@@ -196,6 +196,17 @@ To print all messages up to an event id, use the `gpt2099` command `id-to-messag
 gpt2099 id-to-messages <id>
 ```
 
+## Direct LLM Call Without xs
+
+The purpose of this section is to show you how to call an LLM without a dependency on `xs`.
+
+```nu
+~> [{role: "user" content: "what's 4 + 4"}] | gpt2099 call
+4 + 4 = 8
+```
+
+The above command will create a one-shot call to your LLM without creating any `xs` artifacts.
+
 ## Conversation Forking Use Case
 
 The purpose of this section is to illustrate how easy it is to fork a conversation using `xs` and `gpt2099`. Here is an example:
