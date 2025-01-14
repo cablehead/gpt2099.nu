@@ -13,7 +13,7 @@ def or-else [or_else: closure] {
 
 export def id-to-messages [id: string] {
   let frame = .get $id
-  let role = $frame | get meta | if ($in | is-not-empty) {$in} else {{}} | default "user" role | get role
+  let role = $frame | get meta? | if ($in | is-not-empty) {$in} else {{}} | default "user" role | get role
   let content = (.cas $frame.hash)
   let message = {
     id: $id
