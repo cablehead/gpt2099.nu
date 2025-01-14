@@ -39,6 +39,14 @@ def id-to-message [id: string] {
   }
 }
 
+export def thread [id?: string] {
+  id-to-messages (
+    $id | or-else {||
+      .cat | where topic == "message" | last | get id
+    }
+  )
+}
+
 export def read-input [] {
   iff {||
     match ($in | describe -d | get type) {
@@ -48,7 +56,6 @@ export def read-input [] {
     }
   } --else {|| input "prompt: "}
 }
-
 
 export def is-interactive [] {
   (is-terminal --stdin) and ($env.GPT_INTERACTIVE? | default true)
