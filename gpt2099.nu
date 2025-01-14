@@ -16,6 +16,7 @@ export def id-to-messages [id: string] {
   let role = $frame | get meta | if ($in | is-not-empty) {$in} else {{}} | default "user" role | get role
   let content = (.cas $frame.hash)
   let message = {
+    id: $id
     role: $role
     content: $content
   }
@@ -27,15 +28,6 @@ export def id-to-messages [id: string] {
     "list" => ($next_id | each {|id| id-to-messages $id} | flatten | append $message)
     "nothing" => [$message]
     _ => ( error make { msg: "TBD" })
-  }
-}
-
-def id-to-message [id: string] {
-  let frame = .get $id
-  let role = $frame | get meta | if ($in | is-not-empty) {$in} else {{}} | default "user" role | get role
-  return {
-    role: $role
-    content: (.cas $frame.hash)
   }
 }
 
@@ -62,7 +54,7 @@ export def is-interactive [] {
 }
 
 export def --env run-thread [id: string] {
-  let messages = id-to-messages $id
+  let messages = id-to-messages $id | reject id
 
   mut streamer = {|| return }
   # Only enable interactivity if we're attached to a terminal.
