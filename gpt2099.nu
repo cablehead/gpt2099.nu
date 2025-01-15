@@ -31,12 +31,12 @@ export def id-to-messages [id: string] {
   }
 }
 
-export def thread [id?: string] {
+export def thread [id?: string --sk] {
   id-to-messages (
     $id | or-else {||
       .cat | where topic == "message" | last | get id
     }
-  )
+  ) | conditional-pipe $sk {|| dash-sk}
 }
 
 export def read-input [] {
@@ -54,7 +54,7 @@ export def is-interactive [] {
 }
 
 export def --env run-thread [id: string] {
-  let messages = id-to-messages $id | reject id
+  let messages = id-to-messages $id
 
   mut streamer = {|| return }
   # Only enable interactivity if we're attached to a terminal.
@@ -65,7 +65,7 @@ export def --env run-thread [id: string] {
     print $messages
   }
 
-  let res = $messages | gpt call --streamer $streamer
+  let res = $messages | reject id | gpt call --streamer $streamer
   $res | .append message --meta {
     provider: $env.GPT_PROVIDER
     role: "assistant"
@@ -81,9 +81,18 @@ export def --env new [] {
   return
 }
 
-export def --env resume [ --id: string] {
+export def --env resume [
+  id?: string
+  --sk
+] {
+  let id = if $sk {
+    thread | dash-sk | if ($in | is-not-empty) {$in.id} else { return }
+  } else {
+    $id | or-else {|| .cat | where topic == "message" | last | get id}
+  }
+
   let content = read-input
-  let id = $id | or-else {|| .cat | where topic == "message" | last | get id}
+
   let frame = $content | .append message --meta { role: "user" continues: $id }
   run-thread $frame.id
   return
@@ -92,9 +101,34 @@ export def --env resume [ --id: string] {
 export def --env system [] {
   let content = read-input
   let frame = .cat | where {|frame| ($frame.topic == "messages") and (($frame | get meta.role?) == "system")} | input list --fuzzy -d meta.description
-  $content | resume --id $frame.id
+  $content | resume $frame.id
 }
 
 export def prep [...names: string] {
   $names | each {|name| $"($name):\n\n``````\n(open $name | str trim)\n``````\n"} | str join "\n"
+}
+
+def conditional-pipe [
+  condition: bool
+  action: closure
+] {
+  if $condition {do $action} else {$in}
+}
+
+def role-color [role: string] {
+  match $role {
+    "assistant" => "green"
+    "user" => "blue"
+    _ => "purple"
+  }
+}
+
+def dash-sk [] {
+  let size = term size
+
+  $in | reverse | sk --format {
+    $"..($in.id | str substring 20..) (ansi (role-color $in.role))($in.role | fill -w 9 -a r)(ansi reset) ($in.content | lines | str join)"
+  } --preview {
+    $in.content | bat -l md --force-colorization -p
+  } --preview-window (if $size.columns >= 120 {"right"} else {"up"})
 }
