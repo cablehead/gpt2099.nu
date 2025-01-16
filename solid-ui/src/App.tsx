@@ -48,6 +48,12 @@ const App: Component = () => {
     return selectedThreadItem() ?? (thread.length > 0 ? thread[0].id : null);
   });
 
+  createEffect(() => {
+    // Reset selectedThreadItem whenever selectedHead changes
+    setSelectedThreadItem(null);
+    selectedHead(); // dependency tracking
+  });
+
   return (
     <div style="display: flex; height: 100vh; overflow: hidden;">
       <div style="flex: 0 0 25ch; border-right: 1px solid var(--color-sub-bg); overflow-y: auto;">
@@ -122,15 +128,19 @@ const App: Component = () => {
               return (
                 <div
                   ref={ref}
+                  onClick={() => setSelectedThreadItem(frame.id)}
                   style={{
                     margin: "0.5em 0",
                     padding: "0.5em",
+                    cursor: "pointer",
                     "background-color": currentThreadItem() === frame.id
                       ? "var(--color-sub-bg)"
                       : "transparent",
                   }}
                 >
-                  <pre>{cas.get(frame.hash)()}</pre>
+                  <div style="overflow-x: hidden; margin: 0 0.5em;">
+                    <pre>{cas.get(frame.hash)()}</pre>
+                  </div>
                 </div>
               );
             }}
