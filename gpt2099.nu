@@ -85,13 +85,15 @@ export def --env resume [
   id?: string
   --sk
 ] {
+  let input = $in
+
   let id = if $sk {
     thread | dash-sk | if ($in | is-not-empty) {$in.id} else { return }
   } else {
     $id | or-else {|| .cat | where topic == "message" | last | get id}
   }
 
-  let content = read-input
+  let content = $input | read-input
 
   let frame = $content | .append message --meta { role: "user" continues: $id }
   run-thread $frame.id
