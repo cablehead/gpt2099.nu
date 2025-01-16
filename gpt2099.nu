@@ -117,7 +117,7 @@ def conditional-pipe [
   if $condition {do $action} else {$in}
 }
 
-def role-color [role: string] {
+def role-color [role] {
   match $role {
     "assistant" => "green"
     "user" => "blue"
