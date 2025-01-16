@@ -6,6 +6,9 @@ import {
   For,
   Show,
 } from "solid-js";
+
+import { createShortcut } from "@solid-primitives/keyboard";
+
 import { useFrameStream } from "./store/stream";
 import { useStore } from "./store";
 import { createCAS } from "./store/cas";
@@ -52,6 +55,22 @@ const App: Component = () => {
     // Reset selectedThreadItem whenever selectedHead changes
     setSelectedThreadItem(null);
     selectedHead(); // dependency tracking
+  });
+
+  createShortcut(["Control", "n"], () => {
+    const thread = currentHead() ? getThread(currentHead()!) : [];
+    const currentIndex = thread.findIndex((f) => f.id === currentThreadItem());
+    if (currentIndex < thread.length - 1) {
+      setSelectedThreadItem(thread[currentIndex + 1].id);
+    }
+  });
+
+  createShortcut(["Control", "p"], () => {
+    const thread = currentHead() ? getThread(currentHead()!) : [];
+    const currentIndex = thread.findIndex((f) => f.id === currentThreadItem());
+    if (currentIndex > 0) {
+      setSelectedThreadItem(thread[currentIndex - 1].id);
+    }
   });
 
   return (
