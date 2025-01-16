@@ -132,5 +132,5 @@ def dash-sk [] {
     $"..($in.id | str substring 20..) (ansi (role-color $in.role))($in.role | fill -w 9 -a r)(ansi reset) ($in.content | lines | str join)"
   } --preview {
     $in.content | bat -l md --force-colorization -p
-  } --preview-window (if $size.columns >= 120 {"right"} else {"up"})
+  } --preview-window (if $size.columns >= 120 {"right:wrap"} else {"up:wrap"})
 }
