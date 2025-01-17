@@ -129,6 +129,7 @@ const App: Component = () => {
           <For each={nav.heads()}>
             {(headId) => (
               <div
+                class="nav-item"
                 style={{
                   padding: "0.5em 1em",
                   cursor: "pointer",
@@ -140,12 +141,13 @@ const App: Component = () => {
               >
                 <Show
                   when={cas.get(frames[headId].hash)()}
-                  fallback={<pre>Loading...</pre>}
+                  fallback={<p>Loading...</p>}
                 >
                   {(text) => (
-                    <pre>
-                    {text().replace(/\n/g, ' ').slice(0, 25) + (text().length > 20 ? ".." : "")}
-                    </pre>
+                    <div>
+                      {text().replace(/\n/g, " ").slice(0, 25) +
+                        (text().length > 20 ? ".." : "")}
+                    </div>
                   )}
                 </Show>
               </div>
@@ -157,6 +159,7 @@ const App: Component = () => {
           <For each={nav.thread()}>
             {(frame) => (
               <div
+                class="nav-item"
                 style={{
                   padding: "0.5em 1em",
                   cursor: "pointer",
@@ -171,12 +174,13 @@ const App: Component = () => {
               >
                 <Show
                   when={cas.get(frame.hash)()}
-                  fallback={<pre>Loading...</pre>}
+                  fallback={<p>Loading...</p>}
                 >
                   {(text) => (
-                    <pre>
-                    {text().replace(/\n/g, ' ').slice(0, 25) + (text().length > 20 ? ".." : "")}
-                    </pre>
+                    <div>
+                      {text().replace(/\n/g, " ").slice(0, 25) +
+                        (text().length > 20 ? ".." : "")}
+                    </div>
                   )}
                 </Show>
               </div>
