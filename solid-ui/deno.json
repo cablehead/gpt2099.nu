@@ -13,6 +13,9 @@
   "imports": {
     "@deno/vite-plugin": "npm:@deno/vite-plugin@^1.0.0",
     "@solid-primitives/keyboard": "npm:@solid-primitives/keyboard@^1.2.8",
+    "date-fns": "npm:date-fns@^4.1.0",
+    "lucide-solid": "npm:lucide-solid@^0.473.0",
+    "scru128": "npm:scru128@^3.0.6",
     "solid-js": "npm:solid-js@^1.9.2",
     "solid-styled-components": "npm:solid-styled-components@^0.28.5",
     "vite": "npm:vite@^5.4.9",

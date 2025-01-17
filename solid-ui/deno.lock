@@ -3,6 +3,9 @@
   "specifiers": {
     "npm:@deno/vite-plugin@1": "1.0.0_vite@5.4.10",
     "npm:@solid-primitives/keyboard@^1.2.8": "1.2.8_solid-js@1.9.3__seroval@1.1.1",
+    "npm:date-fns@^4.1.0": "4.1.0",
+    "npm:lucide-solid@0.473": "0.473.0_solid-js@1.9.3__seroval@1.1.1",
+    "npm:scru128@^3.0.6": "3.0.6",
     "npm:solid-js@^1.9.2": "1.9.3_seroval@1.1.1",
     "npm:solid-styled-components@~0.28.5": "0.28.5_solid-js@1.9.3__seroval@1.1.1_csstype@3.1.3",
     "npm:vite-plugin-solid@^2.10.2": "2.10.2_solid-js@1.9.3__seroval@1.1.1_vite@5.4.10_@babel+core@7.26.0",
@@ -400,6 +403,9 @@
     "csstype@3.1.3": {
       "integrity": "sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw=="
     },
+    "date-fns@4.1.0": {
+      "integrity": "sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg=="
+    },
     "debug@4.3.7": {
       "integrity": "sha512-Er2nc/H7RrMXZBFCEim6TCmMk02Z8vLC2Rbi1KEBggpo0fS6l0S1nnapwmIi3yW/+GOJap1Krg4w0Hg80oCqgQ==",
       "dependencies": [
@@ -479,6 +485,12 @@
         "yallist"
       ]
     },
+    "lucide-solid@0.473.0_solid-js@1.9.3__seroval@1.1.1": {
+      "integrity": "sha512-AcmBZle73Z9HOtKI3uXBJ6aRem1kVE4XHuiVrhrIToi8jLlycBewUel6ToBUe2s/5mBtRfMe7ZeVYy6PMqyuOA==",
+      "dependencies": [
+        "solid-js"
+      ]
+    },
     "merge-anything@5.1.7": {
       "integrity": "sha512-eRtbOb1N5iyH0tkQDAoQ4Ipsp/5qSR79Dzrz8hEPxRX10RWWR/iQXdoKmBSRCThY1Fh5EhISDtpSc93fpxUniQ==",
       "dependencies": [
@@ -535,6 +547,9 @@
         "@types/estree",
         "fsevents"
       ]
+    },
+    "scru128@3.0.6": {
+      "integrity": "sha512-LcEVFimCYdYAr8ULCERltvoFpH1jJVcMEGn5p5X1XeV9XRssaWYWKNGFV5CJvczV+Lr6H45tm7g81+qcGE8S5A=="
     },
     "semver@6.3.1": {
       "integrity": "sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA=="
@@ -623,6 +638,9 @@
     "dependencies": [
       "npm:@deno/vite-plugin@1",
       "npm:@solid-primitives/keyboard@^1.2.8",
+      "npm:date-fns@^4.1.0",
+      "npm:lucide-solid@0.473",
+      "npm:scru128@^3.0.6",
       "npm:solid-js@^1.9.2",
       "npm:solid-styled-components@~0.28.5",
       "npm:vite-plugin-solid@^2.10.2",

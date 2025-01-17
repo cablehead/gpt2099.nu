@@ -9,6 +9,11 @@ import {
 
 import { createShortcut } from "@solid-primitives/keyboard";
 
+import { Fingerprint } from "lucide-solid";
+import { formatRelative } from "date-fns";
+import { Scru128Id } from "scru128";
+import CopyTrigger from "./components/CopyTrigger";
+
 import { useFrameStream } from "./store/stream";
 import { useStore } from "./store";
 import { createCAS } from "./store/cas";
@@ -203,30 +208,50 @@ const App: Component = () => {
                 });
 
                 return (
-                  <div
-                    ref={ref}
-                    onClick={() =>
-                      nav.setSelectedIndex(
-                        nav.thread().findIndex((f) => f.id === frame.id),
-                      )}
-                  >
-                    <div style="overflow-x: hidden; margin: 0 0.5em; border-radius: 0.25em; border: 1px solid var(--color-sub-bg); margin-bottom: 0.5em;">
-                      <div style="display: flex; justify-content: space-between; font-size: 0.75rem; background-color: var(--color-accent); padding: 0.5em;">
-                        <div>{frame.meta.role}</div>
-                        <div>{frame.id}</div>
+                  <div style="overflow-x: hidden; margin: 0 0.5em; border-radius: 0.25em; box-shadow: 0 0 0.25em var(--color-shadow); margin-bottom: 0.5em; background-color: var(--color-bg-alt);">
+                    <div
+                      class="panel"
+                      style="display: flex; flex-direction: column; gap: 0.25em; padding: 0.5em 1em;"
+                    >
+                      <div style="display: flex; justify-content: space-between; align-items: center; gap: 1em;">
+                        <span>{frame.meta.role}</span>
+                        <div style="display:flex; gap: 0.2em;">
+                          <Fingerprint
+                            class="icon-button"
+                            size={18}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              navigator.clipboard.writeText(frame.id);
+                            }}
+                          />
+                          <Show when={cas.get(frame.hash)()} keyed>
+                            {(content) => (
+                              <span>
+                                <CopyTrigger content={content} />
+                              </span>
+                            )}
+                          </Show>
+                        </div>
                       </div>
-
-                      <div
-                        style={{
-                          padding: "0.5em",
-                          cursor: "pointer",
-                          "background-color": nav.selected_id() === frame.id
-                            ? "var(--color-sub-bg)"
-                            : "transparent",
-                        }}
-                      >
-                        <pre>{cas.get(frame.hash)()}</pre>
+                      <div style="display: flex; justify-content: flex-start; align-items: center; gap: 1em;">
+                        <span>
+                          {formatRelative(
+                            new Date(Scru128Id.fromString(frame.id).timestamp),
+                            new Date(),
+                          )}
+                        </span>
                       </div>
+                    </div>
+                    <div
+                      style={{
+                        padding: "0.5em 1em",
+                        cursor: "pointer",
+                        "background-color": nav.selected_id() === frame.id
+                          ? "var(--color-sub-bg)"
+                          : "transparent",
+                      }}
+                    >
+                      <pre style="white-space: pre-wrap;">{cas.get(frame.hash)()}</pre>
                     </div>
                   </div>
                 );
