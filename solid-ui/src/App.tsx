@@ -134,13 +134,12 @@ const App: Component = () => {
           <For each={nav.heads()}>
             {(headId) => (
               <div
-                class="nav-item"
+                class={`nav-item ${
+                  nav.selected_head() === headId ? "selected" : ""
+                }`}
                 style={{
                   padding: "0.5em 1em",
                   cursor: "pointer",
-                  "background-color": nav.selected_head() === headId
-                    ? "var(--color-sub-bg)"
-                    : "transparent",
                 }}
                 onClick={() => nav.setSelectedHead(headId)}
               >
@@ -164,13 +163,12 @@ const App: Component = () => {
           <For each={nav.thread()}>
             {(frame) => (
               <div
-                class="nav-item"
+                class={`nav-item ${
+                  nav.selected_id() === frame.id ? "selected" : ""
+                }`}
                 style={{
                   padding: "0.5em 1em",
                   cursor: "pointer",
-                  "background-color": nav.selected_id() === frame.id
-                    ? "var(--color-sub-bg)"
-                    : "transparent",
                 }}
                 onClick={() =>
                   nav.setSelectedIndex(
@@ -247,8 +245,9 @@ const App: Component = () => {
                         padding: "0.5em 1em",
                         cursor: "pointer",
                         "background-color": nav.selected_id() === frame.id
-                          ? "var(--color-sub-bg)"
+                          ? "var(--color-pill)"
                           : "transparent",
+                        "border-radius": "0.25em",
                       }}
                     >
                       <pre style="white-space: pre-wrap;">{cas.get(frame.hash)()}</pre>
