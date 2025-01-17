@@ -4,7 +4,9 @@ export type CASStore = {
   get: (hash: string) => () => string | null;
 };
 
-export function createCAS(fetchContent: (hash: string) => Promise<string>): CASStore {
+export function createCAS(
+  fetchContent: (hash: string) => Promise<string>,
+): CASStore {
   const cache = new Map<string, () => string | null>();
 
   return {
