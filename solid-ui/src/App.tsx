@@ -79,12 +79,14 @@ const createNav = (heads: () => string[], frames: Record<string, Frame>) => {
     selected_id,
 
     nextMessage: () => {
+      console.log("nextMessage", selectedIndex(), thread().length - 1);
       if (selectedIndex() < thread().length - 1) {
         setSelectedIndex(selectedIndex() + 1);
       }
     },
 
     prevMessage: () => {
+      console.log("prevMessage", selectedIndex());
       if (selectedIndex() > 0) {
         setSelectedIndex(selectedIndex() - 1);
       }
@@ -93,8 +95,8 @@ const createNav = (heads: () => string[], frames: Record<string, Frame>) => {
     reset: () => {
       if (heads().length > 0) {
         setSelectedHead(heads()[0]);
-        setSelectedIndex(0);
       }
+      setSelectedIndex(0);
     },
   } as const;
 };
@@ -114,9 +116,10 @@ const App: Component = () => {
 
   const nav = createNav(heads, frames);
 
-  createShortcut(["Control", "n"], nav.nextMessage);
-  createShortcut(["Control", "p"], nav.prevMessage);
-  createShortcut(["Meta", "0"], nav.reset);
+  createShortcut(["n"], nav.nextMessage);
+  createShortcut(["p"], nav.prevMessage);
+  createShortcut(["0"], nav.reset);
+
 
   return (
     <div style="display: flex; height: 100vh; overflow: hidden;">
