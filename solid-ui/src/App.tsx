@@ -148,17 +148,28 @@ const App: Component = () => {
                 <div
                   ref={ref}
                   onClick={() => setSelectedThreadItem(frame.id)}
-                  style={{
-                    margin: "0.5em 0",
-                    padding: "0.5em",
-                    cursor: "pointer",
-                    "background-color": currentThreadItem() === frame.id
-                      ? "var(--color-sub-bg)"
-                      : "transparent",
-                  }}
                 >
-                  <div style="overflow-x: hidden; margin: 0 0.5em;">
-                    <pre>{cas.get(frame.hash)()}</pre>
+                  <div style="overflow-x: hidden; margin: 0 0.5em; border-radius: 0.25em; border: 1px solid var(--color-sub-bg); margin-bottom: 0.5em;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.75rem; background-color: var(--color-accent); padding: 0.5em;">
+                      <div>
+                        {frame.meta.role}
+                      </div>
+                      <div>
+                        {frame.id}
+                      </div>
+                    </div>
+
+                    <div
+                      style={{
+                        padding: "0.5em",
+                        cursor: "pointer",
+                        "background-color": currentThreadItem() === frame.id
+                          ? "var(--color-sub-bg)"
+                          : "transparent",
+                      }}
+                    >
+                      <pre>{cas.get(frame.hash)()}</pre>
+                    </div>
                   </div>
                 </div>
               );
