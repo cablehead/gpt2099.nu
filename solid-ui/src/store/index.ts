@@ -1,4 +1,4 @@
-import { createEffect, createMemo } from "solid-js";
+import { createEffect, createMemo, createSignal } from "solid-js";
 import { createStore } from "solid-js/store";
 import { Frame } from "./stream";
 
@@ -16,10 +16,16 @@ export function useStore({ dataSignal }: StreamProps) {
     frames: {},
     heads: [],
   });
+  const [isInitialized, setIsInitialized] = createSignal(false);
 
   createEffect(() => {
     const frame = dataSignal();
     if (!frame) return;
+
+    if (frame.topic === "xs.threshold") {
+      setIsInitialized(true);
+      return;
+    }
 
     if (frame.topic !== "message") return;
 
@@ -39,5 +45,5 @@ export function useStore({ dataSignal }: StreamProps) {
   const heads = createMemo(() => [...store.heads].sort().reverse());
   const { frames } = store;
 
-  return { frames, heads };
+  return { frames, heads, isInitialized };
 }
