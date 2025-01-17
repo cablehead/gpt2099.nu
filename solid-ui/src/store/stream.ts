@@ -4,6 +4,7 @@ export type Frame = {
   id: string;
   topic: string;
   hash: string;
+  // deno-lint-ignore no-explicit-any
   meta?: Record<string, any>;
 };
 
