@@ -73,6 +73,19 @@ const App: Component = () => {
     }
   });
 
+  createShortcut(["Meta", "0"], () => {
+    // First, set to the most recent thread (first head)
+    if (heads().length > 0) {
+      setSelectedHead(heads()[0]);
+    }
+
+    // Then set to the first message in that thread
+    const thread = currentHead() ? getThread(currentHead()!) : [];
+    if (thread.length > 0) {
+      setSelectedThreadItem(thread[0].id);
+    }
+  });
+
   return (
     <div style="display: flex; height: 100vh; overflow: hidden;">
       <div style="flex: 0 0 25ch; border-right: 1px solid var(--color-sub-bg); overflow-y: auto;">
