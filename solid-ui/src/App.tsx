@@ -197,25 +197,48 @@ const App: Component = () => {
           <Show when={nav.selected_head()}>
             <div style="display: flex; flex-direction: column; gap: 1em;">
               <For each={heads()}>
-                {(headId) => (
-                  <div style="display: flex; flex-direction: row; gap: 0.5em;">
-                    <For each={getThread(headId, frames)}>
-                      {(frame) => (
-                        <MessageCard
-                          frame={frame}
-                          isSelected={nav.selected_id() === frame.id}
-                          cas={cas}
-                          onSelect={() => {
-                            nav.setSelectedHead(headId);
-                            nav.setSelectedIndex(
-                              nav.thread().findIndex((f) => f.id === frame.id),
-                            );
-                          }}
-                        />
-                      )}
-                    </For>
-                  </div>
-                )}
+                {(headId, rowIndex) => {
+                  const prevThread = rowIndex > 0
+                    ? getThread(heads()[rowIndex() - 1], frames)
+                    : null;
+                  const nextThread = rowIndex() < heads().length - 1
+                    ? getThread(heads()[rowIndex() + 1], frames)
+                    : null;
+                  const currentThread = getThread(headId, frames);
+
+                  return (
+                    <div style="display: flex; flex-direction: row; gap: 0.5em;">
+                      <For each={currentThread}>
+                        {(frame, colIndex) => {
+                          const shouldShow = !(
+                            (prevThread?.[colIndex()]?.id === frame.id) ||
+                            (nextThread?.[colIndex()]?.id === frame.id)
+                          );
+
+                          return (
+                            <div
+                              style={`flex-shrink: 0; width: 20em; height: ${
+                                shouldShow ? "10em" : "0"
+                              }; margin: 0 0.25em;`}
+                            >
+                              {shouldShow && (
+                                <MessageCard
+                                  frame={frame}
+                                  isSelected={nav.selected_id() === frame.id}
+                                  cas={cas}
+                                  onSelect={() => {
+                                    nav.setSelectedHead(headId);
+                                    nav.setSelectedIndex(colIndex());
+                                  }}
+                                />
+                              )}
+                            </div>
+                          );
+                        }}
+                      </For>
+                    </div>
+                  );
+                }}
               </For>
             </div>
           </Show>
