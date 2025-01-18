@@ -133,8 +133,8 @@ const App: Component = () => {
   const cas = createCAS(fetchContent);
   const nav = createNav(heads, frames);
 
-  createShortcut(["n"], nav.nextMessage);
-  createShortcut(["p"], nav.prevMessage);
+  createShortcut(["l"], nav.nextMessage);
+  createShortcut(["h"], nav.prevMessage);
   createShortcut(["0"], nav.reset);
 
   return (
