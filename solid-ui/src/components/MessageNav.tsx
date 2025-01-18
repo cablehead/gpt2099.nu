@@ -1,11 +1,7 @@
-import { Component, For } from "solid-js";
+import { Component, createEffect } from "solid-js";
+
 import { Frame } from "../store/stream";
-import { Fingerprint } from "lucide-solid";
-import { formatRelative } from "date-fns";
-import { Scru128Id } from "scru128";
-import CopyTrigger from "./CopyTrigger";
 import { CASStore } from "../store/cas";
-import { Show } from "solid-js";
 
 type MessageNavProps = {
   segment: {
@@ -19,6 +15,16 @@ type MessageNavProps = {
 
 const MessageNav: Component<MessageNavProps> = (props) => {
   let ref: HTMLDivElement | undefined;
+
+  createEffect(() => {
+    if (props.isSelected && ref) {
+      ref.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "nearest",
+      });
+    }
+  });
 
   return (
     <div
