@@ -44,7 +44,7 @@ const getThread = (headId: string, frames: Record<string, Frame>) => {
     thread.push(frame);
     currentId = frame.meta?.continues;
   }
-  return thread;
+  return thread.reverse();
 };
 
 const createNav = (heads: () => string[], frames: Record<string, Frame>) => {
