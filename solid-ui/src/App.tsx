@@ -208,6 +208,10 @@ const App: Component = () => {
                 return (
                   <div
                     ref={ref}
+                    onClick={() =>
+                      nav.setSelectedIndex(
+                        nav.thread().findIndex((f) => f.id === frame.id),
+                      )}
                     style="overflow-x: hidden; margin: 0 0.5em; border-radius: 0.25em; box-shadow: 0 0 0.25em var(--color-shadow); margin-bottom: 0.5em; background-color: var(--color-bg-alt);"
                   >
                     <div
