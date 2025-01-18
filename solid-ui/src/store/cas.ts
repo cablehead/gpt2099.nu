@@ -12,7 +12,6 @@ export function createCAS(
   return {
     get(hash: string) {
       if (!cache.has(hash)) {
-        console.log("Fetching content for hash:", hash);
         const [content, setContent] = createSignal<string | null>(null);
 
         // Cache the signal
