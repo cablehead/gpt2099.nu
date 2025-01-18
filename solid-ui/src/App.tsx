@@ -191,78 +191,92 @@ const App: Component = () => {
           </For>
         </div>
 
-        <div style="flex: 1; padding: 1em; overflow-y: auto; overflow-x: hidden;">
+        <div style="flex: 1; padding: 1em; overflow-x: auto;">
           <Show when={nav.selected_head()}>
-            <For each={nav.thread()}>
-              {(frame) => {
-                let ref: HTMLDivElement | undefined;
-                createEffect(() => {
-                  if (nav.selected_id() === frame.id && ref) {
-                    ref.scrollIntoView({
-                      behavior: "smooth",
-                      block: "nearest",
-                    });
-                  }
-                });
+            <div style="display: flex; flex-direction: row; gap: 0.5em;">
+              <For each={nav.thread()}>
+                {(frame) => {
+                  let ref: HTMLDivElement | undefined;
+                  createEffect(() => {
+                    if (nav.selected_id() === frame.id && ref) {
+                      ref.scrollIntoView({
+                        behavior: "smooth",
+                        block: "nearest",
+                        inline: "nearest", // Added for horizontal scrolling
+                      });
+                    }
+                  });
 
-                return (
-                  <div
-                    ref={ref}
-                    onClick={() =>
-                      nav.setSelectedIndex(
-                        nav.thread().findIndex((f) => f.id === frame.id),
-                      )}
-                    style="overflow-x: hidden; margin: 0 0.5em; border-radius: 0.25em; box-shadow: 0 0 0.25em var(--color-shadow); margin-bottom: 0.5em; background-color: var(--color-bg-alt);"
-                  >
+                  return (
                     <div
-                      class="panel"
-                      style="display: flex; flex-direction: column; gap: 0.25em; padding: 0.5em 1em;"
+                      ref={ref}
+                      onClick={() =>
+                        nav.setSelectedIndex(
+                          nav.thread().findIndex((f) => f.id === frame.id),
+                        )}
+                      style="
+              flex-shrink: 0;
+              width: 20em;
+              height: 10em;
+              overflow: hidden;
+              margin: 0 0.25em;
+              border-radius: 0.25em;
+              box-shadow: 0 0 0.25em var(--color-shadow);
+              background-color: var(--color-bg-alt);
+            "
                     >
-                      <div style="display: flex; justify-content: space-between; align-items: center; gap: 1em;">
-                        <span>{frame.meta.role}</span>
-                        <div style="display:flex; gap: 0.2em;">
-                          <Fingerprint
-                            class="icon-button"
-                            size={18}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              navigator.clipboard.writeText(frame.id);
-                            }}
-                          />
-                          <Show when={cas.get(frame.hash)()} keyed>
-                            {(content) => (
-                              <span>
-                                <CopyTrigger content={content} />
-                              </span>
+                      <div
+                        class="panel"
+                        style="display: flex; flex-direction: column; gap: 0.25em; padding: 0.5em 1em;"
+                      >
+                        <div style="display: flex; justify-content: space-between; align-items: center; gap: 1em;">
+                          <span>{frame.meta.role}</span>
+                          <div style="display:flex; gap: 0.2em;">
+                            <Fingerprint
+                              class="icon-button"
+                              size={18}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                navigator.clipboard.writeText(frame.id);
+                              }}
+                            />
+                            <Show when={cas.get(frame.hash)()} keyed>
+                              {(content) => (
+                                <span>
+                                  <CopyTrigger content={content} />
+                                </span>
+                              )}
+                            </Show>
+                          </div>
+                        </div>
+                        <div style="display: flex; justify-content: flex-start; align-items: center; gap: 1em;">
+                          <span>
+                            {formatRelative(
+                              new Date(
+                                Scru128Id.fromString(frame.id).timestamp,
+                              ),
+                              new Date(),
                             )}
-                          </Show>
+                          </span>
                         </div>
                       </div>
-                      <div style="display: flex; justify-content: flex-start; align-items: center; gap: 1em;">
-                        <span>
-                          {formatRelative(
-                            new Date(Scru128Id.fromString(frame.id).timestamp),
-                            new Date(),
-                          )}
-                        </span>
+                      <div
+                        style={{
+                          padding: "0.5em 1em",
+                          cursor: "pointer",
+                          "background-color": nav.selected_id() === frame.id
+                            ? "var(--color-pill)"
+                            : "transparent",
+                          "border-radius": "0.25em",
+                        }}
+                      >
+                        <pre style="white-space: pre-wrap;">{cas.get(frame.hash)()}</pre>
                       </div>
                     </div>
-                    <div
-                      style={{
-                        padding: "0.5em 1em",
-                        cursor: "pointer",
-                        "background-color": nav.selected_id() === frame.id
-                          ? "var(--color-pill)"
-                          : "transparent",
-                        "border-radius": "0.25em",
-                      }}
-                    >
-                      <pre style="white-space: pre-wrap;">{cas.get(frame.hash)()}</pre>
-                    </div>
-                  </div>
-                );
-              }}
-            </For>
+                  );
+                }}
+              </For>
+            </div>
           </Show>
         </div>
       </div>
