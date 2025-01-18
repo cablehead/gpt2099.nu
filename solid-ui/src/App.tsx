@@ -6,45 +6,67 @@ import {
   For,
   Show,
 } from "solid-js";
-
 import { createShortcut } from "@solid-primitives/keyboard";
-
 import { useFrameStream } from "./store/stream";
 import { useStore } from "./store";
 import { createCAS } from "./store/cas";
-
 import MessageNav from "./components/MessageNav";
+
+type MessageSegment = {
+  promptMessages: Frame[];
+  responseMessage: Frame;
+};
 
 type Nav = {
   heads: () => string[];
   selected_head: () => string | null;
   setSelectedHead: (head: string | null) => void;
-
-  thread: () => ReturnType<typeof getThread>;
-
+  thread: () => MessageSegment[];
   selected_index: () => number;
   setSelectedIndex: (index: number) => void;
-
   selected_id: () => string | null;
-
   nextMessage: () => void;
   prevMessage: () => void;
   reset: () => void;
 };
 
-const getThread = (headId: string, frames: Record<string, Frame>) => {
-  const thread = [];
+const getThread = (
+  headId: string,
+  frames: Record<string, Frame>,
+): MessageSegment[] => {
+  const messages = [];
   let currentId = headId;
+
   while (currentId) {
     const frame = frames[currentId];
     if (!frame) break;
-    thread.push(frame);
+    messages.push(frame);
     currentId = frame.meta?.continues;
   }
-  return thread.reverse();
+  messages.reverse();
+
+  const segments: MessageSegment[] = [];
+  let currentPrompt: Frame[] = [];
+
+  for (const message of messages) {
+    if (message.meta.role === "assistant") {
+      segments.push({
+        promptMessages: [...currentPrompt],
+        responseMessage: message,
+      });
+      currentPrompt = [];
+    } else {
+      currentPrompt.push(message);
+    }
+  }
+
+  return segments;
 };
 
-const createNav = (heads: () => string[], frames: Record<string, Frame>) => {
+const createNav = (
+  heads: () => string[],
+  frames: Record<string, Frame>,
+): Nav => {
   const [selectedHead, setSelectedHead] = createSignal<string | null>(null);
   const [selectedIndex, setSelectedIndex] = createSignal(0);
 
@@ -59,48 +81,40 @@ const createNav = (heads: () => string[], frames: Record<string, Frame>) => {
   const selected_id = createMemo(() => {
     const currentThread = thread();
     return currentThread[selectedIndex()]
-      ? currentThread[selectedIndex()].id
+      ? currentThread[selectedIndex()].responseMessage.id
       : null;
   });
 
   createEffect(() => {
     setSelectedIndex(0);
-    currentHead(); // dependency tracking
+    currentHead();
   });
 
   return {
     heads,
     selected_head: currentHead,
     setSelectedHead,
-
     thread,
-
     selected_index: selectedIndex,
     setSelectedIndex,
-
     selected_id,
-
     nextMessage: () => {
-      console.log("nextMessage", selectedIndex(), thread().length - 1);
       if (selectedIndex() < thread().length - 1) {
         setSelectedIndex(selectedIndex() + 1);
       }
     },
-
     prevMessage: () => {
-      console.log("prevMessage", selectedIndex());
       if (selectedIndex() > 0) {
         setSelectedIndex(selectedIndex() - 1);
       }
     },
-
     reset: () => {
       if (heads().length > 0) {
         setSelectedHead(heads()[0]);
       }
       setSelectedIndex(0);
     },
-  } as const;
+  };
 };
 
 const App: Component = () => {
@@ -117,7 +131,6 @@ const App: Component = () => {
     dataSignal: frameSignal,
   });
   const cas = createCAS(fetchContent);
-
   const nav = createNav(heads, frames);
 
   createShortcut(["n"], nav.nextMessage);
@@ -140,19 +153,10 @@ const App: Component = () => {
                   return (
                     <div style="display: flex; flex-direction: row; gap: 0.5em;">
                       <For each={currentThread}>
-                        {(frame, colIndex) => {
+                        {(segment, colIndex) => {
                           const matchesAbove =
-                            prevThread?.[colIndex()]?.id === frame.id;
-
-                          if (frame.id == "03d7j4vt5c7in9ki52fbefby6") {
-                            console.log({
-                              rowIndex: rowIndex(),
-                              colIndex: colIndex(),
-                              frameId: frame.id,
-                              prevFrameId: prevThread?.[colIndex()]?.id,
-                              matchesAbove,
-                            });
-                          }
+                            prevThread?.[colIndex()]?.responseMessage.id ===
+                              segment.responseMessage.id;
 
                           const shouldShow = !matchesAbove;
 
@@ -164,8 +168,9 @@ const App: Component = () => {
                             >
                               {shouldShow && (
                                 <MessageNav
-                                  frame={frame}
-                                  isSelected={nav.selected_id() === frame.id}
+                                  segment={segment}
+                                  isSelected={nav.selected_id() ===
+                                    segment.responseMessage.id}
                                   cas={cas}
                                   onSelect={() => {
                                     nav.setSelectedHead(headId);
