@@ -27,6 +27,8 @@ type Nav = {
   selected_id: () => string | null;
   nextMessage: () => void;
   prevMessage: () => void;
+  nextRow: () => void;
+  prevRow: () => void;
   reset: () => void;
 };
 
@@ -108,6 +110,18 @@ const createNav = (
         setSelectedIndex(selectedIndex() - 1);
       }
     },
+    nextRow: () => {
+      if (
+        currentHead() && heads().indexOf(currentHead()!) < heads().length - 1
+      ) {
+        setSelectedHead(heads()[heads().indexOf(currentHead()!) + 1]);
+      }
+    },
+    prevRow: () => {
+      if (currentHead() && heads().indexOf(currentHead()!) > 0) {
+        setSelectedHead(heads()[heads().indexOf(currentHead()!) - 1]);
+      }
+    },
     reset: () => {
       if (heads().length > 0) {
         setSelectedHead(heads()[0]);
@@ -135,6 +149,8 @@ const App: Component = () => {
 
   createShortcut(["l"], nav.nextMessage);
   createShortcut(["h"], nav.prevMessage);
+  createShortcut(["j"], nav.nextRow);
+  createShortcut(["k"], nav.prevRow);
   createShortcut(["0"], nav.reset);
 
   return (
