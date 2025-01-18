@@ -10,17 +10,15 @@ import { Show } from "solid-js";
 type MessageCardProps = {
   frame: Frame;
   isSelected: boolean;
-  isSelectedThread: boolean;
   cas: CASStore;
   onSelect?: () => void;
-  scrollIntoView?: boolean;
 };
 
 const MessageCard: Component<MessageCardProps> = (props) => {
   let ref: HTMLDivElement | undefined;
 
   createEffect(() => {
-    if (props.scrollIntoView && ref) {
+    if (props.isSelected && ref) {
       ref.scrollIntoView({
         behavior: "smooth",
         block: "nearest",
@@ -41,7 +39,7 @@ const MessageCard: Component<MessageCardProps> = (props) => {
         "border-radius": "0.25em",
         "box-shadow": "0 0 0.25em var(--color-shadow)",
         "background-color": "var(--color-bg-alt)",
-        opacity: props.isSelectedThread ? "1" : "0.7",
+        opacity: props.isSelected ? "1" : "0.7",
       }}
       onClick={props.onSelect}
     >
@@ -51,7 +49,7 @@ const MessageCard: Component<MessageCardProps> = (props) => {
       >
         <div style="display: flex; justify-content: space-between; align-items: center; gap: 1em;">
           <span>{props.frame.meta.role}</span>
-          <Show when={props.isSelectedThread}>
+          <Show when={props.isSelected}>
             <div style="display:flex; gap: 0.2em;">
               <Fingerprint
                 class="icon-button"

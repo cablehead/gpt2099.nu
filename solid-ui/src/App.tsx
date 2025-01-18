@@ -204,13 +204,11 @@ const App: Component = () => {
                         <MessageCard
                           frame={frame}
                           isSelected={nav.selected_id() === frame.id}
-                          isSelectedThread={nav.selected_head() === headId}
                           cas={cas}
                           onSelect={() =>
                             nav.setSelectedIndex(
                               nav.thread().findIndex((f) => f.id === frame.id),
                             )}
-                          scrollIntoView={nav.selected_id() === frame.id}
                         />
                       )}
                     </For>
