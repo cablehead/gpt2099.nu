@@ -36,48 +36,17 @@ const MessageNav: Component<MessageNavProps> = (props) => {
       }}
       onClick={props.onSelect}
     >
-      <div
-        class="panel"
-        style="display: flex; flex-direction: column; gap: 0.25em; padding: 0.5em 1em;"
-      >
-        <div style="display: flex; justify-content: space-between; align-items: center; gap: 1em;">
-          <span>{props.segment.responseMessage.meta.role}</span>
-          <Show when={props.isSelected}>
-            <div style="display:flex; gap: 0.2em;">
-              <Fingerprint
-                class="icon-button"
-                size={18}
-                onClick={(e) => {
-                  e.preventDefault();
-                  navigator.clipboard.writeText(
-                    props.segment.responseMessage.id,
-                  );
-                }}
-              />
-              <Show
-                when={props.cas.get(props.segment.responseMessage.hash)()}
-                keyed
-              >
-                {(content) => (
-                  <span>
-                    <CopyTrigger content={content} />
-                  </span>
-                )}
-              </Show>
-            </div>
-          </Show>
-        </div>
-        <div style="max-height: 7em; overflow-y: auto;">
-          <For each={props.segment.promptMessages}>
-            {(message) => (
-              <div style="font-size: 0.8em; opacity: 0.8;">
-                {props.cas.get(message.hash)()}
-              </div>
-            )}
-          </For>
-          <div style="font-weight: bold;">
-            {props.cas.get(props.segment.responseMessage.hash)()}
+      <div>
+        <div
+          class="panel"
+          style=" padding: 0.5em 1em;"
+        >
+          <div>
+            {props.cas.get(props.segment.promptMessages.at(-1).hash)()}
           </div>
+        </div>
+        <div>
+          {props.cas.get(props.segment.responseMessage.hash)()}
         </div>
       </div>
     </div>
