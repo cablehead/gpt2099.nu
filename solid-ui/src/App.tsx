@@ -9,15 +9,10 @@ import {
 
 import { createShortcut } from "@solid-primitives/keyboard";
 
-import { Fingerprint } from "lucide-solid";
-import { formatRelative } from "date-fns";
-import { Scru128Id } from "scru128";
-
 import { useFrameStream } from "./store/stream";
 import { useStore } from "./store";
 import { createCAS } from "./store/cas";
 
-import CopyTrigger from "./components/CopyTrigger";
 import MessageCard from "./components/MessageCard";
 
 type Nav = {
@@ -198,22 +193,29 @@ const App: Component = () => {
             <div style="display: flex; flex-direction: column; gap: 1em;">
               <For each={heads()}>
                 {(headId, rowIndex) => {
-                  const prevThread = rowIndex > 0
+                  const prevThread = rowIndex() > 0
                     ? getThread(heads()[rowIndex() - 1], frames)
-                    : null;
-                  const nextThread = rowIndex() < heads().length - 1
-                    ? getThread(heads()[rowIndex() + 1], frames)
-                    : null;
+                    : undefined;
                   const currentThread = getThread(headId, frames);
 
                   return (
                     <div style="display: flex; flex-direction: row; gap: 0.5em;">
                       <For each={currentThread}>
                         {(frame, colIndex) => {
-                          const shouldShow = !(
-                            (prevThread?.[colIndex()]?.id === frame.id) ||
-                            (nextThread?.[colIndex()]?.id === frame.id)
-                          );
+                          const matchesAbove =
+                            prevThread?.[colIndex()]?.id === frame.id;
+
+                          if (frame.id == "03d7j4vt5c7in9ki52fbefby6") {
+                            console.log({
+                              rowIndex: rowIndex(),
+                              colIndex: colIndex(),
+                              frameId: frame.id,
+                              prevFrameId: prevThread?.[colIndex()]?.id,
+                              matchesAbove,
+                            });
+                          }
+
+                          const shouldShow = !matchesAbove;
 
                           return (
                             <div
