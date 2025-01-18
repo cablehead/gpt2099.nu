@@ -13,7 +13,7 @@ import { useFrameStream } from "./store/stream";
 import { useStore } from "./store";
 import { createCAS } from "./store/cas";
 
-import MessageCard from "./components/MessageCard";
+import MessageNav from "./components/MessageNav";
 
 type Nav = {
   heads: () => string[];
@@ -127,67 +127,6 @@ const App: Component = () => {
   return (
     <Show when={isInitialized()} fallback={<pre>Loading...</pre>}>
       <div style="display: flex; height: 100vh; overflow: hidden;">
-        <div style="flex: 0 0 25ch; border-right: 1px solid var(--color-sub-bg); overflow-y: auto;">
-          <For each={nav.heads()}>
-            {(headId) => (
-              <div
-                class={`nav-item ${
-                  nav.selected_head() === headId ? "selected" : ""
-                }`}
-                style={{
-                  padding: "0.5em 1em",
-                  cursor: "pointer",
-                }}
-                onClick={() => nav.setSelectedHead(headId)}
-              >
-                <Show
-                  when={cas.get(frames[headId].hash)()}
-                  fallback={<p>Loading...</p>}
-                >
-                  {(text) => (
-                    <div>
-                      {text().replace(/\n/g, " ").slice(0, 25) +
-                        (text().length > 20 ? ".." : "")}
-                    </div>
-                  )}
-                </Show>
-              </div>
-            )}
-          </For>
-        </div>
-
-        <div style="flex: 0 0 25ch; border-right: 1px solid var(--color-sub-bg); overflow-y: auto;">
-          <For each={nav.thread()}>
-            {(frame) => (
-              <div
-                class={`nav-item ${
-                  nav.selected_id() === frame.id ? "selected" : ""
-                }`}
-                style={{
-                  padding: "0.5em 1em",
-                  cursor: "pointer",
-                }}
-                onClick={() =>
-                  nav.setSelectedIndex(
-                    nav.thread().findIndex((f) => f.id === frame.id),
-                  )}
-              >
-                <Show
-                  when={cas.get(frame.hash)()}
-                  fallback={<p>Loading...</p>}
-                >
-                  {(text) => (
-                    <div>
-                      {text().replace(/\n/g, " ").slice(0, 25) +
-                        (text().length > 20 ? ".." : "")}
-                    </div>
-                  )}
-                </Show>
-              </div>
-            )}
-          </For>
-        </div>
-
         <div style="flex: 1; padding: 1em; overflow-x: auto;">
           <Show when={nav.selected_head()}>
             <div style="display: flex; flex-direction: column; gap: 1em;">
@@ -224,7 +163,7 @@ const App: Component = () => {
                               }; margin: 0 0.25em;`}
                             >
                               {shouldShow && (
-                                <MessageCard
+                                <MessageNav
                                   frame={frame}
                                   isSelected={nav.selected_id() === frame.id}
                                   cas={cas}
