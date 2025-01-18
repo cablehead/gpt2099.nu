@@ -39,14 +39,25 @@ const MessageNav: Component<MessageNavProps> = (props) => {
       <div>
         <div
           class="panel"
-          style=" padding: 0.5em 1em;"
+          style="padding: 0.5em 1em; height: 2em; overflow: hidden;"
         >
           <div>
             {props.cas.get(props.segment.promptMessages.at(-1).hash)()}
           </div>
         </div>
-        <div>
-          {props.cas.get(props.segment.responseMessage.hash)()}
+        <div
+          style={{
+            padding: "0.5em 1em",
+            cursor: "pointer",
+            backgroundColor: props.isSelected
+              ? "var(--color-pill)"
+              : "transparent",
+            borderRadius: "0.25em",
+          }}
+        >
+          <div>
+            {props.cas.get(props.segment.responseMessage.hash)()}
+          </div>
         </div>
       </div>
     </div>
