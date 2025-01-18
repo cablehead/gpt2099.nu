@@ -205,10 +205,12 @@ const App: Component = () => {
                           frame={frame}
                           isSelected={nav.selected_id() === frame.id}
                           cas={cas}
-                          onSelect={() =>
+                          onSelect={() => {
+                            nav.setSelectedHead(headId);
                             nav.setSelectedIndex(
                               nav.thread().findIndex((f) => f.id === frame.id),
-                            )}
+                            );
+                          }}
                         />
                       )}
                     </For>
