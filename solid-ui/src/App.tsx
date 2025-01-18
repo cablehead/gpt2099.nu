@@ -12,11 +12,13 @@ import { createShortcut } from "@solid-primitives/keyboard";
 import { Fingerprint } from "lucide-solid";
 import { formatRelative } from "date-fns";
 import { Scru128Id } from "scru128";
-import CopyTrigger from "./components/CopyTrigger";
 
 import { useFrameStream } from "./store/stream";
 import { useStore } from "./store";
 import { createCAS } from "./store/cas";
+
+import CopyTrigger from "./components/CopyTrigger";
+import MessageCard from "./components/MessageCard";
 
 type Nav = {
   heads: () => string[];
@@ -199,67 +201,17 @@ const App: Component = () => {
                   <div style="display: flex; flex-direction: row; gap: 0.5em;">
                     <For each={getThread(headId, frames)}>
                       {(frame) => (
-                        <div style="
-                  flex-shrink: 0;
-                  width: 20em;
-                  height: 10em;
-                  overflow: hidden;
-                  margin: 0 0.25em;
-                  border-radius: 0.25em;
-                  box-shadow: 0 0 0.25em var(--color-shadow);
-                  background-color: var(--color-bg-alt);
-                  {nav.selected_head() === headId ? '' : 'opacity: 0.7;'}
-                ">
-                          <div
-                            class="panel"
-                            style="display: flex; flex-direction: column; gap: 0.25em; padding: 0.5em 1em;"
-                          >
-                            <div style="display: flex; justify-content: space-between; align-items: center; gap: 1em;">
-                              <span>{frame.meta.role}</span>
-                              <Show when={nav.selected_head() === headId}>
-                                <div style="display:flex; gap: 0.2em;">
-                                  <Fingerprint
-                                    class="icon-button"
-                                    size={18}
-                                    onClick={(e) => {
-                                      e.preventDefault();
-                                      navigator.clipboard.writeText(frame.id);
-                                    }}
-                                  />
-                                  <Show when={cas.get(frame.hash)()} keyed>
-                                    {(content) => (
-                                      <span>
-                                        <CopyTrigger content={content} />
-                                      </span>
-                                    )}
-                                  </Show>
-                                </div>
-                              </Show>
-                            </div>
-                            <div style="display: flex; justify-content: flex-start; align-items: center; gap: 1em;">
-                              <span>
-                                {formatRelative(
-                                  new Date(
-                                    Scru128Id.fromString(frame.id).timestamp,
-                                  ),
-                                  new Date(),
-                                )}
-                              </span>
-                            </div>
-                          </div>
-                          <div
-                            style={{
-                              padding: "0.5em 1em",
-                              cursor: "pointer",
-                              backgroundColor: nav.selected_id() === frame.id
-                                ? "var(--color-pill)"
-                                : "transparent",
-                              borderRadius: "0.25em",
-                            }}
-                          >
-                            <pre style="white-space: pre-wrap;">{cas.get(frame.hash)()}</pre>
-                          </div>
-                        </div>
+                        <MessageCard
+                          frame={frame}
+                          isSelected={nav.selected_id() === frame.id}
+                          isSelectedThread={nav.selected_head() === headId}
+                          cas={cas}
+                          onSelect={() =>
+                            nav.setSelectedIndex(
+                              nav.thread().findIndex((f) => f.id === frame.id),
+                            )}
+                          scrollIntoView={nav.selected_id() === frame.id}
+                        />
                       )}
                     </For>
                   </div>
