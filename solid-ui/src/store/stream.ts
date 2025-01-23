@@ -5,7 +5,9 @@ export type Frame = {
   topic: string;
   hash: string;
   // deno-lint-ignore no-explicit-any
-  meta?: Record<string, any>;
+  meta?: Record<string, any> & {
+    role?: string;  // Make role optional
+  };
 };
 
 export function useFrameStream() {
