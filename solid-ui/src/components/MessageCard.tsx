@@ -48,7 +48,7 @@ const MessageCard: Component<MessageCardProps> = (props) => {
         style="display: flex; flex-direction: column; gap: 0.25em; padding: 0.5em 1em;"
       >
         <div style="display: flex; justify-content: space-between; align-items: center; gap: 1em;">
-          <span>{props.frame.meta.role}</span>
+          <span>{props.frame.meta?.role ?? 'user'}</span>
           <Show when={props.isSelected}>
             <div style="display:flex; gap: 0.2em;">
               <Fingerprint

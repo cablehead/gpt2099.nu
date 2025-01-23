@@ -10,18 +10,15 @@ import { createShortcut } from "@solid-primitives/keyboard";
 import { useFrameStream } from "./store/stream";
 import { useStore } from "./store";
 import { createCAS } from "./store/cas";
-import MessageNav from "./components/MessageNav";
+import MessageCard from "./components/MessageCard";
 
-type MessageSegment = {
-  promptMessages: Frame[];
-  responseMessage: Frame;
-};
+// No need for MessageSegment type
 
 type Nav = {
   heads: () => string[];
   selected_head: () => string | null;
   setSelectedHead: (head: string | null) => void;
-  thread: () => MessageSegment[];
+  thread: () => Frame[];
   selected_index: () => number;
   setSelectedIndex: (index: number) => void;
   selected_id: () => string | null;
@@ -35,7 +32,7 @@ type Nav = {
 const getThread = (
   headId: string,
   frames: Record<string, Frame>,
-): MessageSegment[] => {
+): Frame[] => {
   const messages = [];
   let currentId = headId;
 
@@ -45,24 +42,8 @@ const getThread = (
     messages.push(frame);
     currentId = frame.meta?.continues;
   }
-  messages.reverse();
 
-  const segments: MessageSegment[] = [];
-  let currentPrompt: Frame[] = [];
-
-  for (const message of messages) {
-    if (message.meta.role === "assistant") {
-      segments.push({
-        promptMessages: [...currentPrompt],
-        responseMessage: message,
-      });
-      currentPrompt = [];
-    } else {
-      currentPrompt.push(message);
-    }
-  }
-
-  return segments;
+  return messages.reverse();
 };
 
 const createNav = (
@@ -83,7 +64,7 @@ const createNav = (
   const selected_id = createMemo(() => {
     const currentThread = thread();
     return currentThread[selectedIndex()]
-      ? currentThread[selectedIndex()].responseMessage.id
+      ? currentThread[selectedIndex()].id
       : null;
   });
 
@@ -169,10 +150,9 @@ const App: Component = () => {
                   return (
                     <div style="display: flex; flex-direction: row; gap: 0.5em;">
                       <For each={currentThread}>
-                        {(segment, colIndex) => {
+                        {(message, colIndex) => {
                           const matchesAbove =
-                            prevThread?.[colIndex()]?.responseMessage.id ===
-                              segment.responseMessage.id;
+                            prevThread?.[colIndex()]?.id === message.id;
 
                           const shouldShow = !matchesAbove;
 
@@ -183,10 +163,9 @@ const App: Component = () => {
                               }; margin: 0 0.25em;`}
                             >
                               {shouldShow && (
-                                <MessageNav
-                                  segment={segment}
-                                  isSelected={nav.selected_id() ===
-                                    segment.responseMessage.id}
+                                <MessageCard
+                                  frame={message}
+                                  isSelected={nav.selected_id() === message.id}
                                   cas={cas}
                                   onSelect={() => {
                                     nav.setSelectedHead(headId);
