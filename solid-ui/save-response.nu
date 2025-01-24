@@ -57,8 +57,6 @@ def aggregate-response [] {
       )
     } | aggregate-response
 
-    return $meta
-
     $meta.message.content | to json -r | .append message --meta ($meta | reject message.content)
   }
 }
