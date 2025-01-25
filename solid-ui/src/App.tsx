@@ -51,7 +51,7 @@ const createNav = (
   frames: Record<string, Frame>,
 ): Nav => {
   const [selectedHead, setSelectedHead] = createSignal<string | null>(null);
-  const [selectedIndex, setSelectedIndex] = createSignal(0);
+  const [selectedIndex, setSelectedIndex] = createSignal<number | null>(null);
 
   const currentHead = createMemo(() =>
     selectedHead() ?? (heads().length > 0 ? heads()[0] : null)
@@ -61,15 +61,20 @@ const createNav = (
     currentHead() ? getThread(currentHead()!, frames) : []
   );
 
+  const currentIndex = createMemo(() => {
+    const currentThread = thread();
+    return selectedIndex() ?? (currentThread.length > 0 ? currentThread.length - 1 : 0);
+  });
+
   const selected_id = createMemo(() => {
     const currentThread = thread();
-    return currentThread[selectedIndex()]
-      ? currentThread[selectedIndex()].id
+    return currentThread[currentIndex()]
+      ? currentThread[currentIndex()].id
       : null;
   });
 
   createEffect(() => {
-    setSelectedIndex(0);
+    setSelectedIndex(null); // Reset to default behavior
     currentHead();
   });
 
@@ -78,17 +83,17 @@ const createNav = (
     selected_head: currentHead,
     setSelectedHead,
     thread,
-    selected_index: selectedIndex,
+    selected_index: currentIndex,
     setSelectedIndex,
     selected_id,
     nextMessage: () => {
-      if (selectedIndex() < thread().length - 1) {
-        setSelectedIndex(selectedIndex() + 1);
+      if (currentIndex() < thread().length - 1) {
+        setSelectedIndex(currentIndex() + 1);
       }
     },
     prevMessage: () => {
-      if (selectedIndex() > 0) {
-        setSelectedIndex(selectedIndex() - 1);
+      if (currentIndex() > 0) {
+        setSelectedIndex(currentIndex() - 1);
       }
     },
     nextRow: () => {
@@ -107,7 +112,7 @@ const createNav = (
       if (heads().length > 0) {
         setSelectedHead(heads()[0]);
       }
-      setSelectedIndex(0);
+      setSelectedIndex(null); // Reset to default (last message)
     },
   };
 };

@@ -1,11 +1,11 @@
 # a Web UI for your chat threads
 
-This is a [`SolidJS`](https://www.solidjs.com) UI gpt2099's threaded chat history
+This is a [`SolidJS`](https://www.solidjs.com) UI gpt2099's threaded chat
+history
 
 Requirements:
 
 - [Deno2](https://deno.com)
-
 - [xs](https://github.com/cablehead/xs)
 
 ## To run
@@ -24,3 +24,11 @@ Start UI:
 deno task dev
 open http://localhost:5173
 ```
+
+# tool use
+
+- `acall.nu`: a command to call anthropic with tool use. It's trigger with
+  `.append llm.call --meta {id: <id>}`. The response is stream out to llm.recv
+  events as it arrives.
+- `save-response.nu`: watches for streamed responses from an LLM and records
+  them as assistant messages
