@@ -32,3 +32,16 @@ open http://localhost:5173
   events as it arrives.
 - `save-response.nu`: watches for streamed responses from an LLM and records
   them as assistant messages
+- `w.nu` watch llm response stream in
+
+Resume:
+
+```nushell
+"prompt" | .append message --meta {continues: "id to resume from"} | .append llm.call --meta {id: $in.id }
+```
+
+Tool use:
+
+```nushell
+handle-tool-use-request (.last) | .append llm.call --meta {id: $in.id}
+```
