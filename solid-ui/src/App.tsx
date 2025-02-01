@@ -19,6 +19,7 @@ type Nav = {
   selected_head: () => string | null;
   setSelectedHead: (head: string | null) => void;
   thread: () => Frame[];
+  reversedThread: () => Frame[];
   selected_index: () => number;
   setSelectedIndex: (index: number) => void;
   selected_id: () => string | null;
@@ -61,9 +62,12 @@ const createNav = (
     currentHead() ? getThread(currentHead()!, frames) : []
   );
 
+  const reversedThread = createMemo(() => [...thread()].reverse());
+
   const currentIndex = createMemo(() => {
     const currentThread = thread();
-    return selectedIndex() ?? (currentThread.length > 0 ? currentThread.length - 1 : 0);
+    return selectedIndex() ??
+      (currentThread.length > 0 ? currentThread.length - 1 : 0);
   });
 
   const selected_id = createMemo(() => {
@@ -83,6 +87,7 @@ const createNav = (
     selected_head: currentHead,
     setSelectedHead,
     thread,
+    reversedThread,
     selected_index: currentIndex,
     setSelectedIndex,
     selected_id,
@@ -188,6 +193,35 @@ const App: Component = () => {
               </For>
             </div>
           </Show>
+        </div>
+
+        <div style="flex: 1; overflow: hidden">
+          <div style="height: 100%; padding: 1em; overflow-y: auto">
+            <div style="display: flex; flex-direction: column; gap: 1em;">
+              <Show when={nav.selected_id()}>
+                <For each={nav.reversedThread()}>
+                  {(message) => (
+                    <Show when={message}>
+                      <MessageCard
+                        frame={message}
+                        isSelected={nav.selected_id() === message.id}
+                        cas={cas}
+                        onSelect={() => {
+                          nav.setSelectedHead(
+                            nav.thread().find((m) => m.id === message.id)?.id ??
+                              null,
+                          );
+                          nav.setSelectedIndex(
+                            nav.thread().findIndex((m) => m.id === message.id),
+                          );
+                        }}
+                      />
+                    </Show>
+                  )}
+                </For>
+              </Show>
+            </div>
+          </div>
         </div>
       </div>
     </Show>
