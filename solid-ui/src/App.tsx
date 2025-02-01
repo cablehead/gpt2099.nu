@@ -207,10 +207,6 @@ const App: Component = () => {
                         isSelected={nav.selected_id() === message.id}
                         cas={cas}
                         onSelect={() => {
-                          nav.setSelectedHead(
-                            nav.thread().find((m) => m.id === message.id)?.id ??
-                              null,
-                          );
                           nav.setSelectedIndex(
                             nav.thread().findIndex((m) => m.id === message.id),
                           );
