@@ -194,7 +194,7 @@ const App: Component = () => {
           </Show>
         </div>
 
-        <div style="flex: 1; overflow: hidden">
+        <div style="flex: 1; max-width: min(750px, 50%); overflow: hidden">
           <div style="height: 100%; padding: 1em; overflow-y: auto">
             <div style="display: flex; flex-direction: column; gap: 1em;">
               <Show when={nav.selected_id()}>

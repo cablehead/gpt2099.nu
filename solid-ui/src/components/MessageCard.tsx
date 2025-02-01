@@ -32,8 +32,6 @@ const MessageCard: Component<MessageCardProps> = (props) => {
       ref={ref}
       style={{
         "flex-shrink": "0",
-        width: "20em",
-        height: "10em",
         overflow: "hidden",
         margin: "0 0.25em",
         "border-radius": "0.25em",
