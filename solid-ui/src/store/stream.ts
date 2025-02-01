@@ -6,7 +6,7 @@ export type Frame = {
   hash: string;
   // deno-lint-ignore no-explicit-any
   meta?: Record<string, any> & {
-    role?: string;  // Make role optional
+    role?: string; // Make role optional
   };
 };
 

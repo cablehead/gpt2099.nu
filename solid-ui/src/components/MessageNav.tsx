@@ -1,19 +1,15 @@
 import { Component, createEffect } from "solid-js";
-
 import { Frame } from "../store/stream";
 import { CASStore } from "../store/cas";
 
-type MessageNavProps = {
-  segment: {
-    promptMessages: Frame[];
-    responseMessage: Frame;
-  };
+type MessageCardProps = {
+  frame: Frame;
   isSelected: boolean;
   cas: CASStore;
   onSelect?: () => void;
 };
 
-const MessageNav: Component<MessageNavProps> = (props) => {
+const MessageCard: Component<MessageCardProps> = (props) => {
   let ref: HTMLDivElement | undefined;
 
   createEffect(() => {
@@ -42,32 +38,28 @@ const MessageNav: Component<MessageNavProps> = (props) => {
       }}
       onClick={props.onSelect}
     >
-      <div>
-        <div
-          class="panel"
-          style="padding: 0.5em 1em; height: 2em; overflow: hidden;"
-        >
-          <div>
-            {props.cas.get(props.segment.promptMessages.at(-1).hash)()}
-          </div>
+      <div
+        class="panel"
+        style="display: flex; flex-direction: column; gap: 0.25em; padding: 0.5em 1em;"
+      >
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 1em;">
+          <span>{props.frame.meta?.role ?? "user"}</span>
         </div>
-        <div
-          style={{
-            padding: "0.5em 1em",
-            cursor: "pointer",
-            backgroundColor: props.isSelected
-              ? "var(--color-pill)"
-              : "transparent",
-            borderRadius: "0.25em",
-          }}
-        >
-          <div>
-            {props.cas.get(props.segment.responseMessage.hash)()}
-          </div>
-        </div>
+      </div>
+      <div
+        style={{
+          padding: "0.5em 1em",
+          cursor: "pointer",
+          backgroundColor: props.isSelected
+            ? "var(--color-pill)"
+            : "transparent",
+          borderRadius: "0.25em",
+        }}
+      >
+        <pre style="white-space: pre-wrap;">{props.cas.get(props.frame.hash)()}</pre>
       </div>
     </div>
   );
 };
 
-export default MessageNav;
+export default MessageCard;

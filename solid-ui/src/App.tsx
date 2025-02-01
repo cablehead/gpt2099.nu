@@ -11,8 +11,7 @@ import { useFrameStream } from "./store/stream";
 import { useStore } from "./store";
 import { createCAS } from "./store/cas";
 import MessageCard from "./components/MessageCard";
-
-// No need for MessageSegment type
+import MessageNav from "./components/MessageNav";
 
 type Nav = {
   heads: () => string[];
@@ -173,7 +172,7 @@ const App: Component = () => {
                               }; margin: 0 0.25em;`}
                             >
                               {shouldShow && (
-                                <MessageCard
+                                <MessageNav
                                   frame={message}
                                   isSelected={nav.selected_id() === message.id}
                                   cas={cas}
