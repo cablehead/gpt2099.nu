@@ -2,14 +2,14 @@ import { Component, createEffect } from "solid-js";
 import { Frame } from "../store/stream";
 import { CASStore } from "../store/cas";
 
-type MessageCardProps = {
+type MessageNavProps = {
   frame: Frame;
   isSelected: boolean;
   cas: CASStore;
   onSelect?: () => void;
 };
 
-const MessageCard: Component<MessageCardProps> = (props) => {
+const MessageNav: Component<MessageNavProps> = (props) => {
   let ref: HTMLDivElement | undefined;
 
   createEffect(() => {
@@ -62,4 +62,4 @@ const MessageCard: Component<MessageCardProps> = (props) => {
   );
 };
 
-export default MessageCard;
+export default MessageNav;
