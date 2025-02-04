@@ -6,6 +6,7 @@ import { Scru128Id } from "scru128";
 import CopyTrigger from "./CopyTrigger";
 import { CASStore } from "../store/cas";
 import { Show } from "solid-js";
+import MessageContent from "./MessageContent";
 
 type MessageCardProps = {
   frame: Frame;
@@ -86,7 +87,11 @@ const MessageCard: Component<MessageCardProps> = (props) => {
           borderRadius: "0.25em",
         }}
       >
-        <pre style="white-space: pre-wrap;">{props.cas.get(props.frame.hash)()}</pre>
+        <Show when={props.cas.get(props.frame.hash)()} keyed>
+          {(content) => (
+            <MessageContent content={content} />
+          )}
+        </Show>
       </div>
     </div>
   );
