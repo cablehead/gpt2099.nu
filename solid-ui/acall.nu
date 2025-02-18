@@ -79,23 +79,23 @@ def conditional-pipe [
 def id-to-messages [id] {
   mut messages = []
   mut stack = [] | append $id
-  
+
   while not ($stack | is-empty) {
     let current_id = $stack | first
     let frame = .get $current_id
     let meta = $frame | get meta? | default {}
     let role = $meta | default "user" role | get role
     let content = .cas $frame.hash | conditional-pipe (($meta | get mime_type?) == "application/json") { from json }
-    
+
     let message = {
       id: $current_id
       role: $role
       content: $content
     }
-    
+
     $messages = ($messages | prepend $message)
     $stack = ($stack | skip 1)
-    
+
     let next_id = $frame | get meta?.continues?
     match ($next_id | describe -d | get type) {
       "string" => { $stack = ($stack | append $next_id) }
@@ -104,7 +104,7 @@ def id-to-messages [id] {
       _ => ( error make {msg: "TBD"})
     }
   }
-  
+
   $messages
 }
 
