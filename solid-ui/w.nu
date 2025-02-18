@@ -1,6 +1,6 @@
 # .cat --last-id 03d9k9amhjib8kkq1z2r8q7bj |
 
-.cat -f | where topic == "llm.recv" | each {
+.cat -tf | where topic == "llm.recv" | each {
   .cas | from json | match $in.type {
     "content_block_start" => $"**($in.content_block.type)**: "
     "content_block_delta" => {
