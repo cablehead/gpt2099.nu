@@ -76,25 +76,36 @@ def conditional-pipe [
   if $condition { do $action } else { $in }
 }
 
-def id-to-messages [id: string] {
-  let frame = .get $id
-  let meta = $frame | get meta? | default {}
-  let role = $meta | default "user" role | get role
-  let content = .cas $frame.hash | conditional-pipe (($meta | get mime_type?) == "application/json") { from json }
-  let message = {
-    id: $id
-    role: $role
-    content: $content
+def id-to-messages [id] {
+  mut messages = []
+  mut stack = [] | append $id
+  
+  while not ($stack | is-empty) {
+    let current_id = $stack | first
+    let frame = .get $current_id
+    let meta = $frame | get meta? | default {}
+    let role = $meta | default "user" role | get role
+    let content = .cas $frame.hash | conditional-pipe (($meta | get mime_type?) == "application/json") { from json }
+    
+    let message = {
+      id: $current_id
+      role: $role
+      content: $content
+    }
+    
+    $messages = ($messages | prepend $message)
+    $stack = ($stack | skip 1)
+    
+    let next_id = $frame | get meta?.continues?
+    match ($next_id | describe -d | get type) {
+      "string" => { $stack = ($stack | append $next_id) }
+      "list" => { $stack = ($stack | append $next_id) }
+      "nothing" => { }
+      _ => ( error make {msg: "TBD"})
+    }
   }
-
-  let next_id = $frame | get meta?.continues?
-
-  match ($next_id | describe -d | get type) {
-    "string" => (id-to-messages $next_id | append $message)
-    "list" => ($next_id | each {|id| id-to-messages $id } | flatten | append $message)
-    "nothing" => [$message]
-    _ => ( error make {msg: "TBD"})
-  }
+  
+  $messages
 }
 
 const computer_tools = [
