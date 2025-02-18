@@ -76,9 +76,9 @@ def conditional-pipe [
   if $condition { do $action } else { $in }
 }
 
-def id-to-messages [id] {
+def id-to-messages [ids] {
   mut messages = []
-  mut stack = [] | append $id
+  mut stack = [] | append $ids
 
   while not ($stack | is-empty) {
     let current_id = $stack | first
@@ -87,13 +87,15 @@ def id-to-messages [id] {
     let role = $meta | default "user" role | get role
     let content = .cas $frame.hash | conditional-pipe (($meta | get mime_type?) == "application/json") { from json }
 
-    let message = {
-      id: $current_id
-      role: $role
-      content: $content
+    if ($content | is-not-empty) {
+      let message = {
+        id: $current_id
+        role: $role
+        content: $content
+      }
+      $messages = ($messages | prepend $message)
     }
 
-    $messages = ($messages | prepend $message)
     $stack = ($stack | skip 1)
 
     let next_id = $frame | get meta?.continues?
@@ -113,19 +115,18 @@ const computer_tools = [
   {type: "bash_20241022" name: "bash"}
 ]
 
-def .call [id: string] {
-  (
-    id-to-messages $id
-    | reject id
+def .call [ids] {
+  id-to-messages $ids | if ($in | is-empty) { error make {msg: "No messages found"} } else {
+    reject id
     | do (thecall) "claude-3-5-sonnet-20241022" $computer_tools
     | lines
     | each {|line| $line | split row -n 2 "data: " | get 1? }
     | each {|x| $x | from json }
-  )
+  }
 }
 
 {
   process: {|frame|
-    .call $frame.meta.id
+    .call $frame.meta?.continues?
   }
 }
