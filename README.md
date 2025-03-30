@@ -1,8 +1,17 @@
 # xs.mcp.nu
 
-xs.mcp.nu is a Nushell / cross.stream extension for interacting with MCP servers
-using the
-[Model Context Protocol](https://modelcontextprotocol.io/introduction).
+[Model Context Protocol](https://modelcontextprotocol.io/introduction) (MCP)
+servers are really just CLI tools that read from stdin and write to stdout.
+
+[cross.stream](https://github.com/cablehead/xs)
+[generators](https://cablehead.github.io/xs/reference/generators/)) take CLI
+tools and package each line of output into event frames (.recv) while routing
+frames ending in .send as input. This setup lets you interact with the tool as
+if it were a service.
+
+`xs.mcp.nu` leverages this approach to provide a hands-on environment for
+experimenting with and understanding MCP servers. For more details, check out
+the project on
 
 ## Features
 
