@@ -1,5 +1,5 @@
-export def ".mcp register" [name command] {
-  $command | .append $"($name).spawn" --meta {duplex: true}
+export def ".mcp register" [name:string command:string] {
+  $command + " | lines" | .append $"($name).spawn" --meta {duplex: true}
 }
 
 export def ".mcp tools list" [name] {
