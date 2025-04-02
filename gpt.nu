@@ -6,6 +6,23 @@ export-env {
   }
 }
 
+# aggregation
+def content-block-delta [current_block event] {
+  match $event.delta.type {
+    "text_delta" => ($current_block | update text { $in | append $event.delta.text })
+    "input_json_delta" => ($current_block | upsert partial_json { $in | default [] | append $event.delta.partial_json })
+    _ => ( error make {msg: $"TBD: ($event)"})
+  }
+}
+
+def content-block-finish [content_block] {
+  match $content_block.type {
+    "text" => ($content_block | update text { str join })
+    "tool_use" => ($content_block | update input {|x| $x.partial_json | str join | from json } | reject partial_json?)
+    _ => { error make {msg: $"TBD: ($content_block)"} }
+  }
+}
+
 export def providers [] {
   {
     anthropic : {
@@ -64,7 +81,35 @@ export def providers [] {
           -H $headers
           https://api.anthropic.com/v1/messages
           $data
+          | lines
+          | each {|line| $line | split row -n 2 "data: " | get 1? }
+          | each {|x| $x | from json }
         )
+      }
+
+      aggregate_response: {||
+        collect {|events|
+          mut response = {
+            role: "assistant"
+            mime_type: "application/json"
+          }
+          for event in $events {
+            match $event.type {
+              "message_start" => ($response.message = $event.message)
+              "content_block_start" => ($response.current_block = $event.content_block)
+              "content_block_delta" => ($response.current_block = content-block-delta $response.current_block $event)
+              "content_block_stop" => ($response.message.content =  $response.message.content | append (content-block-finish $response.current_block))
+              "message_delta" => ($response = ($response | merge deep {message: ($event.delta | insert usage $event.usage)}))
+              "message_stop" => ($response = ($response | reject current_block))
+              "ping" => (continue)
+              _ => (
+                error make {msg: $"\n\n($response | table -e)\n\n($event | table -e)"}
+              )
+            }
+          }
+
+          $response
+        }
       }
     }
   }
