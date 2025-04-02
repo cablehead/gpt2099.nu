@@ -17,8 +17,8 @@ export-env {
           https://api.anthropic.com/v1/models
           | get data
           | select id created_at
-          | rename -c { created_at: "created" }
-          | update created {into datetime}
+          | rename -c {created_at: "created"}
+          | update created { into datetime }
           | sort-by -r created
         )
       }
@@ -28,7 +28,7 @@ export-env {
           model: $model
           max_tokens: 8192
           stream: true
-          messages: ($in | update role {|x| if $x.role == "system" {"user"} else {$x.role}})
+          messages: ($in | update role {|x| if $x.role == "system" { "user" } else { $x.role } })
         }
 
         (
@@ -41,15 +41,13 @@ export-env {
           https://api.anthropic.com/v1/messages
           $data
           | lines
-          | each {|line| $line | split row -n 2 "data: " | get 1?}
-          | each {|x| $x | from json}
+          | each {|line| $line | split row -n 2 "data: " | get 1? }
+          | each {|x| $x | from json }
           | where type == "content_block_delta"
-          | each {|x| $x | get delta.text}
+          | each {|x| $x | get delta.text }
         )
       }
     }
-
-
   }
 }
 
@@ -57,7 +55,7 @@ def conditional-pipe [
   condition: bool
   action: closure
 ] {
-  if $condition {do $action} else {$in}
+  if $condition { do $action } else { $in }
 }
 
 export def call [ --streamer: closure] {
@@ -69,7 +67,7 @@ export def call [ --streamer: closure] {
   (
     $content
     | do $caller $config.model
-    | conditional-pipe ($streamer | is-not-empty) {|| tee {each {do $streamer}}}
+    | conditional-pipe ($streamer | is-not-empty) {|| tee { each { do $streamer } } }
     | str join
   )
 }
@@ -94,11 +92,11 @@ export def --env select-provider [] {
   print -n "Select model:"
   let model = do $provider.models | get id | input list --fuzzy
   print $"Selected model: ($model)"
-  $env.GPT_PROVIDER = { name: $name model: $model }
+  $env.GPT_PROVIDER = {name: $name model: $model}
 }
 
 export def --env ensure-provider [] {
-  if $env.GPT_PROVIDER? == null {select-provider}
+  if $env.GPT_PROVIDER? == null { select-provider }
   ensure-api-key $env.GPT_PROVIDER.name
 }
 
