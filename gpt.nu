@@ -126,13 +126,14 @@ export def call [ --streamer: closure] {
   let content = $in
 
   let config = $env.GPT_PROVIDER
-  let caller = providers | get $config.name | get call
+
+  let p = providers | get $config.name
 
   (
     $content
-    | do $caller $config.model
+    | do $p.call $config.model
     | conditional-pipe ($streamer | is-not-empty) {|| tee { each { do $streamer } } }
-    | str join
+    | do $p.aggregate_response
   )
 }
 
