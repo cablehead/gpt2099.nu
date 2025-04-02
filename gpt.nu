@@ -4,8 +4,10 @@ export-env {
     "string" => ($env.GPT_PROVIDER | from json)
     _ => ($env.GPT_PROVIDER?)
   }
+}
 
-  $env.GPT_PROVIDERS = {
+export def providers [] {
+  {
     anthropic : {
       models: {||
         (
@@ -23,12 +25,20 @@ export-env {
         )
       }
 
-      call: {|model: string|
+      call: {|model: string, tools?: list|
+        # anthropic only supports a single system message as a top level attribute
+        let messages = $in
+        let system_messages = $messages | where role == "system"
+        let messages = $messages | where role != "system"
+
         let data = {
           model: $model
           max_tokens: 8192
           stream: true
-          messages: ($in | update role {|x| if $x.role == "system" { "user" } else { $x.role } })
+          messages: $messages
+          tools: ($tools | default [])
+        } | conditional-pipe ($system_messages | is-not-empty) {
+          insert "system" ($system_messages | get content | flatten)
         }
 
         (
@@ -40,11 +50,6 @@ export-env {
           }
           https://api.anthropic.com/v1/messages
           $data
-          | lines
-          | each {|line| $line | split row -n 2 "data: " | get 1? }
-          | each {|x| $x | from json }
-          | where type == "content_block_delta"
-          | each {|x| $x | get delta.text }
         )
       }
     }
@@ -62,7 +67,7 @@ export def call [ --streamer: closure] {
   let content = $in
 
   let config = $env.GPT_PROVIDER
-  let caller = $env.GPT_PROVIDERS | get $config.name | get call
+  let caller = providers | get $config.name | get call
 
   (
     $content
@@ -83,10 +88,10 @@ export def --env ensure-api-key [name: string] {
 
 export def --env select-provider [] {
   print "Select a provider:"
-  let name = $env.GPT_PROVIDERS | columns | input list
+  let name = providers | columns | input list
   print $"Selected provider: ($name)"
 
-  let provider = $env.GPT_PROVIDERS | get $name
+  let provider = providers | get $name
   ensure-api-key $name
 
   print -n "Select model:"
@@ -102,6 +107,6 @@ export def --env ensure-provider [] {
 
 export def --env models [] {
   ensure-provider
-  let provider = $env.GPT_PROVIDERS | get $env.GPT_PROVIDER.name
+  let provider = providers | get $env.GPT_PROVIDER.name
   do $provider.models
 }
