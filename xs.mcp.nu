@@ -40,6 +40,12 @@ export def ".mcp call" [name: string] {
   $res
 }
 
+export def ".mcp tools call" [name: string provider: record] {
+  do $provider.provider_to_toolscall_mcp
+  | .mcp call $name
+  | do $provider.mcp_toolscall_response_to_provider
+}
+
 export def providers [] {
   {
     anthropic : {
@@ -50,8 +56,6 @@ export def providers [] {
       provider_to_toolscall_mcp : {||
         let tool_use = $in
         {"jsonrpc": "2.0" "id": $tool_use.id "method": "tools/call" "params": {"name": $tool_use.name "arguments": $tool_use.input}}
-        # call with:
-        # get body.content | where type == "tool_use" | first | to_mcp_to_call | to json -r | bp
       }
 
       mcp_toolscall_response_to_provider : {||
