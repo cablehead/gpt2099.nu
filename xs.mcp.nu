@@ -50,7 +50,7 @@ export def providers [] {
   {
     anthropic : {
       mcp_toolslist_to_provider : {||
-        rename -c {inputSchema: input_schema} | first
+        rename -c {inputSchema: input_schema}
       }
 
       provider_to_toolscall_mcp : {||
