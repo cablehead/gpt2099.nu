@@ -41,13 +41,27 @@ export def providers [] {
           insert "system" ($system_messages | get content | flatten)
         }
 
+        let headers = {
+          "x-api-key": $env.ANTHROPIC_API_KEY
+          "anthropic-version": "2023-06-01"
+        }
+
+        if false {
+          print $"data: ($data | to json)"
+          print $"headers: ($headers | to json)"
+          return (
+            http post --full --allow-errors
+            --content-type application/json
+            -H $headers
+            https://api.anthropic.com/v1/messages
+            $data
+          )
+        }
+
         (
           http post
           --content-type application/json
-          -H {
-            "x-api-key": $env.ANTHROPIC_API_KEY
-            "anthropic-version": "2023-06-01"
-          }
+          -H $headers
           https://api.anthropic.com/v1/messages
           $data
         )
