@@ -1,3 +1,10 @@
+def conditional-pipe [
+  condition: bool
+  action: closure
+] {
+  if $condition { do $action } else { $in }
+}
+
 # aggregation
 def content-block-delta [current_block event] {
   match $event.delta.type {
@@ -40,6 +47,9 @@ def aggregate_response [streamer?: closure] {
   }
 }
 
+export def convert-mcp-toolslist-to-provider [] {
+  rename -c {inputSchema: input_schema}
+}
 export def main [] {
   {
     models: {|key: string|
@@ -69,7 +79,7 @@ export def main [] {
         max_tokens: 8192
         stream: true
         messages: $messages
-        tools: ($tools | default [])
+        tools: ($tools | default [] | convert-mcp-toolslist-to-provider)
       } | conditional-pipe ($system_messages | is-not-empty) {
         insert "system" ($system_messages | get content | flatten)
       }
