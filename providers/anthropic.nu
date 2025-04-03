@@ -25,7 +25,8 @@ def content-block-finish [content_block] {
 export def convert-mcp-toolslist-to-provider [] {
   rename -c {inputSchema: input_schema}
 }
-export def main [] {
+
+export def provider [] {
   {
     models: {|key: string|
       (
@@ -113,7 +114,7 @@ export def main [] {
       }
     }
 
-    response_stream_streamer: {|streamer: closure|
+    response_stream_streamer: {||
       generate {|event cont = true|
         match $event.type {
           "content_block_start" => { return {next: true out: ($event.content_block | reject -i input | reject -i text)} }
