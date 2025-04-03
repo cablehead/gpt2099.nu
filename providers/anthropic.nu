@@ -131,5 +131,16 @@ export def provider [] {
         return {next: true}
       }
     }
+
+    response_to_toolscall_mcp: {||
+      let tool_use = $in.message.content | where type == "tool_use"
+      if ($tool_use | is-empty) { return }
+      $tool_use | first | {
+        "jsonrpc": "2.0"
+        "id": $in.id
+        "method": "tools/call"
+        "params": {"name": $in.name "arguments": $in.input}
+      }
+    }
   }
 }

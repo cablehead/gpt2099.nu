@@ -32,3 +32,15 @@ export def main [] {
     anthropic : (anthropic provider)
   }
 }
+
+export def call [
+  provider: record
+  key: string
+  model: string
+  --streamer: closure
+  --tools: list
+] {
+  do $provider.call $key $model $tools | if $streamer != null {
+    tee { do $provider.response_stream_streamer | do $streamer }
+  } else { } | do $provider.response_stream_aggregate
+}
