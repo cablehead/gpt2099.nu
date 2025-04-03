@@ -10,14 +10,7 @@ export def ".mcp tools list" [name] {
     "params": {}
   }
 
-  let frame = $command | to json -r | $in + "\n" | .append $"mcp.($name).send" --meta {id: $command.id}
-
-  let res = (
-    .cat -f --last-id $frame.id
-    | where topic == $"mcp.($name).recv"
-    | skip until {|x| let res = $x | from json; $res.id == $command.id }
-    | first | .cas $in.hash | from json
-  )
+  let res = $command | .mcp call $name
 
   if "error" in $res {
     return $res.error
