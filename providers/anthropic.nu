@@ -114,7 +114,14 @@ export def main [] {
     }
 
     response_stream_streamer: {|streamer: closure|
-      ept
+      generate {|event cont = true|
+        match $event.type {
+          "content_block_start" => { return {next: true out: $event} }
+          "content_block_delta" => { return {next: true out: $event} }
+        }
+
+        return {next: true}
+      }
     }
   }
 }
