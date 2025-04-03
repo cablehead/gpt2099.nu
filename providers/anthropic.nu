@@ -22,31 +22,6 @@ def content-block-finish [content_block] {
   }
 }
 
-def aggregate_response [streamer?: closure] {
-  collect {|events|
-    mut response = {
-      role: "assistant"
-      mime_type: "application/json"
-    }
-    for event in $events {
-      match $event.type {
-        "message_start" => ($response.message = $event.message)
-        "content_block_start" => ($response.current_block = $event.content_block)
-        "content_block_delta" => ($response.current_block = content-block-delta $response.current_block $event)
-        "content_block_stop" => ($response.message.content =  $response.message.content | append (content-block-finish $response.current_block))
-        "message_delta" => ($response = ($response | merge deep {message: ($event.delta | insert usage $event.usage)}))
-        "message_stop" => ($response = ($response | reject current_block))
-        "ping" => (continue)
-        _ => (
-          error make {msg: $"\n\n($response | table -e)\n\n($event | table -e)"}
-        )
-      }
-    }
-
-    $response
-  }
-}
-
 export def convert-mcp-toolslist-to-provider [] {
   rename -c {inputSchema: input_schema}
 }
@@ -68,7 +43,7 @@ export def main [] {
       )
     }
 
-    call: {|key: string model: string streamer?: closure tools?: list|
+    call: {|key: string model: string tools?: list|
       # anthropic only supports a single system message as a top level attribute
       let messages = $in
       let system_messages = $messages | where role == "system"
@@ -110,8 +85,36 @@ export def main [] {
         | lines
         | each {|line| $line | split row -n 2 "data: " | get 1? }
         | each {|x| $x | from json }
-        | aggregate_response $streamer
       )
+    }
+
+    response_stream_aggregate: {||
+      collect {|events|
+        mut response = {
+          role: "assistant"
+          mime_type: "application/json"
+        }
+        for event in $events {
+          match $event.type {
+            "message_start" => ($response.message = $event.message)
+            "content_block_start" => ($response.current_block = $event.content_block)
+            "content_block_delta" => ($response.current_block = content-block-delta $response.current_block $event)
+            "content_block_stop" => ($response.message.content =  $response.message.content | append (content-block-finish $response.current_block))
+            "message_delta" => ($response = ($response | merge deep {message: ($event.delta | insert usage $event.usage)}))
+            "message_stop" => ($response = ($response | reject current_block))
+            "ping" => (continue)
+            _ => (
+              error make {msg: $"\n\n($response | table -e)\n\n($event | table -e)"}
+            )
+          }
+        }
+
+        $response
+      }
+    }
+
+    response_stream_streamer: {|streamer: closure|
+      ept
     }
   }
 }
