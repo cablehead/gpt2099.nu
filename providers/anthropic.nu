@@ -116,8 +116,15 @@ export def main [] {
     response_stream_streamer: {|streamer: closure|
       generate {|event cont = true|
         match $event.type {
-          "content_block_start" => { return {next: true out: $event} }
-          "content_block_delta" => { return {next: true out: $event} }
+          "content_block_start" => { return {next: true out: ($event.content_block | reject -i input | reject -i text)} }
+          "content_block_delta" => {
+            match $event.delta.type {
+              "text_delta" => { return {next: true out: {content: $event.delta.text}} }
+              "input_json_delta" => { return {next: true out: {content: $event.delta.partial_json}} }
+              _ => ( error make {msg: $"TBD: ($event)"})
+            }
+            return {next: true out: $event}
+          }
         }
 
         return {next: true}
