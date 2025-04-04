@@ -1,4 +1,4 @@
-export def frame-to-message [frame: record] {
+def frame-to-message [frame: record] {
   let meta = $frame | get meta? | default {}
   let role = $meta | default "user" role | get role
 
@@ -39,7 +39,7 @@ export def frame-to-message [frame: record] {
   }
 }
 
-export def id-to-messages [ids] {
+def id-to-messages [ids] {
   mut messages = []
   mut stack = [] | append $ids
 
@@ -60,4 +60,9 @@ export def id-to-messages [ids] {
   }
 
   $messages
+}
+
+export def main [ids?] {
+  let ids = if ($ids | is-empty) { (.head llm.response).id } else { $ids }
+  id-to-messages $ids
 }

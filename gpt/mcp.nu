@@ -1,8 +1,8 @@
-export def ".mcp register" [name: string command: string] {
+export def "register" [name: string command: string] {
   $command + " | lines" | .append $"mcp.($name).spawn" --meta {duplex: true}
 }
 
-export def ".mcp tools list" [name] {
+export def "tools list" [name] {
   let command = {
     "jsonrpc": "2.0"
     "id": (scru128)
@@ -19,7 +19,7 @@ export def ".mcp tools list" [name] {
   $res.result | get tools
 }
 
-export def ".mcp call" [name: string] {
+export def "call" [name: string] {
   let command = $in
   let frame = $command | to json -r | $in + "\n" | .append $"mcp.($name).send" --meta {id: $command.id}
 
