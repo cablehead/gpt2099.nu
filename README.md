@@ -1,6 +1,15 @@
-WIP: this is moving to gpt.nu/mcp.nu
+## Usage
 
-# xs.mcp.nu
+First install and configure cross.stream:
+https://cablehead.github.io/xs/getting-started/installation/
+
+```nushell
+use gpt
+```
+
+### gpt thread
+
+### gpt mcp
 
 [Model Context Protocol](https://modelcontextprotocol.io/introduction) (MCP)
 servers are really just CLI tools that read from stdin and write to stdout.
@@ -11,7 +20,7 @@ tools and package each line of output into event frames (.recv) while routing
 frames ending in .send as input, turning them into services you can
 interactively poke at.
 
-`xs.mcp.nu` leverages this approach to provide a hands-on environment for
+`gpt mcp` leverages this approach to provide a hands-on environment for
 experimenting with and understanding MCP servers.
 
 ## Features
@@ -19,25 +28,14 @@ experimenting with and understanding MCP servers.
 - Spawn an MCP server as a cross.stream
   [generator](https://cablehead.github.io/xs/reference/generators/)
 - List available tools on the server.
-- _Note:_ Only the tools list command is supported at this time. The full
-  protocol will be supported soon.
-
-## Usage
-
-First install and configure cross.stream:
-https://cablehead.github.io/xs/getting-started/installation/
-
-```nushell
-use xs.mcp.nu *
-```
 
 ### Spawn an MCP Server
 
 Register your MCP server:
 
 ```nushell
-# .mcp register <name> <command>
-.mcp register filesystem 'npx -y "@modelcontextprotocol/server-filesystem" "/project/path"'
+# gpt mcp register <name> <command>
+gpt mcp register filesystem 'npx -y "@modelcontextprotocol/server-filesystem" "/project/path"'
 ```
 
 ### List Available Tools
@@ -45,7 +43,7 @@ Register your MCP server:
 List the tools provided by the MCP server:
 
 ```nushell
-.mcp tools list filesystem
+gpt mcp tools list filesystem
 ```
 
 ```
