@@ -1,3 +1,5 @@
+WIP: this is moving to gpt.nu/mcp.nu
+
 # xs.mcp.nu
 
 [Model Context Protocol](https://modelcontextprotocol.io/introduction) (MCP)
