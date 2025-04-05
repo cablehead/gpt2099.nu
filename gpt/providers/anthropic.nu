@@ -57,7 +57,7 @@ export def provider [] {
         messages: $messages
         tools: ($tools | default [] | convert-mcp-toolslist-to-provider)
       } | conditional-pipe ($system_messages | is-not-empty) {
-        insert "system" ($system_messages | get content | flatten)
+        insert "system" ($system_messages | get content | flatten | str join "\n\n----\n\n")
       }
 
       let headers = {
