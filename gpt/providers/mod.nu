@@ -37,10 +37,12 @@ export def call [
   provider: record
   key: string
   model: string
-  --streamer: closure
-  --tools: list
+  options: record
 ] {
-  do $provider.call $key $model $tools | if $streamer != null {
+  let thread = $in
+  let streamer = $options | get -i streamer
+  let tools = $options | get -i tools
+  $thread | do $provider.call $key $model $tools | if $streamer != null {
     tee { do $provider.response_stream_streamer | do $streamer }
   } else { } | do $provider.response_stream_aggregate
 }
