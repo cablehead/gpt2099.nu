@@ -139,7 +139,7 @@ export def provider [] {
         "jsonrpc": "2.0"
         "id": $in.id
         "method": "tools/call"
-        "params": {"name": $in.name "arguments": $in.input}
+        "params": {"name": $in.name "arguments": ($in.input | default {})}
       }
     }
   }

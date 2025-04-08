@@ -19,10 +19,7 @@ export def response [] {
   let res = $in
   let config = .head gpt.provider | .cas $in.hash | from json
   let p = (providers) | get $config.name
-
-  $res | do $p.response_to_toolscall_mcp | if ($in | is-not-empty) {
-    tee { each { do $in } }
-  } else { } | do $p.response_stream_aggregate
+  $res | do $p.response_to_toolscall_mcp
 }
 
 export def response-streamer [] {
