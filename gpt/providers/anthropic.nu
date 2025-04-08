@@ -17,7 +17,7 @@ def content-block-delta [current_block event] {
 def content-block-finish [content_block] {
   match $content_block.type {
     "text" => ($content_block | update text { str join })
-    "tool_use" => ($content_block | update input {|x| $x.partial_json | str join | from json } | reject partial_json?)
+    "tool_use" => ($content_block | update input {|x| $x.partial_json | str join | from json | default {} } | reject partial_json?)
     _ => { error make {msg: $"TBD: ($content_block)"} }
   }
 }
@@ -68,13 +68,14 @@ export def provider [] {
       if false {
         print $"data: ($data | to json)"
         print $"headers: ($headers | to json)"
-        return (
+        print (
           http post --full --allow-errors
           --content-type application/json
           -H $headers
           https://api.anthropic.com/v1/messages
-          $data
+          $data | table -e
         )
+        error make {msg: "peace."}
       }
 
       (
@@ -132,7 +133,7 @@ export def provider [] {
       }
     }
 
-    response_to_toolscall_mcp: {||
+    response_to_mcp_toolscall: {||
       let tool_use = $in.message.content | where type == "tool_use"
       if ($tool_use | is-empty) { return }
       $tool_use | first | {
@@ -140,6 +141,20 @@ export def provider [] {
         "id": $in.id
         "method": "tools/call"
         "params": {"name": $in.name "arguments": ($in.input | default {})}
+      }
+    }
+
+    mcp_toolscall_response_to_provider: {||
+      let res = $in
+      {
+        "role": "user"
+        "content": [
+          {
+            "type": "tool_result"
+            "tool_use_id": $res.id
+            "content": $res.result.content
+          }
+        ]
       }
     }
   }

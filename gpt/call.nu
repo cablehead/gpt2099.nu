@@ -19,7 +19,7 @@ export def response [] {
   let res = $in
   let config = .head gpt.provider | .cas $in.hash | from json
   let p = (providers) | get $config.name
-  $res | do $p.response_to_toolscall_mcp
+  $res | do $p.response_to_mcp_toolscall
 }
 
 export def response-streamer [] {

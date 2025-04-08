@@ -207,7 +207,7 @@ Converts MCP tool definitions to provider-specific format.
 ]
 ```
 
-## `response_to_toolscall_mcp`
+## `response_to_mcp_toolscall`
 
 Extracts tool calls from provider responses and converts to MCP format.
 
