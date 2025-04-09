@@ -31,10 +31,13 @@ export def main [
   let req = $content | .append gpt.call --meta $meta
 
   let frame = .cat --last-id $req.id -f | stream-response $p $req.id
+  process-response $p $servers $frame
+}
 
+export def process-response [p: record servers frame: record] {
   $frame | .cas $in.hash | from json | do $p.response_to_mcp_toolscall | if ($in | is-not-empty) {
     if (["yes" "no"] | input list "Execute?") != "yes" { return {} }
-    let res = $in | mcp call text-editor
+    let res = $in | mcp call kagi
     $res | do $p.mcp_toolscall_response_to_provider | to json -r | main -c $frame.id --json --servers $servers
   }
 }
