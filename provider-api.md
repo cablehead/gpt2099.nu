@@ -163,49 +163,7 @@ The streaming protocol follows these rules:
 {content: "\"/example.txt\"}"}
 ```
 
-## `convert-mcp-toolslist-to-provider`
 
-Converts MCP tool definitions to provider-specific format.
-
-**Input:**
-- List of MCP tool definitions
-
-**Output:**
-- List of provider-specific tool definitions
-
-**Example Input:**
-```nushell
-[
-  {
-    name: "read_file",
-    description: "Read the contents of a file",
-    inputSchema: {
-      type: "object",
-      properties: {
-        path: {type: "string", description: "Path to the file"}
-      },
-      required: ["path"]
-    }
-  }
-]
-```
-
-**Example Output (Anthropic format):**
-```nushell
-[
-  {
-    name: "read_file",
-    description: "Read the contents of a file",
-    input_schema: {
-      type: "object",
-      properties: {
-        path: {type: "string", description: "Path to the file"}
-      },
-      required: ["path"]
-    }
-  }
-]
-```
 
 ## `response_to_mcp_toolscall`
 
@@ -244,11 +202,42 @@ Extracts tool calls from provider responses and converts to MCP format.
 }
 ```
 
+## `mcp_toolscall_response_to_provider`
+
+Converts MCP tool call response back to provider-specific format for continuing the conversation.
+
+**Input:**
+- MCP tool call response with result
+
+**Output:**
+- Provider-specific tool result format
+
+**Example Input (MCP Tool Response):**
+```nushell
+{
+  "id": "tu_01ABCDabcd",
+  "result": {
+    "content": "This is the content of the file."
+  }
+}
+```
+
+**Example Output (Anthropic Format):**
+```nushell
+[
+  {
+    "type": "tool_result",
+    "tool_use_id": "tu_01ABCDabcd",
+    "content": "This is the content of the file."
+  }
+]
+```
+
 ## Implementation Details
 
 The Anthropic provider implements these closures with specific adaptations for the Anthropic API:
 
-1. For tools, it renames `inputSchema` to `input_schema` to match Anthropic's format
+1. It handles converting MCP tool format to provider-specific format internally
 2. It adds proper headers including API version and beta features when tools are used
 3. It handles streaming response formats specific to Anthropic's SSE format
 4. It correctly processes tool usage, including extraction and conversion

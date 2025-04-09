@@ -34,7 +34,7 @@ export def main [
 
   $frame | .cas $in.hash | from json | do $p.response_to_mcp_toolscall | if ($in | is-not-empty) {
     if (["yes" "no"] | input list "Execute?") != "yes" { return {} }
-    let res = $in | mcp call filesystem
+    let res = $in | mcp call text-editor
     $res | do $p.mcp_toolscall_response_to_provider | to json -r | main -c $frame.id --json --servers $servers
   }
 }
