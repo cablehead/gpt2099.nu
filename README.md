@@ -1,3 +1,23 @@
+# gpt.nu - LLM Integration for Nushell
+
+gpt.nu is a Nushell module that enables direct interaction with large language
+models (LLMs) from your command line. It provides a simple interface supporting
+multiple LLM providers and the
+[Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction).
+
+With gpt.nu, you can:
+
+- Chat with AI models using one consistent API
+- Maintain conversation context across sessions. In addition to storing the
+  conversation, cross.stream makes it convenient to review and manually edit
+  conversation threads, giving you direct control over the context window.
+- Integrate with MCP servers to extend tool capabilities
+- Receive streamed AI responses directly in your shell
+
+Built on [cross.stream](https://github.com/cablehead/xs) for event processing,
+gpt.nu brings modern AI capabilities directly into your Nushell workflow,
+without leaving the terminal.
+
 ## Usage
 
 First install and configure cross.stream:
