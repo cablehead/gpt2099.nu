@@ -71,7 +71,11 @@ def id-to-messages [ids] {
     let config = .head gpt.config | .cas $in.hash | from json
     let p = anthropic provider
 
-    id-to-messages $frame.id | reject id | do $p.call $config.key $config.model | tee {
+    let $tools = $frame.meta?.servers? | if ($in | is-not-empty) {
+      each { .head $"mcp.($in).tools" | .cas $in.hash | from json } | flatten
+    }
+
+    id-to-messages $frame.id | reject id | do $p.call $config.key $config.model $tools | tee {
       do $p.response_stream_aggregate | do {
         let res = $in
 

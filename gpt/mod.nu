@@ -24,6 +24,7 @@ export def main [
   let meta = (
     {}
     | if $continues != null { insert continues $continues } else { }
+    | if $servers != null { insert servers $servers } else { }
   )
   let req = $content | .append gpt.call --meta $meta
 
