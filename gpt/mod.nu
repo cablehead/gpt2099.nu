@@ -3,8 +3,10 @@ export use ./mcp.nu
 export use ./providers
 
 export def main [
-  --separator (-s): string = "\n\n---\n\n" # Separator used when joining lists of strings
+  --continues (-c): any # Previous message IDs to continue a conversation
+  --respond (-r) # Continue from the last response
   --servers: list<string> # MCP servers to use
+  --separator (-s): string = "\n\n---\n\n" # Separator used when joining lists of strings
 ] {
   let content = if $in == null {
     input "Enter prompt: "
@@ -17,7 +19,14 @@ export def main [
   let config = .head gpt.config | .cas $in.hash | from json
   let p = (providers) | get $config.name
 
-  let req = $content | .append gpt.call
+  let continues = if $respond { $continues | append (.head gpt.response).id } else { $continues }
+
+  let meta = (
+    {}
+    | if $continues != null { insert continues $continues } else { }
+  )
+  let req = $content | .append gpt.call --meta $meta
+
   .cat --last-id $req.id -f | stream-response $p $req.id
 }
 
