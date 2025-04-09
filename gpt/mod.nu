@@ -39,11 +39,29 @@ export def main [
   }
 }
 
+export def configure [] {
+  let name = providers | columns | input list "Select provider"
+  print $"Selected provider: ($name)"
+  let p = providers | get $name
+
+  let key = input -s "Enter API key: "
+
+  let model = do $p.models $key | get id | input list --fuzzy "Select model"
+  print $"Selected model: ($model)"
+
+  {
+    name: $name
+    key: $key
+    model: $model
+  } | to json -r | .append gpt.config
+  null
+}
+
 export def init [] {
   const base = (path self) | path dirname
   cat ($base | path join "providers/anthropic.nu") | .append gpt.provider.anthropic
   cat ($base | path join "providers/command.nu") | .append gpt.define
-  # todo: gpt.config
+  configure
   null
 }
 
