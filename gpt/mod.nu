@@ -2,18 +2,29 @@ export use ./thread.nu
 export use ./mcp.nu
 export use ./providers
 
-export def main [] {
+export def main [
+  --separator (-s): string = "\n\n---\n\n" # Separator used when joining lists of strings
+  --servers: list<string> # MCP servers to use
+] {
+  let content = if $in == null {
+    input "Enter prompt: "
+  } else if ($in | describe) == "list<string>" {
+    $in | str join $separator
+  } else {
+    $in
+  }
+
   let config = .head gpt.config | .cas $in.hash | from json
   let p = (providers) | get $config.name
 
-  let req = .append gpt.call
+  let req = $content | .append gpt.call
   .cat --last-id $req.id -f | stream-response $p $req.id
 }
 
 export def init [] {
   const base = (path self) | path dirname
   cat ($base | path join "providers/anthropic.nu") | .append gpt.provider.anthropic
-  cat ($base | path join "providers/command.nu") | .append gpt
+  cat ($base | path join "providers/command.nu") | .append gpt.define
   # todo: gpt.config
   null
 }
