@@ -129,7 +129,7 @@ export def provider [] {
     }
 
     response_to_mcp_toolscall: {||
-      let tool_use = $in.message.content | where type == "tool_use"
+      let tool_use = $in | where type == "tool_use"
       if ($tool_use | is-empty) { return }
       $tool_use | first | {
         "jsonrpc": "2.0"
@@ -141,16 +141,13 @@ export def provider [] {
 
     mcp_toolscall_response_to_provider: {||
       let res = $in
-      {
-        "role": "user"
-        "content": [
-          {
-            "type": "tool_result"
-            "tool_use_id": $res.id
-            "content": $res.result.content
-          }
-        ]
-      }
+      [
+        {
+          "type": "tool_result"
+          "tool_use_id": $res.id
+          "content": $res.result.content
+        }
+      ]
     }
   }
 }

@@ -6,6 +6,7 @@ export def main [
   --continues (-c): any # Previous message IDs to continue a conversation
   --respond (-r) # Continue from the last response
   --servers: list<string> # MCP servers to use
+  --json (-j) # Treat input as JSON formatted content
   --separator (-s): string = "\n\n---\n\n" # Separator used when joining lists of strings
 ] {
   let content = if $in == null {
@@ -25,15 +26,16 @@ export def main [
     {}
     | if $continues != null { insert continues $continues } else { }
     | if $servers != null { insert servers $servers } else { }
+    | if $json { insert mime_type "application/json" } else { }
   )
   let req = $content | .append gpt.call --meta $meta
 
-  let res = .cat --last-id $req.id -f | stream-response $p $req.id
+  let frame = .cat --last-id $req.id -f | stream-response $p $req.id
 
-  $res | insert message.content { .cas $in.hash | from json } | do $p.response_to_mcp_toolscall | if ($in | is-not-empty) {
+  $frame | .cas $in.hash | from json | do $p.response_to_mcp_toolscall | if ($in | is-not-empty) {
     if (["yes" "no"] | input list "Execute?") != "yes" { return {} }
     let res = $in | mcp call filesystem
-    $res
+    $res | do $p.mcp_toolscall_response_to_provider | to json -r | main -c $frame.id --json --servers $servers
   }
 }
 
