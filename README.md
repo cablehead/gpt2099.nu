@@ -27,7 +27,18 @@ https://cablehead.github.io/xs/getting-started/installation/
 use gpt
 ```
 
+### gpt init
+
+Installs the required dependencies into your cross.stream store, and prompts
+you to select an LLM provider, an API key, and a model.
+
+### gpt
+
+Makes a request to the LLM provider.
+
 ### gpt thread
+
+Review the current conversation thread.
 
 ### gpt mcp
 
@@ -43,13 +54,13 @@ interactively poke at.
 `gpt mcp` leverages this approach to provide a hands-on environment for
 experimenting with and understanding MCP servers.
 
-## Features
+#### Features
 
 - Spawn an MCP server as a cross.stream
   [generator](https://cablehead.github.io/xs/reference/generators/)
 - List available tools on the server.
 
-### Spawn an MCP Server
+#### Spawn an MCP Server
 
 Register your MCP server:
 
@@ -58,7 +69,7 @@ Register your MCP server:
 gpt mcp register filesystem 'npx -y "@modelcontextprotocol/server-filesystem" "/project/path"'
 ```
 
-### List Available Tools
+#### List Available Tools
 
 List the tools provided by the MCP server:
 
