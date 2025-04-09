@@ -28,7 +28,13 @@ export def main [
   )
   let req = $content | .append gpt.call --meta $meta
 
-  .cat --last-id $req.id -f | stream-response $p $req.id
+  let res = .cat --last-id $req.id -f | stream-response $p $req.id
+
+  $res | insert message.content { .cas $in.hash | from json } | do $p.response_to_mcp_toolscall | if ($in | is-not-empty) {
+    if (["yes" "no"] | input list "Execute?") != "yes" { return {} }
+    let res = $in | mcp call filesystem
+    $res
+  }
 }
 
 export def init [] {
