@@ -1,0 +1,82 @@
+[
+  {
+    "id": "bd8b2eef-c56e-4e90-976b-d861321fe979",
+    "object": "chat.completion.chunk",
+    "created": 1744692250,
+    "model": "mercury-coder-small",
+    "choices": [
+      {
+        "index": 0,
+        "delta": {
+          "content": "",
+          "role": "assistant",
+          "tool_calls": null
+        },
+        "finish_reason": null
+      }
+    ]
+  },
+  {
+    "id": "bd8b2eef-c56e-4e90-976b-d861321fe979",
+    "object": "chat.completion.chunk",
+    "created": 1744692250,
+    "model": "mercury-coder-small",
+    "choices": [
+      {
+        "index": 0,
+        "delta": {
+          "content": "¡",
+          "role": null,
+          "tool_calls": null
+        },
+        "finish_reason": null
+      }
+    ]
+  },
+  {
+    "id": "bd8b2eef-c56e-4e90-976b-d861321fe979",
+    "object": "chat.completion.chunk",
+    "created": 1744692250,
+    "model": "mercury-coder-small",
+    "choices": [
+      {
+        "index": 0,
+        "delta": {
+          "content": "Hola! ¿Cómo estás? ¿En qué puedo",
+          "role": null,
+          "tool_calls": null
+        },
+        "finish_reason": null
+      }
+    ]
+  },
+  {
+    "id": "bd8b2eef-c56e-4e90-976b-d861321fe979",
+    "object": "chat.completion.chunk",
+    "created": 1744692250,
+    "model": "mercury-coder-small",
+    "choices": [
+      {
+        "index": 0,
+        "delta": {
+          "content": " ayudarte hoy?",
+          "role": null,
+          "tool_calls": null
+        },
+        "finish_reason": "stop"
+      }
+    ]
+  },
+  {
+    "id": "bd8b2eef-c56e-4e90-976b-d861321fe979",
+    "object": "chat.completion.chunk",
+    "created": 1744692250,
+    "model": "mercury-coder-small",
+    "choices": [],
+    "usage": {
+      "prompt_tokens": 29,
+      "completion_tokens": 17,
+      "total_tokens": 46
+    }
+  }
+]
