@@ -86,3 +86,9 @@ gpt mcp tools list filesystem
      │                           │ d directories.
  ...
 ```
+
+## Development
+
+```
+overlay use -r ./gpt/providers as p ;  open gpt/providers/fixture-inception-call-response.json | do (p).inception.response_stream_aggregate
+```

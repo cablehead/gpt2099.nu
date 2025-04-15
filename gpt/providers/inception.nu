@@ -55,7 +55,7 @@ export def provider [] {
         for event in $events {
           if ($event.choices? | is-not-empty) {
             let delta = $event.choices.0.delta
-            if ($delta.content?) {
+            if ($delta.content? | is-not-empty) {
               $response.content += $delta.content
             }
           }
