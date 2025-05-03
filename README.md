@@ -1,5 +1,19 @@
 # gpt.nu - LLM Integration for Nushell
 
+
+#### Quick capture: to be added to README
+
+how to test a provider in isolation
+```
+overlay use -r ./gpt/providers as p ; [
+  {role: "user" content: "hola"}
+] | do ((p) | get gemini).call $env.GEMINI_API_KEY "gemini-2.0-flash"
+```
+
+
+####
+
+
 gpt.nu is a Nushell module that enables direct interaction with large language
 models (LLMs) from your command line. It provides a simple interface supporting
 multiple LLM providers and the
