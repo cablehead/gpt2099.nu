@@ -79,6 +79,7 @@ def stream-response [provider: record call_id: string] {
     match $frame {
       {topic: "gpt.recv"} => {
         .cas $frame.hash | from json | each {|chunk|
+          # TODO: add a default for the provider
           let event = do $provider.response_stream_streamer $chunk
           if $event == null { return {next: true} }
 

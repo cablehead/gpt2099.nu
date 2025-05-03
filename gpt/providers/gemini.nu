@@ -35,5 +35,13 @@ export def provider [] {
       | lines | each {|line| $line | split row -n 2 "data: " | get 1? }
       | each {|x| $x | from json }
     }
+
+    response_stream_aggregate: {||
+      "aggregate"
+    }
+
+    response_stream_streamer: {|event|
+      $event
+    }
   }
 }

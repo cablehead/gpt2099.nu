@@ -78,8 +78,7 @@ def id-to-messages [ids] {
 
     let p = $providers | get $config.name
 
-    let aggregate = $p.response_stream_aggregate? | default {|| "yarg"}
-    let streamer = $p.response_stream_streamer? | default {|| "yarg"}
+    let aggregate = $p.response_stream_aggregate? | default {|| "TBD: response_stream_aggregate"}
 
     let $tools = $frame.meta?.servers? | if ($in | is-not-empty) {
       each { .head $"mcp.($in).tools" | .cas $in.hash | from json } | flatten
@@ -92,7 +91,7 @@ def id-to-messages [ids] {
         $res | get message.content | to json -r | .append gpt.response --meta (
           $res | reject message.content | insert continues $frame.id
         )
-      } | do $streamer
+      }
     }
   }
 }
