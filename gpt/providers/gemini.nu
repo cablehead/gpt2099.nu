@@ -33,7 +33,7 @@ export def provider [] {
       let url = $"https://generativelanguage.googleapis.com/v1beta/models/($model):streamGenerateContent?alt=sse&key=($env.GEMINI_API_KEY)"
       $data | http post --content-type application/json $url
       | lines | each {|line| $line | split row -n 2 "data: " | get 1? }
-      | each {|x| $x | from json } # | get candidates.0.content.parts.text?.0 }
+      | each {|x| $x | from json }
     }
   }
 }
