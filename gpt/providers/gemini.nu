@@ -16,7 +16,11 @@ export def provider [] {
           $messages | each {|msg|
             {
               role: (if $msg.role == "assistant" { 'model' } else { $msg.role })
-              parts: [{text: $msg.content}]
+              parts: (
+                $msg.content | each {|content|
+                  {text: $content.text}
+                }
+              )
             }
           }
         )
@@ -30,7 +34,11 @@ export def provider [] {
         }
       }
 
-      let url = $"https://generativelanguage.googleapis.com/v1beta/models/($model):streamGenerateContent?alt=sse&key=($env.GEMINI_API_KEY)"
+      let url = $"https://generativelanguage.googleapis.com/v1beta/models/($model):streamGenerateContent?alt=sse&key=($key)"
+
+      # let res = $data | http post -f -e --content-type application/json $url
+      # error make {msg: $"TBD:\n\n($messages | to json | table -e)\n\n($res | to json)" }
+
       $data | http post --content-type application/json $url
       | lines | each {|line| $line | split row -n 2 "data: " | get 1? }
       | each {|x| $x | from json }
