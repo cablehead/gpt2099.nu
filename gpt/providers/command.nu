@@ -65,24 +65,34 @@ def id-to-messages [ids] {
 {
   modules: {
     anthropic: (.head gpt.provider.anthropic | .cas $in.hash)
+    gemini: (.head gpt.provider.gemini | .cas $in.hash)
   }
 
   run: {|frame|
     let config = .head gpt.config | .cas $in.hash | from json
-    let p = anthropic provider
+
+    let providers = {
+      anthropic: (anthropic provider)
+      gemini: (gemini provider)
+    }
+
+    let p = $providers | get $config.name
+
+    let aggregate = $p.response_stream_aggregate? | default {|| "yarg"}
+    let streamer = $p.response_stream_streamer? | default {|| "yarg"}
 
     let $tools = $frame.meta?.servers? | if ($in | is-not-empty) {
       each { .head $"mcp.($in).tools" | .cas $in.hash | from json } | flatten
     }
 
     id-to-messages $frame.id | reject id | do $p.call $config.key $config.model $tools | tee {
-      do $p.response_stream_aggregate | do {
+      do $aggregate | do {
         let res = $in
 
         $res | get message.content | to json -r | .append gpt.response --meta (
           $res | reject message.content | insert continues $frame.id
         )
-      } | do $p.response_stream_streamer
+      } | do $streamer
     }
   }
 }
