@@ -60,11 +60,15 @@ export def configure [] {
   null
 }
 
-export def init [] {
+export def init [
+  --refresh (-r) # Skip configuration if set
+] {
   const base = (path self) | path dirname
   cat ($base | path join "providers/anthropic.nu") | .append gpt.provider.anthropic
   cat ($base | path join "providers/command.nu") | .append gpt.define
-  configure
+  if not $refresh {
+    configure
+  }
   null
 }
 
