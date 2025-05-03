@@ -24,7 +24,7 @@ First install and configure cross.stream:
 https://cablehead.github.io/xs/getting-started/installation/
 
 ```nushell
-use gpt
+overlay use -pr ./gpt
 ```
 
 ### gpt init
