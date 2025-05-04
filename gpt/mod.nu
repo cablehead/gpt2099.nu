@@ -73,19 +73,30 @@ export def init [
   null
 }
 
-def stream-response [provider: record call_id: string] {
-  generate {|frame cont = false|
+# Streams and displays provider responses in real-time
+# Expects provider's response_stream_streamer to return records conforming to normalized schema:
+# 1. Content Block Type Indicator: {type: string, name?: string}
+# 2. Content Addition: {content: string}
+#
+# The function processes these events and displays them to the user:
+# - Type indicators start a new line and display the content type
+# - Tool use blocks show the tool name in parentheses
+# - Content additions are displayed without additional formatting
+export def stream-response [provider: record call_id: string] {
+  generate {|frame _continue = true|
     if $frame.meta?.frame_id? != $call_id { return {next: true} }
+    # Get the provider's streamer or use default if not defined
+    let streamer = $provider.response_stream_streamer? | default {|chunk|  {content: ($chunk | to json)}}
     match $frame {
       {topic: "gpt.recv"} => {
         .cas $frame.hash | from json | each {|chunk|
-          # TODO: add a default for the provider
-          let event = do $provider.response_stream_streamer $chunk
-          if $event == null { return {next: true} }
+          # Transform provider-specific event to normalized format
+          let event = do $streamer $chunk
+          if $event == null { return {next: true} } # Skip ignored events
 
+          # Handle type indicator events (new content blocks)
           if "type" in $event {
             print -n "\n"
-
             print -n $event.type
 
             if "name" in $event {
@@ -93,6 +104,7 @@ def stream-response [provider: record call_id: string] {
             }
             print ":"
           }
+          # Handle content addition events
           if "content" in $event {
             print -n $event.content
           }

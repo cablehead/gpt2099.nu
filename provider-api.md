@@ -123,12 +123,24 @@ Aggregates streaming response events into a final response.
 Transforms provider-specific events into a normalized streaming format for real-time display. This closure should process the provider's native event format and emit a stream of standard records.
 
 **Input:**
-- Stream of provider-specific events
+- Stream of provider-specific events (format varies by provider)
 
-**Output:**
-- Stream of normalized events in one of two formats:
-  1. Content block type indicator: `{type: string}` - Signals the start of a new content block
-  2. Content addition: `{content: string}` - Appends content to the current block
+**Output Schema:**
+The output must conform to one of these two record formats:
+1. **Content Block Type Indicator**:
+   ```nushell
+   {
+     type: string,      # Required: Indicator of content type ("text", "tool_use", etc.)
+     name?: string      # Optional: For tool use blocks, specifies the tool name
+   }
+   ```
+
+2. **Content Addition**:
+   ```nushell
+   {
+     content: string    # Required: Content to append to the current block
+   }
+   ```
 
 **Normalized Streaming Protocol:**
 The streaming protocol follows these rules:
@@ -138,7 +150,13 @@ The streaming protocol follows these rules:
 - Content continues to be added to the current block until a new type indicator appears
 - This protocol allows for consistent real-time display of different response types
 
-**Example Input (Single Event):**
+**Implementation Requirements:**
+- Must handle provider-specific event formats and normalize to the standard schema
+- Must return `null` for events that should be ignored (e.g., "ping" events)
+- Must correctly identify block boundaries and emit appropriate type indicators
+- Must extract text content from provider deltas regardless of their format
+
+**Example Input (Single Event from Anthropic):**
 ```nushell
 {type: "content_block_delta", delta: {type: "text_delta", text: "Cross.stream is an"}}
 ```
@@ -162,6 +180,13 @@ The streaming protocol follows these rules:
 {content: "{\"path\":"}
 {content: "\"/example.txt\"}"}
 ```
+
+**Display Behavior:**
+In `gpt/mod.nu`, these events are processed for display:
+- When a type indicator is received, a newline and the type are printed
+- For tool use blocks, the name is shown in parentheses
+- Content additions are printed without additional formatting
+- This creates a continuous stream of text with clear demarcation of different content types
 
 
 

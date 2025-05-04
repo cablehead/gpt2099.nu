@@ -115,16 +115,34 @@ export def provider [] {
       }
     }
 
+    # Transforms Anthropic's events into normalized stream format
+    # Returns either:
+    # 1. {type: string, name?: string} for content block start events
+    # 2. {content: string} for content additions
     response_stream_streamer: {|event|
       match $event.type {
-        "content_block_start" => { return ($event.content_block | reject -i input | reject -i text) }
+        # For content_block_start events, return a type indicator
+        # This marks the beginning of a new content block (text, tool_use, etc.)
+        "content_block_start" => { 
+          # Extract type and other relevant fields but remove input/text
+          return ($event.content_block | reject -i input | reject -i text) 
+        }
+        
+        # For content_block_delta events, return content additions
         "content_block_delta" => {
           match $event.delta.type {
+            # Text deltas become content additions
             "text_delta" => { return {content: $event.delta.text} }
+            
+            # JSON deltas for tool use become content additions
             "input_json_delta" => { return {content: $event.delta.partial_json} }
+            
+            # Handle unexpected delta types
             _ => ( error make {msg: $"TBD: ($event)"})
           }
         }
+        
+        # Other event types are implicitly ignored (null is returned)
       }
     }
 
