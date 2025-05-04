@@ -2,8 +2,8 @@
 # This module aggregates and exports all provider implementations
 # Each provider must implement the standard interface as defined in provider-api.md
 
-use ./anthropic.nu
-use ./gemini.nu
+use ./anthropic
+use ./gemini
 
 # Provider Interface Requirements:
 # Each provider must implement these closures:
