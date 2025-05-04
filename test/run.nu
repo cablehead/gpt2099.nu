@@ -17,4 +17,3 @@ $raw_stream | to json | ^$nu.current-exe ...[
   --commands
   $runner
 ]
-
