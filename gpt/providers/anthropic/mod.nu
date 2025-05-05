@@ -123,49 +123,27 @@ export def provider [] {
       match $event.type {
         # For content_block_start events, return a type indicator
         # This marks the beginning of a new content block (text, tool_use, etc.)
-        "content_block_start" => { 
+        "content_block_start" => {
           # Extract type and other relevant fields but remove input/text
-          return ($event.content_block | reject -i input | reject -i text) 
+          return ($event.content_block | reject -i input | reject -i text)
         }
-        
+
         # For content_block_delta events, return content additions
         "content_block_delta" => {
           match $event.delta.type {
             # Text deltas become content additions
             "text_delta" => { return {content: $event.delta.text} }
-            
+
             # JSON deltas for tool use become content additions
             "input_json_delta" => { return {content: $event.delta.partial_json} }
-            
+
             # Handle unexpected delta types
             _ => ( error make {msg: $"TBD: ($event)"})
           }
         }
-        
+
         # Other event types are implicitly ignored (null is returned)
       }
-    }
-
-    response_to_mcp_toolscall: {||
-      let tool_use = $in | where type == "tool_use"
-      if ($tool_use | is-empty) { return }
-      $tool_use | first | {
-        "jsonrpc": "2.0"
-        "id": $in.id
-        "method": "tools/call"
-        "params": {"name": $in.name "arguments": ($in.input | default {})}
-      }
-    }
-
-    mcp_toolscall_response_to_provider: {||
-      let res = $in
-      [
-        {
-          "type": "tool_result"
-          "tool_use_id": $res.id
-          "content": $res.result.content
-        }
-      ]
     }
   }
 }

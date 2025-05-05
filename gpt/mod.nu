@@ -48,12 +48,39 @@ export def recover [id] {
 }
 
 export def process-response [p: record servers frame: record] {
-  $frame | .cas $in.hash | from json | do $p.response_to_mcp_toolscall | if ($in | is-not-empty) {
-    if (["yes" "no"] | input list "Execute?") != "yes" { return {} }
-    # TODO "filesystem" is correctly hardcoded here: we should prepend the tool name with the name of the server
-    let res = $in | mcp call filesystem
-    $res | do $p.mcp_toolscall_response_to_provider | to json -r | main -c $frame.id --json --servers $servers
+  let res = $frame | .cas $in.hash | from json
+
+  let tool_use = $res | where type == "tool_use"
+  if ($tool_use | is-empty) { return }
+  let tool_use = $tool_use | first
+
+  print ($tool_use | table -e)
+  # if (["yes" "no"] | input list "Execute?") != "yes" { return {} }
+
+  # xs/command.nu prepends the server name to the tool name so that we can
+  # determine which server to use
+  let namespace = ($tool_use.name | split row "___")
+
+  let mcp_toolscall = $tool_use | {
+    "jsonrpc": "2.0"
+    "id": $frame.id
+    "method": "tools/call"
+    "params": {"name": $namespace.1 "arguments": ($in.input | default {})}
   }
+
+  let res = $mcp_toolscall | mcp call $namespace.0
+
+  [
+    (
+    {
+      type: "tool_result"
+      name: $tool_use.name
+      content: $res.result.content
+    } | conditional-pipe ($tool_use.id? != null) {
+      insert "tool_use_id" $tool_use.id
+    }
+    )
+  ] | to json -r | main -c $frame.id --json --servers $servers
 }
 
 export def configure [] {
@@ -71,7 +98,7 @@ export def configure [] {
     key: $key
     model: $model
   } | to json -r | .append gpt.config
-  null
+  ignore
 }
 
 export def init [
@@ -131,4 +158,11 @@ export def stream-response [provider: record call_id: string] {
       _ => {next: $block}
     }
   } | first
+}
+
+def conditional-pipe [
+  condition: bool
+  action: closure
+] {
+  if $condition { do $action } else { $in }
 }
