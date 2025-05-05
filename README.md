@@ -10,6 +10,13 @@ overlay use -r ./gpt/providers as p ; [
 ] | do ((p) | get gemini).call $env.GEMINI_API_KEY "gemini-2.0-flash"
 ```
 
+####
+
+```nu
+overlay use -rp gpt/providers/gemini
+let p = gemini provider
+open ./test/fixture-messages.nuon | do $p.call $config.key $config.model (open ./test/fixture-messages.nuon)
+```
 
 ####
 
