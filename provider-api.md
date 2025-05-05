@@ -1,6 +1,8 @@
 # Provider API Specification
 
-This document outlines the closures required for implementing a provider in the cross.stream LLM framework. Each provider must implement this common interface to ensure compatibility with the command handler.
+This document outlines the closures required for implementing a provider in the
+cross.stream LLM framework. Each provider must implement this common interface
+to ensure compatibility with the command handler.
 
 ## Core Provider Interface
 
@@ -10,21 +12,24 @@ Each provider must export a record with the following closures:
 
 Retrieves available models from the provider.
 
-**Input:** 
+**Input:**
+
 - `key: string` - API key for provider authentication
 
 **Example Input:**
+
 ```nushell
 "sk-ant-api03-key-example..." # API key string
 ```
 
 **Output:**
+
 - A list of available model records, each containing at least:
   - `id: string` - The model identifier
   - `created: datetime` - When the model was created/updated
 
-
 **Example Output:**
+
 ```nushell
 [
   {id: "claude-3-5-sonnet-20241022", created: 2024-10-22T00:00:00Z},
@@ -37,12 +42,14 @@ Retrieves available models from the provider.
 Makes an API call to the provider to generate a response.
 
 **Input:**
+
 - `key: string` - API key for provider authentication
 - `model: string` - Model identifier to use
 - `tools?: list` - Optional list of tools definitions
 - Messages records in standard format (from pipeline)
 
 **Example Inputs:**
+
 ```nushell
 # Key
 "sk-ant-api03-key-example..."
@@ -67,9 +74,11 @@ Makes an API call to the provider to generate a response.
 ```
 
 **Output:**
+
 - Raw response events in the provider's format
 
 **Example Call:**
+
 ```nushell
 [
   {role: "user", content: [{type: "text", text: "Hello, how are you?"}]},
@@ -83,19 +92,22 @@ Makes an API call to the provider to generate a response.
 Aggregates streaming response events into a final response.
 
 **Input:**
+
 - Stream of provider-specific events
 
 **Output:**
+
 - Complete response record with normalized structure
 
 **Example Input (Stream of Events):**
+
 ```nushell
 [
   {type: "message_start", message: {id: "msg_01ABCDabcd", model: "claude-3-7-sonnet-20250219"}},
   {type: "content_block_start", content_block: {type: "text", text: []}},
   {type: "content_block_delta", delta: {type: "text_delta", text: "Cross.stream"}},
   {type: "content_block_delta", delta: {type: "text_delta", text: " is an"}},
-  {type: "content_block_delta", delta: {type: "text_delta", text: " event streaming"}}, 
+  {type: "content_block_delta", delta: {type: "text_delta", text: " event streaming"}},
   {type: "content_block_delta", delta: {type: "text_delta", text: " framework"}},
   {type: "content_block_stop"},
   {type: "message_stop"}
@@ -103,6 +115,7 @@ Aggregates streaming response events into a final response.
 ```
 
 **Example Output:**
+
 ```nushell
 {
   role: "assistant",
@@ -120,12 +133,15 @@ Aggregates streaming response events into a final response.
 
 ## `response_stream_streamer`
 
-Transforms provider events into a normalized streaming format for real-time display.
+Transforms provider events into a normalized streaming format for real-time
+display.
 
 **Input:**
+
 - Stream of provider-specific events
 
 **Output Schema:**
+
 ```nushell
 {
   type: string,      # Content type identifier ("text", "tool_use", etc.)
@@ -135,6 +151,7 @@ Transforms provider events into a normalized streaming format for real-time disp
 ```
 
 **Protocol:**
+
 - A record with a new `type` value starts a new block
 - First record may contain both type information and initial content
 - Matching `type` values indicate continuation of the previous block
@@ -142,6 +159,7 @@ Transforms provider events into a normalized streaming format for real-time disp
 - The `content` field contains text to append to the current block
 
 **Requirements:**
+
 - Handle provider-specific formats and normalize to standard schema
 - Return `null` for ignorable events (e.g., "ping")
 - Correctly identify block boundaries
@@ -153,9 +171,11 @@ Transforms provider events into a normalized streaming format for real-time disp
 Extracts tool calls from provider responses and converts to MCP format.
 
 **Input:**
+
 - Provider-specific response containing a tool call
 
 **Example Input (Anthropic Response):**
+
 ```nushell
 {
   id: "msg_01ABCDabcd",
@@ -173,6 +193,7 @@ Extracts tool calls from provider responses and converts to MCP format.
 ```
 
 **Example Output (MCP Format):**
+
 ```nushell
 {
   "jsonrpc": "2.0",
@@ -187,15 +208,19 @@ Extracts tool calls from provider responses and converts to MCP format.
 
 ## `mcp_toolscall_response_to_provider`
 
-Converts MCP tool call response back to provider-specific format for continuing the conversation.
+Converts MCP tool call response back to provider-specific format for continuing
+the conversation.
 
 **Input:**
+
 - MCP tool call response with result
 
 **Output:**
+
 - Provider-specific tool result format
 
 **Example Input (MCP Tool Response):**
+
 ```nushell
 {
   "id": "tu_01ABCDabcd",
@@ -206,6 +231,7 @@ Converts MCP tool call response back to provider-specific format for continuing 
 ```
 
 **Example Output (Anthropic Format):**
+
 ```nushell
 [
   {
@@ -218,11 +244,15 @@ Converts MCP tool call response back to provider-specific format for continuing 
 
 ## Implementation Details
 
-The Anthropic provider implements these closures with specific adaptations for the Anthropic API:
+The Anthropic provider implements these closures with specific adaptations for
+the Anthropic API:
 
 1. It handles converting MCP tool format to provider-specific format internally
-2. It adds proper headers including API version and beta features when tools are used
+2. It adds proper headers including API version and beta features when tools are
+   used
 3. It handles streaming response formats specific to Anthropic's SSE format
 4. It correctly processes tool usage, including extraction and conversion
 
-When implementing a new provider, ensure all closures maintain the same interface signatures while adapting the internals to match the provider's specific requirements.
+When implementing a new provider, ensure all closures maintain the same
+interface signatures while adapting the internals to match the provider's
+specific requirements.
