@@ -18,6 +18,10 @@ let p = gemini provider
 open ./test/fixture-messages.nuon | do $p.call $config.key $config.model (open ./test/fixture-messages.nuon)
 ```
 
+```nu
+ overlay use -rp gpt/providers/anthropic ; let p = anthropic provider ; open test/anthropic/01-response_stream.nuon | do $p.response_stream_aggregate | save test/anthropic/02-response_stream_aggregate.nuon
+ ```
+
 ####
 
 
