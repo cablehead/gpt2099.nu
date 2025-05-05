@@ -1,0 +1,7 @@
+[
+  {type: text},
+  {content: "I can use"},
+  {content: " the `list_allowed_directories` to find out which directories I am allowed to access."},
+  {content: " After calling the function, I will print the result to the user.\n"},
+  {type: tool_use, name: list_allowed_directories, input: {}}
+]
