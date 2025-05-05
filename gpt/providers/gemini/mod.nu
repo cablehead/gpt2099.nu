@@ -71,19 +71,19 @@ export def provider [] {
             content: []
           }
         }
-        
+
         # Extract model name and accumulate text content
         mut text_content = ""
         mut has_tool_use = false
         mut tool_use_name = ""
         mut tool_use_input = {}
-        
+
         for event in $events {
           # Set model from version info
           if ($event | get modelVersion?) != null {
             $response.message.model = $event.modelVersion
           }
-          
+
           # Process candidates
           if ($event | get candidates?) != null {
             for candidate in $event.candidates {
@@ -93,7 +93,7 @@ export def provider [] {
                   if ($part | get text?) != null {
                     $text_content = $text_content + $part.text
                   }
-                  
+
                   # Process function call/tool use
                   if ($part | get functionCall?) != null {
                     $has_tool_use = true
@@ -104,7 +104,7 @@ export def provider [] {
               }
             }
           }
-          
+
           # Set finish reason
           if ($event | get finishReason?) != null {
             # If it's a STOP reason and we have a tool use, set stop_reason to tool_use
@@ -112,7 +112,7 @@ export def provider [] {
               $response.message.stop_reason = "tool_use"
             }
           }
-          
+
           # Process usage info
           if ($event | get usageMetadata?) != null {
             $response.message.usage = {
@@ -123,7 +123,7 @@ export def provider [] {
             }
           }
         }
-        
+
         # Add text content if we found any
         if $text_content != "" {
           $response.message.content = $response.message.content | append {
@@ -131,7 +131,7 @@ export def provider [] {
             text: $text_content
           }
         }
-        
+
         # Add tool use if found
         if $has_tool_use {
           $response.message.content = $response.message.content | append {
@@ -139,11 +139,11 @@ export def provider [] {
             name: $tool_use_name
             input: $tool_use_input
           }
-          
+
           # Make sure stop_reason is set
           $response.message.stop_reason = "tool_use"
         }
-        
+
         $response
       }
     }
