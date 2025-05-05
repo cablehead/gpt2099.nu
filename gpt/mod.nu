@@ -34,6 +34,19 @@ export def main [
   process-response $p $servers $frame
 }
 
+export def recover [id] {
+  let config = .head gpt.config | .cas $in.hash | from json
+  let p = (providers) | get $config.name
+  let frame = .get $id
+  match $frame.topic {
+    "gpt.response" => {
+      let caller = .get $frame.meta.continues
+      process-response $p $caller.meta?.servers? $frame
+    }
+    _ => ( error make {msg: $"TBD:\n\n($frame | to json | table -e)"} )
+  }
+}
+
 export def process-response [p: record servers frame: record] {
   $frame | .cas $in.hash | from json | do $p.response_to_mcp_toolscall | if ($in | is-not-empty) {
     if (["yes" "no"] | input list "Execute?") != "yes" { return {} }
