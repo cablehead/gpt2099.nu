@@ -59,99 +59,93 @@ export def provider [] {
     }
 
     response_stream_aggregate: {||
-      collect {|events|
-        # Define the standard response shape
+      # Start from scratch with something we know works for Gemini's unique response format
+      $in | do {
+        mut text_content = ""
+        mut has_tool_use = false
+        mut tool_use_name = ""
+        mut tool_use_input = {}
+        mut model = ""
+        mut input_tokens = 0
+        mut output_tokens = 0
+        
+        # Process each event
+        for event in $in {
+          # Extract model information (in the 3rd position)
+          if $model == "" and ($event | get 2?) != null {
+            $model = $event | get 2
+          }
+          
+          # Get the candidate (in the 2nd position)
+          if ($event | get 1?) != null {
+            let candidate = $event | get 1
+            
+            # Check for text content
+            if ($candidate | get 0? | where $it == "content" | length) > 0 {
+              if ($candidate | get 1? | get 0? | get parts? | length) > 0 {
+                let parts = $candidate | get 1 | get 0 | get parts
+                
+                # Extract text
+                if ($parts | get 0? | get 0?) == "text" {
+                  $text_content = $text_content + ($parts | get 0 | get 1)
+                }
+                
+                # Extract function call
+                if ($parts | get 0? | get 0?) == "functionCall" {
+                  $has_tool_use = true
+                  $tool_use_name = ($parts | get 0 | get 1 | get 0 | get name)
+                  $tool_use_input = ($parts | get 0 | get 1 | get 0 | get args)
+                }
+              }
+            }
+            
+            # Check for usage information
+            if ($event | get 2? | get promptTokenCount?) != null {
+              $input_tokens = $event | get 2 | get promptTokenCount
+              $output_tokens = $event | get 2 | get candidatesTokenCount | default 0
+            }
+          }
+        }
+        
+        # Construct the response
         mut response = {
           role: "assistant"
           mime_type: "application/json"
           message: {
             type: "message"
             role: "assistant"
+            model: $model
             content: []
+            usage: {
+              input_tokens: $input_tokens
+              cache_creation_input_tokens: 0
+              cache_read_input_tokens: 0
+              output_tokens: $output_tokens
+            }
           }
         }
-
-        # Track text content during processing
-        mut current_text = ""
         
-        # Process each event
-        for event in $events {
-          if ($event | describe) == "list<list>" {
-            # Extract model information from the first event if available
-            if ($response.message.model? | is-empty) and ($event | get 2? | is-not-empty) {
-              $response.message.model = ($event | get 2)
-            }
-            
-            # Get candidate information
-            let candidate = ($event | get 1?)
-            if $candidate == null { continue }
-            
-            # Process content (text)
-            if ($candidate | get 0? | where $it == "content" | length) > 0 {
-              let content = ($candidate | get 1 | get 0?)
-              if $content != null {
-                # Extract text content if present
-                if ($content | get parts? | describe) == "list<list>" {
-                  let parts = ($content | get parts)
-                  if ($parts | get 0? | get 0?) == "text" {
-                    $current_text = $current_text + ($parts | get 0 | get 1)
-                  }
-                  
-                  # Check for function call in the same content block
-                  if ($parts | length) > 0 and ($parts | where $it.0? == "functionCall" | length) > 0 {
-                    let function_part = ($parts | where $it.0? == "functionCall" | first)
-                    let function_call = ($function_part | get 1 | get 0?)
-                    
-                    # Add text content if we have any accumulated
-                    if ($current_text | is-not-empty) {
-                      $response.message.content = ($response.message.content | append {
-                        type: "text"
-                        text: $current_text
-                      })
-                      $current_text = ""
-                    }
-                    
-                    # Add tool use
-                    $response.message.content = ($response.message.content | append {
-                      type: "tool_use"
-                      name: $function_call.name
-                      input: $function_call.args
-                    })
-                  }
-                }
-              }
-            }
-            
-            # Check for finish reason
-            if ($candidate | get 0? | where $it == "finishReason" | length) > 0 {
-              # Set stop reason if function call was the last thing
-              if ($response.message.content | last? | get type?) == "tool_use" {
-                $response.message.stop_reason = "tool_use"
-              }
-              
-              # Process usage data if available
-              if ($event | get 2? | is-not-empty) {
-                let usage_data = ($event | get 2)
-                $response.message.usage = {
-                  input_tokens: ($usage_data | get promptTokenCount | default 0)
-                  cache_creation_input_tokens: 0
-                  cache_read_input_tokens: 0
-                  output_tokens: ($usage_data | get candidatesTokenCount | default 0)
-                }
-              }
-            }
+        # Add text content if any
+        if $text_content != "" {
+          $response.message.content = $response.message.content | append {
+            type: "text"
+            text: $text_content
           }
         }
-
-        # If we have any remaining text, add it
-        if ($current_text | is-not-empty) {
-          $response.message.content = ($response.message.content | append {
-            type: "text"
-            text: $current_text
-          })
+        
+        # Add tool use if any
+        if $has_tool_use {
+          $response.message.content = $response.message.content | append {
+            type: "tool_use"
+            name: $tool_use_name
+            input: $tool_use_input
+          }
+          
+          # Set stop reason for tool use
+          $response.message.stop_reason = "tool_use"
         }
-
-        return $response
+        
+        $response
       }
     }
 
