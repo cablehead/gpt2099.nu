@@ -37,7 +37,8 @@ export def main [
 export def process-response [p: record servers frame: record] {
   $frame | .cas $in.hash | from json | do $p.response_to_mcp_toolscall | if ($in | is-not-empty) {
     if (["yes" "no"] | input list "Execute?") != "yes" { return {} }
-    let res = $in | mcp call kagi
+    # TODO "filesystem" is correctly hardcoded here: we should prepend the tool name with the name of the server
+    let res = $in | mcp call filesystem
     $res | do $p.mcp_toolscall_response_to_provider | to json -r | main -c $frame.id --json --servers $servers
   }
 }
