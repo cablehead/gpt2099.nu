@@ -144,7 +144,7 @@ display.
 
 ```nushell
 {
-  type: string,      # Content type identifier ("text", "tool_use", etc.)
+  type: string,      # Content type identifier ("text" or "tool_use")
   name?: string,     # Tool name (for tool_use blocks only)
   content?: string   # Content to append to current block
 }
