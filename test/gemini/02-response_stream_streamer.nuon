@@ -1,6 +1,2 @@
-[
-  {type: text content: "I can use"},
-  {type: text content: " the `list_allowed_directories` to find out which directories I am allowed to access."},
-  {type: text content: " After calling the function, I will print the result to the user.\n"},
-  {type: tool_use, name: list_allowed_directories, content: {}}
-]
+[{type: text, content: "I can calculate"}, {type: text, content: " the square root of 49 using the `calculate_square_root"}, {type: text, content: "` function.
+"}, {type: tool_use, name: calculate_square_root, content: {number: 49}}]

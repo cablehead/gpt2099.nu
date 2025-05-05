@@ -7,7 +7,11 @@ def conditional-pipe [
 
 export def convert-mcp-toolslist-to-provider [] {
   let tools = $in
-  let decls = ($tools | rename -c {inputSchema: parameters})
+  let decls = $tools | reject -i annotations | rename -c {
+    inputSchema: parameters
+  } | update parameters {
+    reject -i additionalProperties examples "$schema"
+  }
   [{functionDeclarations: $decls}]
 }
 
@@ -57,8 +61,11 @@ export def provider [] {
 
       let url = $"https://generativelanguage.googleapis.com/v1beta/models/($model):streamGenerateContent?alt=sse&key=($key)"
 
-      # let res = $data | http post -f -e --content-type application/json $url
-      # error make {msg: $"TBD:\n\n($messages | to json | table -e)\n\n($res | to json)"}
+      if false {
+        let res = $data | http post -f -e --content-type application/json $url
+        $data | ept
+        error make {msg: $"TBD:\n\n($messages | to json | table -e)\n\n($res | to json)"}
+      }
 
       $data | http post --content-type application/json $url
       | lines | each {|line| $line | split row -n 2 "data: " | get 1? }

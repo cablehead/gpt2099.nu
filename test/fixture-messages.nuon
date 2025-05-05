@@ -1,2 +1,1 @@
-[[role, content]; [system, {text: "We are at the Nushell REPL, working at the command line:
-$ "}], [user, [[type, text]; [text, "What directories do you have access to? Explain your reasoning"]]]]
+[[role, content]; [system, {text: "When selecting a tool, explain your reasoning"}], [user, [[type, text]; [text, "What is the square root of 49?"]]]]

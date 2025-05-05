@@ -1,27 +1,2 @@
-{
-  role: "assistant",
-  mime_type: "application/json",
-  message: {
-    type: "message",
-    role: "assistant",
-    model: "gemini-2.0-flash",
-    content: [
-      {
-        type: "text",
-        text: "I can use the `list_allowed_directories` to find out which directories I am allowed to access. After calling the function, I will print the result to the user.\n"
-      },
-      {
-        type: "tool_use",
-        name: "list_allowed_directories",
-        input: {}
-      }
-    ],
-    stop_reason: "tool_use",
-    usage: {
-      input_tokens: 62,
-      cache_creation_input_tokens: 0,
-      cache_read_input_tokens: 0,
-      output_tokens: 42
-    }
-  }
-}
+{role: assistant, mime_type: application/json, message: {type: message, role: assistant, content: [{type: text, text: "I can calculate the square root of 49 using the `calculate_square_root` function.
+"}, {type: tool_use, name: calculate_square_root, input: {number: 49}}], model: "gemini-2.0-flash", usage: {input_tokens: 57, cache_creation_input_tokens: 0, cache_read_input_tokens: 0, output_tokens: 29}, stop_reason: tool_use}}

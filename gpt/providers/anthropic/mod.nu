@@ -23,7 +23,7 @@ def content-block-finish [content_block] {
 }
 
 export def convert-mcp-toolslist-to-provider [] {
-  rename -c {inputSchema: input_schema}
+  rename -c {inputSchema: input_schema} | reject -i annotations
 }
 
 export def provider [] {
