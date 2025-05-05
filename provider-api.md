@@ -120,75 +120,33 @@ Aggregates streaming response events into a final response.
 
 ## `response_stream_streamer`
 
-Transforms provider-specific events into a normalized streaming format for real-time display. This closure should process the provider's native event format and emit a stream of standard records.
+Transforms provider events into a normalized streaming format for real-time display.
 
 **Input:**
-- Stream of provider-specific events (format varies by provider)
+- Stream of provider-specific events
 
 **Output Schema:**
-The output must conform to one of these two record formats:
-1. **Content Block Type Indicator**:
-   ```nushell
-   {
-     type: string,      # Required: Indicator of content type ("text", "tool_use", etc.)
-     name?: string      # Optional: For tool use blocks, specifies the tool name
-   }
-   ```
-
-2. **Content Addition**:
-   ```nushell
-   {
-     content: string    # Required: Content to append to the current block
-   }
-   ```
-
-**Normalized Streaming Protocol:**
-The streaming protocol follows these rules:
-- A `{type: "text"}` record indicates the start of a text block
-- A `{type: "tool_use", name: "tool_name"}` record indicates the start of a tool use block
-- After a type indicator, subsequent `{content: "..."}` records append content to that block
-- Content continues to be added to the current block until a new type indicator appears
-- This protocol allows for consistent real-time display of different response types
-
-**Implementation Requirements:**
-- Must handle provider-specific event formats and normalize to the standard schema
-- Must return `null` for events that should be ignored (e.g., "ping" events)
-- Must correctly identify block boundaries and emit appropriate type indicators
-- Must extract text content from provider deltas regardless of their format
-
-**Example Input (Single Event from Anthropic):**
-```nushell
-{type: "content_block_delta", delta: {type: "text_delta", text: "Cross.stream is an"}}
-```
-
-**Example Output (Content Addition):**
 ```nushell
 {
-  content: "Cross.stream is an"
+  type: string,      # Content type identifier ("text", "tool_use", etc.)
+  name?: string,     # Tool name (for tool_use blocks only)
+  content?: string   # Content to append to current block
 }
 ```
 
-**Example Complete Stream:**
-```nushell
-# Start of text block
-{type: "text"}
-{content: "Cross.stream is "}
-{content: "an event streaming framework."}
+**Protocol:**
+- A record with a new `type` value starts a new block
+- First record may contain both type information and initial content
+- Matching `type` values indicate continuation of the previous block
+- All records must include the `type` field
+- The `content` field contains text to append to the current block
 
-# Start of tool use block
-{type: "tool_use", name: "read_file"}
-{content: "{\"path\":"}
-{content: "\"/example.txt\"}"}
-```
-
-**Display Behavior:**
-In `gpt/mod.nu`, these events are processed for display:
-- When a type indicator is received, a newline and the type are printed
-- For tool use blocks, the name is shown in parentheses
-- Content additions are printed without additional formatting
-- This creates a continuous stream of text with clear demarcation of different content types
-
-
+**Requirements:**
+- Handle provider-specific formats and normalize to standard schema
+- Return `null` for ignorable events (e.g., "ping")
+- Correctly identify block boundaries
+- Extract text content from provider deltas
+- Support initial content in the first record of a new block
 
 ## `response_to_mcp_toolscall`
 
