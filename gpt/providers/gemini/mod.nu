@@ -1,4 +1,5 @@
 export def convert-mcp-toolslist-to-provider [] {
+  let tools = $in
   let decls = ($tools | rename -c {inputSchema: parameters})
   [{functionDeclarations: $decls}]
 }
@@ -58,7 +59,8 @@ export def provider [] {
     }
 
     response_stream_aggregate: {||
-      "aggregate"
+      collect {|events|
+      }
     }
 
     response_stream_streamer: {|event|

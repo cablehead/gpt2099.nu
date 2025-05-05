@@ -64,8 +64,8 @@ export def init [
   --refresh (-r) # Skip configuration if set
 ] {
   const base = (path self) | path dirname
-  cat ($base | path join "providers/anthropic.nu") | .append gpt.provider.anthropic
-  cat ($base | path join "providers/gemini.nu") | .append gpt.provider.gemini
+  cat ($base | path join "providers/anthropic/mod.nu") | .append gpt.provider.anthropic
+  cat ($base | path join "providers/gemini/mod.nu") | .append gpt.provider.gemini
   cat ($base | path join "xs/command.nu") | .append gpt.define
   if not $refresh {
     configure
