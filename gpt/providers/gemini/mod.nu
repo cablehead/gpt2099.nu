@@ -72,69 +72,54 @@ export def provider [] {
           }
         }
         
-        # Extract the model name from the first event
-        if ($events | length) > 0 {
-          let first_event = $events | first
-          if ($first_event | describe) =~ "list" {
-            let model_version = $first_event | last
-            $response.message.model = $model_version
-          }
-        }
-        
-        # Extract all text content and look for function calls
+        # Extract model name and accumulate text content
         mut text_content = ""
         mut has_tool_use = false
         mut tool_use_name = ""
         mut tool_use_input = {}
-
+        
         for event in $events {
-          if ($event | describe) =~ "list" {
-            # Look for content in the event structure
-            if ($event | get 1 | describe) =~ "list" {
-              let candidate = $event | get 1
-              
-              # Check for text content
-              if ($candidate | get 0? | get 0?) == "content" {
-                if ($candidate | get 1? | get 0? | get parts?) != null {
-                  let parts = $candidate | get 1 | get 0 | get parts
-                  
-                  # Extract text content
-                  if ($parts | get 0? | get 0?) == "text" {
-                    $text_content = $text_content + ($parts | get 0 | get 1)
+          # Set model from version info
+          if ($event | get modelVersion?) != null {
+            $response.message.model = $event.modelVersion
+          }
+          
+          # Process candidates
+          if ($event | get candidates?) != null {
+            for candidate in $event.candidates {
+              # Process text content
+              if ($candidate | get content? | get parts?) != null {
+                for part in $candidate.content.parts {
+                  if ($part | get text?) != null {
+                    $text_content = $text_content + $part.text
                   }
                   
-                  # Look for function call
-                  if ($parts | get 0? | get 0?) == "functionCall" {
+                  # Process function call/tool use
+                  if ($part | get functionCall?) != null {
                     $has_tool_use = true
-                    if ($parts | get 0? | get 1? | get 0? | get name?) != null {
-                      $tool_use_name = $parts | get 0 | get 1 | get 0 | get name
-                    }
-                    if ($parts | get 0? | get 1? | get 0? | get args?) != null {
-                      $tool_use_input = $parts | get 0 | get 1 | get 0 | get args
-                    }
+                    $tool_use_name = $part.functionCall.name
+                    $tool_use_input = $part.functionCall.args
                   }
-                }
-              }
-
-              # Check for finish reason to determine stop_reason
-              if ($candidate | get 0? | get 0?) == "finishReason" {
-                if ($candidate | get 1?) == "STOP" and $has_tool_use {
-                  $response.message.stop_reason = "tool_use"
                 }
               }
             }
-
-            # Extract usage data
-            if ($event | get 2? | describe) =~ "record" {
-              let usage_data = $event | get 2
-              if ($usage_data | get promptTokenCount?) != null {
-                $response.message.usage = {
-                  input_tokens: ($usage_data | get promptTokenCount)
-                  cache_creation_input_tokens: 0
-                  cache_read_input_tokens: 0
-                  output_tokens: ($usage_data | get candidatesTokenCount | default 0)
-                }
-              }
+          }
+          
+          # Set finish reason
+          if ($event | get finishReason?) != null {
+            # If it's a STOP reason and we have a tool use, set stop_reason to tool_use
+            if $event.finishReason == "STOP" and $has_tool_use {
+              $response.message.stop_reason = "tool_use"
+            }
+          }
+          
+          # Process usage info
+          if ($event | get usageMetadata?) != null {
+            $response.message.usage = {
+              input_tokens: ($event.usageMetadata.promptTokenCount)
+              cache_creation_input_tokens: 0
+              cache_read_input_tokens: 0
+              output_tokens: ($event.usageMetadata | get candidatesTokenCount? | default 0)
             }
           }
         }
@@ -145,6 +130,18 @@ export def provider [] {
             type: "text"
             text: $text_content
           }
+        }
+        
+        # Add tool use if found
+        if $has_tool_use {
+          $response.message.content = $response.message.content | append {
+            type: "tool_use"
+            name: $tool_use_name
+            input: $tool_use_input
+          }
+          
+          # Make sure stop_reason is set
+          $response.message.stop_reason = "tool_use"
         }
         
         $response
