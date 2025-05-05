@@ -6,8 +6,16 @@
 how to test a provider in isolation
 ```
 overlay use -r ./gpt/providers as p ; [
-  {role: "user" content: "hola"}
-] | do ((p) | get gemini).call $env.GEMINI_API_KEY "gemini-2.0-flash"
+  {
+    "role": "user",
+    "content": [
+      {
+        "type": "text",
+        "text": "hola"
+      }
+    ]
+  }
+] | do ((p) | get $config.name).call $config.key $config.model
 ```
 
 ####

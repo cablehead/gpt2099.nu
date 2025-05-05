@@ -1,3 +1,10 @@
+def conditional-pipe [
+  condition: bool
+  action: closure
+] {
+  if $condition { do $action } else { $in }
+}
+
 export def convert-mcp-toolslist-to-provider [] {
   let tools = $in
   let decls = ($tools | rename -c {inputSchema: parameters})
@@ -39,9 +46,9 @@ export def provider [] {
           topP: 0.95
           maxOutputTokens: 8192
         }
-      } | if ($tools | is-not-empty) {
+      } | conditional-pipe ($tools | is-not-empty) {
         insert "tools" ($tools | convert-mcp-toolslist-to-provider)
-      } | if ($system_messages | is-not-empty) {
+      } | conditional-pipe ($system_messages | is-not-empty) {
         # system_instruction: {
         # parts: [{text: "You are a helpful assistant."}]
         # }
