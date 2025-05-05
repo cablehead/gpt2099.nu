@@ -1,3 +1,8 @@
+export def convert-mcp-toolslist-to-provider [] {
+  let decls = ($tools | rename -c {inputSchema: parameters})
+  [{functionDeclarations: $decls}]
+}
+
 export def provider [] {
   {
     models: {|key|
@@ -33,6 +38,8 @@ export def provider [] {
           topP: 0.95
           maxOutputTokens: 8192
         }
+      } | if ($tools | is-not-empty) {
+        insert "tools" ($tools | convert-mcp-toolslist-to-provider)
       } | if ($system_messages | is-not-empty) {
         # system_instruction: {
         # parts: [{text: "You are a helpful assistant."}]
