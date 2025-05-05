@@ -164,5 +164,13 @@ export def provider [] {
         }
       } else { $in }
     }
+
+    response_to_mcp_toolscall: {||
+      ignore
+    }
+
+    mcp_toolscall_response_to_provider: {||
+      ignore
+    }
   }
 }
