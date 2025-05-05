@@ -10,7 +10,11 @@ export def provider [] {
     }
 
     call: {|key: string model: string tools?: list|
+      # gemini only supports a single system message as a top level attribute
       let messages = $in
+      let system_messages = $messages | where role == "system"
+      let messages = $messages | where role != "system"
+
       let data = {
         contents: (
           $messages | each {|msg|
@@ -24,20 +28,22 @@ export def provider [] {
             }
           }
         )
-        systemInstruction: {
-          parts: [{text: "You are a helpful assistant."}]
-        }
         generationConfig: {
           temperature: 1
           topP: 0.95
           maxOutputTokens: 8192
         }
+      } | if ($system_messages | is-not-empty) {
+        # system_instruction: {
+        # parts: [{text: "You are a helpful assistant."}]
+        # }
+        insert "systemInstruction" {parts: ($system_messages | get content)}
       }
 
       let url = $"https://generativelanguage.googleapis.com/v1beta/models/($model):streamGenerateContent?alt=sse&key=($key)"
 
       # let res = $data | http post -f -e --content-type application/json $url
-      # error make {msg: $"TBD:\n\n($messages | to json | table -e)\n\n($res | to json)" }
+      # error make {msg: $"TBD:\n\n($messages | to json | table -e)\n\n($res | to json)"}
 
       $data | http post --content-type application/json $url
       | lines | each {|line| $line | split row -n 2 "data: " | get 1? }
