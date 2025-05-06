@@ -42,35 +42,48 @@ export def main [
     }
   }
 
-  let res = $messages | do $p.prepare-request $tools | do $p.call $config.key $config.model | tee {
-    preview-stream $p
-  } | do $p.response_stream_aggregate
+  $messages | run-turn $config $p $tools $turn.id
+}
+
+export def run-turn [
+  config: record
+  provider: record
+  tools: list
+  turn_id: string
+] {
+  let messages = $in
+
+  let res = (
+    $messages
+    | do $provider.prepare-request $tools
+    | do $provider.call $config.key $config.model
+    | tee { preview-stream $provider.response_stream_streamer }
+    | do $provider.response_stream_aggregate
+  )
 
   let content = $res | get message.content
-  let meta = $res | reject message.content | insert continues $turn.id
-
-  [$meta $content]
+  let meta = $res | reject message.content | insert continues $turn_id
 
   let tool_use = $content | where type == "tool_use"
   if ($tool_use | is-empty) { return }
   let tool_use = $tool_use | first
 
   print ($tool_use | table -e)
-  # if (["yes" "no"] | input list "Execute?") != "yes" { return {} }
+  if (["yes" "no"] | input list "Execute?") != "yes" { return {} }
 
   # parse out the server name from the tool name
   let namespace = ($tool_use.name | split row "___")
 
   let mcp_toolscall = $tool_use | {
     "jsonrpc": "2.0"
-    "id": $turn.id
+    "id": $turn_id
     "method": "tools/call"
     "params": {"name": $namespace.1 "arguments": ($in.input | default {})}
   }
 
   let res = $mcp_toolscall | mcp call $namespace.0
 
-  let res = [
+  let tool_result = [
     (
       {
         type: "tool_result"
@@ -82,18 +95,18 @@ export def main [
     )
   ]
 
-  $res | ept
+  print ($tool_result | table -e)
 
-  # | to json -r | main -c $frame.id --json --servers $servers
-
-  # let frame = .cat --last-id $req.id -f | stream-response $p $req.id
-  # process-response $p $servers $frame
+  $messages | append [
+    {role: assistant content: $content}
+    {role: user content: $tool_result}
+  ] | run-turn $config $provider $tools $turn_id
 }
 
-export def preview-stream [provider] {
+export def preview-stream [streamer] {
   generate {|chunk block = ""|
     # Transform provider-specific event to normalized format
-    let event = do $provider.response_stream_streamer $chunk
+    let event = do $streamer $chunk
     if $event == null { return {next: true} } # Skip ignored events
 
     let next_block = $event.type? | default $block
@@ -119,58 +132,6 @@ export def preview-stream [provider] {
 
     {next: $next_block} # Continue with the next block
   }
-}
-
-export def recover [id] {
-  let config = .head gpt.config | .cas $in.hash | from json
-  let p = (providers) | get $config.name
-  let frame = .get $id
-  match $frame.topic {
-    "gpt.response" => {
-      let caller = .get $frame.meta.continues
-      process-response $p $caller.meta?.servers? $frame
-    }
-    _ => ( error make {msg: $"TBD:\n\n($frame | to json | table -e)"})
-  }
-}
-
-export def process-response [p: record servers frame: record] {
-  let res = $frame | .cas $in.hash | from json
-
-  let tool_use = $res | where type == "tool_use"
-  if ($tool_use | is-empty) { return }
-  let tool_use = $tool_use | first
-
-  print ($tool_use | table -e)
-  # if (["yes" "no"] | input list "Execute?") != "yes" { return {} }
-
-  # parse out the server name from the tool name
-  let namespace = ($tool_use.name | split row "___")
-
-  let mcp_toolscall = $tool_use | {
-    "jsonrpc": "2.0"
-    "id": $frame.id
-    "method": "tools/call"
-    "params": {"name": $namespace.1 "arguments": ($in.input | default {})}
-  }
-
-  let res = $mcp_toolscall | mcp call $namespace.0
-
-  let res = [
-    (
-      {
-        type: "tool_result"
-        name: $tool_use.name
-        content: $res.result.content
-      } | conditional-pipe ($tool_use.id? != null) {
-        insert "tool_use_id" $tool_use.id
-      }
-    )
-  ]
-
-  $res | ept
-
-  # | to json -r | main -c $frame.id --json --servers $servers
 }
 
 export def configure [] {
@@ -202,49 +163,6 @@ export def init [
     configure
   }
   ignore
-}
-
-export def stream-response [provider: record call_id: string] {
-  generate {|frame block = ""|
-    if $frame.meta?.frame_id? != $call_id { return {next: $block} }
-
-    match $frame {
-      {topic: "gpt.recv"} => {
-        .cas $frame.hash | from json | each {|chunk|
-          # Transform provider-specific event to normalized format
-          let event = do $provider.response_stream_streamer $chunk
-          if $event == null { return {next: true} } # Skip ignored events
-
-          let next_block = $event.type? | default $block
-
-          # Handle type indicator events (new content blocks)
-          if $next_block != $block {
-            print -n "\n"
-            print -n $next_block
-
-            if "name" in $event {
-              print -n $"\(($event.name)\)"
-            }
-            print ":"
-          }
-
-          # Handle content addition events
-          if "content" in $event {
-            print -n $event.content
-          }
-
-          {next: $next_block} # Continue with the next block
-        }
-      }
-
-      {topic: "gpt.response"} => {
-        print "\n"
-        return {out: $frame}
-      }
-
-      _ => {next: $block}
-    }
-  } | first
 }
 
 def conditional-pipe [

@@ -49,7 +49,13 @@ export def provider [] {
                   match $content.type {
                     "text" => {text: $content.text}
                     "tool_use" => {functionCall: {name: $content.name args: ($content.input | default {})}}
-                    "tool_result" => {functionResponse: {response: $content.content}}
+                    "tool_result" => {
+                      functionResponse: {
+                        name: $content.name
+                        # TODO: content length > 1
+                        response: ($content.content | first)
+                      }
+                    }
                     _ => ( error make {msg: $"TBD: ($content)"})
                   }
                 }
