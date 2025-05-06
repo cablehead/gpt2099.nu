@@ -40,10 +40,42 @@ export def main [
       }
     }
   }
-  $messages | do $p.prepare-request $tools
+
+  $messages | do $p.prepare-request $tools | do $p.call $config.key $config.model | preview-stream $p
 
   # let frame = .cat --last-id $req.id -f | stream-response $p $req.id
   # process-response $p $servers $frame
+}
+
+export def preview-stream [provider] {
+  generate {|chunk block = ""|
+    # Transform provider-specific event to normalized format
+    let event = do $provider.response_stream_streamer $chunk
+    if $event == null { return {next: true} } # Skip ignored events
+
+    let next_block = $event.type? | default $block
+
+    # Handle type indicator events (new content blocks)
+    if $next_block != $block {
+      if $block != "" {
+        print "\n"
+      }
+      if $next_block != "text" {
+        print -n $next_block
+        if "name" in $event {
+          print -n $"\(($event.name)\)"
+        }
+        print ":"
+      }
+    }
+
+    # Handle content addition events
+    if "content" in $event {
+      print -n $event.content
+    }
+
+    {next: $next_block} # Continue with the next block
+  }
 }
 
 export def recover [id] {
@@ -134,14 +166,11 @@ export def stream-response [provider: record call_id: string] {
   generate {|frame block = ""|
     if $frame.meta?.frame_id? != $call_id { return {next: $block} }
 
-    # Get the provider's streamer or use default if not defined
-    let streamer = $provider.response_stream_streamer? | default {|chunk| {content: ($chunk | to json)} }
-
     match $frame {
       {topic: "gpt.recv"} => {
         .cas $frame.hash | from json | each {|chunk|
           # Transform provider-specific event to normalized format
-          let event = do $streamer $chunk
+          let event = do $provider.response_stream_streamer $chunk
           if $event == null { return {next: true} } # Skip ignored events
 
           let next_block = $event.type? | default $block

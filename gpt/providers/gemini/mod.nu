@@ -79,12 +79,12 @@ export def provider [] {
       return $data
     }
 
-    call: {|key: string model: string tools?: list|
-      let data = $in | messages-to-provider
+    call: {|key: string model: string|
+      let data = $in
 
       let url = $"https://generativelanguage.googleapis.com/v1beta/models/($model):streamGenerateContent?alt=sse&key=($key)"
 
-      if true {
+      if false {
         let res = $data | http post -f -e --content-type application/json $url
         error make {msg: $"TBD:\n\n($data | to json | table -e)\n\n($res | to json)"}
       }
