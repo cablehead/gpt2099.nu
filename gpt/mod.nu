@@ -36,12 +36,55 @@ export def main [
   let $tools = $servers | if ($in | is-not-empty) {
     each {|server|
       .head $"mcp.($server).tools" | .cas $in.hash | from json | update name {
+        # prepend server name to tool name so we can determine which server to use
         $"($server)___($in)"
       }
     }
   }
 
-  $messages | do $p.prepare-request $tools | do $p.call $config.key $config.model | preview-stream $p
+  let res = $messages | do $p.prepare-request $tools | do $p.call $config.key $config.model | tee {
+    preview-stream $p
+  } | do $p.response_stream_aggregate
+
+  let content = $res | get message.content
+  let meta = $res | reject message.content | insert continues $turn.id
+
+  [$meta $content]
+
+  let tool_use = $content | where type == "tool_use"
+  if ($tool_use | is-empty) { return }
+  let tool_use = $tool_use | first
+
+  print ($tool_use | table -e)
+  # if (["yes" "no"] | input list "Execute?") != "yes" { return {} }
+
+  # parse out the server name from the tool name
+  let namespace = ($tool_use.name | split row "___")
+
+  let mcp_toolscall = $tool_use | {
+    "jsonrpc": "2.0"
+    "id": $turn.id
+    "method": "tools/call"
+    "params": {"name": $namespace.1 "arguments": ($in.input | default {})}
+  }
+
+  let res = $mcp_toolscall | mcp call $namespace.0
+
+  let res = [
+    (
+      {
+        type: "tool_result"
+        name: $tool_use.name
+        content: $res.result.content
+      } | conditional-pipe ($tool_use.id? != null) {
+        insert "tool_use_id" $tool_use.id
+      }
+    )
+  ]
+
+  $res | ept
+
+  # | to json -r | main -c $frame.id --json --servers $servers
 
   # let frame = .cat --last-id $req.id -f | stream-response $p $req.id
   # process-response $p $servers $frame
@@ -101,8 +144,7 @@ export def process-response [p: record servers frame: record] {
   print ($tool_use | table -e)
   # if (["yes" "no"] | input list "Execute?") != "yes" { return {} }
 
-  # xs/command.nu prepends the server name to the tool name so that we can
-  # determine which server to use
+  # parse out the server name from the tool name
   let namespace = ($tool_use.name | split row "___")
 
   let mcp_toolscall = $tool_use | {
