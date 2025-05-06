@@ -39,8 +39,8 @@ export def main [
         # prepend server name to tool name so we can determine which server to use
         $"($server)___($in)"
       }
-    }
-  } | flatten
+    } | flatten
+  }
 
   let res = (
     $messages
