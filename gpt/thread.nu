@@ -63,6 +63,6 @@ def id-to-messages [ids] {
 }
 
 export def main [ids?] {
-  let ids = if ($ids | is-empty) { (.head gpt.response).id } else { $ids }
+  let ids = if ($ids | is-empty) { (.head gpt.turn).id } else { $ids }
   id-to-messages $ids
 }

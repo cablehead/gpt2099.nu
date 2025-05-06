@@ -20,7 +20,7 @@ export def main [
   let config = .head gpt.config | .cas $in.hash | from json
   let p = (providers) | get $config.name
 
-  let continues = if $respond { $continues | append (.head gpt.response).id } else { $continues }
+  let continues = if $respond { $continues | append (.head gpt.turn).id } else { $continues }
 
   let meta = (
     {}
@@ -42,27 +42,19 @@ export def main [
     }
   }
 
-  $messages | run-turn $config $p $tools $turn.id
-}
-
-export def run-turn [
-  config: record
-  provider: record
-  tools: list
-  turn_id: string
-] {
-  let messages = $in
-
   let res = (
     $messages
-    | do $provider.prepare-request $tools
-    | do $provider.call $config.key $config.model
-    | tee { preview-stream $provider.response_stream_streamer }
-    | do $provider.response_stream_aggregate
+    | do $p.prepare-request $tools
+    | do $p.call $config.key $config.model
+    | tee { preview-stream $p.response_stream_streamer }
+    | do $p.response_stream_aggregate
   )
 
   let content = $res | get message.content
-  let meta = $res | reject message.content | insert continues $turn_id
+  let meta = $res | reject message.content | insert continues $turn.id
+
+  # save the assistance response
+  let turn = $content | to json | .append gpt.turn --meta $meta
 
   let tool_use = $content | where type == "tool_use"
   if ($tool_use | is-empty) { return }
@@ -76,7 +68,7 @@ export def run-turn [
 
   let mcp_toolscall = $tool_use | {
     "jsonrpc": "2.0"
-    "id": $turn_id
+    "id": $turn.id
     "method": "tools/call"
     "params": {"name": $namespace.1 "arguments": ($in.input | default {})}
   }
@@ -96,11 +88,8 @@ export def run-turn [
   ]
 
   print ($tool_result | table -e)
-
-  $messages | append [
-    {role: assistant content: $content}
-    {role: user content: $tool_result}
-  ] | run-turn $config $provider $tools $turn_id
+  # continue the interaction
+  $tool_result | to json | main -c $turn.id --json --servers $servers
 }
 
 export def preview-stream [streamer] {
