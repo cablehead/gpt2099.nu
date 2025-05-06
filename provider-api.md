@@ -1,14 +1,14 @@
+Here's the complete revised providers-api.md document:
+
 # Provider API Specification
 
-This document outlines the closures required for implementing a provider in the
-cross.stream LLM framework. Each provider must implement this common interface
-to ensure compatibility with the command handler.
+This document outlines the interface required for implementing a provider in the
+cross.stream LLM framework. Each provider must export a record with the
+following closures to ensure compatibility with the command handler.
 
 ## Core Provider Interface
 
-Each provider must export a record with the following closures:
-
-## `models`
+### `models`
 
 Retrieves available models from the provider.
 
@@ -16,28 +16,51 @@ Retrieves available models from the provider.
 
 - `key: string` - API key for provider authentication
 
-**Example Input:**
-
-```nushell
-"sk-ant-api03-key-example..." # API key string
-```
-
 **Output:**
 
 - A list of available model records, each containing at least:
   - `id: string` - The model identifier
   - `created: datetime` - When the model was created/updated
 
-**Example Output:**
+### `prepare-request`
 
-```nushell
-[
-  {id: "claude-3-5-sonnet-20241022", created: 2024-10-22T00:00:00Z},
-  {id: "claude-3-7-sonnet-20250219", created: 2025-02-19T00:00:00Z}
-]
-```
+Formats messages and tools into the provider-specific request structure.
 
-## `call`
+**Input:**
+
+- Messages list in standard format with the following structure:
+  ```
+  [
+    {
+      role: "user" | "assistant" | "system",
+      content: [
+        {type: "text", text: string} |
+        {type: "tool_use", name: string, input?: record} |
+        {type: "tool_result", name: string, content: list, tool_use_id?: string}
+      ]
+    }
+  ]
+  ```
+- `tools?: list` - Optional list of tool definitions with the structure:
+  ```
+  [
+    {
+      name: string,
+      description: string,
+      inputSchema: {
+        type: "object",
+        properties: record,
+        required: list<string>
+      }
+    }
+  ]
+  ```
+
+**Output:**
+
+- Provider-specific request data structure ready for API call
+
+### `call`
 
 Makes an API call to the provider to generate a response.
 
@@ -45,49 +68,13 @@ Makes an API call to the provider to generate a response.
 
 - `key: string` - API key for provider authentication
 - `model: string` - Model identifier to use
-- `tools?: list` - Optional list of tools definitions
-- Messages records in standard format (from pipeline)
-
-**Example Inputs:**
-
-```nushell
-# Key
-"sk-ant-api03-key-example..."
-
-# Model
-"claude-3-7-sonnet-20250219"
-
-# Tools (Optional)
-[
-  {
-    name: "read_file",
-    description: "Read the contents of a file",
-    input_schema: {
-      type: "object",
-      properties: {
-        path: {type: "string", description: "Path to the file"}
-      },
-      required: ["path"]
-    }
-  }
-]
-```
+- Prepared request data from `prepare-request`
 
 **Output:**
 
-- Raw response events in the provider's format
+- Raw response events in the provider's native format
 
-**Example Call:**
-
-```nushell
-[
-  {role: "user", content: [{type: "text", text: "Hello, how are you?"}]},
-  {role: "assistant", content: [{type: "text", text: "I'm doing well, how can I help?"}]},
-  {role: "user", content: [{type: "text", text: "Tell me about cross.stream"}]}
-]
-```
-
-## `response_stream_aggregate`
+### `response_stream_aggregate`
 
 Aggregates streaming response events into a final response.
 
@@ -97,71 +84,73 @@ Aggregates streaming response events into a final response.
 
 **Output:**
 
-- Complete response record with normalized structure
-
-**Example Input (Stream of Events):**
-
-```nushell
-[
-  {type: "message_start", message: {id: "msg_01ABCDabcd", model: "claude-3-7-sonnet-20250219"}},
-  {type: "content_block_start", content_block: {type: "text", text: []}},
-  {type: "content_block_delta", delta: {type: "text_delta", text: "Cross.stream"}},
-  {type: "content_block_delta", delta: {type: "text_delta", text: " is an"}},
-  {type: "content_block_delta", delta: {type: "text_delta", text: " event streaming"}},
-  {type: "content_block_delta", delta: {type: "text_delta", text: " framework"}},
-  {type: "content_block_stop"},
-  {type: "message_stop"}
-]
-```
-
-**Example Output:**
-
-```nushell
-{
-  role: "assistant",
-  mime_type: "application/json",
-  message: {
-    id: "msg_01ABCDabcd",
-    content: [
-      {type: "text", text: "Cross.stream is an event streaming framework..."}
-    ],
-    model: "claude-3-7-sonnet-20250219",
-    stop_reason: "end_turn"
+- Complete response record with normalized structure:
+  ```
+  {
+    role: "assistant",
+    mime_type: "application/json",
+    message: {
+      id: string,
+      content: [
+        {type: "text", text: string} |
+        {type: "tool_use", name: string, input: record}
+      ],
+      model: string,
+      stop_reason: "end_turn" | "tool_use" | string,
+      usage?: {
+        input_tokens: int,
+        output_tokens: int
+      }
+    }
   }
-}
-```
+  ```
 
-## `response_stream_streamer`
+### `response_stream_streamer`
 
 Transforms provider events into a normalized streaming format for real-time
 display.
 
 **Input:**
 
-- Stream of provider-specific events
+- Single provider-specific event
 
-**Output Schema:**
+**Output:**
 
-```nushell
-{
-  type: string,      # Content type identifier ("text" or "tool_use")
-  name?: string,     # Tool name (for tool_use blocks only)
-  content?: string   # Content to append to current block
-}
-```
+- Normalized event format (or null for events that should be ignored):
+  ```
+  {
+    type: string,      # Content type identifier ("text" or "tool_use")
+    name?: string,     # Tool name (for tool_use blocks only)
+    content?: string   # Content to append to current block
+  }
+  ```
 
-**Protocol:**
+## Implementation Flow
 
-- A record with a new `type` value starts a new block
-- First record may contain both type information and initial content
-- Matching `type` values indicate continuation of the previous block
-- All records must include the `type` field
-- The `content` field contains text to append to the current block
+1. `prepare-request` formats messages and tools into provider-specific format
+2. `call` sends the prepared request to the provider API
+3. `response_stream_streamer` transforms individual events for display
+4. `response_stream_aggregate` collects all events into final response
 
-**Requirements:**
+Providers should handle any provider-specific formatting, authentication
+requirements, and event normalization within these closures.
 
-- Handle provider-specific formats and normalize to standard schema
-- Return `null` for ignorable events (e.g., "ping")
-- Correctly identify block boundaries
-- Extract text content from provider deltas
-- Support initial content in the first record of a new block
+## Message Type Reference
+
+When processing messages, providers should handle these standard message types:
+
+1. **Text Message**
+   - Format: `{type: "text", text: string}`
+   - Used for standard text content from user or assistant
+
+2. **Tool Use Request**
+   - Format: `{type: "tool_use", name: string, input?: record}`
+   - Represents a request to use a specific tool with optional input parameters
+
+3. **Tool Result**
+   - Format:
+     `{type: "tool_result", name: string, content: list, tool_use_id?: string}`
+   - Contains the result returned from a tool execution
+
+Each provider implementation must properly transform these standardized message
+formats to and from the provider's specific API requirements.
