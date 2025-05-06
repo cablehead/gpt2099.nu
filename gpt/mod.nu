@@ -28,10 +28,22 @@ export def main [
     | if $servers != null { insert servers $servers } else { }
     | if $json { insert mime_type "application/json" } else { }
   )
-  let req = $content | .append gpt.call --meta $meta
 
-  let frame = .cat --last-id $req.id -f | stream-response $p $req.id
-  process-response $p $servers $frame
+  let turn = $content | .append gpt.turn --meta $meta
+
+  let messages = thread $turn.id | reject id
+
+  let $tools = $servers | if ($in | is-not-empty) {
+    each {|server|
+      .head $"mcp.($server).tools" | .cas $in.hash | from json | update name {
+        $"($server)___($in)"
+      }
+    }
+  }
+  $messages | do $p.prepare-request $tools
+
+  # let frame = .cat --last-id $req.id -f | stream-response $p $req.id
+  # process-response $p $servers $frame
 }
 
 export def recover [id] {
@@ -70,17 +82,21 @@ export def process-response [p: record servers frame: record] {
 
   let res = $mcp_toolscall | mcp call $namespace.0
 
-  [
+  let res = [
     (
-    {
-      type: "tool_result"
-      name: $tool_use.name
-      content: $res.result.content
-    } | conditional-pipe ($tool_use.id? != null) {
-      insert "tool_use_id" $tool_use.id
-    }
+      {
+        type: "tool_result"
+        name: $tool_use.name
+        content: $res.result.content
+      } | conditional-pipe ($tool_use.id? != null) {
+        insert "tool_use_id" $tool_use.id
+      }
     )
-  ] | to json -r | main -c $frame.id --json --servers $servers
+  ]
+
+  $res | ept
+
+  # | to json -r | main -c $frame.id --json --servers $servers
 }
 
 export def configure [] {

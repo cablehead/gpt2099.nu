@@ -80,9 +80,6 @@ def id-to-messages [ids] {
 
     let aggregate = $p.response_stream_aggregate? | default {|| "TBD: response_stream_aggregate" }
 
-    let $tools = $frame.meta?.servers? | if ($in | is-not-empty) {
-      each {|server| .head $"mcp.($server).tools" | .cas $in.hash | from json | update name { $"($server)___($in)" } } | flatten
-    }
 
     id-to-messages $frame.id | reject id | do $p.call $config.key $config.model $tools | tee {
       do $aggregate | do {

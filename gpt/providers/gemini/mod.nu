@@ -7,44 +7,19 @@ def conditional-pipe [
 
 export def convert-mcp-toolslist-to-provider [] {
   let tools = $in
-  let decls = $tools | reject -i annotations | rename -c {
-    inputSchema: parameters
-  } | update parameters {
-    reject -i additionalProperties examples "$schema"
-  }
-  [{functionDeclarations: $decls}]
-}
-
-export def messages-to-provider [] {
-  # gemini only supports a single system message as a top level attribute
-  let messages = $in
-  let system_messages = $messages | where role == "system"
-  let messages = $messages | where role != "system"
-
-  {
-    contents: (
-      $messages | each {|msg|
-        {
-          role: (if $msg.role == "assistant" { 'model' } else { $msg.role })
-          parts: (
-            $msg.content | each {|content|
-              match $content.type {
-                "text" => {text: $content.text}
-                "tool_use" => {functionCall: {name: $content.name args: ($content.input | default {})}}
-                "tool_result" => {functionResponse: {response: $content.content}}
-                _ => ( error make {msg: $"TBD: ($content)"})
-              }
-            }
-          )
+  return [
+    {
+      functionDeclarations: (
+        $tools | each {|tool|
+          $tool | reject -i annotations | rename -c {
+            inputSchema: parameters
+          } | update parameters {
+            reject -i additionalProperties examples "$schema"
+          }
         }
-      }
-    )
-  } | conditional-pipe ($system_messages | is-not-empty) {
-    # system_instruction: {
-    # parts: [{text: "You are a helpful assistant."}]
-    # }
-    insert "systemInstruction" {parts: ($system_messages | get content)}
-  }
+      )
+    }
+  ]
 }
 
 export def provider [] {
@@ -58,16 +33,54 @@ export def provider [] {
       )
     }
 
-    call: {|key: string model: string tools?: list|
-      let data = $in | messages-to-provider
+    prepare-request: {|tools?: list|
+      # gemini only supports a single system message as a top level attribute
+      let messages = $in
+      let system_messages = $messages | where role == "system"
+      let messages = $messages | where role != "system"
+
+      let data = {
+        contents: (
+          $messages | each {|msg|
+            {
+              role: (if $msg.role == "assistant" { 'model' } else { $msg.role })
+              parts: (
+                $msg.content | each {|content|
+                  match $content.type {
+                    "text" => {text: $content.text}
+                    "tool_use" => {functionCall: {name: $content.name args: ($content.input | default {})}}
+                    "tool_result" => {functionResponse: {response: $content.content}}
+                    _ => ( error make {msg: $"TBD: ($content)"})
+                  }
+                }
+              )
+            }
+          }
+        )
+      }
+
+      let data = $data | conditional-pipe ($system_messages | is-not-empty) {
+        # system_instruction: {
+        # parts: [{text: "You are a helpful assistant."}]
+        # }
+        insert "systemInstruction" {parts: ($system_messages | get content)}
+      }
 
       let data = $data | insert generationConfig {
         temperature: 1
         topP: 0.95
         maxOutputTokens: 8192
-      } | conditional-pipe ($tools | is-not-empty) {
+      }
+
+      let data = $data | conditional-pipe ($tools | is-not-empty) {
         insert "tools" ($tools | convert-mcp-toolslist-to-provider)
       }
+
+      return $data
+    }
+
+    call: {|key: string model: string tools?: list|
+      let data = $in | messages-to-provider
 
       let url = $"https://generativelanguage.googleapis.com/v1beta/models/($model):streamGenerateContent?alt=sse&key=($key)"
 
