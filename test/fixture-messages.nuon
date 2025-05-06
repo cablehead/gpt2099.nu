@@ -1,1 +1,3 @@
-[[role, content]; [system, {text: "When selecting a tool, explain your reasoning"}], [user, [[type, text]; [text, "What is the square root of 49?"]]]]
+[[id, role, content]; ["03dvnby7v8s90z5n0ku88i9wv", user, [[type, text]; [text, "explain your thinking, what's the squareroot of 49?"]]], ["03dvnbycqi62mj38qhvgyf5ac", assistant, [{type: text, text: "I can calculate the square root of a number using the `calc___calculate_square_root` function. In this case, the number is 49. After the calculation, I will return the square root value.
+"}, {type: tool_use, name: calc___calculate_square_root, input: {number: 49}}]], ["03dvnbyhrcessqc0ajtgcbtir", user, [[type, name, content]; [tool_result, calc___calculate_square_root, [[type, text]; [text, "7"]]]]], ["03dvnbyn9773nub0dkxcm5k0o", assistant, [[type, text]; [text, "The square root of 49 is 7.
+"]]]]

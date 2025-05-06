@@ -23,7 +23,9 @@ def content-block-finish [content_block] {
 }
 
 export def convert-mcp-toolslist-to-provider [] {
-  rename -c {inputSchema: input_schema} | reject -i annotations
+  $in | each {|tool|
+    $tool | rename -c {inputSchema: input_schema} | reject -i annotations
+  }
 }
 
 export def provider [] {
@@ -44,14 +46,24 @@ export def provider [] {
       )
     }
 
-    call: {|key: string model: string tools?: list|
+    prepare-request: {|tools?: list|
       # anthropic only supports a single system message as a top level attribute
       let messages = $in
       let system_messages = $messages | where role == "system"
       let messages = $messages | where role != "system"
 
+      let messages = $messages | each {|msg|
+        update content {|content|
+          each {|part|
+            match $part.type {
+              "tool_result" => ($part | reject -i name)
+              _ => $part
+            }
+          }
+        }
+      }
+
       let data = {
-        model: $model
         max_tokens: 8192
         stream: true
         messages: $messages
@@ -59,6 +71,12 @@ export def provider [] {
       } | conditional-pipe ($system_messages | is-not-empty) {
         insert "system" ($system_messages | get content | flatten | str join "\n\n----\n\n")
       }
+
+      return $data
+    }
+
+    call: {|key: string model: string|
+      let data = $in | insert model $model # Fill in the model from the call parameters
 
       let headers = {
         "x-api-key": $key

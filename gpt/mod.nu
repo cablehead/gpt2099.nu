@@ -40,7 +40,7 @@ export def main [
         $"($server)___($in)"
       }
     }
-  }
+  } | flatten
 
   let res = (
     $messages
@@ -147,7 +147,7 @@ export def init [
   const base = (path self) | path dirname
   cat ($base | path join "providers/anthropic/mod.nu") | .append gpt.provider.anthropic
   cat ($base | path join "providers/gemini/mod.nu") | .append gpt.provider.gemini
-  cat ($base | path join "xs/command.nu") | .append gpt.define
+  # cat ($base | path join "xs/command.nu") | .append gpt.define
   if not $refresh {
     configure
   }
