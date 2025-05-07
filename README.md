@@ -1,38 +1,5 @@
 # gpt.nu - LLM Integration for Nushell
 
-
-#### Quick capture: to be added to README
-
-how to test a provider in isolation
-```
-overlay use -r ./gpt/providers as p ; [
-  {
-    "role": "user",
-    "content": [
-      {
-        "type": "text",
-        "text": "hola"
-      }
-    ]
-  }
-] | do ((p) | get $config.name).call $config.key $config.model
-```
-
-####
-
-```nu
-overlay use -rp gpt/providers/gemini
-let p = gemini provider
-open ./test/fixture-messages.nuon | do $p.call $config.key $config.model (open ./test/fixture-messages.nuon)
-```
-
-```nu
- overlay use -rp gpt/providers/anthropic ; let p = anthropic provider ; open test/anthropic/01-response_stream.nuon | do $p.response_stream_aggregate | save test/anthropic/02-response_stream_aggregate.nuon
- ```
-
-####
-
-
 gpt.nu is a Nushell module that enables direct interaction with large language
 models (LLMs) from your command line. It provides a simple interface supporting
 multiple LLM providers and the
@@ -62,8 +29,8 @@ overlay use -pr ./gpt
 
 ### gpt init
 
-Installs the required dependencies into your cross.stream store, and prompts
-you to select an LLM provider, an API key, and a model.
+Installs the required dependencies into your cross.stream store, and prompts you
+to select an LLM provider, an API key, and a model.
 
 ### gpt
 
