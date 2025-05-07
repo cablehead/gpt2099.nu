@@ -35,7 +35,6 @@ export def provider [] {
 
       let payload = (
         {
-          model: ""
           messages: $messages
           stream: true
         }
