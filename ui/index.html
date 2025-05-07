@@ -1,53 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-  <meta charset="utf-8" />
-  <title>Solid + MDX + highlight.js</title>
+<!DOCTYPE html><meta charset="utf-8" />
+<title>MDX + Solid + Shiki (no build)</title>
 
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css"
-  />
+<div id="root">Loading…</div>
 
-  <div id="root">Loading…</div>
-
-  <script type="module">
-    import { compile, run } from "https://esm.sh/@mdx-js/mdx@3?bundle";
-    import { render } from "https://esm.sh/solid-js@1/web";
-    import * as R from "https://esm.sh/solid-jsx@1/jsx-runtime";
-    import hljs from "https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/+esm";
-
-    const mdxSrc = `
-  ## Example
-
-  Here’s some \`inline\` code.
-
-  \`\`\`js
-  function greet(name) {
-    console.log(\`Hello, \${name}\`);
+<style>
+  /* minimal visual: pale yellow bar on the left */
+  [data-highlighted-line] {
+    background: rgba(255, 255, 0, 0.12);
+    border-left: 0.25em solid #ffd60a;
   }
-  greet('world');
+</style>
+
+<script type="module">
+  /* Core libs */
+  import {
+    compile,
+    run,
+  } from "https://esm.sh/@mdx-js/mdx@3?bundle"; /* MDX */ /* :contentReference[oaicite:5]{index=5} */
+  import rehypePretty from "https://esm.sh/rehype-pretty-code@0.14.1?bundle"; /* Shiki plugin */ /* :contentReference[oaicite:6]{index=6} */
+  import { render } from "https://esm.sh/solid-js@1/web"; /* Solid mount */ /* :contentReference[oaicite:7]{index=7} */
+  import * as R from "https://esm.sh/solid-jsx@1/jsx-runtime"; /* JSX helpers */
+
+  /* MDX with a fenced block */
+  const src = `
+  ## Shiki demo
+
+  \`\`\`ts
+  const msg: string = 'hi'
+  console.log(msg)
   \`\`\`
   `;
 
-    const code = String(
-      await compile(mdxSrc, {
-        jsxImportSource: "solid-jsx",
-        outputFormat: "function-body",
-      })
-    );
+  /* Compile with Shiki‑powered plugin */
+  const file = await compile(src, {
+    jsxImportSource: "solid-jsx",
+    outputFormat: "function-body",
+    rehypePlugins: [
+      [
+        rehypePretty,
+        {
+          // highlight options
+          theme: "github-light", // any VS Code theme :contentReference[oaicite:8]{index=8}
+          keepBackground: false, // let page bg show through
+        },
+      ],
+    ],
+  });
 
-    const { default: Post } = await run(code, {
-      jsx: R.jsx,
-      jsxs: R.jsxs,
-      Fragment: R.Fragment,
-      baseUrl: import.meta.url,
-    });
+  /* Evaluate & mount */
+  const { default: Post } = await run(String(file), {
+    jsx: R.jsx,
+    jsxs: R.jsxs,
+    Fragment: R.Fragment,
+    baseUrl: import.meta.url,
+  });
 
-    const rootEl = document.getElementById("root");
-    rootEl.textContent = ""; // remove placeholder
-    render(() => Post({}), rootEl);
-
-    /* highlight all <pre><code> blocks once content is in the DOM */
-    hljs.highlightAll();
-  </script>
-</html>
+  const host = document.getElementById("root");
+  host.textContent = "";
+  render(() => Post({}), host);
+</script>
