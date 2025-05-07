@@ -4,10 +4,12 @@
 
 use ./anthropic
 use ./gemini
+use ./openai
 
 export def main [] {
   {
     anthropic : (anthropic provider)
     gemini : (gemini provider)
+    openai : (openai provider)
   }
 }

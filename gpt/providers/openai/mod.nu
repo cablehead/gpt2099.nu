@@ -19,8 +19,10 @@ export def provider [] {
   {
     models: {|key: string|
       (http get -H {"Authorization": $"Bearer ($key)"} "https://api.openai.com/v1/models")
-      | get models
-      | each {|m| { id: $m.id, created: $m.created }}
+      | get data
+      | select id created
+      | update created { $in * 1_000_000_000 | into datetime }
+      | sort-by -r created
     }
 
     prepare-request: {|tools?: list|
@@ -38,7 +40,7 @@ export def provider [] {
           stream: true
         }
         | conditional-pipe ($tools | is-not-empty) {
-            insert functions ($tools | convert-mcp-toolslist-to-provider)
+          insert functions ($tools | convert-mcp-toolslist-to-provider)
         }
       )
 
@@ -60,13 +62,13 @@ export def provider [] {
     response_stream_streamer: {|event|
       let delta = $event.choices.0.delta
       if $delta.content? != null {
-        { type: "text", content: $delta.content }
+        {type: "text" content: $delta.content}
       } else {
         if $delta.function_call.name? != null {
-          { type: "tool_use", name: $delta.function_call.name }
+          {type: "tool_use" name: $delta.function_call.name}
         } else {
           if $delta.function_call.arguments? != null {
-            { content: $delta.function_call.arguments }
+            {content: $delta.function_call.arguments}
           } else {
             null
           }
@@ -97,15 +99,15 @@ export def provider [] {
         let message_content = (
           []
           | if ($text_parts | is-not-empty) {
-              append { type: "text", text: ($text_parts | str join "") }
-            }
+            append {type: "text" text: ($text_parts | str join "")}
+          }
           | if ($tool_use_event | is-not-empty) {
-              append {
-                type: "tool_use"
-                name: $tool_use_event.name
-                input: ($arg_chunks | str join "" | from json)
-              }
+            append {
+              type: "tool_use"
+              name: $tool_use_event.name
+              input: ($arg_chunks | str join "" | from json)
             }
+          }
         )
 
         {
