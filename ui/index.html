@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <title>Solid + MDX (no build)</title>
+
+  <div id="root">Loading…</div>
+
+  <script type="module">
+    console.log("boot");
+
+    /* 1. Load libs */
+    import { compile, run } from "https://esm.sh/@mdx-js/mdx@3?bundle";
+    import { render } from "https://esm.sh/solid-js@1/web";
+    import * as R from "https://esm.sh/solid-jsx@1/jsx-runtime";
+    console.log("libs ready");
+
+    /* 2. MDX source */
+    const src = `
+    # Solid + MDX
+
+    <button onClick={() => alert('Hi!')}>Click me</button>
+  `;
+
+    try {
+      /* 3. Compile — keep JSX *off* (default) */
+      const file = await compile(src, {
+        jsxImportSource: "solid-jsx", // tell MDX which runtime
+        outputFormat: "function-body", // strip imports
+      });
+      const code = String(file);
+      console.log("compiled OK");
+
+      /* 4. Run with Solid helpers */
+      const { default: MDXContent } = await run(code, {
+        jsx: R.jsx,
+        jsxs: R.jsxs,
+        Fragment: R.Fragment,
+        baseUrl: import.meta.url,
+      });
+      console.log("run OK -> component ready");
+
+      /* 5. Mount */
+      const rootEl = document.getElementById("root");
+      rootEl.textContent = ""; // remove “Loading…” first
+      render(() => MDXContent({}), rootEl);
+
+      console.log("rendered");
+    } catch (err) {
+      console.error("ERROR:", err);
+    }
+  </script>
+</html>
