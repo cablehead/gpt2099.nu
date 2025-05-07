@@ -1,20 +1,22 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<meta charset="utf-8" />
-<title>Solid + MDX + highlight.js</title>
+  <meta charset="utf-8" />
+  <title>Solid + MDX + highlight.js</title>
 
-<link rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css">
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css"
+  />
 
-<div id="root">Loading…</div>
+  <div id="root">Loading…</div>
 
-<script type="module">
-  import {compile, run} from 'https://esm.sh/@mdx-js/mdx@3?bundle';
-  import {render}       from 'https://esm.sh/solid-js@1/web';
-  import * as R         from 'https://esm.sh/solid-jsx@1/jsx-runtime';
-  import hljs           from 'https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/+esm';
+  <script type="module">
+    import { compile, run } from "https://esm.sh/@mdx-js/mdx@3?bundle";
+    import { render } from "https://esm.sh/solid-js@1/web";
+    import * as R from "https://esm.sh/solid-jsx@1/jsx-runtime";
+    import hljs from "https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/+esm";
 
-  const mdxSrc = `
+    const mdxSrc = `
   ## Example
 
   Here’s some \`inline\` code.
@@ -27,23 +29,25 @@
   \`\`\`
   `;
 
-  const code = String(await compile(mdxSrc, {
-    jsxImportSource: 'solid-jsx',
-    outputFormat: 'function-body'
-  }));
+    const code = String(
+      await compile(mdxSrc, {
+        jsxImportSource: "solid-jsx",
+        outputFormat: "function-body",
+      })
+    );
 
-  const {default: Post} = await run(code, {
-    jsx: R.jsx,
-    jsxs: R.jsxs,
-    Fragment: R.Fragment,
-    baseUrl: import.meta.url
-  });
+    const { default: Post } = await run(code, {
+      jsx: R.jsx,
+      jsxs: R.jsxs,
+      Fragment: R.Fragment,
+      baseUrl: import.meta.url,
+    });
 
-  const rootEl = document.getElementById('root');
-  rootEl.textContent = '';           // remove placeholder
-  render(() => Post({}), rootEl);
+    const rootEl = document.getElementById("root");
+    rootEl.textContent = ""; // remove placeholder
+    render(() => Post({}), rootEl);
 
-  /* highlight all <pre><code> blocks once content is in the DOM */
-  hljs.highlightAll();
-</script>
+    /* highlight all <pre><code> blocks once content is in the DOM */
+    hljs.highlightAll();
+  </script>
 </html>
