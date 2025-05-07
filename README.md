@@ -19,7 +19,7 @@ With gpt.nu, you can:
 - Maintain conversation context across sessions. In addition to storing the
   conversation, cross.stream makes it convenient to review and manually edit
   conversation threads, giving you direct control over the context window.
-- Integrate with MCP servers to extend tool capabilities: while rough at the edges, `gpt.nu` is already as capable as claude code for local file editing, but it's provider agnostic and a lot more flexible.
+- Integrate with MCP servers to extend tool capabilities: while rough at the edges, `gpt.nu` is already as capable as [claude code](https://docs.anthropic.com/en/docs/claude-code/overview) for local file editing, but it's provider agnostic and a lot more flexible.
 
 Built on [cross.stream](https://github.com/cablehead/xs) for event processing,
 gpt.nu brings modern AI capabilities directly into your Nushell workflow,
