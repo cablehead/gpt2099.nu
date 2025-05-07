@@ -6,6 +6,7 @@ export def main [
   --continues (-c): any # Previous message IDs to continue a conversation
   --respond (-r) # Continue from the last response
   --servers: list<string> # MCP servers to use
+  --search # enable LLM-side search (gemini only)
   --json (-j) # Treat input as JSON formatted content
   --separator (-s): string = "\n\n---\n\n" # Separator used when joining lists of strings
 ] {
@@ -44,7 +45,7 @@ export def main [
 
   let res = (
     $messages
-    | do $p.prepare-request $tools
+    | do $p.prepare-request {tools: $tools search: $search}
     | do $p.call $config.key $config.model
     | tee { preview-stream $p.response_stream_streamer }
     | do $p.response_stream_aggregate

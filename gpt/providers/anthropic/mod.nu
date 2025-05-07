@@ -46,7 +46,7 @@ export def provider [] {
       )
     }
 
-    prepare-request: {|tools?: list|
+    prepare-request: {|options: record|
       # anthropic only supports a single system message as a top level attribute
       let messages = $in
       let system_messages = $messages | where role == "system"
@@ -67,7 +67,7 @@ export def provider [] {
         max_tokens: 8192
         stream: true
         messages: $messages
-        tools: ($tools | default [] | convert-mcp-toolslist-to-provider)
+        tools: ($options.tools? | default [] | convert-mcp-toolslist-to-provider)
       } | conditional-pipe ($system_messages | is-not-empty) {
         insert "system" ($system_messages | get content | flatten | str join "\n\n----\n\n")
       }

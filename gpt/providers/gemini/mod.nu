@@ -44,11 +44,14 @@ export def provider [] {
       )
     }
 
-    prepare-request: {|tools?: list|
+    prepare-request: {|options: record|
       # gemini only supports a single system message as a top level attribute
       let messages = $in
       let system_messages = $messages | where role == "system"
       let messages = $messages | where role != "system"
+
+      let tools = $options.tools? | default []
+      let search = $options.search? | default false
 
       let data = {
         contents: (
@@ -91,6 +94,14 @@ export def provider [] {
 
       let data = $data | conditional-pipe ($tools | is-not-empty) {
         insert "tools" ($tools | convert-mcp-toolslist-to-provider)
+      }
+
+      let data = $data | conditional-pipe $search {
+        insert "tools" [
+          {
+            google_search: {}
+          }
+        ]
       }
 
       return $data

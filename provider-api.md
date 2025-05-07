@@ -28,7 +28,7 @@ Formats messages and tools into the provider-specific request structure.
 
 **Input:**
 
-- Messages list in standard format with the following structure:
+- The `$in` stream will contain the messages list in standard format:
   ```
   [
     {
@@ -41,20 +41,22 @@ Formats messages and tools into the provider-specific request structure.
     }
   ]
   ```
-- `tools?: list` - Optional list of tool definitions with the structure:
-  ```
-  [
-    {
-      name: string,
-      description: string,
-      inputSchema: {
-        type: "object",
-        properties: record,
-        required: list<string>
+- `options: record` - A record containing options for the request, such as:
+  - `tools?: list` - Optional list of tool definitions with the structure:
+    ```
+    [
+      {
+        name: string,
+        description: string,
+        inputSchema: {
+          type: "object",
+          properties: record,
+          required: list<string>
+        }
       }
-    }
-  ]
-  ```
+    ]
+    ```
+  - Other provider-specific options (e.g., `search: bool`).
 
 **Output:**
 
