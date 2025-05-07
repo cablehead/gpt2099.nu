@@ -61,46 +61,63 @@ export def provider [] {
       let delta = $event.choices.0.delta
       if $delta.content? != null {
         { type: "text", content: $delta.content }
-      } elif $delta.function_call.name? != null {
-        { type: "tool_use", name: $delta.function_call.name }
-      } elif $delta.function_call.arguments? != null {
-        { content: $delta.function_call.arguments }
       } else {
-        null
+        if $delta.function_call.name? != null {
+          { type: "tool_use", name: $delta.function_call.name }
+        } else {
+          if $delta.function_call.arguments? != null {
+            { content: $delta.function_call.arguments }
+          } else {
+            null
+          }
+        }
       }
     }
 
     response_stream_aggregate: {||
       collect {|events|
-        mut response = {
+        let text_parts = (
+          $events
+          | where type == "text"
+          | get content
+        )
+
+        let tool_use_event = (
+          $events
+          | where {|ev| $ev.type == "tool_use" }
+          | first
+        )
+
+        let arg_chunks = (
+          $events
+          | where {|ev| $ev.type != "text" and $ev.type != "tool_use" and $ev.content? }
+          | get content
+        )
+
+        let message_content = (
+          []
+          | if ($text_parts | is-not-empty) {
+              append { type: "text", text: ($text_parts | str join "") }
+            }
+          | if ($tool_use_event | is-not-empty) {
+              append {
+                type: "tool_use"
+                name: $tool_use_event.name
+                input: ($arg_chunks | str join "" | from json)
+              }
+            }
+        )
+
+        {
           role: "assistant"
           mime_type: "application/json"
-          message: { type: "message" role: "assistant" content: [] }
-        }
-        mut text_accum = ""
-        mut saw_call = false
-        mut func_name = ""
-        mut arg_chunks = []
-
-        for ev in $events {
-          match $ev.type {
-            "text" => { text_accum = $"($text_accum)($ev.content)" }
-            "tool_use" => { saw_call = true; func_name = $ev.name }
-            _ => (if $ev.content? { arg_chunks = $arg_chunks | append $ev.content })
+          message: {
+            type: "message"
+            role: "assistant"
+            content: $message_content
+            stop_reason: (if ($tool_use_event | is-not-empty) { "tool_use" } else { "end_turn" })
           }
         }
-
-        if $text_accum != "" {
-          $response.message.content = ($response.message.content | append { type: "text", text: $text_accum })
-        }
-
-        if $saw_call {
-          let args = ($arg_chunks | str join "" | from json)
-          $response.message.content = ($response.message.content | append { type: "tool_use", name: $func_name, input: $args })
-          $response.message.stop_reason = "tool_use"
-        }
-
-        $response
       }
     }
   }
