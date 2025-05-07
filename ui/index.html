@@ -1,52 +1,49 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <meta charset="utf-8" />
-  <title>Solid + MDX (no build)</title>
+<meta charset="utf-8" />
+<title>Solid + MDX + highlight.js</title>
 
-  <div id="root">Loading…</div>
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css">
 
-  <script type="module">
-    console.log("boot");
+<div id="root">Loading…</div>
 
-    /* 1. Load libs */
-    import { compile, run } from "https://esm.sh/@mdx-js/mdx@3?bundle";
-    import { render } from "https://esm.sh/solid-js@1/web";
-    import * as R from "https://esm.sh/solid-jsx@1/jsx-runtime";
-    console.log("libs ready");
+<script type="module">
+  import {compile, run} from 'https://esm.sh/@mdx-js/mdx@3?bundle';
+  import {render}       from 'https://esm.sh/solid-js@1/web';
+  import * as R         from 'https://esm.sh/solid-jsx@1/jsx-runtime';
+  import hljs           from 'https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/+esm';
 
-    /* 2. MDX source */
-    const src = `
-    # Solid + MDX
+  const mdxSrc = `
+  ## Example
 
-    <button onClick={() => alert('Hi!')}>Click me</button>
+  Here’s some \`inline\` code.
+
+  \`\`\`js
+  function greet(name) {
+    console.log(\`Hello, \${name}\`);
+  }
+  greet('world');
+  \`\`\`
   `;
 
-    try {
-      /* 3. Compile — keep JSX *off* (default) */
-      const file = await compile(src, {
-        jsxImportSource: "solid-jsx", // tell MDX which runtime
-        outputFormat: "function-body", // strip imports
-      });
-      const code = String(file);
-      console.log("compiled OK");
+  const code = String(await compile(mdxSrc, {
+    jsxImportSource: 'solid-jsx',
+    outputFormat: 'function-body'
+  }));
 
-      /* 4. Run with Solid helpers */
-      const { default: MDXContent } = await run(code, {
-        jsx: R.jsx,
-        jsxs: R.jsxs,
-        Fragment: R.Fragment,
-        baseUrl: import.meta.url,
-      });
-      console.log("run OK -> component ready");
+  const {default: Post} = await run(code, {
+    jsx: R.jsx,
+    jsxs: R.jsxs,
+    Fragment: R.Fragment,
+    baseUrl: import.meta.url
+  });
 
-      /* 5. Mount */
-      const rootEl = document.getElementById("root");
-      rootEl.textContent = ""; // remove “Loading…” first
-      render(() => MDXContent({}), rootEl);
+  const rootEl = document.getElementById('root');
+  rootEl.textContent = '';           // remove placeholder
+  render(() => Post({}), rootEl);
 
-      console.log("rendered");
-    } catch (err) {
-      console.error("ERROR:", err);
-    }
-  </script>
+  /* highlight all <pre><code> blocks once content is in the DOM */
+  hljs.highlightAll();
+</script>
 </html>
