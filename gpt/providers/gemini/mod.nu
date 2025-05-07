@@ -14,7 +14,18 @@ export def convert-mcp-toolslist-to-provider [] {
           $tool | reject -i annotations | rename -c {
             inputSchema: parameters
           } | update parameters {
-            reject -i additionalProperties examples "$schema"
+            $in | reject -i additionalProperties examples "$schema" | update properties {
+              $in | items {|k v|
+                {
+                  $k: (
+                    $v | if ($in.items? != null) {
+                      update items { reject -i additionalProperties }
+                    } else { $in }
+                    | into record
+                  )
+                }
+              } | into record
+            }
           }
         }
       )
