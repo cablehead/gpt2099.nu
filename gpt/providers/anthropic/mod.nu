@@ -156,9 +156,9 @@ export def provider [] {
           return (
             $event.content_block | match $in.type {
               "text" => {type: $in.type content: $in.text}
+              "tool_use" => {type: $in.type name: $in.name}
               "server_tool_use" => {type: $in.type name: $in.name}
               "web_search_tool_result" => {type: $in.type content: ($in.content | reject encrypted_content | to csv)}
-              # ($event.content_block | reject -i input | reject -i text)
               _ => ( error make {msg: $"TBD: ($event | to json)"})
             }
           )

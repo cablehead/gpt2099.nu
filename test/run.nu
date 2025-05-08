@@ -7,11 +7,12 @@ exec nu --include-path "$(pwd)" "$tmp" "$@"
 use ./gpt
 
 let p = (gpt providers) | get anthropic
-let stream = open ./test/anthropic/case-search-response-stream.nuon
+# let stream = open ./test/anthropic/case-search-response-stream.nuon
+let stream = open ./test/anthropic/01-response_stream.nuon
 
-# return ($stream | do $p.response_stream_aggregate | to json) # | save -f test/anthropic/case-search-response-stream-aggregate.nuon
+return ($stream | do $p.response_stream_aggregate | to json) # | save -f test/anthropic/case-search-response-stream-aggregate.nuon
 
 
-$stream | gpt preview-stream $p.response_stream_streamer
+# $stream | gpt preview-stream $p.response_stream_streamer
 
 return
