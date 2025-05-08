@@ -153,8 +153,15 @@ export def provider [] {
         # For content_block_start events, return a type indicator
         # This marks the beginning of a new content block (text, tool_use, etc.)
         "content_block_start" => {
-          # Extract type and other relevant fields but remove input/text
-          return ($event.content_block | reject -i input | reject -i text)
+          return (
+            $event.content_block | match $in.type {
+              "text" => {type: $in.type content: $in.text}
+              "server_tool_use" => {type: $in.type name: $in.name}
+              "web_search_tool_result" => {type: $in.type content: ($in.content | reject encrypted_content | to csv)}
+              # ($event.content_block | reject -i input | reject -i text)
+              _ => ( error make {msg: $"TBD: ($event | to json)"})
+            }
+          )
         }
 
         # For content_block_delta events, return content additions
@@ -182,7 +189,6 @@ export def provider [] {
         "content_block_stop" => { return }
 
         _ => ( error make {msg: $"TBD: ($event)"})
-
       }
     }
   }

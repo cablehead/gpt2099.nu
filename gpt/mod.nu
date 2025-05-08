@@ -98,9 +98,8 @@ export def preview-stream [streamer] {
   generate {|chunk block = ""|
     # Transform provider-specific event to normalized format
     let event = do $streamer $chunk
-    print "EVENT" ($chunk | to json)
 
-    if $event == null { return {next: true} } # Skip ignored events
+    if $event == null { return {next: $block} } # Skip ignored events
 
     let next_block = $event.type? | default $block
 
