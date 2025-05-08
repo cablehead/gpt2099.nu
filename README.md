@@ -14,8 +14,8 @@ multiple LLM providers and the
 With gpt.nu, you can:
 
 - Chat with AI models using one consistent API. Current providers (it's easy to add [more](./provider-api.md))
-  - gemini
-  - anthropic
+  - gemini + search
+  - anthropic + search
 - Maintain conversation context across sessions. In addition to storing the
   conversation, cross.stream makes it convenient to review and manually edit
   conversation threads, giving you direct control over the context window.

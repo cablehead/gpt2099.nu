@@ -1,19 +1,18 @@
-#!/usr/bin/env nu
+#!/usr/bin/env bash
+tmp=$(mktemp)
+sed '1,/^# WRAPPER_END_MARKER$/d' "$0" > "$tmp"
+exec nu --include-path "$(pwd)" "$tmp" "$@"
+# WRAPPER_END_MARKER
 
-clear
+use ./gpt
 
-cd $env.FILE_PWD
+let p = (gpt providers) | get anthropic
+# let stream = open ./test/anthropic/case-search-response-stream.nuon
+let stream = open ./test/anthropic/01-response_stream.nuon
 
-const name = "anthropic"
+return ($stream | do $p.response_stream_aggregate | to json) # | save -f test/anthropic/case-search-response-stream-aggregate.nuon
 
-let raw_stream = open $"($name)/01-response_stream_raw.json"
-let runner = open "./one.nu"
 
-cd $"../gpt/providers/($name)"
+# $stream | gpt preview-stream $p.response_stream_streamer
 
-$raw_stream | to json | ^$nu.current-exe ...[
-  --no-config-file
-  --stdin
-  --commands
-  $runner
-]
+return

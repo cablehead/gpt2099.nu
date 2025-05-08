@@ -10,6 +10,7 @@ def content-block-delta [current_block event] {
   match $event.delta.type {
     "text_delta" => ($current_block | update text { $in | append $event.delta.text })
     "input_json_delta" => ($current_block | upsert partial_json { $in | default [] | append $event.delta.partial_json })
+    "citations_delta" => $current_block # ignore for now
     _ => ( error make {msg: $"TBD: ($event)"})
   }
 }
@@ -18,6 +19,9 @@ def content-block-finish [content_block] {
   match $content_block.type {
     "text" => ($content_block | update text { str join })
     "tool_use" => ($content_block | update input {|x| $x.partial_json | str join | from json | default {} } | reject partial_json?)
+    "server_tool_use" => ($content_block | update input {|x| $x.partial_json | str join | from json | default {} } | reject partial_json?)
+    "content_block_delta" => $content_block # ignore for now
+    "web_search_tool_result" => $content_block # ignore for now
     _ => { error make {msg: $"TBD: ($content_block)"} }
   }
 }
@@ -68,6 +72,13 @@ export def provider [] {
         stream: true
         messages: $messages
         tools: ($options.tools? | default [] | convert-mcp-toolslist-to-provider)
+      } | conditional-pipe ($options | get search? | default false) {
+        update tools {
+          $in | append {
+            type: "web_search_20250305"
+            name: "web_search"
+          }
+        }
       } | conditional-pipe ($system_messages | is-not-empty) {
         insert "system" ($system_messages | get content | flatten | str join "\n\n----\n\n")
       }
@@ -142,8 +153,15 @@ export def provider [] {
         # For content_block_start events, return a type indicator
         # This marks the beginning of a new content block (text, tool_use, etc.)
         "content_block_start" => {
-          # Extract type and other relevant fields but remove input/text
-          return ($event.content_block | reject -i input | reject -i text)
+          return (
+            $event.content_block | match $in.type {
+              "text" => {type: $in.type content: $in.text}
+              "tool_use" => {type: $in.type name: $in.name}
+              "server_tool_use" => {type: $in.type name: $in.name}
+              "web_search_tool_result" => {type: $in.type content: ($in.content | reject encrypted_content | to csv)}
+              _ => ( error make {msg: $"TBD: ($event | to json)"})
+            }
+          )
         }
 
         # For content_block_delta events, return content additions
@@ -155,12 +173,22 @@ export def provider [] {
             # JSON deltas for tool use become content additions
             "input_json_delta" => { return {content: $event.delta.partial_json} }
 
+            # with the web_search_20250305 tool we get back citations_delta:
+            # need to work out what to do with this
+            "citations_delta" => { return {} }
+
             # Handle unexpected delta types
             _ => ( error make {msg: $"TBD: ($event)"})
           }
         }
 
-        # Other event types are implicitly ignored (null is returned)
+        "message_start" => { return }
+        "message_delta" => { return }
+        "message_stop" => { return }
+        "ping" => { return }
+        "content_block_stop" => { return }
+
+        _ => ( error make {msg: $"TBD: ($event)"})
       }
     }
   }

@@ -47,6 +47,7 @@ export def main [
     $messages
     | do $p.prepare-request {tools: $tools search: $search}
     | do $p.call $config.key $config.model
+    | tee { each { to json | .append gpt.recv --meta {turn_id: $turn.id} } }
     | tee { preview-stream $p.response_stream_streamer }
     | do $p.response_stream_aggregate
   )
@@ -97,7 +98,8 @@ export def preview-stream [streamer] {
   generate {|chunk block = ""|
     # Transform provider-specific event to normalized format
     let event = do $streamer $chunk
-    if $event == null { return {next: true} } # Skip ignored events
+
+    if $event == null { return {next: $block} } # Skip ignored events
 
     let next_block = $event.type? | default $block
 
