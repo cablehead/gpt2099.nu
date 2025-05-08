@@ -83,7 +83,7 @@ export def provider [] {
         # system_instruction: {
         # parts: [{text: "You are a helpful assistant."}]
         # }
-        insert "systemInstruction" {parts: ($system_messages | get content)}
+        insert "systemInstruction" {parts: ($system_messages | get content | flatten | each { reject type })}
       }
 
       let data = $data | insert generationConfig {
