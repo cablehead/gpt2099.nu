@@ -28,6 +28,7 @@ export def main [
     | if $continues != null { insert continues $continues } else { }
     | if $servers != null { insert servers $servers } else { }
     | if $json { insert mime_type "application/json" } else { }
+    | if $search { insert options {search: true} } else { }
   )
 
   let turn = $content | .append gpt.turn --meta $meta
