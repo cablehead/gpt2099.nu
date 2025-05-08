@@ -1,0 +1,137 @@
+[[candidates, usageMetadata, modelVersion]; [[[content, index, groundingMetadata]; [{parts: [[text]; ["Yes, Dioxus,"]], role: model}, 0, {}]], {promptTokenCount: 33, candidatesTokenCount: 40, totalTokenCount: 189, promptTokensDetails: [[modality, tokenCount]; [TEXT, 33]], thoughtsTokenCount: 116}, "models/gemini-2.5-flash-preview-04-17"], [[[content, index, groundingMetadata]; [{parts: [[text]; [" for its desktop and mobile targets, primarily uses a system's native WebView to render the user interface, similar to how Tauri works.
+
+Here's a breakdown:
+
+*   **WebView"]], role: model}, 0, {}]], {promptTokenCount: 33, candidatesTokenCount: 79, totalTokenCount: 228, promptTokensDetails: [[modality, tokenCount]; [TEXT, 33]], thoughtsTokenCount: 116}, "models/gemini-2.5-flash-preview-04-17"], [[[content, index, groundingMetadata]; [{parts: [[text]; ["-based Rendering:** Dioxus leverages the system's built-in WebView to display the UI using web technologies like HTML and CSS. This approach contributes to smaller application sizes compared to frameworks that embed a full browser"]], role: model}, 0, {}]], {promptTokenCount: 33, candidatesTokenCount: 122, totalTokenCount: 271, promptTokensDetails: [[modality, tokenCount]; [TEXT, 33]], thoughtsTokenCount: 116}, "models/gemini-2.5-flash-preview-04-17"], [[[content, index, groundingMetadata]; [{parts: [[text]; [" engine.
+*   **Native Rust Code:** Although the UI is rendered in a WebView, your application's core logic runs natively in Rust. This allows for direct"]], role: model}, 0, {}]], {promptTokenCount: 33, candidatesTokenCount: 156, totalTokenCount: 305, promptTokensDetails: [[modality, tokenCount]; [TEXT, 33]], thoughtsTokenCount: 116}, "models/gemini-2.5-flash-preview-04-17"], [[[content, index, groundingMetadata]; [{parts: [[text]; [" access to system APIs, multithreading, filesystem access, and other native capabilities without relying on a JavaScript bridge.
+*   **Shared Components:** Dioxus and Tauri actually share some underlying"]], role: model}, 0, {}]], {promptTokenCount: 33, candidatesTokenCount: 195, totalTokenCount: 344, promptTokensDetails: [[modality, tokenCount]; [TEXT, 33]], thoughtsTokenCount: 116}, "models/gemini-2.5-flash-preview-04-17"], [[[content, index, groundingMetadata]; [{parts: [[text]; [" libraries, such as Tao and Wry, which are used for windowing and WebView management.
+*   **Renderer Agnostic Design:** While WebView is the primary renderer for desktop and mobile currently, Dioxus is designed"]], role: model}, 0, {}]], {promptTokenCount: 33, candidatesTokenCount: 240, totalTokenCount: 389, promptTokensDetails: [[modality, tokenCount]; [TEXT, 33]], thoughtsTokenCount: 116}, "models/gemini-2.5-flash-preview-04-17"], [[[content, index, groundingMetadata]; [{parts: [[text]; [" to be renderer-agnostic. There are plans for a native renderer called Blitz, which is still under development and aims to render UI using technologies like WGPU.
+*   **"]], role: model}, 0, {}]], {promptTokenCount: 33, candidatesTokenCount: 277, totalTokenCount: 426, promptTokensDetails: [[modality, tokenCount]; [TEXT, 33]], thoughtsTokenCount: 116}, "models/gemini-2.5-flash-preview-04-17"], [[[content, index, groundingMetadata]; [{parts: [[text]; ["Differences from Tauri:** While both use WebViews, a key difference lies in where the main application logic runs. In Dioxus, your Rust code is native, whereas Tauri typically uses a web-based frontend (like React, Vue,"]], role: model}, 0, {}]], {promptTokenCount: 33, candidatesTokenCount: 325, totalTokenCount: 474, promptTokensDetails: [[modality, tokenCount]; [TEXT, 33]], thoughtsTokenCount: 116}, "models/gemini-2.5-flash-preview-04-17"], [[[content, index, groundingMetadata]; [{parts: [[text]; [" etc.) with Rust for native interactions via an Inter-Process Communication (IPC) bridge. Dioxus's approach of running Rust code natively simplifies the architecture and can lead to better performance."]], role: model}, 0, {}]], {promptTokenCount: 33, candidatesTokenCount: 364, totalTokenCount: 513, promptTokensDetails: [[modality, tokenCount]; [TEXT, 33]], thoughtsTokenCount: 116}, "models/gemini-2.5-flash-preview-04-17"], [[[content, index, groundingMetadata]; [{parts: [[text]; ["
+
+In essence, Dioxus uses a WebView to display the UI but keeps the application's core logic in native Rust, offering a lightweight and performant way to build cross-platform applications."]], role: model}, 0, {}]], {promptTokenCount: 33, candidatesTokenCount: 403, totalTokenCount: 552, promptTokensDetails: [[modality, tokenCount]; [TEXT, 33]], thoughtsTokenCount: 116}, "models/gemini-2.5-flash-preview-04-17"], [[[content, finishReason, index, groundingMetadata]; [{role: model}, STOP, 0, {searchEntryPoint: {renderedContent: "<style>
+.container {
+  align-items: center;
+  border-radius: 8px;
+  display: flex;
+  font-family: Google Sans, Roboto, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 8px 12px;
+}
+.chip {
+  display: inline-block;
+  border: solid 1px;
+  border-radius: 16px;
+  min-width: 14px;
+  padding: 5px 16px;
+  text-align: center;
+  user-select: none;
+  margin: 0 8px;
+  -webkit-tap-highlight-color: transparent;
+}
+.carousel {
+  overflow: auto;
+  scrollbar-width: none;
+  white-space: nowrap;
+  margin-right: -12px;
+}
+.headline {
+  display: flex;
+  margin-right: 4px;
+}
+.gradient-container {
+  position: relative;
+}
+.gradient {
+  position: absolute;
+  transform: translate(3px, -9px);
+  height: 36px;
+  width: 9px;
+}
+@media (prefers-color-scheme: light) {
+  .container {
+    background-color: #fafafa;
+    box-shadow: 0 0 0 1px #0000000f;
+  }
+  .headline-label {
+    color: #1f1f1f;
+  }
+  .chip {
+    background-color: #ffffff;
+    border-color: #d2d2d2;
+    color: #5e5e5e;
+    text-decoration: none;
+  }
+  .chip:hover {
+    background-color: #f2f2f2;
+  }
+  .chip:focus {
+    background-color: #f2f2f2;
+  }
+  .chip:active {
+    background-color: #d8d8d8;
+    border-color: #b6b6b6;
+  }
+  .logo-dark {
+    display: none;
+  }
+  .gradient {
+    background: linear-gradient(90deg, #fafafa 15%, #fafafa00 100%);
+  }
+}
+@media (prefers-color-scheme: dark) {
+  .container {
+    background-color: #1f1f1f;
+    box-shadow: 0 0 0 1px #ffffff26;
+  }
+  .headline-label {
+    color: #fff;
+  }
+  .chip {
+    background-color: #2c2c2c;
+    border-color: #3c4043;
+    color: #fff;
+    text-decoration: none;
+  }
+  .chip:hover {
+    background-color: #353536;
+  }
+  .chip:focus {
+    background-color: #353536;
+  }
+  .chip:active {
+    background-color: #464849;
+    border-color: #53575b;
+  }
+  .logo-light {
+    display: none;
+  }
+  .gradient {
+    background: linear-gradient(90deg, #1f1f1f 15%, #1f1f1f00 100%);
+  }
+}
+</style>
+<div class=\"container\">
+  <div class=\"headline\">
+    <svg class=\"logo-light\" width=\"18\" height=\"18\" viewBox=\"9 9 35 35\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">
+      <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M42.8622 27.0064C42.8622 25.7839 42.7525 24.6084 42.5487 23.4799H26.3109V30.1568H35.5897C35.1821 32.3041 33.9596 34.1222 32.1258 35.3448V39.6864H37.7213C40.9814 36.677 42.8622 32.2571 42.8622 27.0064V27.0064Z\" fill=\"#4285F4\"/>
+      <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M26.3109 43.8555C30.9659 43.8555 34.8687 42.3195 37.7213 39.6863L32.1258 35.3447C30.5898 36.3792 28.6306 37.0061 26.3109 37.0061C21.8282 37.0061 18.0195 33.9811 16.6559 29.906H10.9194V34.3573C13.7563 39.9841 19.5712 43.8555 26.3109 43.8555V43.8555Z\" fill=\"#34A853\"/>
+      <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M16.6559 29.8904C16.3111 28.8559 16.1074 27.7588 16.1074 26.6146C16.1074 25.4704 16.3111 24.3733 16.6559 23.3388V18.8875H10.9194C9.74388 21.2072 9.06992 23.8247 9.06992 26.6146C9.06992 29.4045 9.74388 32.022 10.9194 34.3417L15.3864 30.8621L16.6559 29.8904V29.8904Z\" fill=\"#FBBC05\"/>
+      <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M26.3109 16.2386C28.85 16.2386 31.107 17.1164 32.9095 18.8091L37.8466 13.8719C34.853 11.082 30.9659 9.3736 26.3109 9.3736C19.5712 9.3736 13.7563 13.245 10.9194 18.8875L16.6559 23.3388C18.0195 19.2636 21.8282 16.2386 26.3109 16.2386V16.2386Z\" fill=\"#EA4335\"/>
+    </svg>
+    <svg class=\"logo-dark\" width=\"18\" height=\"18\" viewBox=\"0 0 48 48\" xmlns=\"http://www.w3.org/2000/svg\">
+      <circle cx=\"24\" cy=\"23\" fill=\"#FFF\" r=\"22\"/>
+      <path d=\"M33.76 34.26c2.75-2.56 4.49-6.37 4.49-11.26 0-.89-.08-1.84-.29-3H24.01v5.99h8.03c-.4 2.02-1.5 3.56-3.07 4.56v.75l3.91 2.97h.88z\" fill=\"#4285F4\"/>
+      <path d=\"M15.58 25.77A8.845 8.845 0 0 0 24 31.86c1.92 0 3.62-.46 4.97-1.31l4.79 3.71C31.14 36.7 27.65 38 24 38c-5.93 0-11.01-3.4-13.45-8.36l.17-1.01 4.06-2.85h.8z\" fill=\"#34A853\"/>
+      <path d=\"M15.59 20.21a8.864 8.864 0 0 0 0 5.58l-5.03 3.86c-.98-2-1.53-4.25-1.53-6.64 0-2.39.55-4.64 1.53-6.64l1-.22 3.81 2.98.22 1.08z\" fill=\"#FBBC05\"/>
+      <path d=\"M24 14.14c2.11 0 4.02.75 5.52 1.98l4.36-4.36C31.22 9.43 27.81 8 24 8c-5.93 0-11.01 3.4-13.45 8.36l5.03 3.85A8.86 8.86 0 0 1 24 14.14z\" fill=\"#EA4335\"/>
+    </svg>
+    <div class=\"gradient-container\"><div class=\"gradient\"></div></div>
+  </div>
+  <div class=\"carousel\">
+    <a class=\"chip\" href=\"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AbF9wXE1cvDyTPPH9NCcYtgP_nE5zCHkJuyfZYpInsXULEuDRJ5isZyGWG1X_lRPuvkftCMJDomAsHnWulnEFGyp9XqT9RPx6E9JX9Zs5BavMKkpu2-PRIb9nQ4Yv-Rr_jV6kHtyOKcpP3Bmsw4uHmYyyqTgN0_GpJEH3D5IOk9mZAfZO91CZbRdg-BerNP91kSqIRUU4emMnOg=\">dioxus vs tauri rendering</a>
+    <a class=\"chip\" href=\"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AbF9wXH7qau3tZ2rTa67E77-KteMfca_PLRUJDr2ZB5Tk1tbT3iMWIqtnNLB_MmFINmT1G2_GAKeg8R3a2J2r914AoWlXfcLaozPJoITKDCrviVCqximhKEb2WD89wZz4H3OGqc6Q479UlXQ5PieIOQqf6NbbFVo25vZfl46Bi5HRe-Qc_C9T1VTfHl2Bh_TOEUvYL2mMRhV18MfxEMohyDxOQ==\">how does dioxus render ui desktop</a>
+    <a class=\"chip\" href=\"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AbF9wXE1oAF78Uqh16NEsXxOi4ysN5c0FsbwRPj-tcbvOagj4XGY7YEFWOzMOtP68PHNbdSvwDBFKDIGiO-qY-9MB-yS4k72COFlwk0ePS0lDL8JrTNeV7Wdpsrju3euY3aqzzkq1qsg9tN_JcQKlYOwg3IhkamGo-3wXO3nY4V0v_wfZ7C5CNcMNJ0D7d5IbGQWQAALRGwv\">does dioxus use webview</a>
+  </div>
+</div>
+"}, groundingChunks: [[web]; [{uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AbF9wXHP6V15Gt-ZjmBH3ODU4f354Xx0gkG3tf1UrXag7TzBwsz4wX5rHv0UngXjjYM7G7ALX1ieioBcducUEO8L4JjBjK0UsESS-9EU79Tr9E1ETW-HbSq16atapA==", title: "github.com"}], [{uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AbF9wXHZY6ViIVJx0pLRBSS78Gn-ltM87xj1a1XyvhTosLMFFUJFppnZmAmXtpvgbyDsjqaQY94E-BOBvLstFp2QbdkLkusRNEXzah7Mzz77d-o2BIgiS9xNHmP4SWQQZgOZ3UihFjaiAA==", title: "dioxuslabs.com"}], [{uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AbF9wXEHygjAJLCF5FNiQREpPH0rMb0vOpVek6cA_Y4tweetnp9FnwbRJKvLhfcNFdBRVz8neXLgrOdusGCUJ3FNAmn_6dAGpdXrwpXGNFl8lW6NMN66UwF8f_-MRAjseSAxBtHe7tUpvVc1G8ci235StDy9mB8ocvs=", title: "dioxuslabs.com"}], [{uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AbF9wXFjV6S3xF99Wr_0Ei0dfHsvyWKeGVKOodh1fbE9ybikCRqcLkXA3T19S8ldKW8mQs5E1qoSNcYJ3vP7v75KJxMdifi1509dznNf3MaMIjfO7ow3H6xjOSzpL5qaeYRTV9mGtg==", title: "ycombinator.com"}], [{uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AbF9wXEGQtpy7cEdyxitzEoqL0oRDYzQWDQE1HXHTLrG16byqHGWorfJLXDQHBP262ZWPN0qyXkPz1bv-Of9vrV_dqh8Rbnnx37QbDebk-sz1sx0e4HGWNGfCNy3MULrXhV_ZxOrag==", title: "crates.io"}], [{uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AbF9wXFG2p-6xTQ7SNBBHnv_OhntCOTS_qsILDV8y_knIQgcqd61-8nXbek5HeIaae23-epWejaLReJvqXgmIDzf9XlgnTE5x3ThiHB16KU8Jt5aCiXuEjJKWzZLf4NuI_WVBLKHeQ==", title: "ycombinator.com"}], [{uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AbF9wXHGbWqH43UBbAUqYA5D10icdr6tL8107Bp_1LUq613VT7Z7v01vVnH7tZZQwEJR9J1O2FzpvQ72Pv4Nm5N1zhCvBdmX9OENsz4z5_-UAi1SF7rEZfqaL17KxiDFI72JS7TnhVbGm__i04czEm6gpKe4h-81ws_gv3dJwKIYVKFRN_k7KLyJPcJfce1WtH20WA==", title: "reddit.com"}], [{uri: "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AbF9wXH4Kv94J8uH7VCwhe3Qa1hDcGwSfMgn5VlIIpuyThzJTRR45bn3FfIwLocJna19jC3esJw7cmeltQP73iVD1dPhwEovdkcfto4ttNonTrzsapZA0n9JITdrBRADk-NUAjBjS37lk0RC366Bw1emmVODEvtPuJ90JQNhA56CfxQP6GMXauBeY2KNediA7SwoVVSDIGTi7Xcg2LLRzN1W", title: "webengineshackfest.org"}]], groundingSupports: [[segment, groundingChunkIndices]; [{endIndex: 147, text: "Yes, Dioxus, for its desktop and mobile targets, primarily uses a system's native WebView to render the user interface, similar to how Tauri works."}, [0, 1, 2]], [{startIndex: 170, endIndex: 309, text: "*   **WebView-based Rendering:** Dioxus leverages the system's built-in WebView to display the UI using web technologies like HTML and CSS."}, [0, 1, 2]], [{startIndex: 310, endIndex: 421, text: "This approach contributes to smaller application sizes compared to frameworks that embed a full browser engine."}, [0, 1]], [{startIndex: 422, endIndex: 542, text: "*   **Native Rust Code:** Although the UI is rendered in a WebView, your application's core logic runs natively in Rust."}, [1, 3, 4]], [{startIndex: 543, endIndex: 693, text: "This allows for direct access to system APIs, multithreading, filesystem access, and other native capabilities without relying on a JavaScript bridge."}, [0, 1, 4]], [{startIndex: 694, endIndex: 853, text: "*   **Shared Components:** Dioxus and Tauri actually share some underlying libraries, such as Tao and Wry, which are used for windowing and WebView management."}, [0]], [{startIndex: 854, endIndex: 1003, text: "*   **Renderer Agnostic Design:** While WebView is the primary renderer for desktop and mobile currently, Dioxus is designed to be renderer-agnostic."}, [0, 5]], [{startIndex: 1004, endIndex: 1140, text: "There are plans for a native renderer called Blitz, which is still under development and aims to render UI using technologies like WGPU."}, [5, 6, 7]], [{startIndex: 1373, endIndex: 1455, text: "with Rust for native interactions via an Inter-Process Communication (IPC) bridge."}, [0]], [{startIndex: 1456, endIndex: 1567, text: "Dioxus's approach of running Rust code natively simplifies the architecture and can lead to better performance."}, [0, 3]], [{startIndex: 1569, endIndex: 1755, text: "In essence, Dioxus uses a WebView to display the UI but keeps the application's core logic in native Rust, offering a lightweight and performant way to build cross-platform applications."}, [0, 1, 3]]], webSearchQueries: ["how does dioxus render ui desktop", "dioxus vs tauri rendering", "does dioxus use webview"]}]], {promptTokenCount: 33, candidatesTokenCount: 403, totalTokenCount: 552, promptTokensDetails: [[modality, tokenCount]; [TEXT, 33]], thoughtsTokenCount: 116}, "models/gemini-2.5-flash-preview-04-17"]]

@@ -213,7 +213,9 @@ export def provider [] {
     }
 
     response_stream_streamer: {|event|
-      $event | get candidates.0.content.parts.0 | transpose type content | first | if $in.type == "functionCall" {
+      let parts = $event | get candidates.0.content.parts?
+      if $parts == null { return }
+      $parts.0 | transpose type content | first | if $in.type == "functionCall" {
         {
           type: "tool_use"
           name: $in.content.name
