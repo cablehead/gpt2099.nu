@@ -1,29 +1,19 @@
-# gpt.nu
+# gpt2099.nu
 
-gpt.nu is a Nushell module that enables direct interaction with large language
-models (LLMs) from your command line. It provides a simple interface supporting
-multiple LLM providers and the
-[Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction).
+A [Nushell](https://www.nushell.sh) scriptable [MCP client](https://modelcontextprotocol.io/sdk/java/mcp-client#model-context-protocol-client) with editable context threads stored in [cross.stream](https://github.com/cablehead/xs)
 
 <img
   src="https://github.com/user-attachments/assets/1b2a9834-dcbf-4f5a-85aa-32109a68397b"
   width="600"
 />
 
+## Features
 
-With gpt.nu, you can:
+* **Consistent API Across Models:** Connect to Gemini + Search and Anthropic + Search through a single, simple interface. ([Add providers easily.](./provider-api.md))
+* **Persistent, Editable Conversations:** Conversations are saved across sessions. Review, edit, and control your own context window — no black-box history.
+* **Flexible Tool Integration:** Connect to MCP servers to extend functionality. `gpt2099.nu` already rivals [Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) for local file editing, but with full provider independence and deeper flexibility.
 
-- Chat with AI models using one consistent API. Current providers (it's easy to add [more](./provider-api.md))
-  - gemini + search
-  - anthropic + search
-- Maintain conversation context across sessions. In addition to storing the
-  conversation, cross.stream makes it convenient to review and manually edit
-  conversation threads, giving you direct control over the context window.
-- Integrate with MCP servers to extend tool capabilities: while rough at the edges, `gpt.nu` is already as capable as [claude code](https://docs.anthropic.com/en/docs/claude-code/overview) for local file editing, but it's provider agnostic and a lot more flexible.
-
-Built on [cross.stream](https://github.com/cablehead/xs) for event processing,
-gpt.nu brings modern AI capabilities directly into your Nushell workflow,
-without leaving the terminal.
+Built on [cross.stream](https://github.com/cablehead/xs) for event-driven processing, `gpt2099.nu` brings modern AI directly into your Nushell workflow — fully scriptable, fully inspectable, all in the terminal.
 
 ## Usage
 
