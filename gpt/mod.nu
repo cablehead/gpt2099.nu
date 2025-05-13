@@ -145,6 +145,32 @@ export def configure [] {
   ignore
 }
 
+# Configure a different model for the current provider
+export def configure-model [] {
+  # Get current configuration
+  let config = .head gpt.config | .cas $in.hash | from json
+  print $"Current provider: ($config.name)"
+  print $"Current model: ($config.model)"
+
+  # Get provider module
+  let p = (providers) | get $config.name
+
+  # Fetch available models
+  let models = do $p.models $config.key
+
+  # Let user select a new model
+  let model = $models | get id | input list --fuzzy "Select model"
+  print $"Selected model: ($model)"
+
+  # Save updated configuration
+  {
+    name: $config.name
+    key: $config.key
+    model: $model
+  } | to json -r | .append gpt.config
+  ignore
+}
+
 export def init [
   --refresh (-r) # Skip configuration if set
 ] {
