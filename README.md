@@ -33,9 +33,9 @@ to select an LLM provider, an API key, and a model.
 
 Makes a request to the LLM provider.
 
-### gpt thread
+### gpt context pull
 
-Review the current conversation thread.
+Review the current context-window.
 
 ### gpt mcp
 
