@@ -1,4 +1,4 @@
-export use ./thread.nu
+export use ./context.nu
 export use ./mcp.nu
 export use ./providers
 
@@ -51,8 +51,6 @@ export def main [
 
   process-turn $turn
 
-  let messages = thread $turn.id | reject id
-
   let config = .head gpt.config | .cas $in.hash | from json
 
   let content = $res | get message.content
@@ -98,18 +96,16 @@ export def main [
 }
 
 export def process-turn [turn: record] {
-
   let role = $turn.meta | default "user" role | get role
-
   if $role == "assistant" {
     return "end-of-turn"
   }
 
-  let context = thread $turn.id
+  let ctx = context $turn.id
 
   let config = .head gpt.config | .cas $in.hash | from json
 
-  let res = generate-response $config $context
+  let res = generate-response $config $ctx
 
   let content = $res | get message.content
   let meta = (
@@ -122,11 +118,10 @@ export def process-turn [turn: record] {
 
   # save the assistance response
   let turn = $content | to json | .append gpt.turn --meta $meta
-
   process-turn $turn
 }
 
-export def generate-response [config: record messages: list<record> options: record] {
+export def generate-response [config: record ctx: record] {
 
   let $tools = $servers | if ($in | is-not-empty) {
     each {|server|
@@ -141,7 +136,7 @@ export def generate-response [config: record messages: list<record> options: rec
 
   let res = (
     $messages
-    | do $p.prepare-request {tools: $tools search: $search}
+    | do $p.prepare-request {options: tools: $tools search: $search}
     | do $p.call $config.key $config.model
     | tee { each { to json | .append gpt.recv --meta {turn_id: $turn.id} } }
     | tee { preview-stream $p.response_stream_streamer }
