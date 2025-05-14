@@ -73,9 +73,9 @@ def id-to-turns [ids] {
     let next = $frame | get meta?.continues?
     match ($next | describe -d | get type) {
       "string" => { $stack = ($stack | append $next) }
-      "list"   => { $stack = ($stack | append $next) }
+      "list" => { $stack = ($stack | append $next) }
       "nothing" => { }
-      _ => (error make {msg: "Invalid continues value"})
+      _ => ( error make {msg: "Invalid continues value"})
     }
   }
 
@@ -96,7 +96,7 @@ export def main [ids?] {
   let merged_options = (
     $turns
     | each {|t| t.options }
-    | reduce {|a b| merge $a $b}
+    | reduce {|a b| $a }
   )
 
   {

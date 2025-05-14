@@ -50,15 +50,10 @@ export def main [
   let turn = $content | .append gpt.turn --meta $meta
 
   process-turn $turn
+}
 
-  let config = .head gpt.config | .cas $in.hash | from json
-
-  let content = $res | get message.content
-  let meta = $res | reject message.content | insert continues $turn.id
-
-  # save the assistance response
-  let turn = $content | to json | .append gpt.turn --meta $meta
-
+export def process-turn-response [turn: record] {
+  let content = .cas $turn.hash | from json
   let tool_use = $content | where type == "tool_use"
   if ($tool_use | is-empty) { return }
   let tool_use = $tool_use | first
@@ -91,21 +86,27 @@ export def main [
   ]
 
   print ($tool_result | table -e)
-  # continue the interaction
-  $tool_result | to json | main -c $turn.id --json --servers $servers
+
+  let meta = {
+    role: "user"
+    content_type: "application/json"
+    continues: $turn.id
+  }
+  let turn = $tool_result | to json | .append gpt.turn --meta $meta
+  process-turn $turn
 }
 
 export def process-turn [turn: record] {
   let role = $turn.meta | default "user" role | get role
   if $role == "assistant" {
-    return "end-of-turn"
+    return (process-turn-response $turn)
   }
 
   let ctx = context $turn.id
 
   let config = .head gpt.config | .cas $in.hash | from json
 
-  let res = generate-response $config $ctx
+  let res = generate-response $config $ctx $turn.id
 
   let content = $res | get message.content
   let meta = (
@@ -118,11 +119,11 @@ export def process-turn [turn: record] {
 
   # save the assistance response
   let turn = $content | to json | .append gpt.turn --meta $meta
-  process-turn $turn
+  $content | process-turn-response $turn
 }
 
-export def generate-response [config: record ctx: record] {
-
+export def generate-response [config: record ctx: record id: string] {
+  let servers = $ctx.options?.servers?
   let $tools = $servers | if ($in | is-not-empty) {
     each {|server|
       .head $"mcp.($server).tools" | .cas $in.hash | from json | update name {
@@ -133,15 +134,14 @@ export def generate-response [config: record ctx: record] {
   }
 
   let p = (providers) | get $config.name
-
   let res = (
-    $messages
-    | do $p.prepare-request {options: tools: $tools search: $search}
+    do $p.prepare-request $ctx $tools
     | do $p.call $config.key $config.model
-    | tee { each { to json | .append gpt.recv --meta {turn_id: $turn.id} } }
+    | tee { each { to json | .append gpt.recv --meta {turn_id: $id} } }
     | tee { preview-stream $p.response_stream_streamer }
     | do $p.response_stream_aggregate
   )
+  $res
 }
 
 export def preview-stream [streamer] {
