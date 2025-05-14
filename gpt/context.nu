@@ -91,7 +91,7 @@ export def get-thread [ids?] {
 # Fully resolved context window
 export def pull [ids?] {
   let turns = get-thread $ids
-  let options = $turns | get options? | compact | last
+  let options = $turns | get options? | compact --empty | if ($in | is-not-empty) { last } else { null }
   {
     messages: $turns
     options: $options

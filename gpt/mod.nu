@@ -38,10 +38,11 @@ export def main [
   let meta = (
     {
       role: user
-      options : {
-        servers: $servers
-        search: $search
-      }
+      options : (
+        {}
+        | conditional-pipe ($servers | is-not-empty) { insert servers $servers }
+        | conditional-pipe $search { insert search $search }
+      )
     }
     | if $continues != null { insert continues $continues } else { }
     | if $json { insert content_type "application/json" } else { }
