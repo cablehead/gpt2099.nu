@@ -102,7 +102,7 @@ export def process-turn [turn: record] {
     return (process-turn-response $turn)
   }
 
-  let ctx = context $turn.id
+  let ctx = context pull $turn.id
 
   let config = .head gpt.config | .cas $in.hash | from json
 
