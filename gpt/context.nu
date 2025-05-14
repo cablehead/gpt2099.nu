@@ -1,30 +1,31 @@
-def frame-to-message [frame: record] {
+# Convert a stored frame into a normalized “turn” with delta options and cache flag
+def frame-to-turn [frame: record] {
   let meta = $frame | get meta? | default {}
   let role = $meta | default "user" role | get role
+  let cache = $meta | get cache? | default false
+  let options_delta = $meta | get options? | default {}
 
-  let content = if ($frame | get hash? | is-not-empty) { .cas $frame.hash }
-  if ($content | is-empty) { return }
+  let content_raw = if ($frame | get hash? | is-not-empty) { .cas $frame.hash }
+  if ($content_raw | is-empty) { return }
 
   let content = (
     if ($meta.type? == "document" and $meta.content_type? != null) {
       [
         {
-          "type": "document"
-          "cache_control": {"type": "ephemeral"}
-          "source": {
-            "type": "base64"
-            "media_type": $meta.content_type
-            "data": ($content | encode base64)
+          type: "document"
+          cache_control: {type: "ephemeral"}
+          source: {
+            type: "base64"
+            media_type: $meta.content_type
+            data: ($content_raw | encode base64)
           }
         }
       ]
     } else if (($meta | get content_type?) == "application/json") {
-      $content | from json
+      $content_raw | from json
     } else {
       [
-        (
-          {type: "text" text: $content}
-        )
+        {type: "text" text: $content_raw}
       ]
     }
   )
@@ -33,35 +34,53 @@ def frame-to-message [frame: record] {
     id: $frame.id
     role: $role
     content: $content
-  } | if ($frame.meta?.cache? | default false) {
-    insert cache true
-  } else { }
+    options: $options_delta
+    cache: $cache
+  }
 }
 
-def id-to-messages [ids] {
-  mut messages = []
+# Follow the continues chain to produce a list of turns in chronological order
+def id-to-turns [ids] {
+  mut turns = []
   mut stack = [] | append $ids
 
   while not ($stack | is-empty) {
     let current_id = $stack | first
     let frame = .get $current_id
-    $messages = ($messages | prepend (frame-to-message $frame))
-
+    $turns = ($turns | prepend (frame-to-turn $frame))
     $stack = ($stack | skip 1)
 
-    let next_id = $frame | get meta?.continues?
-    match ($next_id | describe -d | get type) {
-      "string" => { $stack = ($stack | append $next_id) }
-      "list" => { $stack = ($stack | append $next_id) }
+    let next = $frame | get meta?.continues?
+    match ($next | describe -d | get type) {
+      "string" => { $stack = ($stack | append $next) }
+      "list" =>   { $stack = ($stack | append $next) }
       "nothing" => { }
-      _ => ( error make {msg: "TBD"})
+      _ => (error make {msg: "Invalid continues value"})
     }
   }
 
-  $messages
+  $turns
 }
 
-export def main [ids?] {
+# Raw per-turn view
+export def thread [ids?] {
   let ids = if ($ids | is-empty) { (.head gpt.turn).id } else { $ids }
-  id-to-messages $ids
+  id-to-turns $ids
+}
+
+# Fully resolved context for LLM: messages + merged options
+export def main [ids?] {
+  let turns = thread $ids
+
+  # Merge options deltas in order
+  let merged_options = (
+    $turns
+    | each {|t| t.options }
+    | reduce {|a b| merge $a $b}
+  )
+
+  {
+    messages: $turns
+    options: $merged_options
+  }
 }
