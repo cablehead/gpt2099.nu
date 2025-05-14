@@ -121,10 +121,7 @@ export def provider [] {
 
     response_stream_aggregate: {||
       collect {|events|
-        mut response = {
-          role: "assistant"
-          mime_type: "application/json"
-        }
+        mut response = {}
         for event in $events {
           match $event.type {
             "message_start" => ($response.message = $event.message)

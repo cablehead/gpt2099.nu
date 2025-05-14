@@ -2,6 +2,21 @@ export use ./thread.nu
 export use ./mcp.nu
 export use ./providers
 
+# Schema: gpt.turn.meta
+# Each `gpt.turn` frame stores metadata under `meta`, which controls role, format, options, and flow.
+#
+# {
+#   role: "user" | "assistant" | "system"       # Optional; defaults to "user"
+#   content_type: string                        # MIME type of this turn's content (default: "text/plain")
+#   continues: string | list<string>            # Parent turn(s) for context linking
+#   options: {
+#     servers: list<string>                     # Available MCP tool namespaces
+#     search: bool                              # Enable LLM-side search
+#     tool_mode: "auto" | "manual" | "disabled" # Tool execution strategy
+#   }
+#   cache: bool                                 # If true, marks content for ephemeral caching (not inherited)
+# }
+
 export def main [
   --continues (-c): any # Previous message IDs to continue a conversation
   --respond (-r) # Continue from the last response
@@ -18,40 +33,27 @@ export def main [
     $in
   }
 
-  let config = .head gpt.config | .cas $in.hash | from json
-  let p = (providers) | get $config.name
-
   let continues = if $respond { $continues | append (.head gpt.turn).id } else { $continues }
 
   let meta = (
-    {}
+    {
+      role: user
+      options : {
+        servers: $servers
+        search: $search
+      }
+    }
     | if $continues != null { insert continues $continues } else { }
-    | if $servers != null { insert servers $servers } else { }
-    | if $json { insert mime_type "application/json" } else { }
-    | if $search { insert options {search: true} } else { }
+    | if $json { insert content_type "application/json" } else { }
   )
 
   let turn = $content | .append gpt.turn --meta $meta
 
+  process-turn $turn
+
   let messages = thread $turn.id | reject id
 
-  let $tools = $servers | if ($in | is-not-empty) {
-    each {|server|
-      .head $"mcp.($server).tools" | .cas $in.hash | from json | update name {
-        # prepend server name to tool name so we can determine which server to use
-        $"($server)___($in)"
-      }
-    } | flatten
-  }
-
-  let res = (
-    $messages
-    | do $p.prepare-request {tools: $tools search: $search}
-    | do $p.call $config.key $config.model
-    | tee { each { to json | .append gpt.recv --meta {turn_id: $turn.id} } }
-    | tee { preview-stream $p.response_stream_streamer }
-    | do $p.response_stream_aggregate
-  )
+  let config = .head gpt.config | .cas $in.hash | from json
 
   let content = $res | get message.content
   let meta = $res | reject message.content | insert continues $turn.id
@@ -93,6 +95,58 @@ export def main [
   print ($tool_result | table -e)
   # continue the interaction
   $tool_result | to json | main -c $turn.id --json --servers $servers
+}
+
+export def process-turn [turn: record] {
+
+  let role = $turn.meta | default "user" role | get role
+
+  if $role == "assistant" {
+    return "end-of-turn"
+  }
+
+  let context = thread $turn.id
+
+  let config = .head gpt.config | .cas $in.hash | from json
+
+  let res = generate-response $config $context
+
+  let content = $res | get message.content
+  let meta = (
+    $res
+    | reject message.content
+    | insert continues $turn.id
+    | insert role "assistant"
+    | insert content_type "application/json"
+  )
+
+  # save the assistance response
+  let turn = $content | to json | .append gpt.turn --meta $meta
+
+  process-turn $turn
+}
+
+export def generate-response [config: record messages: list<record> options: record] {
+
+  let $tools = $servers | if ($in | is-not-empty) {
+    each {|server|
+      .head $"mcp.($server).tools" | .cas $in.hash | from json | update name {
+        # prepend server name to tool name so we can determine which server to use
+        $"($server)___($in)"
+      }
+    } | flatten
+  }
+
+  let p = (providers) | get $config.name
+
+  let res = (
+    $messages
+    | do $p.prepare-request {tools: $tools search: $search}
+    | do $p.call $config.key $config.model
+    | tee { each { to json | .append gpt.recv --meta {turn_id: $turn.id} } }
+    | tee { preview-stream $p.response_stream_streamer }
+    | do $p.response_stream_aggregate
+  )
 }
 
 export def preview-stream [streamer] {

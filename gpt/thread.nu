@@ -18,15 +18,12 @@ def frame-to-message [frame: record] {
           }
         }
       ]
-    } else if (($meta | get mime_type?) == "application/json") {
+    } else if (($meta | get content_type?) == "application/json") {
       $content | from json
     } else {
       [
         (
           {type: "text" text: $content}
-          | if ($frame.meta?.cache? | default false) {
-            insert cache_control {type: "ephemeral"}
-          } else { }
         )
       ]
     }
@@ -36,7 +33,9 @@ def frame-to-message [frame: record] {
     id: $frame.id
     role: $role
     content: $content
-  }
+  } | if ($frame.meta?.cache? | default false) {
+    insert cache true
+  } else { }
 }
 
 def id-to-messages [ids] {

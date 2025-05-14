@@ -110,8 +110,6 @@ export def provider [] {
         )
 
         {
-          role: "assistant"
-          mime_type: "application/json"
           message: {
             type: "message"
             role: "assistant"

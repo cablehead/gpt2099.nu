@@ -127,8 +127,6 @@ export def provider [] {
       collect {|events|
         # Initialize the basic structure
         mut response = {
-          role: "assistant"
-          mime_type: "application/json"
           message: {
             type: "message"
             role: "assistant"
