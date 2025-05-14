@@ -2,21 +2,6 @@ export use ./context.nu
 export use ./mcp.nu
 export use ./providers
 
-# Schema: gpt.turn.meta
-# Each `gpt.turn` frame stores metadata under `meta`, which controls role, format, options, and flow.
-#
-# {
-#   role: "user" | "assistant" | "system"       # Optional; defaults to "user"
-#   content_type: string                        # MIME type of this turn's content (default: "text/plain")
-#   continues: string | list<string>            # Parent turn(s) for context linking
-#   options: {
-#     servers: list<string>                     # Available MCP tool namespaces
-#     search: bool                              # Enable LLM-side search
-#     tool_mode: "auto" | "manual" | "disabled" # Tool execution strategy
-#   }
-#   cache: bool                                 # If true, marks content for ephemeral caching (not inherited)
-# }
-
 export def main [
   --continues (-c): any # Previous message IDs to continue a conversation
   --respond (-r) # Continue from the last response
