@@ -1,4 +1,4 @@
-export use ./thread.nu
+export use ./context.nu
 export use ./mcp.nu
 export use ./providers
 
@@ -18,47 +18,28 @@ export def main [
     $in
   }
 
-  let config = .head gpt.config | .cas $in.hash | from json
-  let p = (providers) | get $config.name
-
   let continues = if $respond { $continues | append (.head gpt.turn).id } else { $continues }
 
   let meta = (
-    {}
+    {
+      role: user
+      options : (
+        {}
+        | conditional-pipe ($servers | is-not-empty) { insert servers $servers }
+        | conditional-pipe $search { insert search $search }
+      )
+    }
     | if $continues != null { insert continues $continues } else { }
-    | if $servers != null { insert servers $servers } else { }
-    | if $json { insert mime_type "application/json" } else { }
-    | if $search { insert options {search: true} } else { }
+    | if $json { insert content_type "application/json" } else { }
   )
 
   let turn = $content | .append gpt.turn --meta $meta
 
-  let messages = thread $turn.id | reject id
+  process-turn $turn
+}
 
-  let $tools = $servers | if ($in | is-not-empty) {
-    each {|server|
-      .head $"mcp.($server).tools" | .cas $in.hash | from json | update name {
-        # prepend server name to tool name so we can determine which server to use
-        $"($server)___($in)"
-      }
-    } | flatten
-  }
-
-  let res = (
-    $messages
-    | do $p.prepare-request {tools: $tools search: $search}
-    | do $p.call $config.key $config.model
-    | tee { each { to json | .append gpt.recv --meta {turn_id: $turn.id} } }
-    | tee { preview-stream $p.response_stream_streamer }
-    | do $p.response_stream_aggregate
-  )
-
-  let content = $res | get message.content
-  let meta = $res | reject message.content | insert continues $turn.id
-
-  # save the assistance response
-  let turn = $content | to json | .append gpt.turn --meta $meta
-
+export def process-turn-response [turn: record] {
+  let content = .cas $turn.hash | from json
   let tool_use = $content | where type == "tool_use"
   if ($tool_use | is-empty) { return }
   let tool_use = $tool_use | first
@@ -91,8 +72,62 @@ export def main [
   ]
 
   print ($tool_result | table -e)
-  # continue the interaction
-  $tool_result | to json | main -c $turn.id --json --servers $servers
+
+  let meta = {
+    role: "user"
+    content_type: "application/json"
+    continues: $turn.id
+  }
+  let turn = $tool_result | to json | .append gpt.turn --meta $meta
+  process-turn $turn
+}
+
+export def process-turn [turn: record] {
+  let role = $turn.meta | default "user" role | get role
+  if $role == "assistant" {
+    return (process-turn-response $turn)
+  }
+
+  let ctx = context pull $turn.id
+
+  let config = .head gpt.config | .cas $in.hash | from json
+
+  let res = generate-response $config $ctx $turn.id
+
+  let content = $res | get message.content
+  let meta = (
+    $res
+    | reject message.content
+    | insert continues $turn.id
+    | insert role "assistant"
+    | insert content_type "application/json"
+  )
+
+  # save the assistance response
+  let turn = $content | to json | .append gpt.turn --meta $meta
+  $content | process-turn-response $turn
+}
+
+export def generate-response [config: record ctx: record id: string] {
+  let servers = $ctx.options?.servers?
+  let $tools = $servers | if ($in | is-not-empty) {
+    each {|server|
+      .head $"mcp.($server).tools" | .cas $in.hash | from json | update name {
+        # prepend server name to tool name so we can determine which server to use
+        $"($server)___($in)"
+      }
+    } | flatten
+  }
+
+  let p = (providers) | get $config.name
+  let res = (
+    do $p.prepare-request $ctx $tools
+    | do $p.call $config.key $config.model
+    | tee { each { to json | .append gpt.recv --meta {turn_id: $id} } }
+    | tee { preview-stream $p.response_stream_streamer }
+    | do $p.response_stream_aggregate
+  )
+  $res
 }
 
 export def preview-stream [streamer] {
@@ -140,6 +175,32 @@ export def configure [] {
   {
     name: $name
     key: $key
+    model: $model
+  } | to json -r | .append gpt.config
+  ignore
+}
+
+# Configure a different model for the current provider
+export def configure-model [] {
+  # Get current configuration
+  let config = .head gpt.config | .cas $in.hash | from json
+  print $"Current provider: ($config.name)"
+  print $"Current model: ($config.model)"
+
+  # Get provider module
+  let p = (providers) | get $config.name
+
+  # Fetch available models
+  let models = do $p.models $config.key
+
+  # Let user select a new model
+  let model = $models | get id | input list --fuzzy "Select model"
+  print $"Selected model: ($model)"
+
+  # Save updated configuration
+  {
+    name: $config.name
+    key: $config.key
     model: $model
   } | to json -r | .append gpt.config
   ignore

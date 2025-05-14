@@ -50,9 +50,9 @@ export def provider [] {
       )
     }
 
-    prepare-request: {|options: record|
+    prepare-request: {|ctx: record tools?: list<record>|
       # anthropic only supports a single system message as a top level attribute
-      let messages = $in
+      let messages = $ctx.messages
       let system_messages = $messages | where role == "system"
       let messages = $messages | where role != "system"
 
@@ -71,8 +71,8 @@ export def provider [] {
         max_tokens: 8192
         stream: true
         messages: $messages
-        tools: ($options.tools? | default [] | convert-mcp-toolslist-to-provider)
-      } | conditional-pipe ($options | get search? | default false) {
+        tools: ($tools | default [] | convert-mcp-toolslist-to-provider)
+      } | conditional-pipe ($ctx.options | get search? | default false) {
         update tools {
           $in | append {
             type: "web_search_20250305"
@@ -121,10 +121,7 @@ export def provider [] {
 
     response_stream_aggregate: {||
       collect {|events|
-        mut response = {
-          role: "assistant"
-          mime_type: "application/json"
-        }
+        mut response = {}
         for event in $events {
           match $event.type {
             "message_start" => ($response.message = $event.message)
