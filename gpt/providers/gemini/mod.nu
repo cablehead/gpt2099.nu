@@ -44,14 +44,13 @@ export def provider [] {
       )
     }
 
-    prepare-request: {|options: record|
+    prepare-request: {|ctx: record tools?: list<record>|
       # gemini only supports a single system message as a top level attribute
-      let messages = $in
+      let messages = $ctx.messages
       let system_messages = $messages | where role == "system"
       let messages = $messages | where role != "system"
 
-      let tools = $options.tools? | default []
-      let search = $options.search? | default false
+      let search = $ctx.options.search? | default false
 
       let data = {
         contents: (

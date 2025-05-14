@@ -25,8 +25,8 @@ export def provider [] {
       | sort-by -r created
     }
 
-    prepare-request: {|tools?: list|
-      let messages = $in | each {|m|
+    prepare-request: {|ctx: record tools?: list<record>|
+      let messages = $ctx.messages | each {|m|
         {
           role: $m.role
           content: ($m.content | where type == "text" | get text | str join "")
