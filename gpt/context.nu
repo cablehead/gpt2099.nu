@@ -83,24 +83,17 @@ def id-to-turns [ids] {
 }
 
 # Raw per-turn view
-export def thread [ids?] {
+export def get-thread [ids?] {
   let ids = if ($ids | is-empty) { (.head gpt.turn).id } else { $ids }
   id-to-turns $ids
 }
 
-# Fully resolved context for LLM: messages + merged options
-export def main [ids?] {
-  let turns = thread $ids
-
-  # Merge options deltas in order
-  let merged_options = (
-    $turns
-    | each {|t| t.options }
-    | reduce {|a b| $a }
-  )
-
+# Fully resolved context window
+export def pull [ids?] {
+  let turns = get-thread $ids
+  let options = $turns | get options? | compact | last
   {
     messages: $turns
-    options: $merged_options
+    options: $options
   }
 }
