@@ -1,3 +1,23 @@
+# gpt/context.nu
+# Module: Context and Thread Handling
+#
+# Schemas:
+#
+# Thread (per-turn) record:
+# {
+#   id: string                            # Unique turn ID
+#   role: "user" | "assistant" | "system"  # Speaker role, default "user"
+#   content: list<record>                # Blocks: e.g., {type: "text"|"document", ...}
+#   options: record                      # Delta options: {servers?, search?, tool_mode?}
+#   cache: bool                          # Ephemeral cache flag for this turn
+# }
+#
+# Context (full) record returned by main:
+# {
+#   messages: list<record>               # Chronological list of thread records
+#   options: record                      # Merged options across all turns
+# }
+
 # Convert a stored frame into a normalized “turn” with delta options and cache flag
 def frame-to-turn [frame: record] {
   let meta = $frame | get meta? | default {}
@@ -53,7 +73,7 @@ def id-to-turns [ids] {
     let next = $frame | get meta?.continues?
     match ($next | describe -d | get type) {
       "string" => { $stack = ($stack | append $next) }
-      "list" =>   { $stack = ($stack | append $next) }
+      "list"   => { $stack = ($stack | append $next) }
       "nothing" => { }
       _ => (error make {msg: "Invalid continues value"})
     }
