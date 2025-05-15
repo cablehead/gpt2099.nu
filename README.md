@@ -17,12 +17,21 @@ Built on [cross.stream](https://github.com/cablehead/xs) for event-driven proces
 
 ## Usage
 
-First install and configure cross.stream:
-https://cablehead.github.io/xs/getting-started/installation/
+### Step 1.
+
+First, install and configure [`cross.stream`](https://github.com/cablehead/xs). This may take a little effort to get right, but once it’s set up, you’ll have the full [`cross.stream`](https://github.com/cablehead/xs) ecosystem of tools for editing and working with your context windows.
+
+- https://cablehead.github.io/xs/getting-started/installation/
+
+### Step 2.
+
+It's easy from here.
 
 ```nushell
 overlay use -pr ./gpt
 ```
+
+## commands
 
 ### gpt init
 
