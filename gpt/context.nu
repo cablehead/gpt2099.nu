@@ -108,8 +108,7 @@ export def pull [ids?] {
 # - path = current working directory
 # - origin = output of `git remote get-url origin`
 export def prep-git-repo [
-  # Optional closure to fetch file content. Defaults to `cat $in`
-  get_content?: closure
+  get_content?: closure # closure to fetch file content, default `{ cat $in }`
 ]: list<string> -> string {
   let names = $in
 
