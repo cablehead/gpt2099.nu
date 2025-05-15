@@ -42,9 +42,10 @@ to select an LLM provider, an API key, and a model.
 
 Makes a request to the LLM provider.
 
-### gpt context pull
+### gpt context
 
-Review the current context-window.
+- `pull`: Review the current context-window.
+- `prep-git-repo`: `git ls-files ./gpt | lines | gpt context prep-git-repo | bat -l xml`
 
 ### gpt mcp
 
