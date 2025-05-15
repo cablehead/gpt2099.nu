@@ -83,14 +83,14 @@ def id-to-turns [ids] {
 }
 
 # Raw per-turn view
-export def get-thread [ids?] {
+export def list [ids?] {
   let ids = if ($ids | is-empty) { (.head gpt.turn).id } else { $ids }
   id-to-turns $ids
 }
 
 # Fully resolved context window
 export def pull [ids?] {
-  let turns = get-thread $ids
+  let turns = list $ids
   let options = $turns | get options? | compact --empty | if ($in | is-not-empty) { last } else { null }
   {
     messages: $turns
