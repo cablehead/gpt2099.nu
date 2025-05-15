@@ -101,29 +101,22 @@ export def pull [ids?] {
 }
 
 # Generate XML context for a list of files in the current Git repository
-#
-# Takes file paths on stdin and, for each:
-# - Tags it as `<file name="…">…</file>`
-# - Retrieves content via the optional `get_content` closure (defaults to `cat`)
-# Wraps all file entries in a `<context>` element with:
-# - type="git-repo"
-# - path = current working directory
-# - origin = output of `git remote get-url origin`
 export def prep-git-repo [
-  get_content?: closure # closure to fetch file content, default `{ cat $in }`
-  usage?: string
-]: list<string> -> string {
-  let names = $in
+  ...names: string # list of file names to include
+  --with-content: closure # closure to fetch file content, default `{ cat $in }`
+  --usage: string
+]: any -> string {
+  let names = $names | default [] | append $in
 
   # Fallback to `cat` if no closure provided
-  let get_content = $get_content | default { cat $in }
+  let with_content = $with_content | default { cat $in }
 
   $names | each {
     # For each file name in the list, emit a <file> element
     {
       tag: file
       attributes: {name: $in}
-      content: [($in | do $get_content)]
+      content: [($in | do $with_content)]
     }
   }
   | {
