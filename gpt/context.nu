@@ -91,7 +91,9 @@ export def list [ids?] {
 # Fully resolved context window
 export def pull [ids?] {
   let turns = list $ids
-  let options = $turns | get options? | compact --empty | if ($in | is-not-empty) { last } else { null }
+  let options = $turns | get options? | compact --empty | if ($in | is-not-empty) {
+    reduce {|it, acc| $acc | merge deep $it }
+  } else { null }
   {
     messages: $turns
     options: $options
@@ -109,6 +111,7 @@ export def pull [ids?] {
 # - origin = output of `git remote get-url origin`
 export def prep-git-repo [
   get_content?: closure # closure to fetch file content, default `{ cat $in }`
+  usage?: string
 ]: list<string> -> string {
   let names = $in
 
@@ -126,11 +129,16 @@ export def prep-git-repo [
   | {
     # Wrap all <file> elements in a <context> element
     tag: context
-    attributes: {
-      type: "git-repo" # Context type
-      path: (pwd) # Repo path
-      origin: (git remote get-url origin) # Origin URL
-    }
+    attributes: (
+      {
+        type: "git-repo"
+        path: (pwd)
+        origin: (git remote get-url origin)
+      } | if ($usage | is-not-empty) {
+        insert usage $usage
+      } else { }
+    )
+
     content: $in
   }
   # Serialize to XML without extra indentation
