@@ -106,7 +106,8 @@ export def prep-git-repo [
   --with-content: closure # closure to fetch file content, default `{ cat $in }`
   --usage: string
 ]: any -> string {
-  let names = $names | default [] | append $in
+  let input = $in
+  let names = $names | default [] | append $input
 
   # Fallback to `cat` if no closure provided
   let with_content = $with_content | default { cat $in }
