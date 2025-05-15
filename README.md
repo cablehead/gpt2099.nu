@@ -44,8 +44,15 @@ Makes a request to the LLM provider.
 
 ### gpt context
 
-- `pull`: Review the current context-window.
-- `prep-git-repo`: `git ls-files ./gpt | lines | gpt context prep-git-repo | bat -l xml`
+#### `pull`: Review the current context-window.
+
+#### `prep-git-repo`: git-repo context generation helper
+
+```nushell
+git ls-files ./gpt | lines | gpt context prep-git-repo | bat -l xml
+```
+
+![image](https://github.com/user-attachments/assets/3f19b6c5-1d42-4038-b6b8-8cac0b5687d5)
 
 ### gpt mcp
 
