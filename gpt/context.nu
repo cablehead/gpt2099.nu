@@ -110,7 +110,7 @@ export def pull [ids?] {
 export def prep-git-repo [
   # Optional closure to fetch file content. Defaults to `cat $in`
   get_content?: closure
-] {
+]: list<string> -> string {
   let names = $in
 
   # Fallback to `cat` if no closure provided
