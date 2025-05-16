@@ -4,8 +4,11 @@ A [Nushell](https://www.nushell.sh) scriptable [MCP client](https://modelcontext
 
 <img
   src="https://github.com/user-attachments/assets/1b2a9834-dcbf-4f5a-85aa-32109a68397b"
-  width="600"
+  height="300"
 />
+
+<img height="300" alt="image" src="https://github.com/user-attachments/assets/19b52dfe-53c3-449d-8b62-aa1b434f901b" />
+
 
 ## Features
 
@@ -44,6 +47,9 @@ Makes a request to the LLM provider.
 
 ### gpt context
 
+<img height="600" alt="image" src="https://github.com/user-attachments/assets/8cdeb6c1-3b4c-46fa-8196-c2ec2683cedb" />
+
+
 #### `pull`: Review the current context-window.
 
 #### `prep-git-repo`: git-repo context generation helper
@@ -52,7 +58,7 @@ Makes a request to the LLM provider.
 git ls-files ./gpt | lines | gpt context prep-git-repo | bat -l xml
 ```
 
-![image](https://github.com/user-attachments/assets/3f19b6c5-1d42-4038-b6b8-8cac0b5687d5)
+<img height="300" src="https://github.com/user-attachments/assets/3f19b6c5-1d42-4038-b6b8-8cac0b5687d5" />
 
 ### gpt mcp
 
