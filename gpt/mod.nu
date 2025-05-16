@@ -19,8 +19,8 @@ export def main [
   --continues (-c): any # Previous `headish` to continue a conversation, can be a list of `headish`
   --respond (-r) # Continue from the last turn
   --servers: list<string> # MCP servers to use
-  --search # enable LLM-side search (gemini only)
-  --bookmark (-b): string # mark this turn: this will become the thread's head name
+  --search # enable LLM-side search (currently anthropic + gemini only)
+  --bookmark (-b): string # bookmark this turn: this will become the thread's head name
   --json (-j) # Treat input as JSON formatted content
   --separator (-s): string = "\n\n---\n\n" # Separator used when joining lists of strings
 ] {
