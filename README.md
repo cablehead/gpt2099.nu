@@ -116,11 +116,12 @@ gpt mcp tools list filesystem
  ...
 ```
 
+## FAQ
+
+- Why does the name include 2099? What else would you call the future?
+
 ## Original intro
 
 This is how the project looked, 4 hours into its inception:
 
 https://github.com/user-attachments/assets/768cc655-a892-47cc-bf64-8b5f61c41f35
-
-
-
