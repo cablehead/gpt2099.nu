@@ -18,7 +18,7 @@ A [Nushell](https://www.nushell.sh) scriptable [MCP client](https://modelcontext
 
 Built on [cross.stream](https://github.com/cablehead/xs) for event-driven processing, `gpt2099.nu` brings modern AI directly into your Nushell workflow — fully scriptable, fully inspectable, all in the terminal.
 
-## Usage
+## Getting started
 
 ### Step 1.
 
@@ -26,9 +26,18 @@ First, install and configure [`cross.stream`](https://github.com/cablehead/xs). 
 
 - https://cablehead.github.io/xs/getting-started/installation/
 
+After this step you should be able to run:
+
+```nushell
+"as easy as" | .append abc123
+.head abc123 | .cas | str slug
+```
+
+<img height="200" alt="image" src="https://github.com/user-attachments/assets/dcff4ecf-e708-42fc-8cac-573375003320" />
+
 ### Step 2.
 
-It's easy from here.
+It really is easy from here.
 
 ```nushell
 overlay use -pr ./gpt
@@ -106,3 +115,12 @@ gpt mcp tools list filesystem
      │                           │ d directories.
  ...
 ```
+
+## Original intro
+
+This is how the project looked, 4 hours into its inception:
+
+https://github.com/user-attachments/assets/768cc655-a892-47cc-bf64-8b5f61c41f35
+
+
+
