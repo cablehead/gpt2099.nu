@@ -1,12 +1,26 @@
+# gpt module
+#
+# use gpt
+#
+# This module provides commands for interacting with Language Model (LLM) APIs.
+# It manages conversation threads, supports different providers, and handles tool use.
+#
+# A key concept is the 'headish', which is a reference (specifically, the ID) to a
+# particular turn within a conversation thread. This allows commands like `gpt main`
+# to continue a conversation from a specific point by specifying the `headish`
+# using the `--continues` flag. The conversation context is built by tracing
+# backward from the specified 'headish' through the `continues` links.
+
 export use ./context.nu
 export use ./mcp.nu
 export use ./providers
 
 export def main [
-  --continues (-c): any # Previous message IDs to continue a conversation
-  --respond (-r) # Continue from the last response
+  --continues (-c): any # Previous `headish` to continue a conversation, can be a list of `headish`
+  --respond (-r) # Continue from the last turn
   --servers: list<string> # MCP servers to use
   --search # enable LLM-side search (gemini only)
+  --bookmark (-b): string # mark this turn: this will become the thread's head name
   --json (-j) # Treat input as JSON formatted content
   --separator (-s): string = "\n\n---\n\n" # Separator used when joining lists of strings
 ] {
@@ -17,8 +31,12 @@ export def main [
   } else {
     $in
   }
+  let continues = $continues | append [] | each { context headish-to-id $in }
+  let continues = $continues | conditional-pipe $respond { append (.head gpt.turn).id }
 
-  let continues = if $respond { $continues | append (.head gpt.turn).id } else { $continues }
+  let head = $bookmark | default (
+    if ($continues | is-not-empty) { (.get ($continues | last)).meta?.head? }
+  )
 
   let meta = (
     {
@@ -29,6 +47,7 @@ export def main [
         | conditional-pipe $search { insert search $search }
       )
     }
+    | conditional-pipe ($head | is-not-empty) { insert head $head }
     | if $continues != null { insert continues $continues } else { }
     | if $json { insert content_type "application/json" } else { }
   )
@@ -77,7 +96,8 @@ export def process-turn-response [turn: record] {
     role: "user"
     content_type: "application/json"
     continues: $turn.id
-  }
+  } | conditional-pipe ($turn.meta?.head? | is-not-empty) { insert head $turn.meta?.head? }
+
   let turn = $tool_result | to json | .append gpt.turn --meta $meta
   process-turn $turn
 }
@@ -101,6 +121,7 @@ export def process-turn [turn: record] {
     | insert continues $turn.id
     | insert role "assistant"
     | insert content_type "application/json"
+    | conditional-pipe ($turn.meta?.head? | is-not-empty) { insert head $turn.meta?.head? }
   )
 
   # save the assistance response

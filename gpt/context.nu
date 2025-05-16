@@ -18,6 +18,20 @@
 #   options: record                      # Merged options across all turns
 # }
 
+use util.nu is-scru128
+
+export def headish-to-id [headish: string] {
+  if (is-scru128 $headish) {
+    return $headish
+  }
+
+  .cat | where topic == "gpt.turn" and meta?.head? == $headish | if ($in | is-not-empty) {
+    last | get id
+  } else {
+    error make {msg: $"Headish '($headish)' isn't an SCRU128 or valid bookmark"}
+  }
+}
+
 # Convert a stored frame into a normalized “turn” with delta options and cache flag
 def frame-to-turn [frame: record] {
   let meta = $frame | get meta? | default {}
@@ -83,14 +97,15 @@ def id-to-turns [ids] {
 }
 
 # Raw per-turn view
-export def list [ids?] {
+export def list [headish?] {
+  let ids = $headish | default [] | each { headish-to-id $in }
   let ids = if ($ids | is-empty) { (.head gpt.turn).id } else { $ids }
   id-to-turns $ids
 }
 
 # Fully resolved context window
-export def pull [ids?] {
-  let turns = list $ids
+export def pull [headish?] {
+  let turns = list $headish
   let options = $turns | get options? | compact --empty | if ($in | is-not-empty) {
     reduce {|it, acc| $acc | merge deep $it }
   } else { null }
@@ -104,7 +119,7 @@ export def pull [ids?] {
 export def prep-git-repo [
   ...names: string # list of file names to include
   --with-content: closure # closure to fetch file content, default `{ cat $in }`
-  --usage: string
+  --instructions: string
 ]: any -> string {
   let input = $in
   let names = $names | default [] | append $input
@@ -128,13 +143,14 @@ export def prep-git-repo [
         type: "git-repo"
         path: (pwd)
         origin: (git remote get-url origin)
-      } | if ($usage | is-not-empty) {
-        insert usage $usage
+        caveats: "XML special characters have been escaped. Be sure to unescape them before processing"
+      } | if ($instructions | is-not-empty) {
+        insert instructions $instructions
       } else { }
     )
 
     content: $in
   }
-  # Serialize to XML without extra indentation
-  | to xml --indent 0
+  # Serialize to XML
+  | to xml --indent 0 --partial-escape
 }
