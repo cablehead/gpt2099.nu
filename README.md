@@ -116,6 +116,40 @@ gpt mcp tools list filesystem
  ...
 ```
 
+
+## Conversation Turn Schema (`gpt.turn`)
+
+Each turn in a thread is stored as a `gpt.turn` frame, with these top-level
+attributes in its `meta` record:
+
+```
+role
+: speaker for this turn ("user", "assistant", "system")
+
+inherited  (currently named "options")
+: attributes auto-inherited down the thread (deep-merged at each turn)
+    servers
+    : list of MCP server names to use
+    search
+    : enable LLM-side search
+    tool_mode
+    : provider-specific tool mode
+
+head
+: thread bookmark; must be explicitly carried forward if continuity is needed
+
+continues
+: id or list of ids, links to previous turn(s) for context
+
+cache
+: ephemeral cache flag for this turn
+
+content_type
+: MIME type for content (e.g., "application/json")
+```
+
+> **Note:** We plan to rename `"options"` to `"inherited"` to clarify its behavior.
+
 ## FAQ
 
 - Why does the name include 2099? What else would you call the future?

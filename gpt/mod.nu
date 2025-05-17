@@ -42,6 +42,7 @@ export def main [
   let meta = (
     {
       role: user
+      # options should be renamed to "inherited"
       options : (
         {}
         | conditional-pipe ($servers | is-not-empty) { insert servers $servers }
@@ -184,6 +185,8 @@ export def preview-stream [streamer] {
   }
 }
 
+# this is currently a no-op. the actual llm call should be performed by a
+# cross.stream command. this init should register those commands
 export def init [
   --refresh (-r) # Skip configuration if set
 ] {
