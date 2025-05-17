@@ -134,6 +134,8 @@ inherited  (currently named "options")
     : enable LLM-side search
     tool_mode
     : provider-specific tool mode
+    provider_ptr (required)
+    : the provider ptr to use for this turn, ("nano", "milli", "mega")
 
 head
 : thread bookmark; must be explicitly carried forward if continuity is needed

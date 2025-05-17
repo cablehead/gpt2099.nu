@@ -1,5 +1,4 @@
-# gpt/context.nu
-# Module: Context and Thread Handling
+# context window
 #
 # Schemas:
 #
@@ -104,7 +103,7 @@ export def list [headish?] {
 }
 
 # Fully resolved context window
-export def pull [headish?] {
+export def resolve [headish?] {
   let turns = list $headish
   let options = $turns | get options? | compact --empty | if ($in | is-not-empty) {
     reduce {|it, acc| $acc | merge deep $it }

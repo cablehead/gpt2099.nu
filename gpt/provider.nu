@@ -20,13 +20,12 @@ export def get-providers [] {
   | transpose -rd
 }
 
-export def goose [name?: string subcommand?: string] {
-  if $name == null {
+export def main [] {
+  let available = get-implementations
+  let enabled = get-providers
 
-    let available = get-implementations
-    let enabled = get-providers
-
-    return (
+  return {
+    providers: (
       $available | columns | each {|name|
         {
           name: $name
@@ -34,34 +33,7 @@ export def goose [name?: string subcommand?: string] {
         }
       }
     )
-  }
-
-  let key = get-providers | get -i $name | if ($in | is-empty) {
-    error make {
-      msg: $"provider: `($name)` is not enabled"
-      label: {
-        text: "the provider right here"
-        span: (metadata $name).span
-      }
-    }
-  } else { }
-
-  let p = (get-implementations) | get $name
-
-  match $subcommand {
-    "models" => {
-      do $p.models $key
-    }
-
-    _ => (
-      error make {
-        msg: $"subcommand: `($subcommand)` is not supported"
-        label: {
-          text: "the subcommand right here"
-          span: (metadata $subcommand).span
-        }
-      }
-    )
+    ptrs: (ptr)
   }
 }
 

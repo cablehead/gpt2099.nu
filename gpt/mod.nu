@@ -2,6 +2,9 @@
 #
 # use gpt
 #
+# "hola" | gpt -p nano
+# TBD
+#
 # This module provides commands for interacting with Language Model (LLM) APIs.
 # It manages conversation threads, supports different providers, and handles tool use.
 #
@@ -11,7 +14,7 @@
 # using the `--continues` flag. The conversation context is built by tracing
 # backward from the specified 'headish' through the `continues` links.
 
-export use ./context.nu
+export use ./ctx.nu
 export use ./mcp.nu
 export use ./providers
 export use ./provider.nu
@@ -22,6 +25,7 @@ export def main [
   --servers: list<string> # MCP servers to use
   --search # enable LLM-side search (currently anthropic + gemini only)
   --bookmark (-b): string # bookmark this turn: this will become the thread's head name
+  --provider-ptr (-p): string # a short alias for provider to going-forward
   --json (-j) # Treat input as JSON formatted content
   --separator (-s): string = "\n\n---\n\n" # Separator used when joining lists of strings
 ] {
@@ -32,20 +36,35 @@ export def main [
   } else {
     $in
   }
-  let continues = $continues | append [] | each { context headish-to-id $in }
+  let continues = $continues | append [] | each { ctx headish-to-id $in }
   let continues = $continues | conditional-pipe $respond { append (.head gpt.turn).id }
 
   let head = $bookmark | default (
     if ($continues | is-not-empty) { (.get ($continues | last)).meta?.head? }
   )
 
+  let provider_ptr = $provider_ptr | default (
+    if ($continues | is-not-empty) { (.get ($continues | last)).meta?.provider_ptr? }
+  )
+
+  if $provider_ptr == null {
+    error make {
+      msg: "provider_ptr is required"
+      label: {
+        text: "the provider_ptr right here"
+        span: (metadata $provider_ptr).span
+      }
+    }
+  }
+
   let meta = (
     {
       role: user
       # options should be renamed to "inherited"
       options : (
-        {}
-        | conditional-pipe ($servers | is-not-empty) { insert servers $servers }
+        {
+          provider_ptr: $provider_ptr
+        } | conditional-pipe ($servers | is-not-empty) { insert servers $servers }
         | conditional-pipe $search { insert search $search }
       )
     }
@@ -110,11 +129,9 @@ export def process-turn [turn: record] {
     return (process-turn-response $turn)
   }
 
-  let ctx = context pull $turn.id
+  let window = ctx resolve $turn.id
 
-  let config = .head gpt.config | .cas $in.hash | from json
-
-  let res = generate-response $config $ctx $turn.id
+  let res = generate-response $window $turn.id
 
   let content = $res | get message.content
   let meta = (
@@ -131,8 +148,20 @@ export def process-turn [turn: record] {
   $content | process-turn-response $turn
 }
 
-export def generate-response [config: record ctx: record id: string] {
-  let servers = $ctx.options?.servers?
+export def generate-response [window: record id: string] {
+  let provider_ptr = $window.options.provider_ptr?
+  if $provider_ptr == null {
+    error make {
+      msg: "provider_ptr is required"
+      label: {
+        text: "the options right here"
+        span: (metadata $window).span
+      }
+    }
+  }
+  let config = gpt provider ptr $provider_ptr
+
+  let servers = $window.options?.servers?
   let $tools = $servers | if ($in | is-not-empty) {
     each {|server|
       .head $"mcp.($server).tools" | .cas $in.hash | from json | update name {
@@ -142,9 +171,9 @@ export def generate-response [config: record ctx: record id: string] {
     } | flatten
   }
 
-  let p = (providers) | get $config.name
+  let p = (providers) | get $config.provider
   let res = (
-    do $p.prepare-request $ctx $tools
+    do $p.prepare-request $window $tools
     | do $p.call $config.key $config.model
     | tee { each { to json | .append gpt.recv --meta {turn_id: $id} } }
     | tee { preview-stream $p.response_stream_streamer }
