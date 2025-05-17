@@ -20,7 +20,7 @@ export def get-providers [] {
   | transpose -rd
 }
 
-export def main [name?: string subcommand?: string] {
+export def goose [name?: string subcommand?: string] {
   if $name == null {
 
     let available = get-implementations
@@ -63,4 +63,9 @@ export def main [name?: string subcommand?: string] {
       }
     )
   }
+}
+
+export def ptr [name: string] {
+  let res = .head gpt.provider.ptrs | .cas | from json | get $name
+  $res | insert key (get-providers | get $res.provider)
 }
