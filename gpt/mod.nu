@@ -183,50 +183,6 @@ export def preview-stream [streamer] {
   }
 }
 
-export def configure [] {
-  let name = providers | columns | input list "Select provider"
-  print $"Selected provider: ($name)"
-  let p = providers | get $name
-
-  let key = input -s "Enter API key: "
-
-  let model = do $p.models $key | get id | input list --fuzzy "Select model"
-  print $"Selected model: ($model)"
-
-  {
-    name: $name
-    key: $key
-    model: $model
-  } | to json -r | .append gpt.config
-  ignore
-}
-
-# Configure a different model for the current provider
-export def configure-model [] {
-  # Get current configuration
-  let config = .head gpt.config | .cas $in.hash | from json
-  print $"Current provider: ($config.name)"
-  print $"Current model: ($config.model)"
-
-  # Get provider module
-  let p = (providers) | get $config.name
-
-  # Fetch available models
-  let models = do $p.models $config.key
-
-  # Let user select a new model
-  let model = $models | get id | input list --fuzzy "Select model"
-  print $"Selected model: ($model)"
-
-  # Save updated configuration
-  {
-    name: $config.name
-    key: $config.key
-    model: $model
-  } | to json -r | .append gpt.config
-  ignore
-}
-
 export def init [
   --refresh (-r) # Skip configuration if set
 ] {
@@ -235,7 +191,6 @@ export def init [
   # cat ($base | path join "providers/gemini/mod.nu") | .append gpt.provider.gemini
   # cat ($base | path join "xs/command.nu") | .append gpt.define
   if not $refresh {
-    configure
   }
   ignore
 }
