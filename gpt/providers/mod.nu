@@ -6,7 +6,7 @@ use ./anthropic
 use ./gemini
 use ./openai
 
-export def main [] {
+export def all [] {
   {
     anthropic : (anthropic provider)
     gemini : (gemini provider)

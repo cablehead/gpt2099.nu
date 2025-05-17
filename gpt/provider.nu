@@ -11,7 +11,7 @@ export def get-enabled [] {
 }
 
 export def main [] {
-  let available = providers
+  let available = providers all
   let enabled = get-enabled
 
   return {
@@ -57,7 +57,7 @@ export def set-ptr [name: string] {
   print $"Selected provider: ($provider)"
   let key = $enabled | get $provider
 
-  let p = providers | get $provider
+  let p = providers all | get $provider
 
   let model = do $p.models $key | get id | input list --fuzzy "Select model"
   print $"Selected model: ($model)"
@@ -66,4 +66,11 @@ export def set-ptr [name: string] {
     provider: $provider
     model: $model
   } | .append gpt.provider.ptrs --meta $in
+}
+
+export def models [provider: string] {
+  let enabled = get-enabled
+  let key = $enabled | get $provider
+  let p = providers all | get $provider
+  do $p.models $key
 }
