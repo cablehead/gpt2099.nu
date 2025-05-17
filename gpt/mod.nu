@@ -129,9 +129,7 @@ export def process-turn [turn: record] {
     return (process-turn-response $turn)
   }
 
-  let window = ctx resolve $turn.id
-
-  let res = generate-response $window $turn.id
+  let res = generate-response $turn.id
 
   let content = $res | get message.content
   let meta = (
@@ -148,7 +146,9 @@ export def process-turn [turn: record] {
   $content | process-turn-response $turn
 }
 
-export def generate-response [window: record id: string] {
+export def generate-response [turn_id: string] {
+  let window = ctx resolve $turn_id
+
   let provider_ptr = $window.options.provider_ptr?
   if $provider_ptr == null {
     error make {
@@ -175,7 +175,7 @@ export def generate-response [window: record id: string] {
   let res = (
     do $p.prepare-request $window $tools
     | do $p.call $config.key $config.model
-    | tee { each { to json | .append gpt.recv --meta {turn_id: $id} } }
+    | tee { each { to json | .append gpt.recv --meta {turn_id: $turn_id} } }
     | tee { preview-stream $p.response_stream_streamer }
     | do $p.response_stream_aggregate
   )
