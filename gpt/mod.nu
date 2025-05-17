@@ -14,6 +14,7 @@
 export use ./context.nu
 export use ./mcp.nu
 export use ./providers
+export use ./provider.nu
 
 export def main [
   --continues (-c): any # Previous `headish` to continue a conversation, can be a list of `headish`

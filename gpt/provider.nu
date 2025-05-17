@@ -1,0 +1,2 @@
+export def main [] {
+}
