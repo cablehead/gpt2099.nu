@@ -1,5 +1,5 @@
 # Generate XML context for a list of files in the current Git repository
-export def git-repo [
+export def gr [
   ...names: string # list of file names to include
   --with-content: closure # closure to fetch file content, default `{ cat $in }`
   --instructions: string

@@ -66,10 +66,10 @@ Makes a request to the LLM provider.
 
 Context generation helpers.
 
-#### `git-repo`: git-repo context generation helper
+#### `gr`: git-repo context generation helper
 
 ```nushell
-git ls-files ./gpt | lines | gpt prep git-repo | bat -l xml
+git ls-files ./gpt | lines | gpt prep gr | bat -l xml
 ```
 
 <img height="300" src="https://github.com/user-attachments/assets/3f19b6c5-1d42-4038-b6b8-8cac0b5687d5" />
