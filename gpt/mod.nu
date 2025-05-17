@@ -18,6 +18,7 @@ export use ./ctx.nu
 export use ./mcp.nu
 export use ./providers
 export use ./provider.nu
+export use ./prep.nu
 
 export def main [
   --continues (-c): any # Previous `headish` to continue a conversation, can be a list of `headish`
@@ -145,7 +146,7 @@ export def generate-response [turn_id: string] {
       }
     }
   }
-  let config = gpt provider ptr $provider_ptr
+  let config = provider ptr $provider_ptr
 
   let servers = $window.options?.servers?
   let $tools = $servers | if ($in | is-not-empty) {
