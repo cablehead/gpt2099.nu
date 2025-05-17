@@ -27,7 +27,7 @@ export def main [
   --bookmark (-b): string # bookmark this turn: this will become the thread's head name
   --provider-ptr (-p): string # a short alias for provider to going-forward
   --json (-j) # Treat input as JSON formatted content
-  --separator (-s): string = "\n\n---\n\n" # Separator used when joining lists of strings
+  --separator: string = "\n\n---\n\n" # Separator used when joining lists of strings
 ] {
   let content = if $in == null {
     input "Enter prompt: "
@@ -157,7 +157,7 @@ export def generate-response [turn_id: string] {
     } | flatten
   }
 
-  let p = (providers) | get $config.provider
+  let p = providers all | get $config.provider
   let res = (
     do $p.prepare-request $window $tools
     | do $p.call $config.key $config.model
