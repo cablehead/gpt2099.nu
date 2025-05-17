@@ -1,13 +1,13 @@
+<img
+  src="https://github.com/user-attachments/assets/1b2a9834-dcbf-4f5a-85aa-32109a68397b"
+  height="400"
+/>
+
 # gpt2099.nu [![Discord](https://img.shields.io/discord/1182364431435436042?logo=discord)](https://discord.com/invite/YNbScHBHrh)
 
 A [Nushell](https://www.nushell.sh) scriptable [MCP client](https://modelcontextprotocol.io/sdk/java/mcp-client#model-context-protocol-client) with editable context threads stored in [cross.stream](https://github.com/cablehead/xs)
 
-<img width="382" alt="image" src="https://github.com/user-attachments/assets/a0c6e4f0-2cc7-4849-9388-29c1ed3ceaf1" />
-
-<img
-  src="https://github.com/user-attachments/assets/1b2a9834-dcbf-4f5a-85aa-32109a68397b"
-  height="600"
-/>
+<img width="660" alt="image" src="https://github.com/user-attachments/assets/2b8d8744-076c-40e1-ac2c-1b1864ca2b80" />
 
 ## Features
 
