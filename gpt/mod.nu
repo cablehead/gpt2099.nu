@@ -43,28 +43,14 @@ export def main [
     if ($continues | is-not-empty) { (.get ($continues | last)).meta?.head? }
   )
 
-  let provider_ptr = $provider_ptr | default (
-    if ($continues | is-not-empty) { (.get ($continues | last)).meta?.provider_ptr? }
-  )
-
-  if $provider_ptr == null {
-    error make {
-      msg: "provider_ptr is required"
-      label: {
-        text: "the provider_ptr right here"
-        span: (metadata $provider_ptr).span
-      }
-    }
-  }
-
   let meta = (
     {
       role: user
       # options should be renamed to "inherited"
       options : (
-        {
-          provider_ptr: $provider_ptr
-        } | conditional-pipe ($servers | is-not-empty) { insert servers $servers }
+        {}
+        | conditional-pipe ($provider_ptr != null) { insert provider_ptr $provider_ptr }
+        | conditional-pipe ($servers | is-not-empty) { insert servers $servers }
         | conditional-pipe $search { insert search $search }
       )
     }

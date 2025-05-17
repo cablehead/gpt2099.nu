@@ -1,16 +1,6 @@
-use ./providers/gemini
-use ./providers/anthropic
-use ./providers/openai
+use ./providers
 
-export def get-implementations [] {
-  {
-    anthropic : (anthropic provider)
-    gemini : (gemini provider)
-    openai : (openai provider)
-  }
-}
-
-export def get-providers [] {
+export def get-enabled [] {
   .cat
   | where topic == "gpt.provider"
   | each { .cas | from json }
@@ -21,8 +11,8 @@ export def get-providers [] {
 }
 
 export def main [] {
-  let available = get-implementations
-  let enabled = get-providers
+  let available = providers
+  let enabled = get-enabled
 
   return {
     providers: (
@@ -58,16 +48,16 @@ export def ptr [name?: string --set] {
   }
 
   let ptr = $ptrs | get $name
-  $ptr | insert key (get-providers | get $ptr.provider)
+  $ptr | insert key (get-enabled | get $ptr.provider)
 }
 
 export def set-ptr [name: string] {
-  let providers = get-providers
-  let provider = $providers | columns | input list "Select provider"
+  let enabled = get-enabled
+  let provider = $enabled | columns | input list "Select provider"
   print $"Selected provider: ($provider)"
-  let key = $providers | get $provider
+  let key = $enabled | get $provider
 
-  let p = (get-implementations) | get $provider
+  let p = providers | get $provider
 
   let model = do $p.models $key | get id | input list --fuzzy "Select model"
   print $"Selected model: ($model)"
