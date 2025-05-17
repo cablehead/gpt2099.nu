@@ -1,13 +1,16 @@
 use ./providers/gemini
+use ./providers/anthropic
+use ./providers/openai
 
 export def get-implementations [] {
   {
-    # anthropic : (anthropic provider)
+    anthropic : (anthropic provider)
     gemini : (gemini provider)
-    # openai : (openai provider)
+    openai : (openai provider)
   }
 }
-def get-providers [] {
+
+export def get-providers [] {
   .cat
   | where topic == "gpt.provider"
   | each { .cas | from json }
@@ -19,7 +22,18 @@ def get-providers [] {
 
 export def main [name?: string subcommand?: string] {
   if $name == null {
-    return (get-providers)
+
+    let available = get-implementations
+    let enabled = get-providers
+
+    return (
+      $available | columns | each {|name|
+        {
+          name: $name
+          enabled: ($name in $enabled)
+        }
+      }
+    )
   }
 
   let key = get-providers | get -i $name | if ($in | is-empty) {
