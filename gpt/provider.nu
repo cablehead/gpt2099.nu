@@ -1,5 +1,47 @@
 use ./providers
 
+export def enable [provider?: string] {
+  let avail = providers all | columns
+
+  let provider = if $provider != null {
+    if $provider not-in $avail {
+      error make {
+        msg: $"unknown provider: ($provider)"
+        label: {
+          text: "the provider right here"
+          span: (metadata $provider).span
+        }
+      }
+    }
+    $provider
+  } else {
+    let enabled = get-enabled | columns
+
+    let togo = $avail | without $enabled
+
+    if ($togo | is-empty) {
+      return "all providers are enabled"
+    }
+
+    if ($togo | length) == 1 { $togo | first } else {
+      $togo | input list "Select provider to enable" --fuzzy
+    }
+  }
+
+  print $"Configuring: ($provider)"
+  let key = input -s "Enter API key: "
+
+  print -n $"\nquerying ($provider) to test key..."
+
+  let p = providers all | get $provider
+  print $"(do $p.models $key | length) models found"
+
+  {name: $provider key: $key} | to json -r | .append gpt.provider
+
+  # show the current summary of our setup
+  main
+}
+
 export def get-enabled [] {
   .cat
   | where topic == "gpt.provider"
@@ -7,6 +49,7 @@ export def get-enabled [] {
   | group-by name
   | values
   | each { last }
+  | where key? != null
   | transpose -rd
 }
 
@@ -73,4 +116,18 @@ export def models [provider: string] {
   let key = $enabled | get $provider
   let p = providers all | get $provider
   do $p.models $key
+}
+
+# Takes a list as pipeline input, and returns a new list containing elements
+# that are present in the input list but not in the argument list.
+#
+# Example:
+# > let all_items = ["apple", "banana", "cherry", "date"]
+# > let owned_items = ["banana", "date", "grape"]
+# > $all_items | without $owned_items
+# ["apple", "cherry"]
+def "without" [
+  exclude: list
+]: list -> list {
+  where {|item| $item not-in $exclude }
 }

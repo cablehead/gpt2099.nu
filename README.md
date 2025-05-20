@@ -43,12 +43,18 @@ It really is easy from here.
 overlay use -pr ./gpt
 ```
 
-## commands
+## just the commands need to get started
 
-### gpt init
+### gpt provider enable
 
-Installs the required dependencies into your cross.stream store, and prompts you
-to select an LLM provider, an API key, and a model.
+configure a key for one of the available providers
+
+### gpt provider ptr milli --set
+
+...
+
+
+## full command reference (move to separate file)
 
 ### gpt
 
