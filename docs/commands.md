@@ -1,86 +1,117 @@
-## just the commands need to get started
+# Command Reference
 
-### gpt provider enable
+This page lists the major commands provided by the `gpt` overlay.
 
-configure a key for one of the available providers
+## Quick start
 
-### gpt provider ptr milli --set
+1. Configure a provider:
+   ```nushell
+   gpt provider enable
+   ```
+2. Create a model pointer:
+   ```nushell
+   gpt provider ptr milli --set
+   ```
+3. Send a prompt:
+   ```nushell
+   "hello" | gpt -p milli
+   ```
 
+## Commands
 
+### `gpt`
+Send a request to the selected provider.
 
+```
+gpt [OPTIONS]
+```
 
-...
+Options:
+- `--continues (-c) <headish>` – continue from a previous turn.
+- `--respond (-r)` – continue from the last turn automatically.
+- `--servers <list>` – MCP servers to use.
+- `--search` – enable provider search capabilities.
+- `--bookmark (-b) <name>` – bookmark this turn for later reference.
+- `--provider-ptr (-p) <alias>` – pointer to the provider/model.
+- `--json (-j)` – treat input as JSON.
+- `--separator <str>` – join list input with this separator.
 
+### `gpt context`
+Inspect conversation threads.
 
-## full command reference (move to separate file)
+```
+gpt context list [HEADISH]
+```
+Raw per‑turn view.
 
-### gpt
+```
+gpt context resolve [HEADISH]
+```
+Resolved context with merged options.
 
-Makes a request to the LLM provider.
+### `gpt provider`
+Manage provider configuration.
 
-### gpt context
+```
+gpt provider enable [PROVIDER]
+```
+Store an API key.
 
-<img height="600" alt="image" src="https://github.com/user-attachments/assets/8cdeb6c1-3b4c-46fa-8196-c2ec2683cedb" />
+```
+gpt provider ptr [NAME] [--set]
+```
+With `--set` choose provider and model for the pointer; without it show the current mapping.
 
+```
+gpt provider models <PROVIDER>
+```
+List available models.
 
-#### `pull`: Review the current context-window.
+### `gpt prep`
+Helpers for building context.
 
-
-### gpt prep
-
-Context generation helpers.
-
-#### `gr`: git-repo context generation helper
-
+```
+gpt prep gr [FILES...]
+```
+Generate XML describing repository files. Example:
 ```nushell
 git ls-files ./gpt | lines | gpt prep gr | bat -l xml
 ```
 
-<img height="300" src="https://github.com/user-attachments/assets/3f19b6c5-1d42-4038-b6b8-8cac0b5687d5" />
+### `gpt mcp`
+Interact with [Model Context Protocol](https://modelcontextprotocol.io/introduction) servers.
 
-### gpt mcp
+MCP servers are typically simple CLI tools that read from `stdin` and write to
+`stdout`. The `cross.stream`
+[generator](https://cablehead.github.io/xs/reference/generators/) pattern wraps
+these tools so each line of output is packaged into event frames while frames
+ending in `.send` are routed back as input. `gpt mcp` leverages this pattern to
+provide a hands‑on way to experiment with and understand MCP servers.
 
-[Model Context Protocol](https://modelcontextprotocol.io/introduction) (MCP)
-servers are really just CLI tools that read from stdin and write to stdout.
+**Features**
 
-[cross.stream](https://github.com/cablehead/xs)
-[generators](https://cablehead.github.io/xs/reference/generators/) spawn CLI
-tools and package each line of output into event frames (.recv) while routing
-frames ending in .send as input, turning them into services you can
-interactively poke at.
-
-`gpt mcp` leverages this approach to provide a hands-on environment for
-experimenting with and understanding MCP servers.
-
-#### Features
-
-- Spawn an MCP server as a cross.stream
-  [generator](https://cablehead.github.io/xs/reference/generators/)
+- Spawn an MCP server as a cross.stream generator.
 - List available tools on the server.
 
-#### Spawn an MCP Server
-
-Register your MCP server:
-
-```nushell
-# gpt mcp register <name> <command>
-gpt mcp register filesystem 'npx -y "@modelcontextprotocol/server-filesystem" "/project/path"'
 ```
-
-#### List Available Tools
-
-List the tools provided by the MCP server:
-
-```nushell
-gpt mcp tools list filesystem
+gpt mcp register <NAME> <COMMAND>
 ```
+Spawn a server as a cross.stream generator.
 
 ```
-──#──┬───────────name────────────┬─────────────────────────────────────────────────────────────────────────description─────────────────────────────────────────────────────────────────────────┬─...─
- 0   │ read_file                 │ Read the complete contents of a file from the file system. Handles various text encodings and provides detailed error messages if the file cannot be read.  │ ...
-     │                           │ Use this tool when you need to examine the contents of a single file. Only works within allowed directories.                                                │
- 1   │ read_multiple_files       │ Read the contents of multiple files simultaneously. This is more efficient than reading files one by one when you need to analyze or compare multiple files │ ...
-     │                           │ . Each file's content is returned with its path as a reference. Failed reads for individual files won't stop the entire operation. Only works within allowe │
-     │                           │ d directories.
+gpt mcp tools list <NAME>
+```
+List available tools.
+
+```text
+──#──┬───────────name────────────┬─────────────────────────────────────
+ 0   │ read_file                 │ Read the contents of a file
+ 1   │ read_multiple_files       │ Read multiple files at once
  ...
 ```
+
+```
+gpt mcp tools call <NAME> <METHOD> <ARGS>
+```
+Invoke a tool directly.
+
