@@ -1,5 +1,8 @@
 export def "register" [name: string command: string] {
-  $command + " | lines" | .append $"mcp.($name).spawn" --meta {duplex: true}
+  $"{
+    run: {|| ($command) | lines}
+    duplex: true
+  }" | .append $"mcp.($name).spawn"
 }
 
 # https://spec.modelcontextprotocol.io/specification/2025-03-26/basic/lifecycle/#initialization
