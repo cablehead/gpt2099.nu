@@ -9,7 +9,7 @@ export def "register" [name: string command: string] {
 export def "initialize" [name] {
   let command = {
     jsonrpc: "2.0"
-    "id": (scru128)
+    "id": (random uuid)
     method: initialize
     params: {
       protocolVersion: "2025-03-26"
@@ -28,7 +28,7 @@ export def "initialize" [name] {
 export def "tools call" [name: string method: string arguments: record] {
   let command = {
     jsonrpc: "2.0"
-    id: (scru128)
+    id: (random uuid)
     method: tools/call
     params: {
       name: $method
@@ -42,7 +42,7 @@ export def "tools call" [name: string method: string arguments: record] {
 export def "tools list" [name] {
   let command = {
     "jsonrpc": "2.0"
-    "id": (scru128)
+    "id": (random uuid)
     "method": "tools/list"
     "params": {}
   }
