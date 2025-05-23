@@ -12,7 +12,7 @@ A [Nushell](https://www.nushell.sh) scriptable [MCP client](https://modelcontext
 ## Features
 
 * **Consistent API Across Models:** Connect to Gemini + Search and Anthropic + Search through a single, simple interface. ([Add providers easily.](./provider-api.md))
-* **Persistent, Editable Conversations:** Conversations are saved across sessions. Review, edit, and control your own context window — no black-box history.
+* **Persistent, Editable Conversations:** [Conversation threads](https://cablehead.github.io/xs/tutorials/threaded-conversations/) are saved across sessions. Review, edit, and control your own context window — no black-box history.
 * **Flexible Tool Integration:** Connect to MCP servers to extend functionality. `gpt2099.nu` already rivals [Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) for local file editing, but with full provider independence and deeper flexibility.
 
 Built on [cross.stream](https://github.com/cablehead/xs) for event-driven processing, `gpt2099.nu` brings modern AI directly into your Nushell workflow — fully scriptable, fully inspectable, all in the terminal.
