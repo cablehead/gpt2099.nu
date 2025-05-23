@@ -67,3 +67,25 @@ export def "call" [name: string] {
   )
   $res
 }
+
+export def "list" [] {
+  .cat
+  | where { $in.topic | str starts-with "mcp." }
+  | reduce --fold [] {|row, acc|
+    let t = $row.topic
+    let name = ($t | split row "." | get 1)
+
+    if ($t | str ends-with ".spawn") {
+      # add if not already present
+      if $name in $acc { return $acc }
+      return ($acc | append $name)
+    }
+
+    if not (($t | str ends-with ".spawn.error") or ($t | str ends-with ".terminate")) {
+      return $acc
+    }
+
+    # remove on error or termination
+    $acc | where $it != $name
+  }
+}
