@@ -62,8 +62,9 @@ export def "call" [name: string] {
   let res = (
     .cat -f --last-id $frame.id
     | where topic == $"mcp.($name).recv"
-    | skip until {|x| let res = $x | from json; $res.id == $command.id }
-    | first | .cas $in.hash | from json
+    | each { .cas $in.hash | from json }
+    | where { $in.id == $command.id }
+    | first
   )
   $res
 }
