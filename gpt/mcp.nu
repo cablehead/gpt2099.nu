@@ -25,7 +25,7 @@ export def "initialize" [name] {
   $res
 }
 
-export def "tools call" [name: string method: string arguments: record] {
+export def "tool call" [name: string method: string arguments: record] {
   let command = {
     jsonrpc: "2.0"
     id: (random uuid)
@@ -39,7 +39,7 @@ export def "tools call" [name: string method: string arguments: record] {
   $res
 }
 
-export def "tools list" [name] {
+export def "tool list" [name] {
   let command = {
     "jsonrpc": "2.0"
     "id": (random uuid)

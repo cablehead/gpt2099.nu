@@ -99,7 +99,7 @@ gpt mcp register <NAME> <COMMAND>
 Spawn a server as a cross.stream generator.
 
 ```
-gpt mcp tools list <NAME>
+gpt mcp tool list <NAME>
 ```
 List available tools.
 
@@ -111,7 +111,7 @@ List available tools.
 ```
 
 ```
-gpt mcp tools call <NAME> <METHOD> <ARGS>
+gpt mcp tool call <NAME> <METHOD> <ARGS>
 ```
 Invoke a tool directly.
 
