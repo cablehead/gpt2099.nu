@@ -70,44 +70,71 @@ export def process-turn-response [turn: record] {
   let tool_use = $content | where type == "tool_use"
   if ($tool_use | is-empty) { return }
   let tool_use = $tool_use | first
-
   print ($tool_use | table -e)
-  if (["yes" "no"] | input list "Execute?") != "yes" { return {} }
 
-  # parse out the server name from the tool name
-  let namespace = ($tool_use.name | split row "___")
+  let choice = ["yes" "no: do something different" "no"] | input list "Execute?"
 
-  let mcp_toolscall = $tool_use | {
-    "jsonrpc": "2.0"
-    "id": $turn.id
-    "method": "tools/call"
-    "params": {"name": $namespace.1 "arguments": ($in.input | default {})}
-  }
-
-  let res = $mcp_toolscall | mcp call $namespace.0
-
-  let tool_result = [
-    (
-      {
-        type: "tool_result"
-        name: $tool_use.name
-        content: $res.result.content
-      } | conditional-pipe ($tool_use.id? != null) {
-        insert "tool_use_id" $tool_use.id
+  match $choice {
+    "yes" => {
+      # Original execution path
+      let namespace = ($tool_use.name | split row "___")
+      let mcp_toolscall = $tool_use | {
+        "jsonrpc": "2.0"
+        "id": $turn.id
+        "method": "tools/call"
+        "params": {"name": $namespace.1 "arguments": ($in.input | default {})}
       }
-    )
-  ]
-
-  print ($tool_result | table -e)
-
-  let meta = {
-    role: "user"
-    content_type: "application/json"
-    continues: $turn.id
-  } | conditional-pipe ($turn.meta?.head? | is-not-empty) { insert head $turn.meta?.head? }
-
-  let turn = $tool_result | to json | .append gpt.turn --meta $meta
-  process-turn $turn
+      let res = $mcp_toolscall | mcp call $namespace.0
+      let tool_result = [
+        (
+          {
+            type: "tool_result"
+            name: $tool_use.name
+            content: $res.result.content
+          } | conditional-pipe ($tool_use.id? != null) {
+            insert "tool_use_id" $tool_use.id
+          }
+        )
+      ]
+      print ($tool_result | table -e)
+      let meta = {
+        role: "user"
+        content_type: "application/json"
+        continues: $turn.id
+      } | conditional-pipe ($turn.meta?.head? | is-not-empty) { insert head $turn.meta?.head? }
+      let turn = $tool_result | to json | .append gpt.turn --meta $meta
+      process-turn $turn
+    }
+    "no: do something different" => {
+      # New custom input path
+      let custom_text = input "Enter alternative response: "
+      let tool_result = [
+        {
+          type: "tool_result"
+          tool_use_id: $tool_use.id
+          content: [
+            {
+              type: "text"
+              text: $custom_text
+            }
+          ]
+          is_error: true
+          name: $tool_use.name
+        }
+      ]
+      print ($tool_result | table -e)
+      let meta = {
+        role: "user"
+        content_type: "application/json"
+        continues: $turn.id
+      } | conditional-pipe ($turn.meta?.head? | is-not-empty) { insert head $turn.meta?.head? }
+      let turn = $tool_result | to json | .append gpt.turn --meta $meta
+      process-turn $turn
+    }
+    "no" => {
+      return {}
+    }
+  }
 }
 
 export def process-turn [turn: record] {
