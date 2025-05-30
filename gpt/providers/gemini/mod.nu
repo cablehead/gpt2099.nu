@@ -67,6 +67,7 @@ export def provider [] {
                         name: $content.name
                         # TODO: content length > 1
                         response: ($content.content | first)
+                        # Note: Deliberately omit tool_use_id - Gemini doesn't use it
                       }
                     }
                     _ => ( error make {msg: $"TBD: ($content)"})
@@ -197,6 +198,7 @@ export def provider [] {
         if $has_tool_use {
           $response.message.content = $response.message.content | append {
             type: "tool_use"
+            id: (random uuid)  # Add random UUID for normalization
             name: $tool_use_name
             input: $tool_use_input
           }
