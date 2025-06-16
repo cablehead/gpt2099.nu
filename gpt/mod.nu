@@ -20,6 +20,71 @@ export use ./providers
 export use ./provider.nu
 export use ./prep.nu
 
+export def document [
+  path: string # Path to the document file
+  --name (-n): string # Optional name for the document (defaults to filename)
+  --cache: string = "ephemeral" # Cache control: "ephemeral" or "none"
+  --bookmark (-b): string # Bookmark this document registration
+] {
+  # Validate file exists
+  if not ($path | path exists) {
+    error make {
+      msg: $"File does not exist: ($path)"
+      label: {
+        text: "this path"
+        span: (metadata $path).span
+      }
+    }
+  }
+
+  # Detect content type from file extension
+  let content_type = match ($path | path parse | get extension | str downcase) {
+    "pdf" => "application/pdf"
+    "txt" => "text/plain"
+    "md" => "text/markdown"
+    "json" => "application/json"
+    "csv" => "text/csv"
+    "jpg" | "jpeg" => "image/jpeg"
+    "png" => "image/png"
+    "webp" => "image/webp"
+    "gif" => "image/gif"
+    "docx" => "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    "xlsx" => "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    _ => {
+      let detected = (file --mime-type $path | split row ":" | get 1 | str trim)
+      print $"Warning: Unknown extension, detected MIME type: ($detected)"
+      $detected
+    }
+  }
+
+  # Check file size (Anthropic has limits)
+  let file_size = ($path | path expand | ls $in | get size | first)
+  if $file_size > 100MB { # rough limit
+    error make {
+      msg: $"File too large: ($file_size). Consider splitting or compressing."
+    }
+  }
+
+  let document_name = $name | default ($path | path basename)
+  let content = open $path --raw
+
+  let meta = {
+    type: "document"
+    content_type: $content_type
+    role: "user"
+    document_name: $document_name
+    original_path: ($path | path expand)
+    file_size: $file_size
+    cache_control: (if $cache == "ephemeral" { "ephemeral" } else { null })
+  } | conditional-pipe ($bookmark | is-not-empty) {
+    insert head $bookmark
+  }
+
+  let turn = $content | .append gpt.turn --meta $meta
+
+  $turn
+}
+
 export def main [
   --continues (-c): any # Previous `headish` to continue a conversation, can be a list of `headish`
   --respond (-r) # Continue from the last turn

@@ -14,6 +14,7 @@ A [Nushell](https://www.nushell.sh) scriptable [MCP client](https://modelcontext
 * **Consistent API Across Models:** Connect to Gemini + Search and Anthropic + Search through a single, simple interface. ([Add providers easily.](./provider-api.md))
 * **Persistent, Editable Conversations:** [Conversation threads](https://cablehead.github.io/xs/tutorials/threaded-conversations/) are saved across sessions. Review, edit, and control your own context window — no black-box history.
 * **Flexible Tool Integration:** Connect to MCP servers to extend functionality. `gpt2099.nu` already rivals [Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) for local file editing, but with full provider independence and deeper flexibility.
+* **Document Support:** Upload and reference documents (PDFs, images, text files) directly in conversations with automatic content-type detection and caching.
 
 Built on [cross.stream](https://github.com/cablehead/xs) for event-driven processing, `gpt2099.nu` brings modern AI directly into your Nushell workflow — fully scriptable, fully inspectable, all in the terminal.
 
@@ -65,6 +66,35 @@ Give it a spin:
 ```nushell
 "hola" | gpt -p milli
 ```
+
+## Working with Documents
+
+Register documents to include in your conversations:
+
+```nushell
+# Register a PDF document
+gpt document ~/reports/analysis.pdf
+
+# Register with custom name and bookmark for easy reference
+gpt document ~/data.csv --name "Sales Data Q4" --bookmark "sales-data"
+
+# Use the document in a conversation
+let doc = (gpt document ~/manual.pdf)
+"Summarize this manual" | gpt --continues $doc.id -p milli
+
+# Continue the conversation thread
+"What are the key safety procedures?" | gpt -r -p milli
+```
+
+Supported document types:
+- **PDFs** (`application/pdf`)
+- **Images** (`image/jpeg`, `image/png`, `image/webp`, `image/gif`)
+- **Text files** (`text/plain`, `text/markdown`, `text/csv`)
+- **Office documents** (`application/vnd.openxmlformats-officedocument.*`)
+- **JSON** (`application/json`)
+
+Documents are automatically cached using ephemeral caching for better performance with supported providers.
+
 The default alias scheme ranks models by relative weight: `nano` < `milli` < `kilo` < `giga`. Reasoning-optimized variants use `.r`. See [docs/configure-providers.md](docs/configure-providers.md) for details.
 For more commands see [docs/commands.md](docs/commands.md).
 
@@ -100,6 +130,21 @@ cache
 
 content_type
 : MIME type for content (e.g., "application/json")
+
+type
+: content type indicator ("document" for uploaded files)
+
+document_name
+: display name for documents (defaults to filename)
+
+original_path
+: full path to the original document file
+
+file_size
+: size of the document in bytes
+
+cache_control
+: caching directive ("ephemeral" for documents)
 ```
 
 > **Note:** We plan to rename `"options"` to `"inherited"` to clarify its behavior.
