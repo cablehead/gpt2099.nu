@@ -8,7 +8,7 @@ export def gr [
   let names = $names | default [] | append $input
 
   # Fallback to `cat` if no closure provided
-  let with_content = $with_content | default { cat $in }
+  let with_content = $with_content | default ({|| cat $in })
 
   $names | each {
     # For each file name in the list, emit a <file> element
