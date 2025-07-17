@@ -5,7 +5,7 @@
 
 # gpt2099.nu [![Discord](https://img.shields.io/discord/1182364431435436042?logo=discord)](https://discord.com/invite/YNbScHBHrh)
 
-A [Nushell](https://www.nushell.sh) scriptable [MCP client](https://modelcontextprotocol.io/sdk/java/mcp-client#model-context-protocol-client) with editable context threads stored in [cross.stream](https://github.com/cablehead/xs)
+A [Nushell](https://www.nushell.sh) scriptable [MCP client](https://modelcontextprotocol.io/sdk/java/mcp-client#model-context-protocol-client) with editable context threads stored in [cross.stream](https://cablehead.github.io/xs/tutorials/threaded-conversations/)
 
 <img width="660" alt="image" src="https://github.com/user-attachments/assets/2b8d8744-076c-40e1-ac2c-1b1864ca2b80" />
 
