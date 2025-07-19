@@ -20,7 +20,7 @@ Built on [cross.stream](https://github.com/cablehead/xs) for event-driven proces
 
 https://github.com/user-attachments/assets/1254aaa1-2ca2-46b5-96e8-b5e466c735bd
 
-<small><i>"lady on the track" provided by mobygratis</i><small>
+<small><i>"lady on the track" provided by [mobygratis](https://mobygratis.com)</i><small>
 
 ## Getting started
 
