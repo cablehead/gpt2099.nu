@@ -18,6 +18,10 @@ A [Nushell](https://www.nushell.sh) scriptable [MCP client](https://modelcontext
 
 Built on [cross.stream](https://github.com/cablehead/xs) for event-driven processing, `gpt2099.nu` brings modern AI directly into your Nushell workflow — fully scriptable, fully inspectable, all in the terminal.
 
+https://github.com/user-attachments/assets/1254aaa1-2ca2-46b5-96e8-b5e466c735bd
+
+<small><i>"lady on the track" provided by mobygratis</i><small>
+
 ## Getting started
 
 ### Step 1.
