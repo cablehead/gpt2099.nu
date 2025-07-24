@@ -248,7 +248,7 @@ export def generate-response [turn_id: string] {
         $"($server)___($in)"
       }
     } | flatten
-  }
+  } else { [] }
 
   let p = providers all | get $config.provider
   let res = (
