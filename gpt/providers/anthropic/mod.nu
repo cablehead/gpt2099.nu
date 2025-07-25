@@ -61,6 +61,23 @@ export def provider [] {
           each {|part|
             match $part.type {
               "tool_result" => ($part | reject -i name)
+              "document" => {
+                # Convert text-based documents to text blocks, keep binary as documents
+                let media_type = $part.source.media_type
+                if ($media_type | str starts-with "text/") or ($media_type == "application/json") {
+                  # Decode base64 and convert to text block
+                  let decoded_content = $part.source.data | decode base64 | decode utf-8
+                  {
+                    type: "text"
+                    text: $decoded_content
+                  } | if ($part.cache_control? != null) {
+                    insert cache_control $part.cache_control
+                  } else { $in }
+                } else {
+                  # Keep binary documents as-is (PDFs, images, etc.)
+                  $part
+                }
+              }
               _ => $part
             }
           }
