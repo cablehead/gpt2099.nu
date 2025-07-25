@@ -94,6 +94,7 @@ export def main [
   --provider-ptr (-p): string # a short alias for provider to going-forward
   --json (-j) # Treat input as JSON formatted content
   --separator: string = "\n\n---\n\n" # Separator used when joining lists of strings
+  --cache # Enable ephemeral caching for this turn
 ] {
   let content = if $in == null {
     input "Enter prompt: "
@@ -121,6 +122,7 @@ export def main [
       )
     }
     | conditional-pipe ($head | is-not-empty) { insert head $head }
+    | conditional-pipe $cache { insert cache true }
     | if $continues != null { insert continues $continues } else { }
     | if $json { insert content_type "application/json" } else { }
   )
