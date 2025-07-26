@@ -71,36 +71,15 @@ Give it a spin:
 "hola" | gpt -p milli
 ```
 
-## Working with Documents
+## Documentation
 
-Register documents to include in your conversations:
-
-```nushell
-# Register a PDF document
-gpt document ~/reports/analysis.pdf
-
-# Register with custom name and bookmark for easy reference
-gpt document ~/data.csv --name "Sales Data Q4" --bookmark "sales-data"
-
-# Use the document in a conversation
-let doc = (gpt document ~/manual.pdf)
-"Summarize this manual" | gpt --continues $doc.id -p milli
-
-# Continue the conversation thread
-"What are the key safety procedures?" | gpt -r -p milli
-```
-
-Supported document types:
-- **PDFs** (`application/pdf`)
-- **Images** (`image/jpeg`, `image/png`, `image/webp`, `image/gif`)
-- **Text files** (`text/plain`, `text/markdown`, `text/csv`)
-- **Office documents** (`application/vnd.openxmlformats-officedocument.*`)
-- **JSON** (`application/json`)
-
-Documents are automatically cached using ephemeral caching for better performance with supported providers.
-
-The default alias scheme ranks models by relative weight: `nano` < `milli` < `kilo` < `giga`. Reasoning-optimized variants use `.r`. See [docs/configure-providers.md](docs/configure-providers.md) for details.
-For more commands see [docs/commands.md](docs/commands.md).
+- **[Commands Reference](docs/commands.md)** - Complete command syntax and options
+- **[How-To Guides](docs/how-to/)** - Task-oriented workflows:
+  - [Configure Providers](docs/how-to/configure-providers.md) - Set up AI providers and model aliases
+  - [Work with Documents](docs/how-to/work-with-documents.md) - Register and use documents in conversations
+  - [Manage Conversations](docs/how-to/manage-conversations.md) - Threading, bookmarking, and continuation
+  - [Use MCP Servers](docs/how-to/use-mcp-servers.md) - Extend functionality with external tools
+  - [Generate Code Context](docs/how-to/generate-code-context.md) - Create structured context from Git repositories
 
 
 ## Conversation Turn Schema (`gpt.turn`)
