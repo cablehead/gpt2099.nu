@@ -26,7 +26,10 @@ const App: Component = () => {
   };
 
   const CAS = createCAS(fetchContent);
-  const { currentThread, title, loadingState, parseContent } = useStore({ dataSignal: frameSignal, CAS });
+  const { currentThread, title, loadingState, parseContent } = useStore({
+    dataSignal: frameSignal,
+    CAS,
+  });
 
   const [titleContent] = createResource(
     () => {
@@ -57,16 +60,27 @@ const App: Component = () => {
         <ThemeTrigger prefersDark={prefersDark} toggleTheme={toggleTheme} />
       </header>
 
-      <Show when={currentThread() !== null} fallback={
-        <div>
-          <p>Loading GPT thread...</p>
-          <p style="font-size: 0.9em; color: var(--color-dark-0);">{loadingState()}</p>
-        </div>
-      }>
+      <Show
+        when={currentThread() !== null}
+        fallback={
+          <div>
+            <p>Loading GPT thread...</p>
+            <p style="font-size: 0.9em; color: var(--color-dark-0);">
+              {loadingState()}
+            </p>
+          </div>
+        }
+      >
         <Router>
           <Route
             path="/"
-            component={() => <Home thread={currentThread()!} CAS={CAS} parseContent={parseContent} />}
+            component={() => (
+              <Home
+                thread={currentThread()!}
+                CAS={CAS}
+                parseContent={parseContent}
+              />
+            )}
           />
           <Route
             path="/:id"
@@ -77,14 +91,18 @@ const App: Component = () => {
 
               if (!thread) return <NotFound />;
 
-              const foundTurn = thread.turns.find(turn => turn.id === turnId);
+              const foundTurn = thread.turns.find((turn) => turn.id === turnId);
 
               return (
                 <Show when={foundTurn} fallback={<NotFound />}>
                   <p>
                     <A href="/">home</A> / <A href={`/${turnId}`}>{turnId}</A>
                   </p>
-                  <Card turn={foundTurn!} CAS={CAS} parseContent={parseContent} />
+                  <Card
+                    turn={foundTurn!}
+                    CAS={CAS}
+                    parseContent={parseContent}
+                  />
                 </Show>
               );
             }}

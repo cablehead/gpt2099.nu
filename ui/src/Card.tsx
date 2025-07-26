@@ -42,9 +42,12 @@ const Meta = styled("div")`
 const RoleBadge: Component<{ role: string }> = (props) => {
   const getBgColor = () => {
     switch (props.role) {
-      case 'user': return 'var(--color-green)';
-      case 'assistant': return 'var(--color-frost-2)';
-      default: return 'var(--color-orange)';
+      case "user":
+        return "var(--color-green)";
+      case "assistant":
+        return "var(--color-frost-2)";
+      default:
+        return "var(--color-orange)";
     }
   };
 
@@ -84,7 +87,7 @@ const ContentBlockRenderer: Component<{ block: ContentBlock }> = (props) => {
           {(html) => <div class="markdown" innerHTML={html} />}
         </Show>
       );
-    
+
     case "tool_use":
       return (
         <div style="background: var(--color-pill); padding: 0.5em; border-radius: 0.25em; margin: 0.5em 0;">
@@ -94,7 +97,7 @@ const ContentBlockRenderer: Component<{ block: ContentBlock }> = (props) => {
           </pre>
         </div>
       );
-    
+
     case "tool_result":
       return (
         <div style="background: var(--color-frost-0); padding: 0.5em; border-radius: 0.25em; margin: 0.5em 0;">
@@ -104,13 +107,13 @@ const ContentBlockRenderer: Component<{ block: ContentBlock }> = (props) => {
           </pre>
         </div>
       );
-    
+
     case "document":
       return (
         <div style="background: var(--color-yellow); color: var(--color-black); padding: 0.5em; border-radius: 0.25em; margin: 0.5em 0;">
           <strong>📄 Document: {block.source.media_type}</strong>
           <div style="margin-top: 0.5em; font-size: 0.9em;">
-            {block.source.media_type.startsWith('text/') ? (
+            {block.source.media_type.startsWith("text/") ? (
               (() => {
                 const [docHtml] = createResource(
                   () => atob(block.source.data),
@@ -128,7 +131,7 @@ const ContentBlockRenderer: Component<{ block: ContentBlock }> = (props) => {
           </div>
         </div>
       );
-    
+
     default:
       return (
         <div style="background: var(--color-red); color: var(--color-white); padding: 0.5em; border-radius: 0.25em; margin: 0.5em 0;">
@@ -146,8 +149,8 @@ const Card: Component<CardProps> = (props) => {
 
   const textContent = () => {
     return content()
-      .filter(block => block.type === "text")
-      .map(block => (block as any).text)
+      .filter((block) => block.type === "text")
+      .map((block) => (block as any).text)
       .join("\n");
   };
 
@@ -165,7 +168,9 @@ const Card: Component<CardProps> = (props) => {
           <div style="display: flex; align-items: center; gap: 0.5em;">
             <RoleBadge role={turn.role} />
             <Show when={turn.cache}>
-              <span style="font-size: 0.8em; color: var(--color-purple);">cached</span>
+              <span style="font-size: 0.8em; color: var(--color-purple);">
+                cached
+              </span>
             </Show>
           </div>
 
@@ -193,13 +198,14 @@ const Card: Component<CardProps> = (props) => {
           "
         >
           <span style="font-size: 0.8em; color: var(--color-dark-0);">
-            {Object.keys(turn.options).length > 0 && 
-              `Options: ${JSON.stringify(turn.options)}`
-            }
+            {Object.keys(turn.options).length > 0 &&
+              `Options: ${JSON.stringify(turn.options)}`}
           </span>
-          
+
           <span>
-            <A href={`/${turn.id}`}>{formatRelative(turn.timestamp, new Date())}</A>
+            <A href={`/${turn.id}`}>
+              {formatRelative(turn.timestamp, new Date())}
+            </A>
           </span>
         </div>
       </Meta>

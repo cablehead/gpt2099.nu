@@ -5,8 +5,8 @@ import { CASStore } from "../store/cas";
 import { Thread, Turn, ContentBlock } from "../store/stream";
 import Card from "../Card";
 
-const Home: Component<{ 
-  thread: Thread; 
+const Home: Component<{
+  thread: Thread;
   CAS: CASStore;
   parseContent: (turn: Turn) => ContentBlock[];
 }> = (props) => {
@@ -19,7 +19,9 @@ const Home: Component<{
         <strong>Options:</strong> {JSON.stringify(props.thread.options)}
       </div>
       <For each={props.thread.turns}>
-        {(turn) => <Card turn={turn} CAS={props.CAS} parseContent={props.parseContent} />}
+        {(turn) => (
+          <Card turn={turn} CAS={props.CAS} parseContent={props.parseContent} />
+        )}
       </For>
     </>
   );
