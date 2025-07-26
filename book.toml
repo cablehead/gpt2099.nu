@@ -5,3 +5,6 @@ src = "docs"
 
 [build]
 build-dir = "book"
+
+[output.html.print]
+enable = false
