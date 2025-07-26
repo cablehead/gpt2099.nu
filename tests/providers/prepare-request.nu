@@ -100,19 +100,17 @@ def test-case [
     
     try {
       let model = $models | get $provider
-      let response = $actual | do $provider_impl.call $call $model
       
-      # Simple smoke test: collect some events and verify we got something back
-      let events = $response | take 5 | collect
-      if ($events | is-empty) {
+      # Simple smoke test: show events as they stream in
+      let events = $actual | do $provider_impl.call $call $model | each {|event|
+        print ($event | to json)
+        $event
+      } | collect
+      
+      if ($events | length) == 0 {
         error make {msg: "No response events received"}
-      }
-      
-      print $"✓ ($case_name) - API call successful, received ($events | length) events"
-      
-      # Optionally show first event for manual inspection
-      if $env.GPT_TEST_VERBOSE? == "true" {
-        print $"First event: ($events | first | to json)"
+      } else {
+        print $"✓ ($case_name) - API call successful"
       }
       
     } catch { |e|
