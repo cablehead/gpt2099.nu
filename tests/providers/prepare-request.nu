@@ -1,7 +1,10 @@
 use std assert
-use ../../../gpt/providers/anthropic *
 
-const model = "claude-3-5-haiku-20241022"
+# Provider models for smoke testing
+const models = {
+  anthropic: "claude-3-5-haiku-20241022"
+  gemini: "gemini-2.5-flash"
+}
 
 # Asset mapping for dynamic fixture population
 const assets = {
@@ -47,35 +50,36 @@ def update-data-fields [asset_data: string] {
   }
 }
 
-
-
 # Test runner for prepare-request fixtures
 export def run-all [
-  --call: string # API key to use for actual API calls
+  provider: string # Provider name (anthropic, gemini, etc.)
+  --call: string # API key to use for actual API calls (smoke test)
 ] {
   let fixtures_path = "tests/fixtures/prepare-request"
   let test_cases = (ls $fixtures_path | where type == dir | get name | path basename)
   
   if ($call | is-not-empty) {
-    print $"Running ($test_cases | length) prepare-request test cases for Anthropic with API calls..."
+    let model = $models | get $provider
+    print $"Running ($test_cases | length) prepare-request test cases for ($provider) with API calls..."
     print "⚠️  This will make real API calls and consume tokens!"
     print $"Using ($model)"
     
     for case in $test_cases {
-      test-case $case --call $call
+      test-case $provider $case --call $call
     }
   } else {
-    print $"Running ($test_cases | length) prepare-request test cases for Anthropic..."
+    print $"Running ($test_cases | length) prepare-request test cases for ($provider)..."
     
     for case in $test_cases {
-      test-case $case
+      test-case $provider $case
     }
   }
   
-  print "\n🎉 All Anthropic prepare-request tests passed!"
+  print $"\n🎉 All ($provider) prepare-request tests passed!"
 }
 
 def test-case [
+  provider: string
   case_name: string 
   --call: string # API key if making real calls
 ] {
@@ -83,42 +87,32 @@ def test-case [
   
   # Load input and expected output, with dynamic asset loading
   let input = load-fixture $case_path "input.json"
-  let expected = load-fixture $case_path "expected-anthropic.json"
+  let expected = load-fixture $case_path $"expected-($provider).json"
   
-  # Run the provider's prepare-request function
-  let provider_impl = provider
+  # Get provider implementation
+  use ../../gpt/providers
+  let provider_impl = providers all | get $provider
   let actual = do $provider_impl.prepare-request $input []
   
   if $call != null {
-    # Test the full pipeline
+    # Smoke test - just verify API call works and returns events
     print $"🔄 Testing ($case_name) with API call..."
     
     try {
+      let model = $models | get $provider
       let response = $actual | do $provider_impl.call $call $model
       
-      # Collect more events to better validate the response
-      let events = $response | take 10 | collect
+      # Simple smoke test: collect some events and verify we got something back
+      let events = $response | take 5 | collect
       if ($events | is-empty) {
         error make {msg: "No response events received"}
       }
       
-      # Look for expected event types
-      let has_message_start = $events | any {|e| $e.type? == "message_start"}
-      let has_content = $events | any {|e| $e.type? == "content_block_start" or $e.type? == "content_block_delta"}
+      print $"✓ ($case_name) - API call successful, received ($events | length) events"
       
-      if not $has_message_start {
-        print $"Warning: No message_start event found in ($case_name)"
-      }
-      
-      print $"✓ ($case_name) - API call successful, received ($events | length) events ($has_message_start and $has_content)"
-      
-      # Optionally show first few events for manual inspection
+      # Optionally show first event for manual inspection
       if $env.GPT_TEST_VERBOSE? == "true" {
         print $"First event: ($events | first | to json)"
-        if $has_content {
-          let content_event = $events | where {|e| $e.type? == "content_block_start" or $e.type? == "content_block_delta"} | first
-          print $"Content event: ($content_event | to json)"
-        }
       }
       
     } catch { |e|
@@ -142,51 +136,56 @@ def test-case [
 
 # Individual test functions for backward compatibility
 export def test-text-document [
+  provider: string
   --call: string # API key to use for actual API calls
 ] {
   if ($call | is-not-empty) {
-    test-case "text-document" --call $call
+    test-case $provider "text-document" --call $call
   } else {
-    test-case "text-document"
+    test-case $provider "text-document"
   }
 }
 
 export def test-json-document [
+  provider: string
   --call: string # API key to use for actual API calls
 ] {
   if ($call | is-not-empty) {
-    test-case "json-document" --call $call
+    test-case $provider "json-document" --call $call
   } else {
-    test-case "json-document"
+    test-case $provider "json-document"
   }
 }
 
 export def test-pdf-document [
+  provider: string
   --call: string # API key to use for actual API calls
 ] {
   if ($call | is-not-empty) {
-    test-case "pdf-document" --call $call
+    test-case $provider "pdf-document" --call $call
   } else {
-    test-case "pdf-document"
+    test-case $provider "pdf-document"
   }
 }
 
 export def test-image-document [
+  provider: string
   --call: string # API key to use for actual API calls
 ] {
   if ($call | is-not-empty) {
-    test-case "image-document" --call $call
+    test-case $provider "image-document" --call $call
   } else {
-    test-case "image-document"
+    test-case $provider "image-document"
   }
 }
 
 export def test-mixed-content [
+  provider: string
   --call: string # API key to use for actual API calls
 ] {
   if ($call | is-not-empty) {
-    test-case "mixed-content" --call $call
+    test-case $provider "mixed-content" --call $call
   } else {
-    test-case "mixed-content"
+    test-case $provider "mixed-content"
   }
 }

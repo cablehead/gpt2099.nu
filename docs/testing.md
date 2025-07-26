@@ -3,27 +3,25 @@
 ## Running Tests
 
 ```bash
-# Run all Anthropic prepare-request tests (fixture comparison only)
-use tests/providers/anthropic/prepare-request.nu; prepare-request run-all
-
-# Run all Gemini prepare-request tests (fixture comparison only)
-use tests/providers/gemini/prepare-request.nu; prepare-request run-all
+# Run all prepare-request tests for a provider (fixture comparison only)
+use tests/providers/prepare-request.nu; prepare-request run-all anthropic
+use tests/providers/prepare-request.nu; prepare-request run-all gemini
 
 # Run all tests with actual API calls (⚠️ consumes tokens!)
-use tests/providers/anthropic/prepare-request.nu; prepare-request run-all --call "your-anthropic-api-key"
-use tests/providers/gemini/prepare-request.nu; prepare-request run-all --call "your-gemini-api-key"
+use tests/providers/prepare-request.nu; prepare-request run-all anthropic --call "your-anthropic-api-key"
+use tests/providers/prepare-request.nu; prepare-request run-all gemini --call "your-gemini-api-key"
 
 # Run individual test case
-use tests/providers/anthropic/prepare-request.nu; prepare-request test-text-document
-use tests/providers/gemini/prepare-request.nu; prepare-request test-text-document
+use tests/providers/prepare-request.nu; prepare-request test-text-document anthropic
+use tests/providers/prepare-request.nu; prepare-request test-text-document gemini
 
 # Run individual test case with API call
-use tests/providers/anthropic/prepare-request.nu; prepare-request test-text-document --call "your-anthropic-api-key"
-use tests/providers/gemini/prepare-request.nu; prepare-request test-text-document --call "your-gemini-api-key"
+use tests/providers/prepare-request.nu; prepare-request test-text-document anthropic --call "your-anthropic-api-key"
+use tests/providers/prepare-request.nu; prepare-request test-text-document gemini --call "your-gemini-api-key"
 
 # Verbose output to see response details
-GPT_TEST_VERBOSE=true use tests/providers/anthropic/prepare-request.nu; prepare-request run-all --call "your-anthropic-api-key"
-GPT_TEST_VERBOSE=true use tests/providers/gemini/prepare-request.nu; prepare-request run-all --call "your-gemini-api-key"
+GPT_TEST_VERBOSE=true use tests/providers/prepare-request.nu; prepare-request run-all anthropic --call "your-anthropic-api-key"
+GPT_TEST_VERBOSE=true use tests/providers/prepare-request.nu; prepare-request run-all gemini --call "your-gemini-api-key"
 ```
 
 ## Test Structure
@@ -50,10 +48,9 @@ tests/
 │       └── mixed-content/
 │           └── ...
 └── providers/
-    ├── anthropic/
-    │   └── prepare-request.nu    # Test runner with dynamic asset support
-    ├── gemini/
-    │   └── prepare-request.nu    # Test runner with dynamic asset support
+    ├── prepare-request.nu        # Unified test runner for all providers
+    ├── anthropic/                # (legacy - can be removed)
+    ├── gemini/                   # (legacy - can be removed)
     └── openai/                   # (future)
 ```
 
@@ -73,8 +70,8 @@ The `--call` parameter enables testing the full pipeline by making actual API ca
 - **API Key**: Pass your Anthropic API key as the `--call` parameter value
 - **Model**: Uses cheapest available models to minimize costs:
   - Anthropic: `claude-3-5-haiku-20241022`
-  - Gemini: `gemini-1.5-flash`
-- **Validation**: Checks for expected response structure and event types
+  - Gemini: `gemini-2.5-flash`
+- **Validation**: Simple smoke test - just verifies API calls return events
 - **Safety**: Warns about token consumption before making calls
 - **Debugging**: Set `GPT_TEST_VERBOSE=true` to see response event details
 
