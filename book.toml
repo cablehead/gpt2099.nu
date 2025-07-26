@@ -5,4 +5,3 @@ src = "docs"
 
 [build]
 build-dir = "book"
-create-missing = false
