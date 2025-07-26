@@ -3,6 +3,52 @@ use ../../../gpt/providers/anthropic *
 
 const model = "claude-3-5-haiku-20241022"
 
+# Asset mapping for dynamic fixture population
+const assets = {
+  "pdf-document": {file: "tests/fixtures/assets/doc.pdf", media_type: "application/pdf"}
+  "image-document": {file: "tests/fixtures/assets/img.png", media_type: "image/png"}
+}
+
+# Load fixture with dynamic asset population
+def load-fixture [case_path: string, filename: string] {
+  let case_name = ($case_path | path basename)
+  let fixture_file = $case_path | path join $filename
+  let base_fixture_file = $case_path | path join $"base-($filename)"
+  
+  # Use base fixture if available and case needs dynamic assets
+  if ($case_name in $assets) and ($base_fixture_file | path exists) {
+    let base_fixture = open $base_fixture_file
+    let asset_info = $assets | get $case_name
+    
+    # Load asset data and update fixture
+    let asset_data = open $asset_info.file --raw | encode base64
+    $base_fixture | update-data-fields $asset_data
+  } else if ($fixture_file | path exists) {
+    open $fixture_file
+  } else {
+    error make {msg: $"Fixture not found: ($fixture_file)"}
+  }
+}
+
+# Recursively update empty "data" fields with asset data
+def update-data-fields [asset_data: string] {
+  $in | if ($in | describe -d | get type) == "record" {
+    $in | items {|key, value|
+      if $key == "data" and $value == "" {
+        {$key: $asset_data}
+      } else {
+        {$key: ($value | update-data-fields $asset_data)}
+      }
+    } | into record
+  } else if ($in | describe -d | get type) == "list" {
+    $in | each {|item| $item | update-data-fields $asset_data}
+  } else {
+    $in
+  }
+}
+
+
+
 # Test runner for prepare-request fixtures
 export def run-all [
   --call: string # API key to use for actual API calls
@@ -35,9 +81,9 @@ def test-case [
 ] {
   let case_path = ["tests" "fixtures" "prepare-request" $case_name] | path join
   
-  # Load input and expected output
-  let input = open ($case_path | path join "input.json")
-  let expected = open ($case_path | path join "expected-anthropic.json")
+  # Load input and expected output, with dynamic asset loading
+  let input = load-fixture $case_path "input.json"
+  let expected = load-fixture $case_path "expected-anthropic.json"
   
   # Run the provider's prepare-request function
   let provider_impl = provider

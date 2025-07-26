@@ -28,17 +28,23 @@ Tests use JSON fixtures to separate test data from test logic:
 ```
 tests/
 ├── fixtures/
+│   ├── assets/                   # Binary assets for dynamic fixtures
+│   │   ├── doc.pdf              # PDF document for testing
+│   │   ├── img.png              # PNG image for testing  
+│   │   └── doc.md               # Markdown document for testing
 │   └── prepare-request/          # Shared across all providers
 │       ├── text-document/
 │       │   ├── input.json        # Provider-neutral input
 │       │   ├── expected-anthropic.json
 │       │   ├── expected-gemini.json    # (future)
 │       │   └── expected-openai.json    # (future)
+│       ├── pdf-document/         # Dynamic asset loading
+│       ├── image-document/       # Dynamic asset loading
 │       └── mixed-content/
 │           └── ...
 └── providers/
     ├── anthropic/
-    │   └── prepare-request.nu    # Test runner
+    │   └── prepare-request.nu    # Test runner with dynamic asset support
     ├── gemini/                   # (future)
     └── openai/                   # (future)
 ```
@@ -49,6 +55,7 @@ tests/
 - **Provider-specific outputs**: Each provider transforms inputs differently, so separate expected files per provider
 - **Method-specific organization**: Different provider methods get their own fixture directories
 - **Descriptive naming**: Fixture directories named by input characteristics, not expected behavior
+- **Dynamic asset loading**: Binary fixtures (PDF, images) are dynamically populated from `tests/fixtures/assets/` to avoid storing large base64 data in JSON
 - **API testing option**: Tests can run against fixtures (fast) or make real API calls (validation)
 
 ### API Testing
@@ -94,6 +101,21 @@ tests/fixtures/
 ```
 
 This structure scales cleanly as we add providers and test more complex scenarios.
+
+### Dynamic Asset Loading
+
+For fixtures that contain binary data (PDFs, images), the test system uses dynamic asset loading:
+
+1. **Asset Storage**: Binary files are stored in `tests/fixtures/assets/`
+2. **Runtime Population**: Test runner loads assets and base64-encodes them into fixtures
+3. **Asset Mapping**: `prepare-request.nu` contains a mapping of test cases to their asset files
+4. **Automatic Updates**: When assets change, fixtures are automatically updated with new data
+
+This approach:
+- **Reduces repo size**: Avoids storing large base64 strings in JSON files
+- **Improves maintainability**: Binary files can be easily replaced or updated
+- **Ensures consistency**: All test cases use the same asset files
+- **Supports version control**: Binary assets are tracked separately from test logic
 
 ### Testing Best Practices
 
