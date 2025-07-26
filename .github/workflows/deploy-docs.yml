@@ -3,8 +3,6 @@ name: Deploy Documentation
 on:
   push:
     branches: ["*"]  # Run on push to any branch
-  pull_request:
-    branches: ["*"]  # Also run on PRs for testing
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
