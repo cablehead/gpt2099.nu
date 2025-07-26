@@ -1,0 +1,8 @@
+[book]
+title = "gpt2099"
+authors = ["gpt2099 contributors"]
+src = "docs"
+
+[build]
+build-dir = "book"
+create-missing = false
