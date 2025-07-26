@@ -132,18 +132,31 @@ export def main [
   process-turn $turn
 }
 
-export def process-turn-response [turn: record] {
+export def --env process-turn-response [turn: record] {
   let content = .cas $turn.hash | from json
   let tool_use = $content | where type == "tool_use"
   if ($tool_use | is-empty) { return }
   let tool_use = $tool_use | first
   print ($tool_use | table -e)
 
-  let choice = ["yes" "no: do something different" "no"] | input list "Execute?"
+  let yolo_mode = $env.GPT2099_YOLO? | default false
+  
+  let choice = if $yolo_mode {
+    print "🚀 YOLO mode: auto-executing..."
+    "yes"
+  } else {
+    ["yes" "no: do something different" "no" "activate: yolo"] | input list "Execute?"
+  }
+
+  # Handle yolo activation
+  if $choice == "activate: yolo" {
+    $env.GPT2099_YOLO = true
+    print "🚀 YOLO mode activated for future tool calls"
+  }
 
   match $choice {
-    "yes" => {
-      # Original execution path
+    "yes" | "activate: yolo" => {
+      # Execute tool call
       let namespace = ($tool_use.name | split row "___")
       let mcp_toolscall = $tool_use | {
         "jsonrpc": "2.0"
