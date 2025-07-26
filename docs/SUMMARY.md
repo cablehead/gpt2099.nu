@@ -14,7 +14,8 @@
 - [Use MCP Servers](how-to/use-mcp-servers.md)
 - [Generate Code Context](how-to/generate-code-context.md)
 
-# Reference
+# Development
 
 - [Provider API](reference/provider-api.md)
 - [Schemas](reference/schemas.md)
+- [Testing](testing.md)
