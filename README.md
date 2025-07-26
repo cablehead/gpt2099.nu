@@ -11,7 +11,7 @@ A [Nushell](https://www.nushell.sh) scriptable [MCP client](https://modelcontext
 
 ## Features
 
-* **Consistent API Across Models:** Connect to Gemini + Search and Anthropic + Search through a single, simple interface. ([Add providers easily.](./provider-api.md))
+* **Consistent API Across Models:** Connect to Gemini + Search and Anthropic + Search through a single, simple interface. ([Add providers easily.](docs/reference/provider-api.md))
 * **Persistent, Editable Conversations:** [Conversation threads](https://cablehead.github.io/xs/tutorials/threaded-conversations/) are saved across sessions. Review, edit, and control your own context window — no black-box history.
 * **Flexible Tool Integration:** Connect to MCP servers to extend functionality. `gpt2099.nu` already rivals [Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) for local file editing, but with full provider independence and deeper flexibility.
 * **Document Support:** Upload and reference documents (PDFs, images, text files) directly in conversations with automatic content-type detection and caching.
@@ -82,55 +82,10 @@ Give it a spin:
   - [Generate Code Context](docs/how-to/generate-code-context.md) - Create structured context from Git repositories
 
 
-## Conversation Turn Schema (`gpt.turn`)
+## Reference Documentation
 
-Each turn in a thread is stored as a `gpt.turn` frame, with these top-level
-attributes in its `meta` record:
-
-```
-role
-: speaker for this turn ("user", "assistant", "system")
-
-inherited  (currently named "options")
-: attributes auto-inherited down the thread (deep-merged at each turn)
-    servers
-    : list of MCP server names to use
-    search
-    : enable LLM-side search
-    tool_mode
-    : provider-specific tool mode
-    provider_ptr (required)
-    : the provider ptr to use for this turn, ("nano", "milli", "mega")
-
-head
-: thread bookmark; must be explicitly carried forward if continuity is needed
-
-continues
-: id or list of ids, links to previous turn(s) for context
-
-cache
-: ephemeral cache flag for this turn
-
-content_type
-: MIME type for content (e.g., "application/json")
-
-type
-: content type indicator ("document" for uploaded files)
-
-document_name
-: display name for documents (defaults to filename)
-
-original_path
-: full path to the original document file
-
-file_size
-: size of the document in bytes
-
-cache_control
-: caching directive ("ephemeral" for documents)
-```
-
-> **Note:** We plan to rename `"options"` to `"inherited"` to clarify its behavior.
+- **[Provider API](docs/reference/provider-api.md)** - Technical specification for implementing providers
+- **[Schemas](docs/reference/schemas.md)** - Complete data structure reference including `gpt.turn` schema
 
 ## FAQ
 
