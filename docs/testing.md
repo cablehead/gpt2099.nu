@@ -6,17 +6,24 @@
 # Run all Anthropic prepare-request tests (fixture comparison only)
 use tests/providers/anthropic/prepare-request.nu; prepare-request run-all
 
+# Run all Gemini prepare-request tests (fixture comparison only)
+use tests/providers/gemini/prepare-request.nu; prepare-request run-all
+
 # Run all tests with actual API calls (⚠️ consumes tokens!)
-use tests/providers/anthropic/prepare-request.nu; prepare-request run-all --call "your-api-key-here"
+use tests/providers/anthropic/prepare-request.nu; prepare-request run-all --call "your-anthropic-api-key"
+use tests/providers/gemini/prepare-request.nu; prepare-request run-all --call "your-gemini-api-key"
 
 # Run individual test case
 use tests/providers/anthropic/prepare-request.nu; prepare-request test-text-document
+use tests/providers/gemini/prepare-request.nu; prepare-request test-text-document
 
 # Run individual test case with API call
-use tests/providers/anthropic/prepare-request.nu; prepare-request test-text-document --call "your-api-key-here"
+use tests/providers/anthropic/prepare-request.nu; prepare-request test-text-document --call "your-anthropic-api-key"
+use tests/providers/gemini/prepare-request.nu; prepare-request test-text-document --call "your-gemini-api-key"
 
 # Verbose output to see response details
-GPT_TEST_VERBOSE=true use tests/providers/anthropic/prepare-request.nu; prepare-request run-all --call "your-api-key-here"
+GPT_TEST_VERBOSE=true use tests/providers/anthropic/prepare-request.nu; prepare-request run-all --call "your-anthropic-api-key"
+GPT_TEST_VERBOSE=true use tests/providers/gemini/prepare-request.nu; prepare-request run-all --call "your-gemini-api-key"
 ```
 
 ## Test Structure
@@ -36,7 +43,7 @@ tests/
 │       ├── text-document/
 │       │   ├── input.json        # Provider-neutral input
 │       │   ├── expected-anthropic.json
-│       │   ├── expected-gemini.json    # (future)
+│       │   ├── expected-gemini.json
 │       │   └── expected-openai.json    # (future)
 │       ├── pdf-document/         # Dynamic asset loading
 │       ├── image-document/       # Dynamic asset loading
@@ -45,7 +52,8 @@ tests/
 └── providers/
     ├── anthropic/
     │   └── prepare-request.nu    # Test runner with dynamic asset support
-    ├── gemini/                   # (future)
+    ├── gemini/
+    │   └── prepare-request.nu    # Test runner with dynamic asset support
     └── openai/                   # (future)
 ```
 
@@ -63,7 +71,9 @@ tests/
 The `--call` parameter enables testing the full pipeline by making actual API calls:
 
 - **API Key**: Pass your Anthropic API key as the `--call` parameter value
-- **Model**: Uses `claude-3-haiku-20240307` (cheapest model) to minimize costs
+- **Model**: Uses cheapest available models to minimize costs:
+  - Anthropic: `claude-3-5-haiku-20241022`
+  - Gemini: `gemini-1.5-flash`
 - **Validation**: Checks for expected response structure and event types
 - **Safety**: Warns about token consumption before making calls
 - **Debugging**: Set `GPT_TEST_VERBOSE=true` to see response event details
