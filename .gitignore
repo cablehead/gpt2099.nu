@@ -1,3 +1,4 @@
 learn-dioxus/
 xs
 book/
+.env/
