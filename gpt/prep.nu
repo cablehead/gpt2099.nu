@@ -1,14 +1,30 @@
 # Generate XML context for a list of files in the current Git repository
 export def gr [
   ...names: string # list of file names to include
-  --with-content: closure # closure to fetch file content, default `{ cat $in }`
+  --with-content: closure # closure to fetch file content, default detects binary files
   --instructions: string
 ]: any -> string {
   let input = $in
   let names = $names | default [] | append $input
 
-  # Fallback to `cat` if no closure provided
-  let with_content = $with_content | default ({|| cat $in })
+  # Fallback to content reader that handles binary files
+  let with_content = if ($with_content == null) {
+    { 
+      # Read file as raw bytes, convert to string, check for null bytes to detect binary files
+      try {
+        let content = (open --raw $in | into string)
+        if ($content | str contains "\u{0}") {
+          "[binary file]"
+        } else {
+          $content
+        }
+      } catch {
+        "[binary file]"
+      }
+    }
+  } else {
+    $with_content
+  }
 
   $names | each {
     # For each file name in the list, emit a <file> element

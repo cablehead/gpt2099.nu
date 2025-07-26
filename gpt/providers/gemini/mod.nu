@@ -70,6 +70,27 @@ export def provider [] {
                         # Note: Deliberately omit tool_use_id - Gemini doesn't use it
                       }
                     }
+                    "document" => {
+                      # Convert based on media type
+                      let media_type = $content.source.media_type
+                      if ($media_type | str starts-with "text/") or ($media_type == "application/json") {
+                        # Decode base64 and convert to text
+                        let decoded_content = $content.source.data | decode base64 | decode utf-8
+                        {text: $decoded_content}
+                      } else if ($media_type | str starts-with "image/") or ($media_type == "application/pdf") {
+                        # Convert images and PDFs to Gemini's inline_data format
+                        {
+                          inline_data: {
+                            mime_type: $media_type
+                            data: $content.source.data
+                          }
+                        }
+                      } else {
+                        # For other document types, Gemini doesn't support them directly
+                        # Convert to text representation
+                        {text: $"[Document: ($media_type) - content not directly supported by Gemini]"}
+                      }
+                    }
                     _ => ( error make {msg: $"TBD: ($content)"})
                   }
                 }

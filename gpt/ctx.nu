@@ -57,10 +57,15 @@ def frame-to-turn [frame: record] {
     } else if (($meta | get content_type?) == "application/json") {
       $content_raw | from json
     } else {
-      [
+    [
+    (
         {type: "text" text: $content_raw}
-      ]
-    }
+          | if $cache {
+          insert cache_control {type: "ephemeral"}
+        } else { $in }
+      )
+    ]
+  }
   )
 
   {

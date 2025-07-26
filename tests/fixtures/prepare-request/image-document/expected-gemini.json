@@ -1,0 +1,20 @@
+{
+  "contents": [
+    {
+      "role": "user",
+      "parts": [
+        {
+          "inline_data": {
+            "mime_type": "image/png",
+            "data": "iVBORw0KGgoAAAANSUhEUgAAACMAAAAGAQAAAABhwxpxAAAAHElEQVQI12P4DwQPGP7/YZAHkgxgkgOJzQ+UBQBX2xHFO9XWzAAAAABJRU5ErkJggg=="
+          }
+        }
+      ]
+    }
+  ],
+  "generationConfig": {
+    "temperature": 1,
+    "topP": 0.95,
+    "maxOutputTokens": 81920
+  }
+}
