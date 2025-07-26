@@ -1,0 +1,23 @@
+{
+  "max_tokens": 8192,
+  "stream": true,
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "document",
+          "source": {
+            "type": "base64",
+            "media_type": "image/png",
+            "data": "ZmFrZS1wbmctYmluYXJ5LWRhdGE="
+          },
+          "cache_control": {
+            "type": "ephemeral"
+          }
+        }
+      ]
+    }
+  ],
+  "tools": []
+}

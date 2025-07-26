@@ -1,0 +1,39 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Regular text message",
+          "cache_control": {
+            "type": "ephemeral"
+          }
+        },
+        {
+          "type": "document",
+          "source": {
+            "type": "base64",
+            "media_type": "text/markdown",
+            "data": "IyBSRUFETUUKClRoaXMgaXMgZG9jdW1lbnRhdGlvbi4="
+          },
+          "cache_control": {
+            "type": "ephemeral"
+          }
+        },
+        {
+          "type": "document",
+          "source": {
+            "type": "base64",
+            "media_type": "application/pdf",
+            "data": "ZmFrZS1wZGYtZGF0YQ=="
+          },
+          "cache_control": {
+            "type": "ephemeral"
+          }
+        }
+      ]
+    }
+  ],
+  "options": {}
+}
