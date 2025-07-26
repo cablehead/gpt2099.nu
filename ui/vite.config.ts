@@ -1,0 +1,16 @@
+import { defineConfig } from "vite";
+import solid from "vite-plugin-solid";
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [solid()],
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:3021",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
+  },
+});
