@@ -131,58 +131,18 @@ def test-case [
   }
 }
 
-# Individual test functions for backward compatibility
-export def test-text-document [
-  provider: string
-  --call: string # API key to use for actual API calls
-] {
+# Helper to eliminate duplication in optional call flag handling
+def with-optional-call [case_name: string provider: string call?: string] {
   if ($call | is-not-empty) {
-    test-case $provider "text-document" --call $call
+    test-case $provider $case_name --call $call
   } else {
-    test-case $provider "text-document"
+    test-case $provider $case_name
   }
 }
 
-export def test-json-document [
-  provider: string
-  --call: string # API key to use for actual API calls
-] {
-  if ($call | is-not-empty) {
-    test-case $provider "json-document" --call $call
-  } else {
-    test-case $provider "json-document"
-  }
-}
-
-export def test-pdf-document [
-  provider: string
-  --call: string # API key to use for actual API calls
-] {
-  if ($call | is-not-empty) {
-    test-case $provider "pdf-document" --call $call
-  } else {
-    test-case $provider "pdf-document"
-  }
-}
-
-export def test-image-document [
-  provider: string
-  --call: string # API key to use for actual API calls
-] {
-  if ($call | is-not-empty) {
-    test-case $provider "image-document" --call $call
-  } else {
-    test-case $provider "image-document"
-  }
-}
-
-export def test-mixed-content [
-  provider: string
-  --call: string # API key to use for actual API calls
-] {
-  if ($call | is-not-empty) {
-    test-case $provider "mixed-content" --call $call
-  } else {
-    test-case $provider "mixed-content"
-  }
-}
+# Individual test functions - all identical one-liners
+export def test-text-document [provider: string --call: string] { with-optional-call "text-document" $provider $call }
+export def test-json-document [provider: string --call: string] { with-optional-call "json-document" $provider $call }
+export def test-pdf-document [provider: string --call: string] { with-optional-call "pdf-document" $provider $call }
+export def test-image-document [provider: string --call: string] { with-optional-call "image-document" $provider $call }
+export def test-mixed-content [provider: string --call: string] { with-optional-call "mixed-content" $provider $call }

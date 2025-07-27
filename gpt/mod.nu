@@ -238,6 +238,7 @@ export def process-turn [turn: record] {
 
   # save the assistance response
   let turn = $content | to json | .append gpt.turn --meta $meta
+    print $"THIS SHOULND'T BE POSSIBLE: ($turn)"
   $content | process-turn-response $turn
 }
 
