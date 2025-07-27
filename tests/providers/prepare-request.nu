@@ -103,7 +103,7 @@ def test-case [
       
       # Simple smoke test: show events as they stream in
       let events = $actual | do $provider_impl.call $call $model | each {|event|
-        print ($event | to json)
+        print ($event | to json -r)
         $event
       } | collect
       
