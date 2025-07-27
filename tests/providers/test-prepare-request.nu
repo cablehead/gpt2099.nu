@@ -131,18 +131,20 @@ def test-case [
   }
 }
 
-# Helper to eliminate duplication in optional call flag handling
-def with-optional-call [case_name: string provider: string call?: string] {
-  if ($call | is-not-empty) {
-    test-case $provider $case_name --call $call
+export def main [
+  provider: string # Provider name (anthropic, gemini, etc.)
+  test_case?: string # Test case name (text-document, json-document, etc.) - runs all if omitted
+  --call: string # API key to use for actual API calls (smoke test)
+] {
+  if ($test_case | is-not-empty) {
+    # Run single test case
+    if ($call | is-not-empty) {
+      test-case $provider $test_case --call $call
+    } else {
+      test-case $provider $test_case
+    }
   } else {
-    test-case $provider $case_name
+    # Run all test cases (equivalent to old run-all)
+    run-all $provider --call $call
   }
 }
-
-# Individual test functions - all identical one-liners
-export def test-text-document [provider: string --call: string] { with-optional-call "text-document" $provider $call }
-export def test-json-document [provider: string --call: string] { with-optional-call "json-document" $provider $call }
-export def test-pdf-document [provider: string --call: string] { with-optional-call "pdf-document" $provider $call }
-export def test-image-document [provider: string --call: string] { with-optional-call "image-document" $provider $call }
-export def test-mixed-content [provider: string --call: string] { with-optional-call "mixed-content" $provider $call }
