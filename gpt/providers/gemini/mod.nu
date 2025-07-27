@@ -33,6 +33,7 @@ export def convert-mcp-toolslist-to-provider [] {
   ]
 }
 
+# Note: we ignore cache control directives as Gemini's API has implicit caching (2.5 and up)
 export def provider [] {
   {
     models: {|key|
