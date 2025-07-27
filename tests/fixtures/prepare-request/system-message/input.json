@@ -1,0 +1,32 @@
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": [
+        {
+          "type": "text",
+          "text": "You are a helpful coding assistant. Always provide clear, concise explanations."
+        }
+      ]
+    },
+    {
+      "role": "user", 
+      "content": [
+        {
+          "type": "text",
+          "text": "How do I reverse a string?"
+        }
+      ]
+    },
+    {
+      "role": "system",
+      "content": [
+        {
+          "type": "text",
+          "text": "Remember to include examples in your responses."
+        }
+      ]
+    }
+  ],
+  "options": {}
+}

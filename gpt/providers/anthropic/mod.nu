@@ -105,7 +105,7 @@ export def provider [] {
           }
         }
       } | conditional-pipe ($system_messages | is-not-empty) {
-        insert "system" ($system_messages | get content | flatten | str join "\n\n----\n\n")
+        insert "system" ($system_messages | get content | flatten | get text | str join "\n\n----\n\n")
       }
 
       return $data

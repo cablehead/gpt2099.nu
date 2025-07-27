@@ -1,0 +1,27 @@
+{
+  "contents": [
+    {
+      "role": "user",
+      "parts": [
+        {
+          "text": "How do I reverse a string?"
+        }
+      ]
+    }
+  ],
+  "systemInstruction": {
+    "parts": [
+      {
+        "text": "You are a helpful coding assistant. Always provide clear, concise explanations."
+      },
+      {
+        "text": "Remember to include examples in your responses."
+      }
+    ]
+  },
+  "generationConfig": {
+    "temperature": 1,
+    "topP": 0.95,
+    "maxOutputTokens": 81920
+  }
+}

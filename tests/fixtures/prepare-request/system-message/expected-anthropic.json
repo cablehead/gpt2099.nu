@@ -1,0 +1,17 @@
+{
+  "max_tokens": 8192,
+  "stream": true,
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "How do I reverse a string?"
+        }
+      ]
+    }
+  ],
+  "system": "You are a helpful coding assistant. Always provide clear, concise explanations.\n\n----\n\nRemember to include examples in your responses.",
+  "tools": []
+}
