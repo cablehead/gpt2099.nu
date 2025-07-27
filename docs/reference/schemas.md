@@ -1,6 +1,85 @@
 # Schema Reference
 
-This document defines the data structures used throughout gpt2099.nu.
+This document is the authoritative reference for all data structures used throughout gpt2099.nu.
+
+## Normalized Context Window Input Schema
+
+This is the primary schema that provider `prepare-request` functions receive:
+
+```nushell
+# Context Window Input
+{
+  messages: list<message_record>
+  options: options_record
+}
+
+# Message Record
+message_record = {
+  role: "user" | "assistant" | "system"
+  content: list<content_block>
+}
+
+# Options Record
+options_record = {
+  provider_ptr?: string           # Required for actual calls
+  servers?: list<string>          # MCP server names
+  search?: bool                   # Enable provider search
+  tool_mode?: string              # Provider-specific tool mode
+}
+```
+
+### Content Block Types
+
+Content blocks are a union of these types:
+
+#### Text Block
+```nushell
+{
+  type: "text"
+  text: string
+  cache_control?: {type: "ephemeral"}
+}
+```
+
+#### Document Block
+```nushell
+{
+  type: "document"
+  source: {
+    type: "base64"
+    media_type: string              # MIME type
+    data: string                    # Base64-encoded content
+  }
+  cache_control?: {type: "ephemeral"}
+}
+```
+
+#### Tool Use Block
+```nushell
+{
+  type: "tool_use"
+  id?: string                       # Tool use identifier
+  name: string                      # Tool name
+  input: record                     # Tool arguments
+}
+```
+
+#### Tool Result Block
+```nushell
+{
+  type: "tool_result"
+  name: string                      # Tool name that was called
+  content: list<record>             # Result content (usually text blocks)
+  tool_use_id?: string             # Reference to originating tool_use
+  is_error?: bool                  # Whether result represents an error
+}
+```
+
+**Schema Notes:**
+- `options.provider_ptr` is required for actual API calls but optional in stored contexts
+- `cache_control` only supported by Anthropic (ignored by Gemini)
+- `tool_use.id` auto-generated if missing (Gemini requirement)
+- `document_block.source.media_type` determines provider-specific handling
 
 ## Conversation Turn Schema (`gpt.turn`)
 
@@ -71,71 +150,28 @@ Each turn in a thread is stored as a `gpt.turn` frame, with these top-level attr
 
 ## Thread Record Schema
 
-Internal representation used by the context system:
+Internal representation used by the context system (see `gpt/ctx.nu` for implementation):
 
 ```nushell
 {
   id: string                            # Unique turn ID (SCRU128)
   role: "user" | "assistant" | "system" # Speaker role, default "user"
-  content: list<record>                 # Content blocks
+  content: list<content_block>          # Content blocks (same as normalized schema)
   options: record                       # Delta options for this turn
   cache: bool                          # Ephemeral cache flag for this turn
 }
 ```
 
-### Content Block Types
+**Note**: Content blocks in thread records use the same format as the normalized schema above.
 
-**Text Block:**
-```nushell
-{
-  type: "text"
-  text: string
-  cache_control?: {type: "ephemeral"}  # Optional caching
-}
-```
+## Resolved Context Window Schema
 
-**Tool Use Block:**
-```nushell
-{
-  type: "tool_use"
-  id?: string        # Tool use identifier
-  name: string       # Tool name
-  input: record      # Tool arguments
-}
-```
-
-**Tool Result Block:**
-```nushell
-{
-  type: "tool_result"
-  name: string              # Tool name
-  content: list<record>     # Result content
-  tool_use_id?: string     # Reference to tool use
-  is_error?: bool          # Error flag
-}
-```
-
-**Document Block:**
-```nushell
-{
-  type: "document"
-  source: {
-    type: "base64"
-    media_type: string     # MIME type
-    data: string          # Base64-encoded content
-  }
-  cache_control?: {type: "ephemeral"}
-}
-```
-
-## Context Window Schema
-
-Full resolved context returned by `gpt context resolve`:
+Full resolved context returned by `gpt context resolve` (matches normalized input schema):
 
 ```nushell
 {
-  messages: list<record>    # Chronological list of thread records
-  options: record          # Merged options across all turns
+  messages: list<message_record>    # Chronological list using normalized format
+  options: options_record          # Merged options across all turns
 }
 ```
 

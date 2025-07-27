@@ -85,7 +85,7 @@ Give it a spin:
 ## Reference Documentation
 
 - **[Provider API](docs/reference/provider-api.md)** - Technical specification for implementing providers
-- **[Schemas](docs/reference/schemas.md)** - Complete data structure reference including `gpt.turn` schema
+- **[Schemas](docs/reference/schemas.md)** - Complete data structure reference for all gpt2099.nu schemas
 
 ## FAQ
 
