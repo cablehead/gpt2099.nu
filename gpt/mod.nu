@@ -44,7 +44,7 @@ export def document [
     "md" => "text/markdown"
     "json" => "application/json"
     "csv" => "text/csv"
-    "jpg" | "jpeg" => "image/jpeg"
+    "jpg"|"jpeg" => "image/jpeg"
     "png" => "image/png"
     "webp" => "image/webp"
     "gif" => "image/gif"
@@ -59,7 +59,8 @@ export def document [
 
   # Check file size (Anthropic has limits)
   let file_size = ($path | path expand | ls $in | get size | first)
-  if $file_size > 100MB { # rough limit
+  if $file_size > 100MB {
+    # rough limit
     error make {
       msg: $"File too large: ($file_size). Consider splitting or compressing."
     }
@@ -140,7 +141,7 @@ export def --env process-turn-response [turn: record] {
   print ($tool_use | table -e)
 
   let yolo_mode = $env.GPT2099_YOLO? | default false
-  
+
   let choice = if $yolo_mode {
     print "🚀 YOLO mode: auto-executing..."
     "yes"
@@ -155,7 +156,7 @@ export def --env process-turn-response [turn: record] {
   }
 
   match $choice {
-    "yes" | "activate: yolo" => {
+    "yes"|"activate: yolo" => {
       # Execute tool call
       let namespace = ($tool_use.name | split row "___")
       let mcp_toolscall = $tool_use | {
