@@ -61,6 +61,31 @@ export def provider [] {
           each {|part|
             match $part.type {
               "tool_result" => ($part | reject -i name)
+              "document" => {
+                # Convert based on media type
+                let media_type = $part.source.media_type
+                if ($media_type | str starts-with "text/") or ($media_type == "application/json") {
+                  # Decode base64 and convert to text block
+                  let decoded_content = $part.source.data | decode base64 | decode utf-8
+                  {
+                    type: "text"
+                    text: $decoded_content
+                  } | if ($part.cache_control? != null) {
+                    insert cache_control $part.cache_control
+                  } else { $in }
+                } else if ($media_type | str starts-with "image/") {
+                  # Convert images to use type: "image" as per Anthropic API
+                  {
+                    type: "image"
+                    source: $part.source
+                  } | if ($part.cache_control? != null) {
+                    insert cache_control $part.cache_control
+                  } else { $in }
+                } else {
+                  # Keep other binary documents as-is (PDFs, etc.)
+                  $part
+                }
+              }
               _ => $part
             }
           }

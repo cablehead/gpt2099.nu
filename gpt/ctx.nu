@@ -1,21 +1,7 @@
-# context window
+# Context window management
 #
-# Schemas:
-#
-# Thread (per-turn) record:
-# {
-#   id: string                            # Unique turn ID
-#   role: "user" | "assistant" | "system"  # Speaker role, default "user"
-#   content: list<record>                # Blocks: e.g., {type: "text"|"document", ...}
-#   options: record                      # Delta options: {servers?, search?, tool_mode?}
-#   cache: bool                          # Ephemeral cache flag for this turn
-# }
-#
-# Context (full) record returned by main:
-# {
-#   messages: list<record>               # Chronological list of thread records
-#   options: record                      # Merged options across all turns
-# }
+# See docs/reference/schemas.md for complete schema documentation.
+# This module implements the thread record and context resolution logic.
 
 use util.nu is-scru128
 
@@ -57,10 +43,15 @@ def frame-to-turn [frame: record] {
     } else if (($meta | get content_type?) == "application/json") {
       $content_raw | from json
     } else {
-      [
+    [
+    (
         {type: "text" text: $content_raw}
-      ]
-    }
+          | if $cache {
+          insert cache_control {type: "ephemeral"}
+        } else { $in }
+      )
+    ]
+  }
   )
 
   {

@@ -1,0 +1,21 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "document",
+          "source": {
+            "type": "base64",
+            "media_type": "text/markdown",
+            "data": "IyBIZWxsbyBXb3JsZAoKVGhpcyBpcyBhIHRlc3Qu"
+          },
+          "cache_control": {
+            "type": "ephemeral"
+          }
+        }
+      ]
+    }
+  ],
+  "options": {}
+}

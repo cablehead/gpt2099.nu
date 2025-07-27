@@ -28,35 +28,21 @@ Formats messages and tools into the provider-specific request structure.
 
 **Input:**
 
-- The `$in` stream will contain the messages list in standard format:
+- Context window in normalized format (see [Schema Reference](./schemas.md#normalized-context-window-input-schema))
+- `tools?: list` - Optional list of tool definitions with the structure:
   ```
   [
     {
-      role: "user" | "assistant" | "system",
-      content: [
-        {type: "text", text: string} |
-        {type: "tool_use", name: string, input?: record} |
-        {type: "tool_result", name: string, content: list, tool_use_id?: string}
-      ]
+      name: string,
+      description: string,
+      inputSchema: {
+        type: "object",
+        properties: record,
+        required: list<string>
+      }
     }
   ]
   ```
-- `options: record` - A record containing options for the request, such as:
-  - `tools?: list` - Optional list of tool definitions with the structure:
-    ```
-    [
-      {
-        name: string,
-        description: string,
-        inputSchema: {
-          type: "object",
-          properties: record,
-          required: list<string>
-        }
-      }
-    ]
-    ```
-  - Other provider-specific options (e.g., `search: bool`).
 
 **Output:**
 
@@ -137,22 +123,13 @@ display.
 Providers should handle any provider-specific formatting, authentication
 requirements, and event normalization within these closures.
 
-## Message Type Reference
+## Message Format Reference
 
-When processing messages, providers should handle these standard message types:
+Providers must handle the normalized message format defined in the [Schema Reference](./schemas.md#content-block-types). Each provider implementation must properly transform these standardized formats to and from the provider's specific API requirements.
 
-1. **Text Message**
-   - Format: `{type: "text", text: string}`
-   - Used for standard text content from user or assistant
-
-2. **Tool Use Request**
-   - Format: `{type: "tool_use", name: string, input?: record}`
-   - Represents a request to use a specific tool with optional input parameters
-
-3. **Tool Result**
-   - Format:
-     `{type: "tool_result", name: string, content: list, tool_use_id?: string}`
-   - Contains the result returned from a tool execution
-
-Each provider implementation must properly transform these standardized message
-formats to and from the provider's specific API requirements.
+Refer to the schema documentation for complete details on:
+- Text blocks
+- Document blocks (PDFs, images, text files)
+- Tool use blocks
+- Tool result blocks
+- Cache control options

@@ -1,117 +1,126 @@
 # Command Reference
 
-This page lists the major commands provided by the `gpt` overlay.
+Terse reference for all gpt2099 commands. See the [how-to guides](./how-to/) for detailed workflows.
 
-## Quick start
+## `gpt`
 
-1. Configure a provider:
-   ```nushell
-   gpt provider enable
-   ```
-2. Create a model pointer:
-   ```nushell
-   gpt provider ptr milli --set
-   ```
-3. Send a prompt:
-   ```nushell
-   "hello" | gpt -p milli
-   ```
-
-## Commands
-
-### `gpt`
 Send a request to the selected provider.
 
 ```
 gpt [OPTIONS]
 ```
 
-Options:
-- `--continues (-c) <headish>` – continue from a previous turn.
-- `--respond (-r)` – continue from the last turn automatically.
-- `--servers <list>` – MCP servers to use.
-- `--search` – enable provider search capabilities.
-- `--bookmark (-b) <name>` – bookmark this turn for later reference.
-- `--provider-ptr (-p) <alias>` – pointer to the provider/model.
-- `--json (-j)` – treat input as JSON.
-- `--separator <str>` – join list input with this separator.
+**Options:**
+- `--continues (-c) <headish>` – Continue from a previous turn
+- `--respond (-r)` – Continue from the last turn automatically  
+- `--servers <list>` – MCP servers to use
+- `--search` – Enable provider search capabilities
+- `--bookmark (-b) <name>` – Bookmark this turn for later reference
+- `--provider-ptr (-p) <alias>` – Pointer to the provider/model
+- `--json (-j)` – Treat input as JSON
+- `--separator <str>` – Join list input with this separator
+- `--cache` – Enable ephemeral caching for this turn
 
-### `gpt context`
+**Example:**
+```nushell
+"Hello world" | gpt -p milli
+```
+
+See: [How to manage conversations](./how-to/manage-conversations.md)
+
+## `gpt context`
+
 Inspect conversation threads.
 
+**Commands:**
+```nushell
+gpt context list [HEADISH]    # Raw per-turn view
+gpt context resolve [HEADISH] # Resolved context with merged options
 ```
-gpt context list [HEADISH]
-```
-Raw per‑turn view.
 
+**Example:**
+```nushell
+gpt context list my-bookmark
 ```
-gpt context resolve [HEADISH]
-```
-Resolved context with merged options.
 
-### `gpt provider`
+See: [How to manage conversations](./how-to/manage-conversations.md)
+
+## `gpt provider`
+
 Manage provider configuration.
 
+**Commands:**
+```nushell
+gpt provider enable [PROVIDER]    # Store an API key
+gpt provider ptr [NAME] [--set]   # Manage model pointers  
+gpt provider models <PROVIDER>    # List available models
 ```
-gpt provider enable [PROVIDER]
+
+**Examples:**
+```nushell
+gpt provider enable
+gpt provider ptr milli --set
+gpt provider models anthropic
 ```
-Store an API key.
+
+See: [How to configure providers](./how-to/configure-providers.md)
+
+## `gpt document`
+
+Register documents for use in conversations.
 
 ```
-gpt provider ptr [NAME] [--set]
+gpt document <PATH> [OPTIONS]
 ```
-With `--set` choose provider and model for the pointer; without it show the current mapping.
 
-```
-gpt provider models <PROVIDER>
-```
-List available models.
+**Options:**
+- `--name (-n) <string>` – Custom name for the document
+- `--cache <string>` – Cache control: "ephemeral" or "none"  
+- `--bookmark (-b) <string>` – Bookmark this document registration
 
-### `gpt prep`
+**Example:**
+```nushell
+gpt document ~/report.pdf --name "Q4 Report" --bookmark "quarterly"
+```
+
+See: [How to work with documents](./how-to/work-with-documents.md)
+
+## `gpt prep`
+
 Helpers for building context.
 
-```
-gpt prep gr [FILES...]
-```
-Generate XML describing repository files. Example:
+**Commands:**
 ```nushell
-git ls-files ./gpt | lines | gpt prep gr | bat -l xml
+gpt prep gr [FILES...] [OPTIONS]  # Generate XML describing repository files
 ```
 
-### `gpt mcp`
-Interact with [Model Context Protocol](https://modelcontextprotocol.io/introduction) servers.
+**Options:**
+- `--with-content <closure>` – Custom content fetcher closure
+- `--instructions <string>` – Add instructions to the context
 
-MCP servers are typically simple CLI tools that read from `stdin` and write to
-`stdout`. The `cross.stream`
-[generator](https://cablehead.github.io/xs/reference/generators/) pattern wraps
-these tools so each line of output is packaged into event frames while frames
-ending in `.send` are routed back as input. `gpt mcp` leverages this pattern to
-provide a hands‑on way to experiment with and understand MCP servers.
-
-**Features**
-
-- Spawn an MCP server as a cross.stream generator.
-- List available tools on the server.
-
-```
-gpt mcp register <NAME> <COMMAND>
-```
-Spawn a server as a cross.stream generator.
-
-```
-gpt mcp tool list <NAME>
-```
-List available tools.
-
-```text
-──#──┬───────────name────────────┬─────────────────────────────────────
- 0   │ read_file                 │ Read the contents of a file
- 1   │ read_multiple_files       │ Read multiple files at once
- ...
+**Example:**
+```nushell
+git ls-files ./src | lines | gpt prep gr
 ```
 
-```
-gpt mcp tool call <NAME> <METHOD> <ARGS>
-```
-Invoke a tool directly.
+See: [How to generate code context](./how-to/generate-code-context.md)
 
+## `gpt mcp`
+
+Interact with Model Context Protocol servers.
+
+**Commands:**
+```nushell
+gpt mcp register <NAME> <COMMAND>    # Spawn a server as generator
+gpt mcp tool list <NAME>             # List available tools
+gpt mcp tool call <NAME> <METHOD> <ARGS>  # Invoke a tool directly
+gpt mcp list                         # List active servers
+```
+
+**Example:**
+```nushell
+gpt mcp register filesystem "npx -y @modelcontextprotocol/server-filesystem /workspace"
+gpt mcp tool list filesystem
+```
+
+See: [How to use MCP servers](./how-to/use-mcp-servers.md)
