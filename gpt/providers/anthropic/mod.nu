@@ -52,77 +52,71 @@ export def provider [] {
 
     prepare-request: {|ctx: record tools?: list<record>|
       # anthropic only supports a single system message as a top level attribute
-      let messages = $ctx.messages | select role content
+      let messages = $ctx.messages
       let system_messages = $messages | where role == "system"
       let messages = $messages | where role != "system"
 
-      let messages = $messages | each {|msg|
-        update content {|content|
-          each {|part|
-            match $part.type {
-              "tool_result" => ($part | reject -i name)
-              "document" => {
-                # Convert based on media type
-                let media_type = $part.source.media_type
-                if ($media_type | str starts-with "text/") or ($media_type == "application/json") {
-                  # Decode base64 and convert to text block
-                  let decoded_content = $part.source.data | decode base64 | decode utf-8
-                  {
-                    type: "text"
-                    text: $decoded_content
-                  } | if ($part.cache_control? != null) {
-                    insert cache_control $part.cache_control
-                  } else { $in }
-                } else if ($media_type | str starts-with "image/") {
-                  # Convert images to use type: "image" as per Anthropic API
-                  {
-                    type: "image"
-                    source: $part.source
-                  } | if ($part.cache_control? != null) {
-                    insert cache_control $part.cache_control
-                  } else { $in }
-                } else {
-                  # Keep other binary documents as-is (PDFs, etc.)
-                  $part
-                }
-              }
-              _ => $part
-            }
-          }
-        }
-      }
-
-      # Apply cache control limits across all content blocks (max 4 breakpoints)
-      let all_content = $messages | get content | flatten
-      let cache_indices = $all_content | enumerate | where {|item| $item.item.cache_control? != null } | get index
-      let cache_count = $cache_indices | length
+      # Apply cache control limits at message level FIRST (max 4 breakpoints)
+      # Use reverse approach: reverse -> keep first 4 cache messages -> reverse back
+      let cache_count = $messages | where {|msg| $msg.cache? == true } | length
 
       let messages = if $cache_count > 4 {
-        let remove_count = $cache_count - 4
-        let remove_indices = $cache_indices | first $remove_count
-
-        let limited_content = $all_content | enumerate | each {|item|
-          if $item.index in $remove_indices {
-            $item.item | reject cache_control
+        $messages
+        | reverse
+        | generate {|msg state = {cache_kept: 0}|
+          if ($msg.cache? == true) and ($state.cache_kept < 4) {
+            {out: $msg next: {cache_kept: ($state.cache_kept + 1)}}
           } else {
-            $item.item
+            {out: ($msg | reject -i cache) next: $state}
           }
         }
-
-        # Rebuild messages with limited cache control
-        let result = $messages | reduce --fold {messages: [] index: 0} {|msg acc|
-          let msg_content_count = $msg.content | length
-          let new_content = $limited_content | skip $acc.index | first $msg_content_count
-          let new_msg = $msg | update content $new_content
-          {
-            messages: ($acc.messages | append $new_msg)
-            index: ($acc.index + $msg_content_count)
-          }
-        }
-
-        $result.messages
+        | reverse
       } else {
         $messages
+      }
+
+      # THEN process content and apply cache to content blocks
+      let messages = $messages | each {|msg|
+        let has_cache = ($msg.cache? == true)
+        let content = $msg.content | enumerate | each {|item|
+          let part = $item.item
+          let is_last = ($item.index == (($msg.content | length) - 1))
+
+          let converted_part = match $part.type {
+            "tool_result" => ($part | reject -i name)
+            "document" => {
+              # Convert based on media type
+              let media_type = $part.source.media_type
+              if ($media_type | str starts-with "text/") or ($media_type == "application/json") {
+                # Decode base64 and convert to text block
+                let decoded_content = $part.source.data | decode base64 | decode utf-8
+                {
+                  type: "text"
+                  text: $decoded_content
+                }
+              } else if ($media_type | str starts-with "image/") {
+                # Convert images to use type: "image" as per Anthropic API
+                {
+                  type: "image"
+                  source: $part.source
+                }
+              } else {
+                # Keep other binary documents as-is (PDFs, etc.)
+                $part
+              }
+            }
+            _ => $part
+          }
+
+          # Add cache_control to the last content block if message has cache
+          if $has_cache and $is_last {
+            $converted_part | insert cache_control {type: "ephemeral"}
+          } else {
+            $converted_part
+          }
+        }
+
+        $msg | update content $content | reject -i cache
       }
 
       let data = {

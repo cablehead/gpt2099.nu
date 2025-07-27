@@ -23,7 +23,7 @@ export use ./prep.nu
 export def document [
   path: string # Path to the document file
   --name (-n): string # Optional name for the document (defaults to filename)
-  --cache: string = "ephemeral" # Cache control: "ephemeral" or "none"
+  --cache # Enable caching for this document
   --bookmark (-b): string # Bookmark this document registration
 ] {
   # Validate file exists
@@ -76,7 +76,8 @@ export def document [
     document_name: $document_name
     original_path: ($path | path expand)
     file_size: $file_size
-    cache_control: (if $cache == "ephemeral" { "ephemeral" } else { null })
+  } | conditional-pipe $cache {
+    insert cache true
   } | conditional-pipe ($bookmark | is-not-empty) {
     insert head $bookmark
   }
@@ -95,7 +96,7 @@ export def main [
   --provider-ptr (-p): string # a short alias for provider to going-forward
   --json (-j) # Treat input as JSON formatted content
   --separator: string = "\n\n---\n\n" # Separator used when joining lists of strings
-  --cache # Enable ephemeral caching for this turn
+  --cache # Enable caching for this turn
 ] {
   let content = if $in == null {
     input "Enter prompt: "

@@ -32,7 +32,6 @@ def frame-to-turn [frame: record] {
       [
         {
           type: "document"
-          cache_control: {type: "ephemeral"}
           source: {
             type: "base64"
             media_type: $meta.content_type
@@ -43,15 +42,10 @@ def frame-to-turn [frame: record] {
     } else if (($meta | get content_type?) == "application/json") {
       $content_raw | from json
     } else {
-    [
-    (
+      [
         {type: "text" text: $content_raw}
-          | if $cache {
-          insert cache_control {type: "ephemeral"}
-        } else { $in }
-      )
-    ]
-  }
+      ]
+    }
   )
 
   {
@@ -59,8 +53,9 @@ def frame-to-turn [frame: record] {
     role: $role
     content: $content
     options: $options_delta
-    cache: $cache
-  }
+  } | if $cache {
+    insert cache $cache
+  } else { $in }
 }
 
 # Follow the continues chain to produce a list of turns in chronological order

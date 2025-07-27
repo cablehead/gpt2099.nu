@@ -75,12 +75,14 @@ gpt document ~/chart.png --name "Sales Chart"
 
 ## Document Caching
 
-Documents automatically use ephemeral caching with supported providers (like Anthropic) to improve performance on repeated references. You can control caching with the `--cache` flag:
+Documents can signal to the provider that they should be cached to improve performance on repeated references. Enable caching with the `--cache` flag:
 
 ```nushell
-gpt document ~/large-file.pdf --cache ephemeral
-gpt document ~/dynamic-data.json --cache none
+gpt document ~/large-file.pdf --cache
+gpt document ~/dynamic-data.json  # no caching
 ```
+
+**Note:** Caching behavior depends on provider support - Anthropic uses ephemeral caching, while other providers may ignore the cache flag.
 
 ## Thread Management with Documents
 

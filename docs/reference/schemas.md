@@ -37,7 +37,6 @@ Content blocks are a union of these types:
 {
   type: "text"
   text: string
-  cache_control?: {type: "ephemeral"}
 }
 ```
 
@@ -50,7 +49,6 @@ Content blocks are a union of these types:
     media_type: string              # MIME type
     data: string                    # Base64-encoded content
   }
-  cache_control?: {type: "ephemeral"}
 }
 ```
 
@@ -77,7 +75,6 @@ Content blocks are a union of these types:
 
 **Schema Notes:**
 - `options.provider_ptr` is required for actual API calls but optional in stored contexts
-- `cache_control` only supported by Anthropic (ignored by Gemini)
 - `tool_use.id` auto-generated if missing (Gemini requirement)
 - `document_block.source.media_type` determines provider-specific handling
 
@@ -114,9 +111,10 @@ Each turn in a thread is stored as a `gpt.turn` frame, with these top-level attr
 : Values: Turn ID(s) or bookmark name(s)
 
 **`cache`**
-: Ephemeral cache flag for this turn
+: Cache flag for this turn
 : Type: `bool`
 : Default: `false`
+: Note: Provider-specific implementation (e.g., Anthropic uses ephemeral caching)
 
 ### Document-Specific Fields
 
@@ -143,10 +141,10 @@ Each turn in a thread is stored as a `gpt.turn` frame, with these top-level attr
 : Size of the document in bytes
 : Type: `int`
 
-**`cache_control`**
-: Caching directive
-: Type: `string`
-: Values: `"ephemeral"` for documents
+**`cache`**
+: Cache flag for this turn
+: Type: `bool`
+: Default: `false`
 
 ## Thread Record Schema
 

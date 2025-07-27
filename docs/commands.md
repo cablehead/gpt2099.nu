@@ -19,7 +19,7 @@ gpt [OPTIONS]
 - `--provider-ptr (-p) <alias>` – Pointer to the provider/model
 - `--json (-j)` – Treat input as JSON
 - `--separator <str>` – Join list input with this separator
-- `--cache` – Enable ephemeral caching for this turn
+- `--cache` – Enable caching for this conversation turn
 
 **Example:**
 ```nushell
@@ -75,12 +75,12 @@ gpt document <PATH> [OPTIONS]
 
 **Options:**
 - `--name (-n) <string>` – Custom name for the document
-- `--cache <string>` – Cache control: "ephemeral" or "none"  
+- `--cache` – Enable caching for this document  
 - `--bookmark (-b) <string>` – Bookmark this document registration
 
 **Example:**
 ```nushell
-gpt document ~/report.pdf --name "Q4 Report" --bookmark "quarterly"
+gpt document ~/report.pdf --name "Q4 Report" --cache --bookmark "quarterly"
 ```
 
 See: [How to work with documents](./how-to/work-with-documents.md)

@@ -2,6 +2,7 @@
   "messages": [
     {
       "role": "user",
+      "cache": true,
       "content": [
         {
           "type": "document",
@@ -9,9 +10,6 @@
             "type": "base64",
             "media_type": "application/json",
             "data": "eyJ0ZXN0IjogImRhdGEifQ=="
-          },
-          "cache_control": {
-            "type": "ephemeral"
           }
         }
       ]

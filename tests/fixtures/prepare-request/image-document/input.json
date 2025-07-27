@@ -2,6 +2,7 @@
   "messages": [
     {
       "role": "user",
+      "cache": true,
       "content": [
         {
           "type": "document",
@@ -9,9 +10,6 @@
             "type": "base64",
             "media_type": "image/png",
             "data": "iVBORw0KGgoAAAANSUhEUgAAACMAAAAGAQAAAABhwxpxAAAAHElEQVQI12P4DwQPGP7/YZAHkgxgkgOJzQ+UBQBX2xHFO9XWzAAAAABJRU5ErkJggg=="
-          },
-          "cache_control": {
-            "type": "ephemeral"
           }
         }
       ]

@@ -5,28 +5,196 @@
       "content": [
         {
           "type": "text",
-          "text": "Small text 1",
-          "cache_control": { "type": "ephemeral" }
+          "text": "Turn 1"
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "cache": true,
+      "content": [
+        {
+          "type": "text",
+          "text": "Turn 2"
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Turn 3"
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "cache": true,
+      "content": [
+        {
+          "type": "text",
+          "text": "Turn 4"
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Turn 5"
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "cache": true,
+      "content": [
+        {
+          "type": "text",
+          "text": "Turn 6"
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Turn 7"
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "cache": true,
+      "content": [
+        {
+          "type": "text",
+          "text": "Turn 8"
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Turn 9"
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "cache": true,
+      "content": [
+        {
+          "type": "text",
+          "text": "Turn 10"
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Turn 11"
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "cache": true,
+      "content": [
+        {
+          "type": "text",
+          "text": "Turn 12"
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Turn 13"
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "cache": true,
+      "content": [
+        {
+          "type": "text",
+          "text": "Turn 14"
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Turn 15"
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "cache": true,
+      "content": [
+        {
+          "type": "text",
+          "text": "Turn 16"
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Turn 17"
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "cache": true,
+      "content": [
+        {
+          "type": "text",
+          "text": "Turn 18"
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Turn 19"
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "cache": true,
+      "content": [
+        {
+          "type": "text",
+          "text": "Turn 20 item 1"
         },
         {
           "type": "text",
-          "text": "Small text 2",
-          "cache_control": { "type": "ephemeral" }
+          "text": "Turn 20 item 2"
         },
         {
           "type": "text",
-          "text": "Small text 3",
-          "cache_control": { "type": "ephemeral" }
-        },
-        {
-          "type": "text",
-          "text": "Small text 4",
-          "cache_control": { "type": "ephemeral" }
-        },
-        {
-          "type": "text",
-          "text": "Small text 5 - this should be kept",
-          "cache_control": { "type": "ephemeral" }
+          "text": "Turn 20 item 3"
         }
       ]
     }
