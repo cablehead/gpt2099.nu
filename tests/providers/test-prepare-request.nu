@@ -50,29 +50,25 @@ def update-data-fields [asset_data: string] {
   }
 }
 
-# Test runner for prepare-request fixtures
-export def run-all [
+# Test runner for prepare-request fixtures (internal)
+def run-all [
   provider: string # Provider name (anthropic, gemini, etc.)
-  --call: string # API key to use for actual API calls (smoke test)
+  api_key?: string # API key for actual calls (optional)
 ] {
   let fixtures_path = "tests/fixtures/prepare-request"
   let test_cases = (ls $fixtures_path | where type == dir | get name | path basename)
 
-  if ($call | is-not-empty) {
+  if ($api_key | is-not-empty) {
     let model = $models | get $provider
     print $"Running ($test_cases | length) prepare-request test cases for ($provider) with API calls..."
     print "⚠️  This will make real API calls and consume tokens!"
     print $"Using ($model)"
-
-    for case in $test_cases {
-      test-case $provider $case --call $call
-    }
   } else {
     print $"Running ($test_cases | length) prepare-request test cases for ($provider)..."
+  }
 
-    for case in $test_cases {
-      test-case $provider $case
-    }
+  for case in $test_cases {
+    test-case $provider $case $api_key
   }
 
   print $"\n🎉 All ($provider) prepare-request tests passed!"
@@ -81,9 +77,16 @@ export def run-all [
 def test-case [
   provider: string
   case_name: string
-  --call: string # API key if making real calls
+  api_key?: string # API key if making real calls
 ] {
   let case_path = ["tests" "fixtures" "prepare-request" $case_name] | path join
+
+  # Check if expected fixture exists for this provider
+  let expected_file = [$case_path $"expected-($provider).json"] | path join
+  if not ($expected_file | path exists) {
+    print $"⚠️  Skipping ($provider)/($case_name) - no expected fixture"
+    return
+  }
 
   # Load input and expected output, with dynamic asset loading
   let input = load-fixture $case_path "input.json"
@@ -94,7 +97,7 @@ def test-case [
   let provider_impl = providers all | get $provider
   let actual = do $provider_impl.prepare-request $input []
 
-  if $call != null {
+  if ($api_key | is-not-empty) {
     # Smoke test - just verify API call works and returns events
     print $"🔄 Testing ($case_name) with API call..."
 
@@ -102,7 +105,7 @@ def test-case [
       let model = $models | get $provider
 
       # Simple smoke test: show events as they stream in
-      let events = $actual | do $provider_impl.call $call $model | each {|event|
+      let events = $actual | do $provider_impl.call $api_key $model | each {|event|
         print ($event | to json -r)
         $event
       } | collect
@@ -132,19 +135,39 @@ def test-case [
 }
 
 export def main [
-  provider: string # Provider name (anthropic, gemini, etc.)
+  provider?: string # Provider name (anthropic, gemini, etc.) - runs all providers if omitted
   test_case?: string # Test case name (text-document, json-document, etc.) - runs all if omitted
-  --call: string # API key to use for actual API calls (smoke test)
+  --call: any # API key (string) or closure that returns key for provider
 ] {
-  if ($test_case | is-not-empty) {
-    # Run single test case
-    if ($call | is-not-empty) {
-      test-case $provider $test_case --call $call
-    } else {
-      test-case $provider $test_case
+  # Get available providers
+  use ../../gpt/providers
+  let available_providers = providers all | columns
+
+  let providers_to_test = if ($provider | is-not-empty) {
+    if $provider not-in $available_providers {
+      error make {msg: $"Unknown provider: ($provider). Available: ($available_providers | str join ', ')"}
     }
+    [$provider]
   } else {
-    # Run all test cases (equivalent to old run-all)
-    run-all $provider --call $call
+    $available_providers
+  }
+
+  for prov in $providers_to_test {
+    # Resolve API key for this provider
+    let api_key = if ($call | is-not-empty) {
+      match ($call | describe -d | get type) {
+        "string" => $call
+        "closure" => (do $call $prov)
+        _ => ( error make {msg: "--call must be a string or closure"})
+      }
+    } else { null }
+
+    if ($test_case | is-not-empty) {
+      # Run single test case for this provider
+      test-case $prov $test_case $api_key
+    } else {
+      # Run all test cases for this provider
+      run-all $prov $api_key
+    }
   }
 }
