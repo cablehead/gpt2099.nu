@@ -1,10 +1,10 @@
 # How to Use MCP Servers
 
-This guide shows you how to set up and interact with Model Context Protocol (MCP) servers to extend gpt2099.nu's capabilities.
+This guide shows you how to set up and interact with Model Context Protocol (MCP) servers to extend gpt2099's capabilities.
 
 ## Overview
 
-MCP servers are external tools that provide additional capabilities like file editing, web search, or database access. gpt2099.nu integrates with these servers through the `cross.stream` generator pattern, allowing you to experiment with and understand server capabilities before using them in conversations.
+MCP servers are external tools that provide additional capabilities like file editing, web search, or database access. gpt2099 integrates with these servers through the `cross.stream` generator pattern, allowing you to experiment with and understand server capabilities before using them in conversations.
 
 ## Setting Up MCP Servers
 

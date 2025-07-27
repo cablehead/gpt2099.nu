@@ -1,6 +1,6 @@
 # Command Reference
 
-Terse reference for all gpt2099.nu commands. See the [how-to guides](./how-to/) for detailed workflows.
+Terse reference for all gpt2099 commands. See the [how-to guides](./how-to/) for detailed workflows.
 
 ## `gpt`
 

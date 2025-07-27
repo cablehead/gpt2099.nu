@@ -4,7 +4,7 @@ This guide shows you how to register, reference, and work with documents in conv
 
 ## Overview
 
-gpt2099.nu supports various document types that can be registered and referenced in conversations. Documents are automatically cached for better performance and can be given custom names and bookmarks for easy reference.
+gpt2099 supports various document types that can be registered and referenced in conversations. Documents are automatically cached for better performance and can be given custom names and bookmarks for easy reference.
 
 ## Supported Document Types
 

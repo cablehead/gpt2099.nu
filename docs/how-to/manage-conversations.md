@@ -4,7 +4,7 @@ This guide shows you how to create, continue, and organize conversation threads 
 
 ## Overview
 
-gpt2099.nu stores conversations as persistent, editable threads. Each conversation turn is linked to previous turns, creating a branching conversation history you can navigate, edit, and continue from any point.
+gpt2099 stores conversations as persistent, editable threads. Each conversation turn is linked to previous turns, creating a branching conversation history you can navigate, edit, and continue from any point.
 
 ## Basic Conversation Flow
 

@@ -4,7 +4,7 @@ This guide walks you through setting up AI providers and creating model aliases 
 
 ## Overview
 
-gpt2099.nu uses a two-step provider setup:
+gpt2099 uses a two-step provider setup:
 1. **Enable providers** - Store API keys for authentication
 2. **Create aliases** - Set up friendly names pointing to specific models
 

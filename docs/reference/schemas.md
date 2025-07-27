@@ -1,6 +1,6 @@
 # Schema Reference
 
-This document is the authoritative reference for all data structures used throughout gpt2099.nu.
+This document is the authoritative reference for all data structures used throughout gpt2099.
 
 ## Normalized Context Window Input Schema
 

@@ -3,7 +3,7 @@
   height="400"
 />
 
-# gpt2099.nu [![Discord](https://img.shields.io/discord/1182364431435436042?logo=discord)](https://discord.com/invite/YNbScHBHrh)
+# gpt2099 [![Discord](https://img.shields.io/discord/1182364431435436042?logo=discord)](https://discord.com/invite/YNbScHBHrh)
 
 A [Nushell](https://www.nushell.sh) scriptable [MCP client](https://modelcontextprotocol.io/sdk/java/mcp-client#model-context-protocol-client) with [editable context threads](https://cablehead.github.io/xs/tutorials/threaded-conversations/) stored in [cross.stream](https://cablehead.github.io/xs/)
 
@@ -13,10 +13,10 @@ A [Nushell](https://www.nushell.sh) scriptable [MCP client](https://modelcontext
 
 * **Consistent API Across Models:** Connect to Gemini + Search and Anthropic + Search through a single, simple interface. ([Add providers easily.](docs/reference/provider-api.md))
 * **Persistent, Editable Conversations:** [Conversation threads](https://cablehead.github.io/xs/tutorials/threaded-conversations/) are saved across sessions. Review, edit, and control your own context window — no black-box history.
-* **Flexible Tool Integration:** Connect to MCP servers to extend functionality. `gpt2099.nu` already rivals [Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) for local file editing, but with full provider independence and deeper flexibility.
+* **Flexible Tool Integration:** Connect to MCP servers to extend functionality. `gpt2099` already rivals [Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) for local file editing, but with full provider independence and deeper flexibility.
 * **Document Support:** Upload and reference documents (PDFs, images, text files) directly in conversations with automatic content-type detection and caching.
 
-Built on [cross.stream](https://github.com/cablehead/xs) for event-driven processing, `gpt2099.nu` brings modern AI directly into your Nushell workflow — fully scriptable, fully inspectable, all in the terminal.
+Built on [cross.stream](https://github.com/cablehead/xs) for event-driven processing, `gpt2099` brings modern AI directly into your Nushell workflow — fully scriptable, fully inspectable, all in the terminal.
 
 https://github.com/user-attachments/assets/1254aaa1-2ca2-46b5-96e8-b5e466c735bd
 
@@ -85,7 +85,7 @@ Give it a spin:
 ## Reference Documentation
 
 - **[Provider API](docs/reference/provider-api.md)** - Technical specification for implementing providers
-- **[Schemas](docs/reference/schemas.md)** - Complete data structure reference for all gpt2099.nu schemas
+- **[Schemas](docs/reference/schemas.md)** - Complete data structure reference for all gpt2099 schemas
 
 ## FAQ
 
