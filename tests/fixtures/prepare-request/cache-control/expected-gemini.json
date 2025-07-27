@@ -1,0 +1,29 @@
+{
+  "contents": [
+    {
+      "role": "user",
+      "parts": [
+        {
+          "text": "Small text 1"
+        },
+        {
+          "text": "Small text 2"
+        },
+        {
+          "text": "Small text 3"
+        },
+        {
+          "text": "Small text 4"
+        },
+        {
+          "text": "Small text 5 - this should be kept"
+        }
+      ]
+    }
+  ],
+  "generationConfig": {
+    "temperature": 1,
+    "topP": 0.95,
+    "maxOutputTokens": 81920
+  }
+}

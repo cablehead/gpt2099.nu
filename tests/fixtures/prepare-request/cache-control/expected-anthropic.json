@@ -1,0 +1,36 @@
+{
+  "max_tokens": 8192,
+  "stream": true,
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Small text 1"
+        },
+        {
+          "type": "text",
+          "text": "Small text 2",
+          "cache_control": { "type": "ephemeral" }
+        },
+        {
+          "type": "text",
+          "text": "Small text 3",
+          "cache_control": { "type": "ephemeral" }
+        },
+        {
+          "type": "text",
+          "text": "Small text 4",
+          "cache_control": { "type": "ephemeral" }
+        },
+        {
+          "type": "text",
+          "text": "Small text 5 - this should be kept",
+          "cache_control": { "type": "ephemeral" }
+        }
+      ]
+    }
+  ],
+  "tools": []
+}

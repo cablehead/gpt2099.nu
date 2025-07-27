@@ -92,6 +92,39 @@ export def provider [] {
         }
       }
 
+      # Apply cache control limits across all content blocks (max 4 breakpoints)
+      let all_content = $messages | get content | flatten
+      let cache_indices = $all_content | enumerate | where {|item| $item.item.cache_control? != null } | get index
+      let cache_count = $cache_indices | length
+
+      let messages = if $cache_count > 4 {
+        let remove_count = $cache_count - 4
+        let remove_indices = $cache_indices | first $remove_count
+
+        let limited_content = $all_content | enumerate | each {|item|
+          if $item.index in $remove_indices {
+            $item.item | reject cache_control
+          } else {
+            $item.item
+          }
+        }
+
+        # Rebuild messages with limited cache control
+        let result = $messages | reduce --fold {messages: [] index: 0} {|msg acc|
+          let msg_content_count = $msg.content | length
+          let new_content = $limited_content | skip $acc.index | first $msg_content_count
+          let new_msg = $msg | update content $new_content
+          {
+            messages: ($acc.messages | append $new_msg)
+            index: ($acc.index + $msg_content_count)
+          }
+        }
+
+        $result.messages
+      } else {
+        $messages
+      }
+
       let data = {
         max_tokens: 8192
         stream: true
