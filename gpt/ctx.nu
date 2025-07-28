@@ -38,10 +38,8 @@ def frame-to-turn [frame: record] {
   }
 
   {
-    id: $frame.id
     role: $role
     content: $content
-    options: $options_delta
   } | if $cache {
     insert cache $cache
   } else { $in }
@@ -70,6 +68,29 @@ def id-to-turns [ids] {
   $turns
 }
 
+# Follow the continues chain to collect frames (for options extraction)
+def id-to-frames [ids] {
+  mut frames = []
+  mut stack = [] | append $ids
+
+  while not ($stack | is-empty) {
+    let current_id = $stack | first
+    let frame = .get $current_id
+    $frames = ($frames | prepend $frame)
+    $stack = ($stack | skip 1)
+
+    let next = $frame | get meta?.continues?
+    match ($next | describe -d | get type) {
+      "string" => { $stack = ($stack | append $next) }
+      "list" => { $stack = ($stack | append $next) }
+      "nothing" => { }
+      _ => ( error make {msg: "Invalid continues value"})
+    }
+  }
+
+  $frames
+}
+
 # Raw per-turn view
 export def list [headish?] {
   let ids = $headish | default [] | each { headish-to-id $in }
@@ -79,10 +100,16 @@ export def list [headish?] {
 
 # Fully resolved context window
 export def resolve [headish?] {
-  let turns = list $headish
-  let options = $turns | get options? | compact --empty | if ($in | is-not-empty) {
+  let ids = $headish | default [] | each { headish-to-id $in }
+  let ids = if ($ids | is-empty) { (.head gpt.turn).id } else { $ids }
+
+  let turns = id-to-turns $ids
+  let frames = id-to-frames $ids
+
+  let options = $frames | each { $in | get meta? | default {} | get options? | default {} } | if ($in | is-not-empty) {
     reduce {|it acc| $acc | merge deep $it }
   } else { null }
+
   {
     messages: $turns
     options: $options
