@@ -2,14 +2,23 @@
 
 ## Running Tests
 
-### Schema Layer Tests
+### Run All Tests
+
+```bash
+use tests/run.nu
+run
+```
+
+### Individual Test Suites
+
+#### Schema Layer Tests
 
 ```bash
 use tests/schema/test-schema-generation.nu
 test-schema-generation
 ```
 
-### Provider Transformation Tests
+#### Provider Transformation Tests
 
 ```bash
 use tests/providers/test-prepare-request.nu
