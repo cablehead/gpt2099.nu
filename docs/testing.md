@@ -2,6 +2,15 @@
 
 ## Running Tests
 
+### Schema Layer Tests
+
+```bash
+use tests/schema/test-schema-generation.nu
+test-schema-generation
+```
+
+### Provider Transformation Tests
+
 ```bash
 use tests/providers/test-prepare-request.nu
 
@@ -14,6 +23,9 @@ test-prepare-request anthropic image-document
 
 # Test with real API calls (⚠️ consumes tokens!)
 test-prepare-request anthropic --call "your-api-key"
+
+# Test all providers
+test-prepare-request
 ```
 
 ## Test Structure
