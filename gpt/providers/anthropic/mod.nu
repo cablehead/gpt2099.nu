@@ -28,7 +28,7 @@ def content-block-finish [content_block] {
 
 export def convert-mcp-toolslist-to-provider [] {
   $in | each {|tool|
-    $tool | rename -c {inputSchema: input_schema} | reject -i annotations
+    $tool | rename -c {inputSchema: input_schema} | reject -o annotations
   }
 }
 
@@ -67,7 +67,7 @@ export def provider [] {
           if ($msg.cache? == true) and ($state.cache_kept < 4) {
             {out: $msg next: {cache_kept: ($state.cache_kept + 1)}}
           } else {
-            {out: ($msg | reject -i cache) next: $state}
+            {out: ($msg | reject -o cache) next: $state}
           }
         }
         | reverse
@@ -83,7 +83,7 @@ export def provider [] {
           let is_last = ($item.index == (($msg.content | length) - 1))
 
           let converted_part = match $part.type {
-            "tool_result" => ($part | reject -i name)
+            "tool_result" => ($part | reject -o name)
             "document" => {
               # Convert based on media type
               let media_type = $part.source.media_type
@@ -116,7 +116,7 @@ export def provider [] {
           }
         }
 
-        $msg | update content $content | reject -i cache
+        $msg | update content $content | reject -o cache
       }
 
       let data = {

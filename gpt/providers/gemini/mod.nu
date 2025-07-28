@@ -11,15 +11,15 @@ export def convert-mcp-toolslist-to-provider [] {
     {
       functionDeclarations: (
         $tools | each {|tool|
-          $tool | reject -i annotations | rename -c {
+          $tool | reject -o annotations | rename -c {
             inputSchema: parameters
           } | update parameters {
-            $in | reject -i additionalProperties examples "$schema" | update properties {
+            $in | reject -o additionalProperties examples "$schema" | update properties {
               $in | items {|k v|
                 {
                   $k: (
                     $v | if ($in.items? != null) {
-                      update items { reject -i additionalProperties }
+                      update items { reject -o additionalProperties }
                     } else { $in }
                     | into record
                   )
