@@ -28,7 +28,19 @@ def frame-to-turn [frame: record] {
   if ($content_raw | is-empty) { return }
 
   # Content is now stored as clean JSON (normalized format)
-  let content = if (($meta | get content_type?) == "application/json") {
+  let content = if ($meta | get type?) == "document" {
+    # For documents, reconstruct the normalized format with base64 encoding
+    [
+      {
+        type: "document"
+        source: {
+          type: "base64"
+          media_type: ($meta | get content_type)
+          data: ($content_raw | encode base64)
+        }
+      }
+    ]
+  } else if (($meta | get content_type?) == "application/json") {
     $content_raw | from json
   } else {
     # Legacy fallback for old text-based storage
