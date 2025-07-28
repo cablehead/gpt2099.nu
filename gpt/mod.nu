@@ -27,20 +27,63 @@ export def document [
   --cache # Enable caching for this document
   --bookmark (-b): string # Bookmark this document registration
 ] {
-  # Generate normalized document turn using schema layer
-  let normalized_turn = schema document-turn $path {name: $name cache: $cache}
-
-  # Extract metadata for storage
-  let metadata = $normalized_turn._metadata
-  let clean_turn = $normalized_turn | reject _metadata
-
-  # Build storage metadata
-  let meta = $metadata | insert role "user" | conditional-pipe ($bookmark | is-not-empty) {
-    insert head $bookmark
+  # Validate file exists
+  if not ($path | path exists) {
+    error make {
+      msg: $"File does not exist: ($path)"
+      label: {
+        text: "this path"
+        span: (metadata $path).span
+      }
+    }
   }
 
-  # Store the clean normalized content
-  let turn = $clean_turn.content | to json | .append gpt.turn --meta $meta
+  # Detect content type from file extension
+  let content_type = match ($path | path parse | get extension | str downcase) {
+    "pdf" => "application/pdf"
+    "txt" => "text/plain"
+    "md" => "text/markdown"
+    "json" => "application/json"
+    "csv" => "text/csv"
+    "jpg"|"jpeg" => "image/jpeg"
+    "png" => "image/png"
+    "webp" => "image/webp"
+    "gif" => "image/gif"
+    "docx" => "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    "xlsx" => "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    _ => {
+      let detected = (file --mime-type $path | split row ":" | get 1 | str trim)
+      print $"Warning: Unknown extension, detected MIME type: ($detected)"
+      $detected
+    }
+  }
+
+  # Check file size (rough limit)
+  let file_size = ($path | path expand | ls $in | get size | first)
+  if $file_size > 100MB {
+    error make {
+      msg: $"File too large: ($file_size). Consider splitting or compressing."
+    }
+  }
+
+  let document_name = $name | default ($path | path basename)
+
+  # Build storage metadata
+  let meta = {
+    role: "user"
+    type: "document"
+    content_type: $content_type
+    document_name: $document_name
+    original_path: ($path | path expand)
+    file_size: $file_size
+  } | conditional-pipe ($bookmark | is-not-empty) {
+    insert head $bookmark
+  } | conditional-pipe $cache {
+    insert cache true
+  }
+
+  # Store raw binary directly in cross.stream
+  let turn = open $path --raw | .append gpt.turn --meta $meta
 
   $turn
 }

@@ -30,6 +30,7 @@ def frame-to-turn [frame: record] {
   # Content is now stored as clean JSON (normalized format)
   let content = if ($meta | get type?) == "document" {
     # For documents, reconstruct the normalized format with base64 encoding
+    # content_raw is raw binary data, encode to base64 for normalized format
     [
       {
         type: "document"
