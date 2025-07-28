@@ -71,6 +71,7 @@ type CardProps = {
   turn: Turn;
   CAS: CASStore;
   parseContent: (turn: Turn) => ContentBlock[];
+  isLastTurn?: boolean;
 };
 
 const ContentBlockRenderer: Component<{ block: ContentBlock }> = (props) => {
@@ -142,7 +143,7 @@ const ContentBlockRenderer: Component<{ block: ContentBlock }> = (props) => {
 };
 
 const Card: Component<CardProps> = (props) => {
-  const { turn, parseContent } = props;
+  const { turn, parseContent, isLastTurn = false } = props;
 
   // Create reactive content signal
   const content = () => parseContent(turn);
@@ -209,7 +210,7 @@ const Card: Component<CardProps> = (props) => {
           </span>
         </div>
       </Meta>
-      <Content>
+      <Content style={isLastTurn ? "max-height: none;" : ""}>
         <For each={content()}>
           {(block) => <ContentBlockRenderer block={block} />}
         </For>

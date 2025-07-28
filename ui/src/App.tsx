@@ -102,6 +102,7 @@ const App: Component = () => {
                     turn={foundTurn!}
                     CAS={CAS}
                     parseContent={parseContent}
+                    isLastTurn={false}
                   />
                 </Show>
               );

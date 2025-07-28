@@ -19,8 +19,13 @@ const Home: Component<{
         <strong>Options:</strong> {JSON.stringify(props.thread.options)}
       </div>
       <For each={props.thread.turns}>
-        {(turn) => (
-          <Card turn={turn} CAS={props.CAS} parseContent={props.parseContent} />
+        {(turn, index) => (
+          <Card
+            turn={turn}
+            CAS={props.CAS}
+            parseContent={props.parseContent}
+            isLastTurn={index() === 0}
+          />
         )}
       </For>
     </>
