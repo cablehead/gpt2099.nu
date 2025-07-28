@@ -19,6 +19,7 @@ export use ./mcp.nu
 export use ./providers
 export use ./provider.nu
 export use ./prep.nu
+export use ./schema.nu
 
 export def document [
   path: string # Path to the document file
@@ -26,63 +27,20 @@ export def document [
   --cache # Enable caching for this document
   --bookmark (-b): string # Bookmark this document registration
 ] {
-  # Validate file exists
-  if not ($path | path exists) {
-    error make {
-      msg: $"File does not exist: ($path)"
-      label: {
-        text: "this path"
-        span: (metadata $path).span
-      }
-    }
-  }
+  # Generate normalized document turn using schema layer
+  let normalized_turn = schema document-turn $path {name: $name cache: $cache}
 
-  # Detect content type from file extension
-  let content_type = match ($path | path parse | get extension | str downcase) {
-    "pdf" => "application/pdf"
-    "txt" => "text/plain"
-    "md" => "text/markdown"
-    "json" => "application/json"
-    "csv" => "text/csv"
-    "jpg"|"jpeg" => "image/jpeg"
-    "png" => "image/png"
-    "webp" => "image/webp"
-    "gif" => "image/gif"
-    "docx" => "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-    "xlsx" => "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    _ => {
-      let detected = (file --mime-type $path | split row ":" | get 1 | str trim)
-      print $"Warning: Unknown extension, detected MIME type: ($detected)"
-      $detected
-    }
-  }
+  # Extract metadata for storage
+  let metadata = $normalized_turn._metadata
+  let clean_turn = $normalized_turn | reject _metadata
 
-  # Check file size (Anthropic has limits)
-  let file_size = ($path | path expand | ls $in | get size | first)
-  if $file_size > 100MB {
-    # rough limit
-    error make {
-      msg: $"File too large: ($file_size). Consider splitting or compressing."
-    }
-  }
-
-  let document_name = $name | default ($path | path basename)
-  let content = open $path --raw
-
-  let meta = {
-    type: "document"
-    content_type: $content_type
-    role: "user"
-    document_name: $document_name
-    original_path: ($path | path expand)
-    file_size: $file_size
-  } | conditional-pipe $cache {
-    insert cache true
-  } | conditional-pipe ($bookmark | is-not-empty) {
+  # Build storage metadata
+  let meta = $metadata | insert role "user" | conditional-pipe ($bookmark | is-not-empty) {
     insert head $bookmark
   }
 
-  let turn = $content | .append gpt.turn --meta $meta
+  # Store the clean normalized content
+  let turn = $clean_turn.content | to json | .append gpt.turn --meta $meta
 
   $turn
 }
@@ -100,11 +58,13 @@ export def main [
 ] {
   let content = if $in == null {
     input "Enter prompt: "
-  } else if ($in | describe) == "list<string>" {
-    $in | str join $separator
   } else {
     $in
   }
+
+  # Generate normalized user turn using schema layer
+  let normalized_turn = schema user-turn $content {json: $json cache: $cache separator: $separator}
+
   let continues = $continues | append [] | each { ctx headish-to-id $in }
   let continues = $continues | conditional-pipe $respond { append (.head gpt.turn).id }
 
@@ -114,7 +74,7 @@ export def main [
 
   let meta = (
     {
-      role: user
+      role: $normalized_turn.role
       # options should be renamed to "inherited"
       options : (
         {}
@@ -124,12 +84,13 @@ export def main [
       )
     }
     | conditional-pipe ($head | is-not-empty) { insert head $head }
-    | conditional-pipe $cache { insert cache true }
+    | conditional-pipe ($normalized_turn.cache? == true) { insert cache true }
     | if $continues != null { insert continues $continues } else { }
     | if $json { insert content_type "application/json" } else { }
   )
 
-  let turn = $content | .append gpt.turn --meta $meta
+  # Store the clean normalized content
+  let turn = $normalized_turn.content | to json | .append gpt.turn --meta $meta
 
   process-turn $turn
 }
@@ -239,7 +200,7 @@ export def process-turn [turn: record] {
 
   # save the assistance response
   let turn = $content | to json | .append gpt.turn --meta $meta
-    print $"THIS SHOULND'T BE POSSIBLE: ($turn)"
+  print $"THIS SHOULND'T BE POSSIBLE: ($turn)"
   $content | process-turn-response $turn
 }
 

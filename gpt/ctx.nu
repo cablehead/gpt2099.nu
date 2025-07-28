@@ -27,26 +27,15 @@ def frame-to-turn [frame: record] {
   let content_raw = if ($frame | get hash? | is-not-empty) { .cas $frame.hash }
   if ($content_raw | is-empty) { return }
 
-  let content = (
-    if ($meta.type? == "document" and $meta.content_type? != null) {
-      [
-        {
-          type: "document"
-          source: {
-            type: "base64"
-            media_type: $meta.content_type
-            data: ($content_raw | encode base64)
-          }
-        }
-      ]
-    } else if (($meta | get content_type?) == "application/json") {
-      $content_raw | from json
-    } else {
-      [
-        {type: "text" text: $content_raw}
-      ]
-    }
-  )
+  # Content is now stored as clean JSON (normalized format)
+  let content = if (($meta | get content_type?) == "application/json") {
+    $content_raw | from json
+  } else {
+    # Legacy fallback for old text-based storage
+    [
+      {type: "text" text: $content_raw}
+    ]
+  }
 
   {
     id: $frame.id
@@ -92,11 +81,10 @@ export def list [headish?] {
 export def resolve [headish?] {
   let turns = list $headish
   let options = $turns | get options? | compact --empty | if ($in | is-not-empty) {
-    reduce {|it, acc| $acc | merge deep $it }
+    reduce {|it acc| $acc | merge deep $it }
   } else { null }
   {
     messages: $turns
     options: $options
   }
 }
-
