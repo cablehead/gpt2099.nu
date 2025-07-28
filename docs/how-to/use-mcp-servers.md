@@ -67,10 +67,7 @@ gpt mcp register web-search "npx -y @modelcontextprotocol/server-brave-search"
 
 ### Interactive Tool Execution
 
-When the LLM wants to use a tool, you'll see:
-1. The proposed tool call with its arguments
-2. A prompt asking if you want to execute it
-3. Options to execute, provide alternative input, or skip
+When the LLM wants to use a tool, you see the proposed tool call and have several options:
 
 ```text
 ┌─────────────┬──────────────────────────────────────────────────────────┐
@@ -82,9 +79,36 @@ Execute?
 > yes
   no: do something different  
   no
+  activate: yolo
 ```
 
-You have full control over what actions are taken on your system.
+**Options:**
+- **yes** - Execute the tool call as proposed
+- **no: do something different** - Provide custom input or alternative response
+- **no** - Skip this tool call and stop
+- **activate: yolo** - Enable YOLO mode for automatic execution
+
+### YOLO Mode
+
+YOLO mode automatically executes tool calls without prompting:
+
+```nushell
+# Enable YOLO mode via environment variable
+$env.GPT2099_YOLO = true
+"Update all config files" | gpt --servers [filesystem] -p milli
+```
+
+Or activate it during a conversation by selecting "activate: yolo" when prompted. Once activated, all subsequent tool calls in the session execute automatically.
+
+### Custom Tool Responses
+
+When you select "no: do something different", you can provide custom input:
+
+```text
+Enter alternative response: The file already exists and shouldn't be modified
+```
+
+This sends your custom response as the tool result, allowing you to guide the conversation without executing the actual tool.
 
 ## Server Management
 
