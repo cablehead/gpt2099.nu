@@ -154,7 +154,7 @@ export def provider [] {
           --content-type application/json
           -H $headers
           https://api.anthropic.com/v1/messages
-          $data | table -e
+          $data | table -e | tee { to json | save -f /tmp/gpt2099.capture }
         )
         error make {msg: "peace."}
       }

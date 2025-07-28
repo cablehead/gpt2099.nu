@@ -110,6 +110,23 @@ Create new fixture directories under `prepare-request/`:
 - `tool-integration/` - MCP tool conversion
 - `search-enabled/` - Web search capabilities
 
+### Error Fixtures
+
+Use `expected-{provider}.err` files for unsupported provider features:
+
+```
+tests/fixtures/prepare-request/tool-use-with-search/
+├── input.json
+├── expected-anthropic.json    # Works normally
+└── expected-gemini.err        # Throws error
+```
+
+The `.err` file contains the expected error message. Test harness:
+
+- Verifies the provider throws an error containing that message
+- Skips API calls for `.err` cases (avoids 400 errors)
+- Supports mixed scenarios (some providers work, others error)
+
 ### Adding Providers
 
 Add expected output files:
