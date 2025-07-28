@@ -1,0 +1,36 @@
+{
+  "contents": [
+    {
+      "role": "user",
+      "parts": [
+        {
+          "text": "Please read the file config.json and tell me about its structure"
+        }
+      ]
+    }
+  ],
+  "generationConfig": {
+    "temperature": 1,
+    "topP": 0.95,
+    "maxOutputTokens": 81920
+  },
+  "tools": [
+    {
+      "functionDeclarations": [
+        {
+          "name": "filesystem___read_file",
+          "description": "Read the complete contents of a file from the file system.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string"
+              }
+            },
+            "required": ["path"]
+          }
+        }
+      ]
+    }
+  ]
+}

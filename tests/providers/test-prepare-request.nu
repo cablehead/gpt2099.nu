@@ -12,6 +12,23 @@ const assets = {
   "document-image": {file: "tests/fixtures/assets/img.png" media_type: "image/png"}
 }
 
+# Mock MCP tools for testing
+const mock_tools = [
+  {
+    name: "filesystem___read_file"
+    description: "Read the complete contents of a file from the file system."
+    inputSchema: {
+      "$schema": "http://json-schema.org/draft-07/schema#"
+      additionalProperties: false
+      properties: {
+        path: {type: "string"}
+      }
+      required: ["path"]
+      type: "object"
+    }
+  }
+]
+
 # Load fixture with dynamic asset population
 def load-fixture [case_path: string filename: string] {
   let case_name = ($case_path | path basename)
@@ -30,6 +47,41 @@ def load-fixture [case_path: string filename: string] {
     open $fixture_file
   } else {
     error make {msg: $"Fixture not found: ($fixture_file)"}
+  }
+}
+
+# Test case that expects an error
+def test-error-case [
+  provider: string
+  case_name: string
+  input: record
+  expected_error: string
+] {
+  # Get provider implementation
+  use ../../gpt/providers
+  let provider_impl = providers all | get $provider
+
+  # Provide mock tools if the input specifies servers
+  let tools = if ($input.options?.servers? | is-not-empty) {
+    $mock_tools
+  } else {
+    []
+  }
+
+  try {
+    let actual = do $provider_impl.prepare-request $input $tools
+    print $"✗ ($case_name): Expected error but got successful result"
+    print $"Result: ($actual | to json)"
+    error make {msg: $"Test failed: ($case_name) - expected error but succeeded"}
+  } catch {|e|
+    if ($e.msg | str contains $expected_error) {
+      print $"✓ ($case_name)"
+    } else {
+      print $"✗ ($case_name): Wrong error message"
+      print $"Expected: ($expected_error)"
+      print $"Actual: ($e.msg)"
+      error make {msg: $"Test failed: ($case_name) - wrong error message"}
+    }
   }
 }
 
@@ -81,21 +133,48 @@ def test-case [
 ] {
   let case_path = ["tests" "fixtures" "prepare-request" $case_name] | path join
 
-  # Check if expected fixture exists for this provider
-  let expected_file = [$case_path $"expected-($provider).json"] | path join
-  if not ($expected_file | path exists) {
+  # Check if expected fixture exists for this provider (.json or .err)
+  let expected_json_file = [$case_path $"expected-($provider).json"] | path join
+  let expected_err_file = [$case_path $"expected-($provider).err"] | path join
+
+  let has_json = ($expected_json_file | path exists)
+  let has_err = ($expected_err_file | path exists)
+
+  if not ($has_json or $has_err) {
     print $"⚠️  Skipping ($provider)/($case_name) - no expected fixture"
     return
   }
 
-  # Load input and expected output, with dynamic asset loading
+  # Skip API calls for .err cases (they indicate unsupported features)
+  if $has_err and ($api_key | is-not-empty) {
+    print $"⚠️  Skipping ($provider)/($case_name) API call - .err fixture indicates unsupported feature"
+    return
+  }
+
+  # Load input
   let input = load-fixture $case_path "input.json"
+
+  # For .err cases, we expect an error; for .json cases, we compare output
+  if $has_err {
+    let expected_error = open $expected_err_file | str trim
+    test-error-case $provider $case_name $input $expected_error
+    return
+  }
+
   let expected = load-fixture $case_path $"expected-($provider).json"
 
   # Get provider implementation
   use ../../gpt/providers
   let provider_impl = providers all | get $provider
-  let actual = do $provider_impl.prepare-request $input []
+
+  # Provide mock tools if the input specifies servers
+  let tools = if ($input.options?.servers? | is-not-empty) {
+    $mock_tools
+  } else {
+    []
+  }
+
+  let actual = do $provider_impl.prepare-request $input $tools
 
   if ($api_key | is-not-empty) {
     # Smoke test - just verify API call works and returns events

@@ -1,0 +1,1 @@
+Gemini API does not support combining google_search with custom function declarations in the same request. This feature is currently only available via the Live API (WebSocket). Consider using either search OR custom tools, but not both together.

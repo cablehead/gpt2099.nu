@@ -119,11 +119,14 @@ export def provider [] {
       }
 
       let data = $data | conditional-pipe $search {
-        insert "tools" [
-          {
-            google_search: {}
+        if "tools" in $in {
+          # Check for multi-tool limitation
+          error make {
+            msg: "Gemini API does not support combining google_search with custom function declarations in the same request. This feature is currently only available via the Live API (WebSocket). Consider using either search OR custom tools, but not both together."
           }
-        ]
+        } else {
+          insert "tools" [{google_search: {}}]
+        }
       }
 
       return $data
@@ -220,7 +223,7 @@ export def provider [] {
         if $has_tool_use {
           $response.message.content = $response.message.content | append {
             type: "tool_use"
-            id: (random uuid)  # Add random UUID for normalization
+            id: (random uuid) # Add random UUID for normalization
             name: $tool_use_name
             input: $tool_use_input
           }

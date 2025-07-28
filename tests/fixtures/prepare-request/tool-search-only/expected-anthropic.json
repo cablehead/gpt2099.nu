@@ -1,0 +1,21 @@
+{
+  "max_tokens": 8192,
+  "stream": true,
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "What's the current weather in Tokyo?"
+        }
+      ]
+    }
+  ],
+  "tools": [
+    {
+      "type": "web_search_20250305",
+      "name": "web_search"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "contents": [
+    {
+      "role": "user",
+      "parts": [
+        {
+          "text": "Read my config file"
+        }
+      ]
+    },
+    {
+      "role": "model",
+      "parts": [
+        {
+          "functionCall": {
+            "name": "filesystem___read_file",
+            "args": {
+              "path": "config.json"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "parts": [
+        {
+          "functionResponse": {
+            "name": "filesystem___read_file",
+            "response": {
+              "type": "text",
+              "text": "{\"database\": \"sqlite://app.db\", \"debug\": true}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "parts": [
+        {
+          "text": "Now create a backup of this config"
+        }
+      ]
+    }
+  ],
+  "generationConfig": {
+    "temperature": 1,
+    "topP": 0.95,
+    "maxOutputTokens": 81920
+  },
+  "tools": [
+    {
+      "functionDeclarations": [
+        {
+          "name": "filesystem___read_file",
+          "description": "Read the complete contents of a file from the file system.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string"
+              }
+            },
+            "required": ["path"]
+          }
+        }
+      ]
+    }
+  ]
+}

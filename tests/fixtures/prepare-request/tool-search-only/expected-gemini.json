@@ -1,0 +1,22 @@
+{
+  "contents": [
+    {
+      "role": "user",
+      "parts": [
+        {
+          "text": "What's the current weather in Tokyo?"
+        }
+      ]
+    }
+  ],
+  "generationConfig": {
+    "temperature": 1,
+    "topP": 0.95,
+    "maxOutputTokens": 81920
+  },
+  "tools": [
+    {
+      "google_search": {}
+    }
+  ]
+}

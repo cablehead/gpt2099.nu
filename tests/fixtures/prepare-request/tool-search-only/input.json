@@ -1,0 +1,16 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "What's the current weather in Tokyo?"
+        }
+      ]
+    }
+  ],
+  "options": {
+    "search": true
+  }
+}

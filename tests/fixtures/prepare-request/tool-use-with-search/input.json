@@ -1,0 +1,17 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Search for recent information about quantum computing and save it to a file"
+        }
+      ]
+    }
+  ],
+  "options": {
+    "servers": ["filesystem"],
+    "search": true
+  }
+}
