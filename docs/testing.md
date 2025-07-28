@@ -19,7 +19,7 @@ test-prepare-request anthropic
 test-prepare-request gemini
 
 # Test specific case
-test-prepare-request anthropic image-document
+test-prepare-request anthropic document-image
 
 # Test with real API calls (⚠️ consumes tokens!)
 test-prepare-request anthropic --call "your-api-key"
@@ -40,13 +40,13 @@ tests/
 │   │   ├── img.png
 │   │   └── doc.md
 │   └── prepare-request/          # Provider transformation tests
-│       ├── text-document/
+│       ├── document-text/
 │       │   ├── input.json        # Normalized context window format
 │       │   ├── expected-anthropic.json
 │       │   └── expected-gemini.json
 │       ├── cache-control/        # Tests Anthropic's 4-breakpoint limit
-│       ├── pdf-document/         # Dynamic asset loading
-│       └── image-document/
+│       ├── document-pdf/         # Dynamic asset loading
+│       └── document-image/
 ├── schema/
 │   └── test-schema-generation.nu # Tests normalized format generation
 └── providers/
@@ -107,7 +107,7 @@ Add expected output files:
 
 ```bash
 # Support new provider
-echo '{}' > tests/fixtures/prepare-request/text-document/expected-newprovider.json
+echo '{}' > tests/fixtures/prepare-request/document-text/expected-newprovider.json
 ```
 
 ### Adding Methods

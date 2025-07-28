@@ -8,8 +8,8 @@ const models = {
 
 # Asset mapping for dynamic fixture population
 const assets = {
-  "pdf-document": {file: "tests/fixtures/assets/doc.pdf" media_type: "application/pdf"}
-  "image-document": {file: "tests/fixtures/assets/img.png" media_type: "image/png"}
+  "document-pdf": {file: "tests/fixtures/assets/doc.pdf" media_type: "application/pdf"}
+  "document-image": {file: "tests/fixtures/assets/img.png" media_type: "image/png"}
 }
 
 # Load fixture with dynamic asset population

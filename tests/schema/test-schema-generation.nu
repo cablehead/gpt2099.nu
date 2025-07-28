@@ -4,7 +4,7 @@ use ../../gpt/schema.nu
 # Test that schema generation produces the expected normalized format
 # This validates that our test fixtures match real-world usage
 
-export def test-user-turn [] {
+export def user-turn [] {
   # Test basic text turn
   let result = schema user-turn "Hello world"
   let expected = {
@@ -29,7 +29,7 @@ export def test-user-turn [] {
   print "✓ user-turn with cache"
 }
 
-export def test-document-turn [] {
+export def document-turn [] {
   # Test markdown document
   let result = schema document-turn "tests/fixtures/assets/doc.md"
 
@@ -56,7 +56,7 @@ export def test-document-turn [] {
 }
 
 # Test that schema output produces the correct structure for prepare-request
-export def test-schema-prepare-request-compatibility [] {
+export def schema-prepare-request-compatibility [] {
   # Generate schema output
   let schema_turn = schema document-turn "tests/fixtures/assets/doc.md" {cache: true}
   let schema_message = $schema_turn | reject _metadata
@@ -95,8 +95,8 @@ export def test-schema-prepare-request-compatibility [] {
 
 export def main [] {
   print "Testing schema generation layer..."
-  test-user-turn
-  test-document-turn
-  test-schema-prepare-request-compatibility
+  user-turn
+  document-turn
+  schema-prepare-request-compatibility
   print "\n🎉 All schema generation tests passed!"
 }
