@@ -1,8 +1,5 @@
-export def is-scru128 [s: string] {
-  $s =~ '(?i)^[0-9a-z]{25}$'
-}
-
 use std/assert
+use ../../gpt/ctx.nu is-scru128
 
 def "test is-scru128" [] {
   for row in [
@@ -16,4 +13,10 @@ def "test is-scru128" [] {
   ] {
     assert equal (is-scru128 $row.input) $row.expected
   }
+}
+
+export def main [] {
+  print "Testing util functions..."
+  test is-scru128
+  print "✅ All util tests passed!"
 }

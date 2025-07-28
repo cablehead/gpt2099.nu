@@ -3,7 +3,9 @@
 # See docs/reference/schemas.md for complete schema documentation.
 # This module implements the thread record and context resolution logic.
 
-use util.nu is-scru128
+export def is-scru128 [s: string] {
+  $s =~ '(?i)^[0-9a-z]{25}$'
+}
 
 export def headish-to-id [headish: string] {
   if (is-scru128 $headish) {
@@ -17,7 +19,7 @@ export def headish-to-id [headish: string] {
   }
 }
 
-# Convert a stored frame into a normalized “turn” with delta options and cache flag
+# Convert a stored frame into a normalized "turn" with delta options and cache flag
 def frame-to-turn [frame: record] {
   let meta = $frame | get meta? | default {}
   let role = $meta | default "user" role | get role
