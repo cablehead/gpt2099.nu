@@ -41,7 +41,7 @@ Before using tools in conversations, test them manually:
 gpt mcp tool call filesystem read_file {path: "/path/to/file.txt"}
 ```
 
-This helps you understand the tool's input format and expected output.
+Test tools to understand their input format and expected output.
 
 ## Using MCP Servers in Conversations
 
@@ -84,7 +84,7 @@ Execute?
   no
 ```
 
-This gives you full control over what actions are taken on your system.
+You have full control over what actions are taken on your system.
 
 ## Server Management
 
@@ -137,6 +137,6 @@ The recommended approach for working with new MCP servers:
 4. **Use** in conversations with `--servers` flag
 5. **Iterate** based on results
 
-This hands-on experimentation helps you understand server capabilities and build effective prompts that leverage the available tools.
+Hands-on experimentation builds understanding of server capabilities and effective prompts.
 
 See the [commands reference](../commands.md#gpt-mcp) for complete MCP command options.

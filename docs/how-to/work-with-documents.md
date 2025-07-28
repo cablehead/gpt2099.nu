@@ -86,7 +86,7 @@ gpt document ~/dynamic-data.json  # no caching
 
 ## Thread Management with Documents
 
-Documents integrate seamlessly with conversation threading:
+Documents work with conversation threading:
 
 ```nushell
 # Start a research session

@@ -4,7 +4,7 @@ This guide shows you how to create structured XML context from your Git reposito
 
 ## Overview
 
-The `gpt prep gr` command generates XML representations of your repository files, making it easy to provide comprehensive code context to LLMs for analysis, refactoring, or documentation tasks.
+The `gpt prep gr` command generates XML representations of your repository files for LLM analysis, refactoring, or documentation tasks.
 
 ## Basic Usage
 
@@ -101,7 +101,7 @@ git ls-files ./src | lines | gpt prep gr | "Review this codebase for potential i
 
 ```nushell
 # Generate API documentation
-git ls-files | lines | where ($it | str ends-with ".py") | gpt prep gr | "Generate comprehensive API documentation" | gpt -p kilo --bookmark "api-docs"
+git ls-files | lines | where ($it | str ends-with ".py") | gpt prep gr | "Generate API documentation" | gpt -p kilo --bookmark "api-docs"
 ```
 
 ### Architecture Analysis

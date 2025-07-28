@@ -1,5 +1,3 @@
-Here's the complete revised providers-api.md document:
-
 # Provider API Specification
 
 This document outlines the interface required for implementing a provider in the

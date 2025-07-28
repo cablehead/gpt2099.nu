@@ -49,6 +49,21 @@ Add `.r` for reasoning-optimized variants:
 - `milli.r` - reasoning-optimized lightweight model
 - `kilo.r` - reasoning-optimized full-capability model
 
+## Provider Capabilities
+
+| Feature | Anthropic | Gemini |
+|---------|-----------|--------|
+| Text conversations | ✅ | ✅ |
+| PDF analysis | ✅ | ✅ |
+| Image analysis | ✅ | ✅ |
+| Web search | ✅ | ✅ |
+| MCP tools | ✅ | ✅ |
+| Tools + search together | ✅ | ❌ |
+| Document caching | ✅ | ✅ (automatic) |
+
+**Key limitations:**
+- **Gemini**: Cannot use custom MCP tools and web search in the same conversation
+
 ## Example Configuration
 
 After setup, your aliases might look like:

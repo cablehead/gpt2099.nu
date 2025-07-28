@@ -234,4 +234,4 @@ Normalized response structure from providers:
 
 ---
 
-> **Note:** The field currently named `"options"` in stored frames will be renamed to `"inherited"` to better reflect its behavior of being automatically propagated down conversation threads.
+**Note:** The field currently named `"options"` in stored frames will be renamed to `"inherited"` to better reflect its behavior of being automatically propagated down conversation threads.
