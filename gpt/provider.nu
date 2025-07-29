@@ -1,6 +1,9 @@
 use ./providers
 
-export def enable [provider?: string] {
+export def enable [
+  provider?: string # Provider name to enable (if not specified, will prompt to select from available providers)
+] {
+  let secret = $in
   let avail = providers all | columns
 
   let provider = if $provider != null {
@@ -29,7 +32,13 @@ export def enable [provider?: string] {
   }
 
   print $"Configuring: ($provider)"
-  let key = input -s "Enter API key: "
+
+  # Check if API key is provided via pipeline input
+  let key = if ($secret | is-empty) {
+    input -s "Enter API key: "
+  } else {
+    $secret
+  }
 
   print -n $"\nquerying ($provider) to test key..."
 
@@ -42,6 +51,7 @@ export def enable [provider?: string] {
   main
 }
 
+# Get a record of currently enabled providers with their API keys
 export def get-enabled [] {
   .cat
   | where topic == "gpt.provider"
@@ -53,6 +63,7 @@ export def get-enabled [] {
   | transpose -rd
 }
 
+# Show the status of all providers and current pointer configurations
 export def main [] {
   let available = providers all
   let enabled = get-enabled
@@ -70,7 +81,10 @@ export def main [] {
   }
 }
 
-export def ptr [name?: string --set] {
+export def ptr [
+  name?: string # Name of the provider pointer to retrieve or create
+  --set # Create a new provider pointer with the given name
+] {
   if $set {
     if $name == null {
       error make {
@@ -94,7 +108,9 @@ export def ptr [name?: string --set] {
   $ptr | insert key (get-enabled | get $ptr.provider)
 }
 
-export def set-ptr [name: string] {
+export def set-ptr [
+  name: string # Name for the new provider pointer
+] {
   let enabled = get-enabled
   let provider = $enabled | columns | input list "Select provider"
   print $"Selected provider: ($provider)"
@@ -111,7 +127,9 @@ export def set-ptr [name: string] {
   } | .append gpt.provider.ptrs --meta $in
 }
 
-export def models [provider: string] {
+export def models [
+  provider: string # Provider name to list models for
+] {
   let enabled = get-enabled
   let key = $enabled | get $provider
   let p = providers all | get $provider
