@@ -110,16 +110,54 @@ export def ptr [
 
 export def set-ptr [
   name: string # Name for the new provider pointer
+  provider?: string # Provider to use (if not specified, will prompt to select)
+  model?: string # Model to use (if not specified, will prompt to select from available models)
 ] {
   let enabled = get-enabled
-  let provider = $enabled | columns | input list "Select provider"
-  print $"Selected provider: ($provider)"
-  let key = $enabled | get $provider
 
+  let provider = if $provider != null {
+    # Validate that the provider is enabled
+    if $provider not-in ($enabled | columns) {
+      error make {
+        msg: $"Provider '($provider)' is not enabled. Available providers: ($enabled | columns | str join ', ')"
+        label: {
+          text: "this provider"
+          span: (metadata $provider).span
+        }
+      }
+    }
+    print $"Using specified provider: ($provider)"
+    $provider
+  } else {
+    let selected = $enabled | columns | input list "Select provider"
+    print $"Selected provider: ($selected)"
+    $selected
+  }
+
+  let key = $enabled | get $provider
   let p = providers all | get $provider
 
-  let model = do $p.models $key | get id | input list --fuzzy "Select model"
-  print $"Selected model: ($model)"
+  let model = if $model != null {
+    # If both provider and model are specified, validate the model
+    if $provider != null {
+      let available_models = do $p.models $key | get id
+      if $model not-in $available_models {
+        error make {
+          msg: $"Model '($model)' not found for provider '($provider)'. Available models: ($available_models | str join ', ')"
+          label: {
+            text: "this model"
+            span: (metadata $model).span
+          }
+        }
+      }
+    }
+    print $"Using specified model: ($model)"
+    $model
+  } else {
+    let selected = do $p.models $key | get id | input list --fuzzy "Select model"
+    print $"Selected model: ($selected)"
+    $selected
+  }
 
   ptr | upsert $name {
     provider: $provider
