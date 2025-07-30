@@ -314,14 +314,15 @@ export def preview-stream [streamer] {
   }
 }
 
-# this is currently a no-op. the actual llm call should be performed by a
-# cross.stream command. this init should register those commands
 export def init [
   --refresh (-r) # Skip configuration if set
 ] {
   const base = (path self) | path dirname
-  # cat ($base | path join "providers/anthropic/mod.nu") | .append gpt.provider.anthropic
-  # cat ($base | path join "providers/gemini/mod.nu") | .append gpt.provider.gemini
+  cat ($base | path join "providers/anthropic/mod.nu") | .append gpt.mod.provider.anthropic
+  cat ($base | path join "ctx.nu") | .append gpt.mod.ctx
+  cat ($base | path join "xs/call.nu") | .append gpt.define
+
+  # cat ($base | path join "providers/gemini/mod.nu") | .append gpt.mod.provider.gemini
   # cat ($base | path join "xs/command.nu") | .append gpt.define
   if not $refresh {
   }
