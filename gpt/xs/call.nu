@@ -1,6 +1,4 @@
-# GPT command definition for cross.stream
-# This will be appended to gpt.define
-
+# append to gpt.define
 {
   modules: {
     "anthropic": (.head gpt.mod.provider.anthropic | .cas $in.hash)
@@ -20,7 +18,7 @@
     
     let p = anthropic provider
     let prepared = do $p.prepare-request $thread []
-    let response = $prepared | do $p.call $key "claude-3-5-haiku-20241022"
+    let response = $prepared | do $p.call $key "claude-3-5-haiku-20241022" | do $p.response_stream_aggregate 
     
     $response
   }
