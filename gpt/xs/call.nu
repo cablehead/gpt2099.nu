@@ -9,13 +9,12 @@
 
   run: {|frame|
     let response = $frame
-    # Extract the continues ID from the call arguments
-    # let continues = $frame.meta.args.continues
+
+    let continues = $frame.meta?.continues?
+    if ($continues | is-empty) { return }
     
-    # Use ctx module to resolve the message thread
-    # let window = ctx resolve $continues
+    let thread = (ctx resolve $continues)
     
-    # Get provider configuration (simplified for now)
     # let provider_data = .head gpt.provider | .cas $in.hash | from json
     # let key = $provider_data.key
     
