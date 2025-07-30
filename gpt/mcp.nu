@@ -25,6 +25,16 @@ export def "initialize" [name] {
   $res
 }
 
+export def "ping" [name: string] {
+  let command = {
+    jsonrpc: "2.0"
+    id: (random uuid)
+    method: ping
+  }
+  let res = $command | call $name
+  $res
+}
+
 export def "tool call" [name: string method: string arguments: record] {
   let command = {
     jsonrpc: "2.0"
