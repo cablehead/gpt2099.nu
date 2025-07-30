@@ -29,7 +29,8 @@
             "name": "filesystem___read_file",
             "response": {
               "type": "text",
-              "text": "{\"database\": \"sqlite://app.db\", \"debug\": true}"
+              "text": "{\"database\": \"sqlite://app.db\", \"debug\": true}",
+              "mimeType": "application/json"
             }
           }
         }

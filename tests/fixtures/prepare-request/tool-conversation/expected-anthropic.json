@@ -29,13 +29,13 @@
       "content": [
         {
           "type": "tool_result",
+          "tool_use_id": "tool123",
           "content": [
             {
               "type": "text",
               "text": "{\"database\": \"sqlite://app.db\", \"debug\": true}"
             }
-          ],
-          "tool_use_id": "tool123"
+          ]
         }
       ]
     },

@@ -83,7 +83,11 @@ export def provider [] {
           let is_last = ($item.index == (($msg.content | length) - 1))
 
           let converted_part = match $part.type {
-            "tool_result" => ($part | reject -o name)
+            "tool_result" => {
+              type: "tool_result"
+              tool_use_id: $part.tool_use_id
+              content: ($part.content | select type text)
+            }
             "document" => {
               # Convert based on media type
               let media_type = $part.source.media_type
