@@ -19,7 +19,7 @@ let req = .append gpt.call --meta {continues: (.head gpt.turn).id}
 
 .cat -f | update hash { .cas } | take until {|frame| 
 	print ($frame | table -e) 
-	($frame.topic == "gpt.response") and ($frame.meta?.frame_id == $req.id)
+	($frame.topic in ["gpt.error" "gpt.response"]) and ($frame.meta?.frame_id == $req.id)
 }
 
 sleep 50ms

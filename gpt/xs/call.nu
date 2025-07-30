@@ -18,7 +18,13 @@
     
     let p = anthropic provider
     let prepared = do $p.prepare-request $thread []
-    let response = $prepared | do $p.call $key "claude-3-5-haiku-20241022" | do $p.response_stream_aggregate 
+    let response = $prepared | do $p.call $key "claude-3-5-haiku-20241022" | tee {
+    each {|chunk| 
+     let event = do $p.response_stream_streamer $chunk 
+    if $event == null { return }
+
+     $event | to json | .append gpt.recv} } |
+    do $p.response_stream_aggregate 
     
     $response
   }
