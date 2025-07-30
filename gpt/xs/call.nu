@@ -15,13 +15,12 @@
     
     let thread = (ctx resolve $continues)
     
-    # let provider_data = .head gpt.provider | .cas $in.hash | from json
-    # let key = $provider_data.key
+    let provider_data = .head gpt.provider | .cas $in.hash | from json
+    let key = $provider_data.key
     
-    # Use anthropic provider to make the call
-    # let p = anthropic provider
-    # let prepared = do $p.prepare-request $window []
-    # let response = $prepared | do $p.call $key "claude-3-5-haiku-20241022"
+    let p = anthropic provider
+    let prepared = do $p.prepare-request $thread []
+    let response = $prepared | do $p.call $key "claude-3-5-haiku-20241022"
     
     $response
   }
