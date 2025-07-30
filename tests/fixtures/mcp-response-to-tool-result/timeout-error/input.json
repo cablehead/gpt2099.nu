@@ -1,0 +1,15 @@
+{
+  "mcp_response": {
+    "jsonrpc": "2.0",
+    "id": "03ee2ts0h2wjz2fypayrgfus7",
+    "error": {
+      "code": -32603,
+      "message": "Command timed out after 30 seconds. Consider breaking down complex scripts into smaller steps."
+    }
+  },
+  "tool_use": {
+    "id": "tool456",
+    "name": "filesystem___execute_script",
+    "input": {"script": "long_script.sh"}
+  }
+}

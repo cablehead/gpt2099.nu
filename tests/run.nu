@@ -7,6 +7,8 @@ export def main [] {
   print "Unit Tests:"
   use unit/util.nu
   util
+  use unit/mcp-response-processing.nu
+  mcp-response-processing
   print ""
 
   # Run schema layer tests

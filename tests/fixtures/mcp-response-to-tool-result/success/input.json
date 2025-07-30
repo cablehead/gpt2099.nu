@@ -1,0 +1,19 @@
+{
+  "mcp_response": {
+    "jsonrpc": "2.0",
+    "id": "03ee2ts0h2wjz2fypayrgfus7",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "File executed successfully. Output: Hello World!"
+        }
+      ]
+    }
+  },
+  "tool_use": {
+    "id": "tool789",
+    "name": "filesystem___read_file", 
+    "input": {"path": "hello.txt"}
+  }
+}

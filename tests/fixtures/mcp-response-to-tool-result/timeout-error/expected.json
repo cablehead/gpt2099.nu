@@ -1,0 +1,12 @@
+{
+  "type": "tool_result",
+  "name": "filesystem___execute_script",
+  "tool_use_id": "tool456",
+  "content": [
+    {
+      "type": "text",
+      "text": "MCP Error (-32603): Command timed out after 30 seconds. Consider breaking down complex scripts into smaller steps."
+    }
+  ],
+  "is_error": true
+}

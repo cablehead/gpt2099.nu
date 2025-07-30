@@ -79,6 +79,24 @@ export def "call" [name: string] {
   $res
 }
 
+export def "response-to-tool-result" [tool_use: record] {
+  let mcp_response = $in
+  if "error" in $mcp_response {
+    {
+      type: "tool_result"
+      name: $tool_use.name
+      content: [{ type: "text", text: $"MCP Error \(($mcp_response.error.code)\): ($mcp_response.error.message)" }]
+      is_error: true
+    }
+  } else {
+    {
+      type: "tool_result"
+      name: $tool_use.name
+      content: $mcp_response.result.content
+    }
+  } | conditional-pipe ($tool_use.id? != null) { insert "tool_use_id" $tool_use.id }
+}
+
 export def "list" [] {
   .cat
   | where { $in.topic | str starts-with "mcp." }
@@ -99,4 +117,11 @@ export def "list" [] {
     # remove on error or termination
     $acc | where $it != $name
   }
+}
+
+def conditional-pipe [
+  condition: bool
+  action: closure
+] {
+  if $condition { do $action } else { $in }
 }

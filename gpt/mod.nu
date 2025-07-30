@@ -172,15 +172,7 @@ export def --env process-turn-response [turn: record] {
       }
       let res = $mcp_toolscall | mcp call $namespace.0
       let tool_result = [
-        (
-          {
-            type: "tool_result"
-            name: $tool_use.name
-            content: $res.result.content
-          } | conditional-pipe ($tool_use.id? != null) {
-            insert "tool_use_id" $tool_use.id
-          }
-        )
+        ($res | mcp response-to-tool-result $tool_use)
       ]
       print ($tool_result | table -e)
       let meta = {
