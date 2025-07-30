@@ -12,10 +12,10 @@ export def "initialize" [name] {
     "id": (random uuid)
     method: initialize
     params: {
-      protocolVersion: "2025-03-26"
+      protocolVersion: "2025-06-18"
       clientInfo: {
-        name: "gpt.nu"
-        version: "0.4"
+        name: "gpt2099"
+        version: "0.5"
       }
       capabilities: {}
     }
