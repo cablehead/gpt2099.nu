@@ -3,8 +3,7 @@ def collect-tests [] {
   {
     "gpt.call": {||
       use std/assert
-
-      const nocapture = false
+      use std/log
 
       gpt init
 
@@ -17,16 +16,12 @@ def collect-tests [] {
       let req = .append gpt.call --meta {continues: (.head gpt.turn).id}
 
       .cat -f | update hash { .cas } | take until {|frame|
-        if $nocapture {
-          print ($frame | table -e)
-        }
+        $frame | table -e | log debug $in
         ($frame.topic in ["gpt.error" "gpt.response"]) and ($frame.meta?.frame_id == $req.id)
       }
 
       let res = .head gpt.response | .cas $in.hash | from json
-      if $nocapture {
-        print ($res | table -e)
-      }
+      $res | table -e | log debug $in
 
       assert equal $res.message.content.0.text "4"
 
@@ -36,9 +31,7 @@ def collect-tests [] {
 }
 
 export def main [] {
-
   let tests = collect-tests
-
   .tmp-spawn $tests."gpt.call"
 }
 
