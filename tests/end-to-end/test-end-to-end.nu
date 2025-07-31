@@ -1,7 +1,7 @@
 def collect-tests [] {
 
   {
-    "gpt.call": {||
+    "gpt.call.basics": {||
       use std/assert
       use std/log
 
@@ -32,7 +32,9 @@ def collect-tests [] {
 
 export def main [] {
   let tests = collect-tests
-  .tmp-spawn $tests."gpt.call"
+  for test in ($tests | columns) {
+    .tmp-spawn ($tests | get $test)
+  }
 }
 
 # Spawn xs serve in a temporary directory, run a closure, then cleanup
