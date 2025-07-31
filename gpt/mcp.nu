@@ -1,11 +1,11 @@
 export def "register" [name: string command: string] {
-  $"{
-    run: {|| ($command) | lines}
+  $"
+    run: {|| ($command) | lines }}
     duplex: true
   }" | .append $"mcp.($name).spawn"
 }
 
-# https://spec.modelcontextprotocol.io/specification/2025-03-26/basic/lifecycle/#initialization
+# https://modelcontextprotocol.io/specification/2025-06-18/basic/lifecycle
 export def "initialize" [name] {
   let command = {
     jsonrpc: "2.0"
@@ -85,7 +85,7 @@ export def "response-to-tool-result" [tool_use: record] {
     {
       type: "tool_result"
       name: $tool_use.name
-      content: [{ type: "text", text: $"MCP Error \(($mcp_response.error.code)\): ($mcp_response.error.message)" }]
+      content: [{type: "text" text: $"MCP Error \(($mcp_response.error.code)\): ($mcp_response.error.message)"}]
       is_error: true
     }
   } else {
@@ -100,7 +100,7 @@ export def "response-to-tool-result" [tool_use: record] {
 export def "list" [] {
   .cat
   | where { $in.topic | str starts-with "mcp." }
-  | reduce --fold [] {|row, acc|
+  | reduce --fold [] {|row acc|
     let t = $row.topic
     let name = ($t | split row "." | get 1)
 
