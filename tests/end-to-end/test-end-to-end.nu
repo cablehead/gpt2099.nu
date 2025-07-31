@@ -2,6 +2,9 @@ def collect-tests [] {
 
   {
     "gpt.call": {||
+      use std/assert
+
+      const nocapture = false
 
       gpt init
 
@@ -10,16 +13,22 @@ def collect-tests [] {
 
       .append gpt.call
 
-      "hola" | .append gpt.turn
+      "what's 2+2, tersely?" | .append gpt.turn
       let req = .append gpt.call --meta {continues: (.head gpt.turn).id}
 
-      # Test gpt call
-      # "Hello, how are you?" | .append gpt.call --meta {args: {provider_ptr: "kilo"}}
-
       .cat -f | update hash { .cas } | take until {|frame|
-        print ($frame | table -e)
+        if $nocapture {
+          print ($frame | table -e)
+        }
         ($frame.topic in ["gpt.error" "gpt.response"]) and ($frame.meta?.frame_id == $req.id)
       }
+
+      let res = .head gpt.response | .cas $in.hash | from json
+      if $nocapture {
+        print ($res | table -e)
+      }
+
+      assert equal $res.message.content.0.text "4"
 
       sleep 50ms
     }
