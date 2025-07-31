@@ -1,58 +1,51 @@
 def collect-tests [] {
+  use std/assert
+  use std/log
+
   {
     "gpt.call.basics": {||
-      use std/assert
-      use std/log
-
       gpt init
+      sleep 50ms
 
       cat .env/anthropic | gpt provider enable anthropic
       gpt provider set-ptr kilo anthropic claude-sonnet-4-20250514
 
-      .append gpt.call
-
       "what's 2+2, tersely?" | .append gpt.turn
       let req = .append gpt.call --meta {continues: (.head gpt.turn).id}
 
-      .cat -f | update hash { .cas } | take until {|frame|
-        $frame | table -e | log debug $in
+      .cat -f | update hash { .cas $in } | take until {|frame|
+        $frame | to json | log debug $in
         ($frame.topic in ["gpt.error" "gpt.response"]) and ($frame.meta?.frame_id == $req.id)
       }
 
-      let res = .head gpt.response | .cas $in.hash | from json
-      $res | table -e | log debug $in
-
+      let res = .head gpt.response | .cas $in | from json
+      $res | to json | log debug $in
       assert equal $res.message.content.0.text "4"
-
-      sleep 50ms
     }
 
     "gpt.call.tool_use": {||
-      use std/assert
-      use std/log
-
-      return
       gpt init
-
+      sleep 50ms
       cat .env/anthropic | gpt provider enable anthropic
       gpt provider set-ptr kilo anthropic claude-sonnet-4-20250514
 
-      .append gpt.call
+      gpt mcp register nu mcp-server-nu
+      # todo: init will setup a handler which takes care of this
+      sleep 50ms
+      gpt mcp initialize nu
+      sleep 50ms
+      gpt mcp tool list nu | to json | .append mcp.nu.tools
 
-      "what's 2+2, tersely?" | .append gpt.turn
+      "reverse the string 'foo'" | .append gpt.turn --meta {options: {servers: ["nu"]}}
       let req = .append gpt.call --meta {continues: (.head gpt.turn).id}
 
-      .cat -f | update hash { .cas } | take until {|frame|
+      .cat -f | update hash { .cas $in } | take until {|frame|
         $frame | table -e | log debug $in
         ($frame.topic in ["gpt.error" "gpt.response"]) and ($frame.meta?.frame_id == $req.id)
       }
 
-      let res = .head gpt.response | .cas $in.hash | from json
-      $res | table -e | log debug $in
-
-      assert equal $res.message.content.0.text "4"
-
-      sleep 50ms
+      let res = .head gpt.response | .cas $in | from json
+      assert ("tool_use" in ($res | get message.content.type))
     }
   }
 }
