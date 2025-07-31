@@ -24,13 +24,14 @@ def collect-tests [] {
       let res = .head gpt.response | .cas $in | from json
       $res | to json | log debug $in
       assert equal $res.message.content.0.text "4"
+      log info "ok"
     }
 
     "gpt.call.tool_use": {||
       gpt init
       sleep 50ms
       cat .env/anthropic | gpt provider enable anthropic
-      gpt provider set-ptr kilo anthropic claude-sonnet-4-20250514
+      gpt provider set-ptr milli anthropic claude-3-5-haiku-20241022
 
       gpt mcp register nu mcp-server-nu
       # todo: init will setup a handler which takes care of this
@@ -40,7 +41,10 @@ def collect-tests [] {
       gpt mcp tool list nu | to json | .append mcp.nu.tools
 
       "reverse the string 'foo'" | .append gpt.turn --meta {options: {servers: ["nu"]}}
-      let req = .append gpt.call --meta {continues: (.head gpt.turn).id}
+      let req = .append gpt.call --meta {
+        continues: (.head gpt.turn).id
+        options: {provider_ptr: "milli"}
+      }
 
       .cat -f | update hash { .cas $in } | take until {|frame|
         $frame | table -e | log debug $in
@@ -49,6 +53,7 @@ def collect-tests [] {
 
       let res = .head gpt.response | .cas $in | from json
       assert ("tool_use" in ($res | get message.content.type))
+      log info "ok"
     }
   }
 }
