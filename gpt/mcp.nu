@@ -1,6 +1,6 @@
 export def "register" [name: string command: string] {
-  $"
-    run: {|| ($command) | lines }}
+  $"{
+    run: {|| ($command) | lines }
     duplex: true
   }" | .append $"mcp.($name).spawn"
 }
