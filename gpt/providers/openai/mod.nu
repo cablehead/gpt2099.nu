@@ -46,7 +46,7 @@ export def provider [] {
       $payload
     }
 
-    call: {|key: string, model: string|
+    call: {|key: string model: string|
       let url = "https://api.openai.com/v1/chat/completions"
       (
         $in

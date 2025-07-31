@@ -9,7 +9,7 @@ export def gr [
 
   # Fallback to content reader that handles binary files
   let with_content = if ($with_content == null) {
-    { 
+    {
       # Read file as raw bytes, convert to string, check for null bytes to detect binary files
       try {
         let content = (open --raw $in | into string)
