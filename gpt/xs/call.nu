@@ -10,22 +10,23 @@
 
     let continues = $frame.meta?.continues?
     if ($continues | is-empty) { return }
-    
+
     let thread = (ctx resolve $continues)
-    
+
     let provider_data = .head gpt.provider | .cas $in.hash | from json
     let key = $provider_data.key
-    
+
     let p = anthropic provider
     let prepared = do $p.prepare-request $thread []
     let response = $prepared | do $p.call $key "claude-3-5-haiku-20241022" | tee {
-    each {|chunk| 
-     let event = do $p.response_stream_streamer $chunk 
-    if $event == null { return }
+      each {|chunk|
+        let event = do $p.response_stream_streamer $chunk
+        if $event == null { return }
 
-     $event | to json | .append gpt.recv} } |
-    do $p.response_stream_aggregate 
-    
+        $event | to json | .append gpt.recv
+      }
+    } | do $p.response_stream_aggregate
+
     $response
   }
 }
