@@ -40,7 +40,7 @@ export def enable [
     $secret
   }
 
-  print -n $"\nquerying ($provider) to test key..."
+  print -n $"querying ($provider) to test key..."
 
   let p = providers all | get $provider
   print $"(do $p.models $key | length) models found"
