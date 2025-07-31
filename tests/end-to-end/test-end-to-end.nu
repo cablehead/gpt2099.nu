@@ -8,10 +8,13 @@ def collect-tests [] {
       sleep 50ms
 
       cat .env/anthropic | gpt provider enable anthropic
-      gpt provider set-ptr kilo anthropic claude-sonnet-4-20250514
+      gpt provider set-ptr milli anthropic claude-3-5-haiku-20241022
 
       "what's 2+2, tersely?" | .append gpt.turn
-      let req = .append gpt.call --meta {continues: (.head gpt.turn).id}
+      let req = .append gpt.call --meta {
+        continues: (.head gpt.turn).id
+        options: {provider_ptr: "milli"}
+      }
 
       .cat -f | update hash { .cas $in } | take until {|frame|
         $frame | to json | log debug $in

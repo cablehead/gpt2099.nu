@@ -7,11 +7,19 @@
 
   run: {|frame|
     let response = $frame
+    let window = (ctx resolve $frame.id)
 
-    let continues = $frame.meta?.continues?
-    if ($continues | is-empty) { return }
+    let provider_ptr = $window.options.provider_ptr?
+    if $provider_ptr == null {
+      error make {
+        msg: "provider_ptr is required"
+        label: {
+          text: "the options right here"
+          span: (metadata $window).span
+        }
+      }
+    }
 
-    let window = (ctx resolve $continues)
     let servers = $window.options?.servers?
     let $tools = $servers | if ($in | is-not-empty) {
       each {|server|
