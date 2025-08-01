@@ -213,54 +213,22 @@ export def process-turn [turn: record] {
 
   let res = generate-response $turn.id
 
-  let content = $res | get message.content
-  let meta = (
-    $res
-    | reject message.content
-    | insert continues $turn.id
-    | insert role "assistant"
-    | insert content_type "application/json"
-    | conditional-pipe ($turn.meta?.head? | is-not-empty) { insert head $turn.meta?.head? }
-  )
+  if $res.topic == "gpt.error" {
+    print $res
+    return
+  }
 
-  # save the assistance response
-  let turn = $content | to json | .append gpt.turn --meta $meta
-  $content | process-turn-response $turn
+  .cas $res.hash | process-turn-response $res
 }
 
 export def generate-response [turn_id: string] {
-  let window = ctx resolve $turn_id
-
-  let provider_ptr = $window.options.provider_ptr?
-  if $provider_ptr == null {
-    error make {
-      msg: "provider_ptr is required"
-      label: {
-        text: "the options right here"
-        span: (metadata $window).span
-      }
-    }
+  let req = .append gpt.call --meta {continues: $turn_id}
+  let res = .cat -f --last-id $req.id | each {|frame|
+    $frame
+  } | where {|frame|
+    ($frame.topic in ["gpt.error" "gpt.turn"]) and ($frame.meta?.frame_id == $req.id)
   }
-  let config = provider ptr $provider_ptr
-
-  let servers = $window.options?.servers?
-  let $tools = $servers | if ($in | is-not-empty) {
-    each {|server|
-      .head $"mcp.($server).tools" | .cas $in.hash | from json | update name {
-        # prepend server name to tool name so we can determine which server to use
-        $"($server)___($in)"
-      }
-    } | flatten
-  } else { [] }
-
-  let p = providers all | get $config.provider
-  let res = (
-    do $p.prepare-request $window $tools
-    | do $p.call $config.key $config.model
-    | tee { each { to json | .append gpt.recv --meta {turn_id: $turn_id} } }
-    | tee { preview-stream $p.response_stream_streamer }
-    | do $p.response_stream_aggregate
-  )
+  | first
   $res
 }
 

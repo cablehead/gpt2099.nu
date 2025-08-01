@@ -9,29 +9,19 @@ def collect-tests [] {
 
       cat .env/anthropic | gpt provider enable anthropic
       gpt provider set-ptr milli anthropic claude-3-5-haiku-20241022
+      sleep 50ms
 
-      return
-
-      "what's 2+2, tersely?" | .append gpt.turn
-      let req = .append gpt.call --meta {
-        continues: (.head gpt.turn).id
-        options: {provider_ptr: "milli"}
-      }
-
-      .cat -f | update hash { .cas $in } | take until {|frame|
-        $frame | to json | debug $in
-        ($frame.topic in ["gpt.error" "gpt.turn"]) and ($frame.meta?.frame_id == $req.id)
-      }
+      "what's 2+2, tersely?" | gpt -p milli
 
       let res = .head gpt.turn | .cas $in | from json
       $res | to json | debug $in
-      assert equal $res.message.content.0.text "4"
-      ok
+      assert equal $res.0.text "4"
     }
 
     "gpt.call.tool_use": {||
       gpt init
       sleep 50ms
+
       cat .env/anthropic | gpt provider enable anthropic
       gpt provider set-ptr milli anthropic claude-3-5-haiku-20241022
 
@@ -42,20 +32,11 @@ def collect-tests [] {
       sleep 50ms
       gpt mcp tool list nu | to json | .append mcp.nu.tools
 
-      "reverse the string 'foo'" | .append gpt.turn --meta {options: {servers: ["nu"]}}
-      let req = .append gpt.call --meta {
-        continues: (.head gpt.turn).id
-        options: {provider_ptr: "milli"}
-      }
-
-      .cat -f | update hash { .cas $in } | take until {|frame|
-        $frame | table -e | debug $in
-        ($frame.topic in ["gpt.error" "gpt.turn"]) and ($frame.meta?.frame_id == $req.id)
-      }
+      "reverse of the string 'foo'; note, no print"
+      | gpt -p milli --servers ["nu"] | warning ($in | to json)
 
       let res = .head gpt.turn | .cas $in | from json
-      assert ("tool_use" in ($res | get message.content.type))
-      ok
+      assert ("tool_use" in ($res | get type))
     }
   }
 }
@@ -68,7 +49,12 @@ export def main [name?: string] {
   let to_test = if $name != null { [$name] } else { $tests | columns }
   for test in $to_test {
     start $test
-    .tmp-spawn ($tests | get $test)
+    try {
+      .tmp-spawn ($tests | get $test)
+      ok
+    } catch {|err|
+      failed $err.msg
+    }
   }
 }
 

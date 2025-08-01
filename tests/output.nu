@@ -8,7 +8,7 @@ export def ok [] {
   print "ok"
 }
 
-export def error [message: string] {
+export def failed [message: string] {
   print $"error: ($message)"
 }
 
