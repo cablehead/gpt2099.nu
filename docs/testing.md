@@ -11,11 +11,11 @@ nu -c 'use tests/unit/util.nu ; util'
 nu -c 'use tests/providers/test-prepare-request.nu ; test-prepare-request anthropic'
 
 # Integration tests (with store)
-nu -c 'use tests/integration/test-integration.nu ; test-integration'
+nu -c 'use xs.nu *; use tests/integration/test-integration.nu; test-integration'
 
 # Run specific test groups by prefix
-nu -c 'use tests/integration/test-integration.nu ; test-integration schema'
-nu -c 'use tests/integration/test-integration.nu ; test-integration call'
+nu -c 'use xs.nu *; use tests/integration/test-integration.nu; test-integration schema'
+nu -c 'use xs.nu *; use tests/integration/test-integration.nu; test-integration call'
 
 # With real API calls (costs tokens)
 nu -c 'use tests/providers/test-prepare-request.nu ; test-prepare-request anthropic --call "api-key"'

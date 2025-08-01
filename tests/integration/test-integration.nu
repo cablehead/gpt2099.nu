@@ -1,12 +1,10 @@
 def collect-tests [] {
   use std/assert
   use ../output.nu *
+  use ../../gpt
 
   {
     "call.basics": {||
-      use ../../gpt/schema.nu
-      use ../../gpt/mod.nu
-
       gpt init
       sleep 50ms
 
@@ -15,7 +13,7 @@ def collect-tests [] {
       sleep 50ms
 
       # Create turn using schema add-turn, then call gpt call
-      let turn = "what's 2+2, tersely?" | schema add-turn {provider_ptr: "milli"}
+      let turn = "what's 2+2, tersely?" | gpt schema add-turn {provider_ptr: "milli"}
       let response = gpt call $turn.id
 
       let res = .cas $response.hash | from json
@@ -24,9 +22,6 @@ def collect-tests [] {
     }
 
     "call.tool_use": {||
-      use ../../gpt/schema.nu
-      use ../../gpt/mod.nu
-
       gpt init
       sleep 50ms
 
@@ -41,7 +36,7 @@ def collect-tests [] {
       gpt mcp tool list nu | to json | .append mcp.nu.tools
 
       # Create turn using schema add-turn, then call gpt call
-      let turn = "reverse of the string 'foo'; note, no print" | schema add-turn {
+      let turn = "reverse of the string 'foo'; note, no print" | gpt schema add-turn {
         provider_ptr: "milli"
         servers: ["nu"]
       }
@@ -57,12 +52,7 @@ def collect-tests [] {
     }
 
     "schema.add-turn.basic-text": {||
-      use ../../gpt/schema.nu
-      use ../output.nu *
-
-      # Test basic text turn - note: add-turn creates and stores the turn, 
-      # so we test the normalized content structure from the stored turn
-      let turn = "Hello world" | schema add-turn {}
+      let turn = "Hello world" | gpt schema add-turn {}
       let stored_content = .cas $turn.hash | from json
       let expected = [
         {type: "text" text: "Hello world"}
@@ -71,11 +61,7 @@ def collect-tests [] {
     }
 
     "schema.add-turn.with-cache": {||
-      use ../../gpt/schema.nu
-      use ../output.nu *
-
-      # Test with cache
-      let turn = "Cached content" | schema add-turn {cache: true}
+      let turn = "Cached content" | gpt schema add-turn {cache: true}
       assert equal $turn.meta?.cache? true
       let stored_content = .cas $turn.hash | from json
       let expected = [
