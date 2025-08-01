@@ -13,7 +13,7 @@
   },
   "tool_use": {
     "id": "tool789",
-    "name": "filesystem___read_file", 
-    "input": {"path": "hello.txt"}
+    "name": "filesystem___read_file",
+    "input": { "path": "hello.txt" }
   }
 }

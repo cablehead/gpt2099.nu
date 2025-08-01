@@ -10,6 +10,6 @@
   "tool_use": {
     "id": "tool456",
     "name": "filesystem___execute_script",
-    "input": {"script": "long_script.sh"}
+    "input": { "script": "long_script.sh" }
   }
 }
