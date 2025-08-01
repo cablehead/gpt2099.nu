@@ -3,6 +3,9 @@ title = "gpt2099"
 authors = ["gpt2099 contributors"]
 src = "docs"
 
+[output.html]
+theme = "docs/theme"
+
 [build]
 build-dir = "book"
 
