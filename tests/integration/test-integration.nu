@@ -1,7 +1,11 @@
 def collect-tests [] {
   use std/assert
-  use ../output.nu *
-  use ../../gpt
+
+  const output_module = (path self "../output.nu")
+  use $output_module *
+
+  const gpt_module = (path self "../../gpt")
+  use $gpt_module
 
   {
     "call.basics": {||
