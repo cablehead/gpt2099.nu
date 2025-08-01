@@ -2,7 +2,7 @@ name: Deploy Documentation
 
 on:
   push:
-    branches: ["*"]  # Run on push to any branch
+    branches: ["*"] # Run on push to any branch
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -23,18 +23,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
+
       - name: Setup mdBook
         uses: peaceiris/actions-mdbook@v2
         with:
-          mdbook-version: 'latest'
-          
+          mdbook-version: "latest"
+
       - name: Build with mdBook
         run: mdbook build
-        
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
-        
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

@@ -2,6 +2,26 @@
 
 This document is the authoritative reference for all data structures used throughout gpt2099.
 
+## Core Concepts
+
+### Headish
+
+A key concept in gpt2099 is the **"headish"**, which is a reference (specifically, the ID) to a
+particular turn within a conversation thread. This allows commands like `gpt main` to continue a
+conversation from a specific point by specifying the `headish` using the `--continues` flag. The
+conversation context is built by tracing backward from the specified 'headish' through the
+`continues` links.
+
+This mechanism enables:
+
+- **Conversation continuation**: Resume any conversation from any specific turn
+- **Branching conversations**: Start multiple conversation branches from the same point
+- **Flexible context building**: Control exactly which turns are included in the context window
+- **Thread navigation**: Move through conversation history in a structured way
+
+See the [Identifiers](#identifiers) section below for the technical specification of headish
+values.
+
 ## Normalized Context Window Input Schema
 
 This is the primary schema that provider `prepare-request` functions receive:
@@ -33,6 +53,7 @@ options_record = {
 Content blocks are a union of these types:
 
 #### Text Block
+
 ```nushell
 {
   type: "text"
@@ -41,6 +62,7 @@ Content blocks are a union of these types:
 ```
 
 #### Document Block
+
 ```nushell
 {
   type: "document"
@@ -53,6 +75,7 @@ Content blocks are a union of these types:
 ```
 
 #### Tool Use Block
+
 ```nushell
 {
   type: "tool_use"
@@ -63,6 +86,7 @@ Content blocks are a union of these types:
 ```
 
 #### Tool Result Block
+
 ```nushell
 {
   type: "tool_result"
@@ -74,77 +98,55 @@ Content blocks are a union of these types:
 ```
 
 **Schema Notes:**
+
 - `options.provider_ptr` is required for actual API calls but optional in stored contexts
 - `tool_use.id` auto-generated if missing (Gemini requirement)
 - `document_block.source.media_type` determines provider-specific handling
 
 ## Conversation Turn Schema (`gpt.turn`)
 
-Each turn in a thread is stored as a `gpt.turn` frame, with these top-level attributes in its `meta` record:
+Each turn in a thread is stored as a `gpt.turn` frame, with these top-level attributes in its
+`meta` record:
 
 ### Required Fields
 
-**`role`**
-: Speaker for this turn
-: Values: `"user"`, `"assistant"`, `"system"`
-: Default: `"user"`
+**`role`** : Speaker for this turn : Values: `"user"`, `"assistant"`, `"system"` : Default:
+`"user"`
 
 ### Optional Fields
 
-**`inherited` (currently named `"options"`)**
-: Attributes auto-inherited down the thread (deep-merged at each turn)
-: Type: `record`
-: Contains:
-  - `servers: list<string>` - List of MCP server names to use
-  - `search: bool` - Enable LLM-side search
-  - `tool_mode: string` - Provider-specific tool mode  
-  - `provider_ptr: string` (required) - The provider ptr to use for this turn (`"nano"`, `"milli"`, `"mega"`)
+**`inherited` (currently named `"options"`)** : Attributes auto-inherited down the thread
+(deep-merged at each turn) : Type: `record` : Contains:
 
-**`head`**
-: Thread bookmark name
-: Type: `string`
-: Must be explicitly carried forward if continuity is needed
+- `servers: list<string>` - List of MCP server names to use
+- `search: bool` - Enable LLM-side search
+- `tool_mode: string` - Provider-specific tool mode
+- `provider_ptr: string` (required) - The provider ptr to use for this turn (`"nano"`, `"milli"`,
+  `"mega"`)
 
-**`continues`**
-: Links to previous turn(s) for context
-: Type: `string | list<string>`
-: Values: Turn ID(s) or bookmark name(s)
+**`head`** : Thread bookmark name : Type: `string` : Must be explicitly carried forward if
+continuity is needed
 
-**`cache`**
-: Cache flag for this turn
-: Type: `bool`
-: Default: `false`
-: Note: Provider-specific implementation (e.g., Anthropic uses ephemeral caching)
+**`continues`** : Links to previous turn(s) for context : Type: `string | list<string>` : Values:
+Turn ID(s) or bookmark name(s)
+
+**`cache`** : Cache flag for this turn : Type: `bool` : Default: `false` : Note: Provider-specific
+implementation (e.g., Anthropic uses ephemeral caching)
 
 ### Document-Specific Fields
 
-**`content_type`**
-: MIME type for content
-: Type: `string`
-: Examples: `"application/json"`, `"text/markdown"`, `"application/pdf"`
+**`content_type`** : MIME type for content : Type: `string` : Examples: `"application/json"`,
+`"text/markdown"`, `"application/pdf"`
 
-**`type`**
-: Content type indicator
-: Type: `string`
-: Values: `"document"` for uploaded files
+**`type`** : Content type indicator : Type: `string` : Values: `"document"` for uploaded files
 
-**`document_name`**
-: Display name for documents
-: Type: `string`
-: Default: filename
+**`document_name`** : Display name for documents : Type: `string` : Default: filename
 
-**`original_path`**
-: Full path to the original document file
-: Type: `string`
+**`original_path`** : Full path to the original document file : Type: `string`
 
-**`file_size`**
-: Size of the document in bytes
-: Type: `int`
+**`file_size`** : Size of the document in bytes : Type: `int`
 
-**`cache`**
-: Cache flag for this turn
-: Type: `bool`
-: Default: `false`
+**`cache`** : Cache flag for this turn : Type: `bool` : Default: `false`
 
 ## Thread Record Schema
 
@@ -178,10 +180,11 @@ Full resolved context returned by `gpt context resolve` (matches normalized inpu
 Options are deep-merged down the conversation thread:
 
 1. **Base options** from earliest turn
-2. **Delta options** from each subsequent turn  
+2. **Delta options** from each subsequent turn
 3. **Current turn options** (highest priority)
 
 Example merged options:
+
 ```nushell
 {
   provider_ptr: "kilo"
@@ -194,16 +197,21 @@ Example merged options:
 ## Identifiers
 
 ### Turn IDs
+
 - Format: SCRU128 (25-character alphanumeric)
 - Example: `"03DXL6W8Q53VJHS6I91Q9R7M3"`
 - Globally unique, lexically sortable
 
 ### Headish
-A reference to a conversation turn, can be:
+
+A reference to a conversation turn (see [Core Concepts](#headish) for detailed explanation). Can
+be:
+
 - **Turn ID**: Direct SCRU128 identifier
 - **Bookmark**: Named reference (e.g., `"research-session"`)
 
 ### Bookmarks
+
 - Human-readable thread names
 - Must be unique within the conversation history
 - Automatically inherited by subsequent turns in the thread
@@ -211,10 +219,14 @@ A reference to a conversation turn, can be:
 ## Provider-Specific Schemas
 
 ### Request Format
-See [Provider API Specification](./provider-api.md) for details on provider-specific request and response formats.
+
+See [Provider API Specification](./provider-api.md) for details on provider-specific request and
+response formats.
 
 ### Response Format
+
 Normalized response structure from providers:
+
 ```nushell
 {
   message: {
@@ -234,4 +246,5 @@ Normalized response structure from providers:
 
 ---
 
-**Note:** The field currently named `"options"` in stored frames will be renamed to `"inherited"` to better reflect its behavior of being automatically propagated down conversation threads.
+**Note:** The field currently named `"options"` in stored frames will be renamed to `"inherited"`
+to better reflect its behavior of being automatically propagated down conversation threads.

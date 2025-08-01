@@ -1,18 +1,8 @@
-# gpt module
-#
-# use gpt
-#
-# "hola" | gpt -p nano
-# TBD
-#
 # This module provides commands for interacting with Language Model (LLM) APIs.
 # It manages conversation threads, supports different providers, and handles tool use.
 #
-# A key concept is the 'headish', which is a reference (specifically, the ID) to a
-# particular turn within a conversation thread. This allows commands like `gpt main`
-# to continue a conversation from a specific point by specifying the `headish`
-# using the `--continues` flag. The conversation context is built by tracing
-# backward from the specified 'headish' through the `continues` links.
+# See docs/reference/schemas.md for detailed documentation on core concepts
+# including the 'headish' mechanism for conversation threading.
 
 export use ./ctx.nu
 export use ./mcp.nu
