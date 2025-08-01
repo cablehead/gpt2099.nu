@@ -4,23 +4,18 @@
 # Generate a normalized user turn from content and options
 export def user-turn [
   content: any
-  options?: record = {} # {json?: bool, cache?: bool, separator?: string}
+  options?: record = {} # {json?: bool, cache?: bool}
 ] {
   let json = $options.json? | default false
   let cache = $options.cache? | default false
-  let separator = $options.separator? | default "\n\n---\n\n"
-
-  let processed_content = if ($content | describe) == "list<string>" {
-    $content | str join $separator
-  } else {
-    $content
-  }
 
   let content_blocks = if $json {
-    $processed_content | from json
+    $content | from json
+  } else if ($content | describe) == "list<string>" {
+    $content | each { {type: "text" text: $in} }
   } else {
     [
-      {type: "text" text: $processed_content}
+      {type: "text" text: $content}
     ]
   }
 

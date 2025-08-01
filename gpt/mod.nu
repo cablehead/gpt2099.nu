@@ -86,7 +86,6 @@ export def main [
   --bookmark (-b): string # bookmark this turn: this will become the thread's head name
   --provider-ptr (-p): string # a short alias for provider to going-forward
   --json (-j) # Treat input as JSON formatted content
-  --separator: string = "\n\n---\n\n" # Separator used when joining lists of strings
   --cache # Enable caching for this turn
 ] {
   let content = if $in == null {
@@ -96,7 +95,7 @@ export def main [
   }
 
   # Generate normalized user turn using schema layer
-  let normalized_turn = schema user-turn $content {json: $json cache: $cache separator: $separator}
+  let normalized_turn = schema user-turn $content {json: $json cache: $cache}
 
   let continues = $continues | append [] | each { ctx headish-to-id $in }
   let continues = $continues | conditional-pipe $respond { append (.head gpt.turn).id }

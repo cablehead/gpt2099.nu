@@ -20,7 +20,6 @@ gpt [OPTIONS]
 - `--bookmark (-b) <name>` – Bookmark this turn for later reference
 - `--provider-ptr (-p) <alias>` – Pointer to the provider/model
 - `--json (-j)` – Treat input as JSON
-- `--separator <str>` – Join list input with this separator
 - `--cache` – Enable caching for this conversation turn
 
 **Example:**
