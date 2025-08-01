@@ -70,16 +70,14 @@ def test-error-case [
 
   use ../output.nu *
   start $"prepare-request.($provider).($case_name)"
-  
+
   try {
     let actual = do $provider_impl.prepare-request $input $tools
-    error "Expected error but got successful result"
     error make {msg: $"Test failed: ($case_name) - expected error but succeeded"}
   } catch {|e|
     if ($e.msg | str contains $expected_error) {
       ok
     } else {
-      error $"Wrong error message - Expected: ($expected_error), Actual: ($e.msg)"
       error make {msg: $"Test failed: ($case_name) - wrong error message"}
     }
   }
@@ -189,19 +187,17 @@ def test-case [
         ok
       }
     } catch {|e|
-      error $"API call failed: ($e.msg)"
       error make {msg: $"API test failed: ($case_name)"}
     }
   } else {
     # Standard fixture comparison
     use ../output.nu *
     start $"prepare-request.($provider).($case_name)"
-    
+
     try {
       assert equal $actual $expected
       ok
     } catch {|e|
-      error $"Fixture comparison failed: ($e.msg)"
       error make {msg: $"Test failed: ($case_name)"}
     }
   }
