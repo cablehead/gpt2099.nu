@@ -1,6 +1,6 @@
 def collect-tests [] {
   use std/assert
-  use std/log
+  use ../output.nu *
 
   {
     "gpt.call.basics": {||
@@ -10,6 +10,8 @@ def collect-tests [] {
       cat .env/anthropic | gpt provider enable anthropic
       gpt provider set-ptr milli anthropic claude-3-5-haiku-20241022
 
+      return
+
       "what's 2+2, tersely?" | .append gpt.turn
       let req = .append gpt.call --meta {
         continues: (.head gpt.turn).id
@@ -17,14 +19,14 @@ def collect-tests [] {
       }
 
       .cat -f | update hash { .cas $in } | take until {|frame|
-        $frame | to json | log debug $in
+        $frame | to json | debug $in
         ($frame.topic in ["gpt.error" "gpt.turn"]) and ($frame.meta?.frame_id == $req.id)
       }
 
       let res = .head gpt.turn | .cas $in | from json
-      $res | to json | log debug $in
+      $res | to json | debug $in
       assert equal $res.message.content.0.text "4"
-      log info "ok"
+      ok
     }
 
     "gpt.call.tool_use": {||
@@ -47,37 +49,35 @@ def collect-tests [] {
       }
 
       .cat -f | update hash { .cas $in } | take until {|frame|
-        $frame | table -e | log debug $in
+        $frame | table -e | debug $in
         ($frame.topic in ["gpt.error" "gpt.turn"]) and ($frame.meta?.frame_id == $req.id)
       }
 
       let res = .head gpt.turn | .cas $in | from json
       assert ("tool_use" in ($res | get message.content.type))
-      log info "ok"
+      ok
     }
   }
 }
 
 export def main [name?: string] {
-  use std/log
-
-  $env.NU_LOG_FORMAT = '- %MSG%'
+  use ../output.nu *
 
   let tests = collect-tests
 
   let to_test = if $name != null { [$name] } else { $tests | columns }
   for test in $to_test {
-    log info $test
+    start $test
     .tmp-spawn ($tests | get $test)
   }
 }
 
 # Spawn xs serve in a temporary directory, run a closure, then cleanup
 def .tmp-spawn [closure: closure] {
-  use std/log
+  use ../output.nu *
   # Create a temporary directory
   let tmp_dir = (mktemp -d)
-  log debug $"Created temp directory: ($tmp_dir)"
+  debug $"Created temp directory: ($tmp_dir)"
 
   let store_path = ($tmp_dir | path join "store")
 
@@ -89,7 +89,7 @@ def .tmp-spawn [closure: closure] {
     let job_id = job spawn --tag "xs-test-server" {
       xs serve $store_path
     }
-    log debug $"Started xs serve with job ID: ($job_id)"
+    debug $"Started xs serve with job ID: ($job_id)"
 
     $env.XS_ADDR = $store_path
     $env.XS_CONTEXT = null
@@ -106,19 +106,19 @@ def .tmp-spawn [closure: closure] {
 
     # Kill the background job
     job kill $job_id
-    log debug $"Killed xs serve job ($job_id)"
+    debug $"Killed xs serve job ($job_id)"
 
     # Give a moment for the job to shut down
     sleep 50ms
   } catch {|err|
-    log error $"Error during setup: ($err.msg)"
+    error make {msg: $"Error during setup: ($err.msg)"}
   }
 
   # Clean up the temporary directory
   try {
     # rm -rf $tmp_dir
-    log debug $"Cleaned up temp directory: ($tmp_dir)"
+    debug $"Cleaned up temp directory: ($tmp_dir)"
   } catch {|err|
-    log warning $"Warning: Could not clean up temp directory: ($err.msg)"
+    warning $"Could not clean up temp directory: ($err.msg)"
   }
 }

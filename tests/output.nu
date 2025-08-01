@@ -19,3 +19,10 @@ export def warning [message: string] {
 export def skip [reason: string] {
   print $"skipped: ($reason)"
 }
+
+export def debug [data: any] {
+  let debug_enabled = ($env.GPT2099_TEST_DEBUG? | default "false") in ["1" "true"]
+  if $debug_enabled {
+    $data | table -e | print
+  }
+}
