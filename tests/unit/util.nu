@@ -16,10 +16,9 @@ def "test is-scru128" [] {
 }
 
 export def main [] {
-  $env.NU_LOG_FORMAT = '- %MSG%'
-  use std/log
+  use ../output.nu *
 
-  log info "util.is-scru128"
+  start "util.is-scru128"
   test is-scru128
-  log info "ok"
+  ok
 }

@@ -5,10 +5,10 @@ use ../../gpt/schema.nu
 # This validates that our test fixtures match real-world usage
 
 export def user-turn [] {
-  use std/log
+  use ../output.nu *
 
   # Test basic text turn
-  log info "schema.user-turn.basic-text"
+  start "schema.user-turn.basic-text"
   let result = schema user-turn "Hello world"
   let expected = {
     role: "user"
@@ -17,10 +17,10 @@ export def user-turn [] {
     ]
   }
   assert equal $result $expected
-  log info "ok"
+  ok
 
   # Test with cache
-  log info "schema.user-turn.with-cache"
+  start "schema.user-turn.with-cache"
   let result = schema user-turn "Cached content" {cache: true}
   let expected = {
     role: "user"
@@ -30,10 +30,9 @@ export def user-turn [] {
     cache: true
   }
   assert equal $result $expected
-  log info "ok"
+  ok
 }
 
 export def main [] {
-  $env.NU_LOG_FORMAT = '- %MSG%'
   user-turn
 }

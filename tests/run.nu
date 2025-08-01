@@ -1,9 +1,6 @@
 # Run all tests in the gpt2099 test suite
 
 export def main [] {
-  # Set standardized log format
-  $env.NU_LOG_FORMAT = '- %MSG%'
-
   # Load required environment for end-to-end tests
   use xs.nu *
   overlay use -pr /root/session/gpt2099.nu/gpt

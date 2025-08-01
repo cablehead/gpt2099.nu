@@ -68,21 +68,18 @@ def test-error-case [
     []
   }
 
+  use ../output.nu *
+  start $"prepare-request.($provider).($case_name)"
+  
   try {
     let actual = do $provider_impl.prepare-request $input $tools
-    use std/log
-    log error $"prepare-request.($provider).($case_name)"
-    log error "Expected error but got successful result"
+    error "Expected error but got successful result"
     error make {msg: $"Test failed: ($case_name) - expected error but succeeded"}
   } catch {|e|
     if ($e.msg | str contains $expected_error) {
-      use std/log
-      log info $"prepare-request.($provider).($case_name)"
-      log info "ok"
+      ok
     } else {
-      use std/log
-      log error $"prepare-request.($provider).($case_name)"
-      log error $"Wrong error message - Expected: ($expected_error), Actual: ($e.msg)"
+      error $"Wrong error message - Expected: ($expected_error), Actual: ($e.msg)"
       error make {msg: $"Test failed: ($case_name) - wrong error message"}
     }
   }
@@ -113,16 +110,6 @@ def run-all [
   let fixtures_path = "tests/fixtures/prepare-request"
   let test_cases = (ls $fixtures_path | where type == dir | get name | path basename)
 
-  # Set log format for consistent output
-  $env.NU_LOG_FORMAT = '- %MSG%'
-  use std/log
-
-  if ($api_key | is-not-empty) {
-    let model = $models | get $provider
-    log warning $"prepare-request.($provider).api-calls"
-    log warning $"Will make real API calls and consume tokens using ($model)"
-  }
-
   for case in $test_cases {
     test-case $provider $case $api_key
   }
@@ -143,17 +130,17 @@ def test-case [
   let has_err = ($expected_err_file | path exists)
 
   if not ($has_json or $has_err) {
-    use std/log
-    log warning $"prepare-request.($provider).($case_name)"
-    log warning "no expected fixture - skipping"
+    use ../output.nu *
+    start $"prepare-request.($provider).($case_name)"
+    skip "no expected fixture"
     return
   }
 
   # Skip API calls for .err cases (they indicate unsupported features)
   if $has_err and ($api_key | is-not-empty) {
-    use std/log
-    log warning $"prepare-request.($provider).($case_name).api-call"
-    log warning "err fixture indicates unsupported feature - skipping"
+    use ../output.nu *
+    start $"prepare-request.($provider).($case_name).api-call"
+    skip "err fixture indicates unsupported feature"
     return
   }
 
@@ -184,8 +171,8 @@ def test-case [
 
   if ($api_key | is-not-empty) {
     # Smoke test - just verify API call works and returns events
-    use std/log
-    log info $"prepare-request.($provider).($case_name).api-call"
+    use ../output.nu *
+    start $"prepare-request.($provider).($case_name).api-call"
 
     try {
       let model = $models | get $provider
@@ -199,27 +186,22 @@ def test-case [
       if ($events | length) == 0 {
         error make {msg: "No response events received"}
       } else {
-        use std/log
-        log info $"prepare-request.($provider).($case_name).api-call"
-        log info "ok"
+        ok
       }
     } catch {|e|
-      use std/log
-      log error $"prepare-request.($provider).($case_name).api-call"
-      log error $"API call failed: ($e.msg)"
+      error $"API call failed: ($e.msg)"
       error make {msg: $"API test failed: ($case_name)"}
     }
   } else {
     # Standard fixture comparison
+    use ../output.nu *
+    start $"prepare-request.($provider).($case_name)"
+    
     try {
       assert equal $actual $expected
-      use std/log
-      log info $"prepare-request.($provider).($case_name)"
-      log info "ok"
+      ok
     } catch {|e|
-      use std/log
-      log error $"prepare-request.($provider).($case_name)"
-      log error $"Fixture comparison failed: ($e.msg)"
+      error $"Fixture comparison failed: ($e.msg)"
       error make {msg: $"Test failed: ($case_name)"}
     }
   }
