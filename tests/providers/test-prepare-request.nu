@@ -70,16 +70,19 @@ def test-error-case [
 
   try {
     let actual = do $provider_impl.prepare-request $input $tools
-    print $"✗ ($case_name): Expected error but got successful result"
-    print $"Result: ($actual | to json)"
+    use std/log
+    log error $"prepare-request.($provider).($case_name)"
+    log error "Expected error but got successful result"
     error make {msg: $"Test failed: ($case_name) - expected error but succeeded"}
   } catch {|e|
     if ($e.msg | str contains $expected_error) {
-      print $"✓ ($case_name)"
+      use std/log
+      log info $"prepare-request.($provider).($case_name)"
+      log info "ok"
     } else {
-      print $"✗ ($case_name): Wrong error message"
-      print $"Expected: ($expected_error)"
-      print $"Actual: ($e.msg)"
+      use std/log
+      log error $"prepare-request.($provider).($case_name)"
+      log error $"Wrong error message - Expected: ($expected_error), Actual: ($e.msg)"
       error make {msg: $"Test failed: ($case_name) - wrong error message"}
     }
   }
@@ -110,20 +113,19 @@ def run-all [
   let fixtures_path = "tests/fixtures/prepare-request"
   let test_cases = (ls $fixtures_path | where type == dir | get name | path basename)
 
+  # Set log format for consistent output
+  $env.NU_LOG_FORMAT = '- %MSG%'
+  use std/log
+
   if ($api_key | is-not-empty) {
     let model = $models | get $provider
-    print $"Running ($test_cases | length) prepare-request test cases for ($provider) with API calls..."
-    print "⚠️  This will make real API calls and consume tokens!"
-    print $"Using ($model)"
-  } else {
-    print $"Running ($test_cases | length) prepare-request test cases for ($provider)..."
+    log warning $"prepare-request.($provider).api-calls"
+    log warning $"Will make real API calls and consume tokens using ($model)"
   }
 
   for case in $test_cases {
     test-case $provider $case $api_key
   }
-
-  print $"\n🎉 All ($provider) prepare-request tests passed!"
 }
 
 def test-case [
@@ -141,13 +143,17 @@ def test-case [
   let has_err = ($expected_err_file | path exists)
 
   if not ($has_json or $has_err) {
-    print $"⚠️  Skipping ($provider)/($case_name) - no expected fixture"
+    use std/log
+    log warning $"prepare-request.($provider).($case_name)"
+    log warning "no expected fixture - skipping"
     return
   }
 
   # Skip API calls for .err cases (they indicate unsupported features)
   if $has_err and ($api_key | is-not-empty) {
-    print $"⚠️  Skipping ($provider)/($case_name) API call - .err fixture indicates unsupported feature"
+    use std/log
+    log warning $"prepare-request.($provider).($case_name).api-call"
+    log warning "err fixture indicates unsupported feature - skipping"
     return
   }
 
@@ -178,7 +184,8 @@ def test-case [
 
   if ($api_key | is-not-empty) {
     # Smoke test - just verify API call works and returns events
-    print $"🔄 Testing ($case_name) with API call..."
+    use std/log
+    log info $"prepare-request.($provider).($case_name).api-call"
 
     try {
       let model = $models | get $provider
@@ -192,22 +199,27 @@ def test-case [
       if ($events | length) == 0 {
         error make {msg: "No response events received"}
       } else {
-        print $"✓ ($case_name) - API call successful"
+        use std/log
+        log info $"prepare-request.($provider).($case_name).api-call"
+        log info "ok"
       }
     } catch {|e|
-      print $"✗ ($case_name) API call failed: ($e.msg)"
-      print $"Request payload: ($actual | to json)"
+      use std/log
+      log error $"prepare-request.($provider).($case_name).api-call"
+      log error $"API call failed: ($e.msg)"
       error make {msg: $"API test failed: ($case_name)"}
     }
   } else {
     # Standard fixture comparison
     try {
       assert equal $actual $expected
-      print $"✓ ($case_name)"
+      use std/log
+      log info $"prepare-request.($provider).($case_name)"
+      log info "ok"
     } catch {|e|
-      print $"✗ ($case_name): ($e.msg)"
-      print $"Expected: ($expected | to json)"
-      print $"Actual: ($actual | to json)"
+      use std/log
+      log error $"prepare-request.($provider).($case_name)"
+      log error $"Fixture comparison failed: ($e.msg)"
       error make {msg: $"Test failed: ($case_name)"}
     }
   }

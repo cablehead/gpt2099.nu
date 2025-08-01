@@ -16,7 +16,10 @@ def "test is-scru128" [] {
 }
 
 export def main [] {
-  print "Testing util functions..."
+  $env.NU_LOG_FORMAT = '- %MSG%'
+  use std/log
+
+  log info "util.is-scru128"
   test is-scru128
-  print "✅ All util tests passed!"
+  log info "ok"
 }
