@@ -3,7 +3,10 @@ def collect-tests [] {
   use ../output.nu *
 
   {
-    "gpt.call.basics": {||
+    "call.basics": {||
+      use ../../gpt/schema.nu
+      use ../../gpt/mod.nu
+
       gpt init
       sleep 50ms
 
@@ -11,9 +14,11 @@ def collect-tests [] {
       gpt provider set-ptr milli anthropic claude-3-5-haiku-20241022
       sleep 50ms
 
-      "what's 2+2, tersely?" | gpt -p milli
+      # Create turn using schema add-turn, then call gpt call
+      let turn = "what's 2+2, tersely?" | schema add-turn {provider_ptr: "milli"}
+      let response = gpt call $turn.id
 
-      let res = .head gpt.turn | .cas $in | from json
+      let res = .cas $response.hash | from json
       $res | to json | debug $in
       assert equal $res.0.text "4"
     }
