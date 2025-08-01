@@ -2,148 +2,127 @@
 
 ## Running Tests
 
-### Run All Tests
+### Complete Test Suite
 
-```bash
-use tests/run.nu
-run
+```nushell
+nu -c 'use tests/run.nu ; run'
 ```
+
+Runs all test levels: unit, schema, provider transformations, and end-to-end integration.
 
 ### Individual Test Suites
 
-#### Schema Layer Tests
+```nushell
+# Unit tests
+nu -c 'use tests/unit/util.nu ; util'
+nu -c 'use tests/unit/mcp-response-processing.nu ; mcp-response-processing'
 
-```bash
-use tests/schema/test-schema-generation.nu
-test-schema-generation
+# Schema generation tests
+nu -c 'use tests/schema/test-schema-generation.nu ; test-schema-generation'
+
+# Provider transformation tests
+nu -c 'use tests/providers/test-prepare-request.nu ; test-prepare-request'
+nu -c 'use tests/providers/test-prepare-request.nu ; test-prepare-request anthropic'
+nu -c 'use tests/providers/test-prepare-request.nu ; test-prepare-request anthropic document-image'
+
+# End-to-end integration tests (requires API keys)
+nu -c 'use xs.nu *; overlay use -pr /root/session/gpt2099.nu/gpt ; use tests/end-to-end/test-end-to-end.nu ; test-end-to-end'
 ```
 
-#### Provider Transformation Tests
+### API Testing
 
-```bash
-use tests/providers/test-prepare-request.nu
+Provider tests support real API validation:
 
-# Test all cases for a provider
-test-prepare-request anthropic
-test-prepare-request gemini
-
-# Test specific case
-test-prepare-request anthropic document-image
-
+```nushell
 # Test with real API calls (⚠️ consumes tokens!)
-test-prepare-request anthropic --call "your-api-key"
-
-# Test all providers
-test-prepare-request
+nu -c 'use tests/providers/test-prepare-request.nu ; test-prepare-request anthropic --call "your-api-key"'
 ```
 
 ## Test Structure
 
-### Organization
-
 ```
 tests/
-├── fixtures/
-│   ├── assets/                   # Binary test files
-│   │   ├── doc.pdf
-│   │   ├── img.png
-│   │   └── doc.md
-│   └── prepare-request/          # Provider transformation tests
-│       ├── document-text/
-│       │   ├── input.json        # Normalized context window format
-│       │   ├── expected-anthropic.json
-│       │   └── expected-gemini.json
-│       ├── cache-control/        # Tests Anthropic's 4-breakpoint limit
-│       ├── document-pdf/         # Dynamic asset loading
-│       └── document-image/
-├── schema/
-│   └── test-schema-generation.nu # Tests normalized format generation
-└── providers/
-    └── test-prepare-request.nu   # Tests provider transformations
+├── run.nu                       # Complete test runner
+├── unit/                        # Fast isolated tests
+│   ├── util.nu
+│   └── mcp-response-processing.nu
+├── schema/                      # Schema validation
+│   └── test-schema-generation.nu
+├── providers/                   # Provider transformations
+│   └── test-prepare-request.nu
+├── end-to-end/                  # Real API integration
+│   └── test-end-to-end.nu
+└── fixtures/                    # Test data
+    ├── assets/                  # Binary test files
+    ├── prepare-request/         # Provider test cases
+    └── mcp-response-to-tool-result/
 ```
 
-### Design Principles
+## Test Levels
 
-- **Pipeline Testing**: Each layer tested separately with clear interfaces
-- **Provider-neutral inputs**: Fixtures use normalized context window format
-- **Provider-specific outputs**: Each provider transforms inputs differently
-- **Dynamic asset loading**: Binary files loaded from `assets/` to avoid storing base64 in JSON
-- **API testing option**: Run against fixtures (fast) or real APIs (validation)
+### Unit Tests
+- **util.nu**: Core utility functions
+- **mcp-response-processing.nu**: MCP response transformation
+- **Fast**: No external dependencies
+- **Isolated**: Test individual functions
 
-### Dynamic Asset Loading
+### Schema Tests
+- **test-schema-generation.nu**: Validates normalized format generation
+- **Pipeline validation**: Ensures schema consistency
 
-Binary fixtures are populated at runtime:
+### Provider Tests
+- **test-prepare-request.nu**: Tests provider transformations
+- **11 test cases**: Documents, tools, cache control, search
+- **3 providers**: anthropic, gemini, openai (fixtures missing)
+- **API option**: `--call` flag for real API validation
 
-1. **Asset Storage**: Files in `tests/fixtures/assets/`
-2. **Runtime Population**: Test runner loads and base64-encodes assets into fixtures
-3. **Reduced repo size**: No large base64 strings in JSON files
+### End-to-End Tests
+- **test-end-to-end.nu**: Full pipeline integration
+- **Real API calls**: Tests `gpt.call.basics` and `gpt.call.tool_use`
+- **Environment dependent**: Requires gpt module loaded
 
-### API Testing
+## Fixture Structure
 
-The `--call` parameter enables full pipeline testing:
-
-- **Token consumption**: Warns before making real API calls
-- **Cheap models**: Uses `claude-3-5-haiku-20241022` (Anthropic), `gemini-2.5-flash` (Gemini)
-- **Smoke test**: Verifies API calls return events without detailed validation
-- **Debugging**: Set `GPT_TEST_VERBOSE=true` for response details
-
-### Commands
-
-```nushell
-# Test schema generation
-use tests/schema/test-schema-generation.nu; test-schema-generation
-
-# Test provider transformations
-use tests/providers/test-prepare-request.nu; test-prepare-request anthropic
-
-# Test with real API (costs tokens)
-use tests/providers/test-prepare-request.nu; test-prepare-request anthropic --call "key"
-```
-
-## Expansion
-
-### Adding Test Cases
-
-Create new fixture directories under `prepare-request/`:
-
-- `system-messages/` - System message handling
-- `tool-integration/` - MCP tool conversion
-- `search-enabled/` - Web search capabilities
-
-### Error Fixtures
-
-Use `expected-{provider}.err` files for unsupported provider features:
+Provider test cases use normalized input with provider-specific expected outputs:
 
 ```
-tests/fixtures/prepare-request/tool-use-with-search/
+tests/fixtures/prepare-request/document-text/
+├── input.json                   # Normalized context window
+├── expected-anthropic.json      # Anthropic transformation
+├── expected-gemini.json         # Gemini transformation
+└── expected-openai.json         # OpenAI (missing)
+```
+
+### Error Testing
+
+Unsupported features use `.err` files:
+
+```
+tool-use-with-search/
 ├── input.json
-├── expected-anthropic.json    # Works normally
-└── expected-gemini.err        # Throws error
+├── expected-anthropic.json      # Works
+└── expected-gemini.err          # Error message
 ```
 
-The `.err` file contains the expected error message. Test harness:
+### Dynamic Assets
 
-- Verifies the provider throws an error containing that message
-- Skips API calls for `.err` cases (avoids 400 errors)
-- Supports mixed scenarios (some providers work, others error)
+Binary files loaded at runtime to avoid large base64 in fixtures:
+- `tests/fixtures/assets/` contains PDF, image, markdown files
+- Test runner dynamically populates document fixtures
 
-### Adding Providers
+## Adding Tests
 
+### New Provider
 Add expected output files:
-
 ```bash
-# Support new provider
 echo '{}' > tests/fixtures/prepare-request/document-text/expected-newprovider.json
 ```
 
-### Adding Methods
+### New Test Case
+Create fixture directory under `prepare-request/` with:
+- `input.json` (normalized format)
+- `expected-{provider}.json` for each supported provider
+- `expected-{provider}.err` for unsupported features
 
-Provider-specific methods need separate fixture structure:
-
-```
-tests/fixtures/
-├── prepare-request/              # Shared inputs
-└── response-stream-aggregate/    # Method-specific tests
-    ├── anthropic/
-    └── gemini/
-```
+### API Keys for Testing
+Set provider API keys in environment or pass via `--call` flag for real API validation.
