@@ -1,3 +1,4 @@
+#!/usr/bin/env nu
 # Run all tests in the gpt2099 test suite
 
 export def main [] {
