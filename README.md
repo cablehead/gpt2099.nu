@@ -37,10 +37,9 @@ https://github.com/user-attachments/assets/1254aaa1-2ca2-46b5-96e8-b5e466c735bd
 
 ### Step 1.
 
-First, install and configure [`cross.stream`](https://github.com/cablehead/xs). This may take a
-little effort to get right, but once it’s set up, you’ll have the full
-[`cross.stream`](https://github.com/cablehead/xs) ecosystem of tools for editing and working with
-your context windows.
+First, install and configure [`cross.stream`](https://github.com/cablehead/xs). Once set up, you'll
+have the full [`cross.stream`](https://github.com/cablehead/xs) ecosystem of tools for editing and
+working with your context windows.
 
 - https://cablehead.github.io/xs/getting-started/installation/
 

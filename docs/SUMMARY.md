@@ -4,6 +4,7 @@
 
 # User Guide
 
+- [Getting Started](getting-started.md)
 - [Commands Reference](commands.md)
 
 # How-To Guides
@@ -14,8 +15,12 @@
 - [Use MCP Servers](how-to/use-mcp-servers.md)
 - [Generate Code Context](how-to/generate-code-context.md)
 
-# Development
+# Reference Documentation
 
 - [Provider API](reference/provider-api.md)
 - [Schemas](reference/schemas.md)
-- [Testing](testing.md)
+- [Testing](reference/testing.md)
+
+# Additional Resources
+
+- [FAQ](faq.md)
