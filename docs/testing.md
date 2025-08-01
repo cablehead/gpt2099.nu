@@ -10,12 +10,12 @@ nu -c 'use tests/run.nu ; run'
 nu -c 'use tests/unit/util.nu ; util'
 nu -c 'use tests/providers/test-prepare-request.nu ; test-prepare-request anthropic'
 
-# End-to-end tests (with store)
-nu -c 'use tests/end-to-end/test-end-to-end.nu ; test-end-to-end'
+# Integration tests (with store)
+nu -c 'use tests/integration/test-integration.nu ; test-integration'
 
 # Run specific test groups by prefix
-nu -c 'use tests/end-to-end/test-end-to-end.nu ; test-end-to-end schema'
-nu -c 'use tests/end-to-end/test-end-to-end.nu ; test-end-to-end gpt.call'
+nu -c 'use tests/integration/test-integration.nu ; test-integration schema'
+nu -c 'use tests/integration/test-integration.nu ; test-integration call'
 
 # With real API calls (costs tokens)
 nu -c 'use tests/providers/test-prepare-request.nu ; test-prepare-request anthropic --call "api-key"'
@@ -28,7 +28,7 @@ tests/
 ├── run.nu                      # Complete suite
 ├── unit/                       # Fast isolated tests
 ├── providers/                  # Provider transformations
-├── end-to-end/                 # Integration tests with store
+├── integration/                # Integration tests with store
 └── fixtures/                   # Test data
     ├── assets/                 # Binary files (PDF, images)
     └── prepare-request/        # Provider test cases
@@ -38,7 +38,7 @@ tests/
 
 - **Unit**: Pure functions, no dependencies
 - **Provider**: Fixture-based transformation tests (+ optional API smoke tests)
-- **End-to-end**: Full pipeline with store integration and real API calls
+- **Integration**: Full pipeline with store integration and real API calls
   - Schema tests: Turn creation and content normalization (requires store)
   - API integration: Complete conversation flows
 
