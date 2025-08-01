@@ -38,6 +38,34 @@ def collect-tests [] {
       let res = .head gpt.turn | .cas $in | from json
       assert ("tool_use" in ($res | get type))
     }
+
+    "schema.add-turn.basic-text": {||
+      use ../../gpt/schema.nu
+      use ../output.nu *
+
+      # Test basic text turn - note: add-turn creates and stores the turn, 
+      # so we test the normalized content structure from the stored turn
+      let turn = "Hello world" | schema add-turn {}
+      let stored_content = .cas $turn.hash | from json
+      let expected = [
+        {type: "text" text: "Hello world"}
+      ]
+      assert equal $stored_content $expected
+    }
+
+    "schema.add-turn.with-cache": {||
+      use ../../gpt/schema.nu
+      use ../output.nu *
+
+      # Test with cache
+      let turn = "Cached content" | schema add-turn {cache: true}
+      assert equal $turn.meta?.cache? true
+      let stored_content = .cas $turn.hash | from json
+      let expected = [
+        {type: "text" text: "Cached content"}
+      ]
+      assert equal $stored_content $expected
+    }
   }
 }
 
@@ -46,7 +74,13 @@ export def main [name?: string] {
 
   let tests = collect-tests
 
-  let to_test = if $name != null { [$name] } else { $tests | columns }
+  let to_test = if $name != null {
+    # Filter tests by prefix match
+    $tests | columns | where ($it | str starts-with $name)
+  } else {
+    $tests | columns
+  }
+
   for test in $to_test {
     start $test
     try {
