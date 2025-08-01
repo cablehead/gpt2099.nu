@@ -4,6 +4,49 @@ This document is the authoritative reference for all data structures used throug
 
 ## Core Concepts
 
+### Turn Creation
+
+The `schema add-turn` function is the primary interface for creating conversation turns. It
+combines content normalization, metadata building, and storage into a single pipeline operation:
+
+```nushell
+# Basic usage
+"Hello world" | schema add-turn {}
+
+# With metadata
+$content | schema add-turn {
+  bookmark: "session-1"
+  cache: true
+  continues: "03DXL6W8Q53VJHS6I91Q9R7M3"
+  provider_ptr: "kilo"
+  servers: ["filesystem"]
+  search: true
+}
+```
+
+**Input Content Types:**
+
+- **String**: Converted to single text block
+- **List of strings**: Each string becomes a separate text block
+- **JSON content**: When `json: true` is set in metadata, content is parsed as JSON content blocks
+
+**Metadata Parameters:**
+
+- `continues`: Previous turn ID(s) to continue from
+- `respond`: Boolean flag to auto-continue from last turn
+- `servers`: List of MCP server names
+- `search`: Enable provider search capabilities
+- `bookmark`: Named reference for this turn
+- `provider_ptr`: Provider alias to use
+- `json`: Treat input content as JSON
+- `cache`: Enable caching for this turn
+
+**Return Value:** The function returns a stored turn record with:
+
+- `id`: Unique turn identifier (SCRU128)
+- `hash`: Content address for stored data
+- `meta`: Complete metadata including resolved options
+
 ### Headish
 
 A key concept in gpt2099 is the **"headish"**, which is a reference (specifically, the ID) to a

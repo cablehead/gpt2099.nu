@@ -30,6 +30,43 @@ gpt [OPTIONS]
 
 See: [How to manage conversations](./how-to/manage-conversations.md)
 
+## `schema add-turn`
+
+Create and store a conversation turn without triggering execution.
+
+```
+$content | schema add-turn [META_RECORD]
+```
+
+**Parameters:**
+
+- `META_RECORD` – Optional record with metadata fields:
+  - `continues` – Previous turn ID(s) to continue from
+  - `respond` – Auto-continue from last turn
+  - `servers` – List of MCP server names
+  - `search` – Enable provider search
+  - `bookmark` – Named reference for this turn
+  - `provider_ptr` – Provider alias
+  - `json` – Treat input as JSON content blocks
+  - `cache` – Enable caching
+
+**Examples:**
+
+```nushell
+# Basic turn creation
+"Hello" | schema add-turn {}
+
+# With conversation continuation
+"Follow up" | schema add-turn {continues: "03DXL6W8Q53VJHS6I91Q9R7M3"}
+
+# Multiple text blocks from list
+["Question 1" "Question 2"] | schema add-turn {bookmark: "multi-q"}
+```
+
+**Returns:** Stored turn record with `id`, `hash`, and `meta` fields.
+
+See: [Schema Reference](./reference/schemas.md#turn-creation)
+
 ## `gpt context`
 
 Inspect conversation threads.

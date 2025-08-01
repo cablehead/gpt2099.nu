@@ -94,35 +94,17 @@ export def main [
     $in
   }
 
-  # Generate normalized user turn using schema layer
-  let normalized_turn = schema user-turn $content {json: $json cache: $cache}
-
-  let continues = $continues | append [] | each { ctx headish-to-id $in }
-  let continues = $continues | conditional-pipe $respond { append (.head gpt.turn).id }
-
-  let head = $bookmark | default (
-    if ($continues | is-not-empty) { (.get ($continues | last)).meta?.head? }
-  )
-
-  let meta = (
-    {
-      role: $normalized_turn.role
-      # options should be renamed to "inherited"
-      options : (
-        {}
-        | conditional-pipe ($provider_ptr != null) { insert provider_ptr $provider_ptr }
-        | conditional-pipe ($servers | is-not-empty) { insert servers $servers }
-        | conditional-pipe $search { insert search $search }
-      )
-    }
-    | conditional-pipe ($head | is-not-empty) { insert head $head }
-    | conditional-pipe ($normalized_turn.cache? == true) { insert cache true }
-    | if $continues != null { insert continues $continues } else { }
-    | if $json { insert content_type "application/json" } else { }
-  )
-
-  # Store the clean normalized content
-  let turn = $normalized_turn.content | to json | .append gpt.turn --meta $meta
+  # Create turn using schema layer
+  let turn = $content | schema add-turn {
+    continues: $continues
+    respond: $respond
+    servers: $servers
+    search: $search
+    bookmark: $bookmark
+    provider_ptr: $provider_ptr
+    json: $json
+    cache: $cache
+  }
 
   process-turn $turn
 }
@@ -210,7 +192,7 @@ export def process-turn [turn: record] {
     return (process-turn-response $turn)
   }
 
-  let res = generate-response $turn.id
+  let res = call $turn.id
 
   if $res.topic == "gpt.error" {
     print $res
@@ -220,7 +202,7 @@ export def process-turn [turn: record] {
   .cas $res.hash | process-turn-response $res
 }
 
-export def generate-response [turn_id: string] {
+export def call [turn_id: string] {
   let req = .append gpt.call --meta {continues: $turn_id}
   let res = .cat -f --last-id $req.id | each {|frame|
     $frame
