@@ -6,7 +6,12 @@
 # All tests
 nu -c 'use tests/run.nu ; run'
 
-# Individual suites
+# Individual test suites
+nu -c 'use tests/run.nu ; run unit'
+nu -c 'use tests/run.nu ; run providers'
+nu -c 'use tests/run.nu ; run integration'
+
+# Individual suites (direct)
 nu -c 'use tests/unit/util.nu ; util'
 nu -c 'use tests/providers/test-prepare-request.nu ; test-prepare-request anthropic'
 

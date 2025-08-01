@@ -1,20 +1,44 @@
 #!/usr/bin/env nu
 # Run all tests in the gpt2099 test suite
 
-export def main [] {
-  # Load required environment for end-to-end tests
+export def main [suite?: string] {
+  # Load required environment for integration tests
   use xs.nu *
-  overlay use -pr /root/session/gpt2099.nu/gpt
+  use output.nu *
+  use ../gpt
 
-  # Run all test suites
-  use unit/util.nu
-  util
-  use unit/mcp-response-processing.nu
-  mcp-response-processing
-  use schema/test-schema-generation.nu
-  test-schema-generation
-  use providers/test-prepare-request.nu
-  test-prepare-request
-  use end-to-end/test-end-to-end.nu
-  test-end-to-end
+  let all_suites = ["unit" "providers" "integration"]
+  let suites_to_run = if $suite == null {
+    $all_suites
+  } else if $suite in $all_suites {
+    [$suite]
+  } else {
+    error make {msg: $"Unknown test suite: ($suite). Available: ($all_suites | str join ', ')"}
+  }
+
+  for test_suite in $suites_to_run {
+    start $"($test_suite) tests"
+    try {
+      match $test_suite {
+        "unit" => {
+          use unit/util.nu
+          util
+          use unit/mcp-response-processing.nu
+          mcp-response-processing
+        }
+        "providers" => {
+          use providers/test-prepare-request.nu
+          test-prepare-request
+        }
+        "integration" => {
+          use integration/test-integration.nu
+          test-integration
+        }
+      }
+      ok
+    } catch {|err|
+      failed $err.msg
+    }
+    print "" # Add spacing between suites when running multiple
+  }
 }
