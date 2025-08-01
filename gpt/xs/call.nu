@@ -5,6 +5,10 @@
     "ctx": (.head gpt.mod.ctx | .cas $in.hash)
   }
 
+  return_options: {
+    suffix: ".turn"
+  }
+
   run: {|frame|
     let response = $frame
     let window = (ctx resolve $frame.id)

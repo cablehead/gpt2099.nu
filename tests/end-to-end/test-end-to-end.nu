@@ -18,10 +18,10 @@ def collect-tests [] {
 
       .cat -f | update hash { .cas $in } | take until {|frame|
         $frame | to json | log debug $in
-        ($frame.topic in ["gpt.error" "gpt.response"]) and ($frame.meta?.frame_id == $req.id)
+        ($frame.topic in ["gpt.error" "gpt.turn"]) and ($frame.meta?.frame_id == $req.id)
       }
 
-      let res = .head gpt.response | .cas $in | from json
+      let res = .head gpt.turn | .cas $in | from json
       $res | to json | log debug $in
       assert equal $res.message.content.0.text "4"
       log info "ok"
@@ -48,10 +48,10 @@ def collect-tests [] {
 
       .cat -f | update hash { .cas $in } | take until {|frame|
         $frame | table -e | log debug $in
-        ($frame.topic in ["gpt.error" "gpt.response"]) and ($frame.meta?.frame_id == $req.id)
+        ($frame.topic in ["gpt.error" "gpt.turn"]) and ($frame.meta?.frame_id == $req.id)
       }
 
-      let res = .head gpt.response | .cas $in | from json
+      let res = .head gpt.turn | .cas $in | from json
       assert ("tool_use" in ($res | get message.content.type))
       log info "ok"
     }
