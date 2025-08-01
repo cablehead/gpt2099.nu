@@ -1,8 +1,8 @@
 # Provider API Specification
 
-This document outlines the interface required for implementing a provider in the
-cross.stream LLM framework. Each provider must export a record with the
-following closures to ensure compatibility with the command handler.
+This document outlines the interface required for implementing a provider in the cross.stream LLM
+framework. Each provider must export a record with the following closures to ensure compatibility
+with the command handler.
 
 ## Core Provider Interface
 
@@ -26,7 +26,8 @@ Formats messages and tools into the provider-specific request structure.
 
 **Input:**
 
-- Context window in normalized format (see [Schema Reference](./schemas.md#normalized-context-window-input-schema))
+- Context window in normalized format (see
+  [Schema Reference](./schemas.md#normalized-context-window-input-schema))
 - `tools?: list` - Optional list of tool definitions with the structure:
   ```
   [
@@ -93,8 +94,7 @@ Aggregates streaming response events into a final response.
 
 ### `response_stream_streamer`
 
-Transforms provider events into a normalized streaming format for real-time
-display.
+Transforms provider events into a normalized streaming format for real-time display.
 
 **Input:**
 
@@ -118,14 +118,17 @@ display.
 3. `response_stream_streamer` transforms individual events for display
 4. `response_stream_aggregate` collects all events into final response
 
-Providers should handle any provider-specific formatting, authentication
-requirements, and event normalization within these closures.
+Providers should handle any provider-specific formatting, authentication requirements, and event
+normalization within these closures.
 
 ## Message Format Reference
 
-Providers must handle the normalized message format defined in the [Schema Reference](./schemas.md#content-block-types). Each provider implementation must properly transform these standardized formats to and from the provider's specific API requirements.
+Providers must handle the normalized message format defined in the
+[Schema Reference](./schemas.md#content-block-types). Each provider implementation must properly
+transform these standardized formats to and from the provider's specific API requirements.
 
 Refer to the schema documentation for complete details on:
+
 - Text blocks
 - Document blocks (PDFs, images, text files)
 - Tool use blocks

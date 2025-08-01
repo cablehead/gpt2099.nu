@@ -5,6 +5,7 @@ This guide walks you through setting up AI providers and creating model aliases 
 ## Overview
 
 gpt2099 uses a two-step provider setup:
+
 1. **Enable providers** - Store API keys for authentication
 2. **Create aliases** - Set up friendly names pointing to specific models
 
@@ -19,6 +20,7 @@ gpt provider enable
 ```
 
 This will:
+
 - Prompt you to select from available providers
 - Ask for your API key
 - Test the connection by querying available models
@@ -33,6 +35,7 @@ gpt provider ptr milli --set
 ```
 
 This will:
+
 - Show your enabled providers
 - Let you select a provider and model
 - Create an alias you can use with `-p milli`
@@ -46,22 +49,24 @@ nano  < milli  < kilo  < giga
 ```
 
 Add `.r` for reasoning-optimized variants:
+
 - `milli.r` - reasoning-optimized lightweight model
 - `kilo.r` - reasoning-optimized full-capability model
 
 ## Provider Capabilities
 
-| Feature | Anthropic | Gemini |
-|---------|-----------|--------|
-| Text conversations | ✅ | ✅ |
-| PDF analysis | ✅ | ✅ |
-| Image analysis | ✅ | ✅ |
-| Web search | ✅ | ✅ |
-| MCP tools | ✅ | ✅ |
-| Tools + search together | ✅ | ❌ |
-| Document caching | ✅ | ✅ (automatic) |
+| Feature                 | Anthropic | Gemini         |
+| ----------------------- | --------- | -------------- |
+| Text conversations      | ✅        | ✅             |
+| PDF analysis            | ✅        | ✅             |
+| Image analysis          | ✅        | ✅             |
+| Web search              | ✅        | ✅             |
+| MCP tools               | ✅        | ✅             |
+| Tools + search together | ✅        | ❌             |
+| Document caching        | ✅        | ✅ (automatic) |
 
 **Key limitations:**
+
 - **Gemini**: Cannot use custom MCP tools and web search in the same conversation
 
 ## Example Configuration
@@ -75,7 +80,7 @@ After setup, your aliases might look like:
     "model": "claude-3-5-haiku-20241022"
   },
   "kilo": {
-    "provider": "openai", 
+    "provider": "openai",
     "model": "gpt-4.1"
   },
   "milli.r": {
@@ -97,7 +102,9 @@ Once configured, use aliases in your prompts:
 
 ## Managing Providers
 
-See the [commands reference](../commands.md#gpt-provider) for the complete list of provider management commands, including:
+See the [commands reference](../commands.md#gpt-provider) for the complete list of provider
+management commands, including:
+
 - `gpt provider models` - List available models
 - `gpt provider ptr` - View current aliases
 - `gpt provider enable` - Add more providers

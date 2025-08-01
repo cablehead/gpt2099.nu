@@ -1,10 +1,14 @@
 # How to Use MCP Servers
 
-This guide shows you how to set up and interact with Model Context Protocol (MCP) servers to extend gpt2099's capabilities.
+This guide shows you how to set up and interact with Model Context Protocol (MCP) servers to extend
+gpt2099's capabilities.
 
 ## Overview
 
-MCP servers are external tools that provide additional capabilities like file editing, web search, or database access. gpt2099 integrates with these servers through the `cross.stream` generator pattern, allowing you to experiment with and understand server capabilities before using them in conversations.
+MCP servers are external tools that provide additional capabilities like file editing, web search,
+or database access. gpt2099 integrates with these servers through the `cross.stream` generator
+pattern, allowing you to experiment with and understand server capabilities before using them in
+conversations.
 
 ## Setting Up MCP Servers
 
@@ -75,14 +79,15 @@ When the LLM wants to use a tool, you see the proposed tool call and have severa
 │ input       │ {path: "config.json", content: "{\n  \"updated\": true}"}│
 └─────────────┴──────────────────────────────────────────────────────────┘
 
-Execute? 
+Execute?
 > yes
-  no: do something different  
+  no: do something different
   no
   activate: yolo
 ```
 
 **Options:**
+
 - **yes** - Execute the tool call as proposed
 - **no: do something different** - Provide custom input or alternative response
 - **no** - Skip this tool call and stop
@@ -98,7 +103,8 @@ $env.GPT2099_YOLO = true
 "Update all config files" | gpt --servers [filesystem] -p milli
 ```
 
-Or activate it during a conversation by selecting "activate: yolo" when prompted. Once activated, all subsequent tool calls in the session execute automatically.
+Or activate it during a conversation by selecting "activate: yolo" when prompted. Once activated,
+all subsequent tool calls in the session execute automatically.
 
 ### Custom Tool Responses
 
@@ -108,7 +114,8 @@ When you select "no: do something different", you can provide custom input:
 Enter alternative response: The file already exists and shouldn't be modified
 ```
 
-This sends your custom response as the tool result, allowing you to guide the conversation without executing the actual tool.
+This sends your custom response as the tool result, allowing you to guide the conversation without
+executing the actual tool.
 
 ## Server Management
 
@@ -123,6 +130,7 @@ Shows all currently running MCP servers.
 ### Server Lifecycle
 
 Servers run as cross.stream generators and will:
+
 - Automatically restart if they crash
 - Be available across multiple conversations
 - Terminate when the cross.stream session ends
@@ -132,21 +140,25 @@ Servers run as cross.stream generators and will:
 Here are some useful MCP servers to try:
 
 **File System Operations:**
+
 ```nushell
 gpt mcp register filesystem "npx -y @modelcontextprotocol/server-filesystem /workspace"
 ```
 
 **Web Search:**
+
 ```nushell
 gpt mcp register brave-search "npx -y @modelcontextprotocol/server-brave-search"
 ```
 
 **Git Operations:**
+
 ```nushell
 gpt mcp register git "npx -y @modelcontextprotocol/server-git"
 ```
 
 **Database Access:**
+
 ```nushell
 gpt mcp register postgres "npx -y @modelcontextprotocol/server-postgres postgresql://user:pass@localhost/db"
 ```

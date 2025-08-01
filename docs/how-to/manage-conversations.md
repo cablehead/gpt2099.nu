@@ -1,10 +1,13 @@
 # How to Manage Conversations
 
-This guide shows you how to create, continue, and organize conversation threads using bookmarks and continuation patterns.
+This guide shows you how to create, continue, and organize conversation threads using bookmarks and
+continuation patterns.
 
 ## Overview
 
-gpt2099 stores conversations as persistent, editable threads. Each conversation turn is linked to previous turns, creating a branching conversation history you can navigate, edit, and continue from any point.
+gpt2099 stores conversations as persistent, editable threads. Each conversation turn is linked to
+previous turns, creating a branching conversation history you can navigate, edit, and continue from
+any point.
 
 ## Basic Conversation Flow
 
@@ -69,7 +72,7 @@ Start different conversation branches from the same point:
 # Branch 1: Technical deep-dive
 "Go deeper into wave-particle duality" | gpt --continues physics -p kilo
 
-# Branch 2: Simple explanation  
+# Branch 2: Simple explanation
 "Explain this for a 10-year-old" | gpt --continues physics -p milli
 ```
 

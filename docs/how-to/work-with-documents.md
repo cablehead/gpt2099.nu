@@ -4,7 +4,9 @@ This guide shows you how to register, reference, and work with documents in conv
 
 ## Overview
 
-gpt2099 supports various document types that can be registered and referenced in conversations. Documents are automatically cached for better performance and can be given custom names and bookmarks for easy reference.
+gpt2099 supports various document types that can be registered and referenced in conversations.
+Documents are automatically cached for better performance and can be given custom names and
+bookmarks for easy reference.
 
 ## Supported Document Types
 
@@ -64,25 +66,29 @@ let doc2 = (gpt document ~/report2.pdf)
 ### Working with Different Content Types
 
 **Text-based documents** (markdown, CSV, JSON) are converted to text blocks:
+
 ```nushell
 gpt document ~/README.md --name "Project Documentation"
 ```
 
 **Binary documents** (PDFs, images) are kept in their original format:
+
 ```nushell
 gpt document ~/chart.png --name "Sales Chart"
 ```
 
 ## Document Caching
 
-Documents can signal to the provider that they should be cached to improve performance on repeated references. Enable caching with the `--cache` flag:
+Documents can signal to the provider that they should be cached to improve performance on repeated
+references. Enable caching with the `--cache` flag:
 
 ```nushell
 gpt document ~/large-file.pdf --cache
 gpt document ~/dynamic-data.json  # no caching
 ```
 
-**Note:** Caching behavior depends on provider support - Anthropic uses ephemeral caching, while other providers may ignore the cache flag.
+**Note:** Caching behavior depends on provider support - Anthropic uses ephemeral caching, while
+other providers may ignore the cache flag.
 
 ## Thread Management with Documents
 

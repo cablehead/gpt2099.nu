@@ -1,10 +1,12 @@
 # How to Generate Code Context
 
-This guide shows you how to create structured XML context from your Git repository for LLM analysis.
+This guide shows you how to create structured XML context from your Git repository for LLM
+analysis.
 
 ## Overview
 
-The `gpt prep gr` command generates XML representations of your repository files for LLM analysis, refactoring, or documentation tasks.
+The `gpt prep gr` command generates XML representations of your repository files for LLM analysis,
+refactoring, or documentation tasks.
 
 ## Basic Usage
 
@@ -147,7 +149,7 @@ Break large repositories into chunks:
 # Analyze backend separately
 git ls-files ./backend | lines | gpt prep gr | "Analyze backend architecture" | gpt --bookmark "backend-analysis" -p kilo
 
-# Analyze frontend separately  
+# Analyze frontend separately
 git ls-files ./frontend | lines | gpt prep gr | "Analyze frontend architecture" | gpt --bookmark "frontend-analysis" -p kilo
 
 # Compare architectures

@@ -31,13 +31,14 @@ tests/
 ## Test Levels
 
 - **Unit**: Pure functions, no dependencies
-- **Schema**: Normalized format validation  
+- **Schema**: Normalized format validation
 - **Provider**: Fixture-based transformation tests (+ optional API smoke tests)
 - **End-to-end**: Full pipeline with real API calls
 
 ## Adding Tests
 
 ### New Provider Test Case
+
 ```bash
 mkdir tests/fixtures/prepare-request/new-case/
 echo '{"messages": [...], "options": {...}}' > tests/fixtures/prepare-request/new-case/input.json
@@ -46,12 +47,14 @@ echo 'Error message' > tests/fixtures/prepare-request/new-case/expected-gemini.e
 ```
 
 ### New Provider Support
+
 ```bash
 echo '{}' > tests/fixtures/prepare-request/existing-case/expected-newprovider.json
 # Repeat for all test cases
 ```
 
 ### Binary Assets
+
 - Add files to `tests/fixtures/assets/`
 - Reference in const `assets` in `tests/providers/test-prepare-request.nu`
 - Test runner auto-populates fixtures with base64 data
