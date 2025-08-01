@@ -23,7 +23,10 @@ def collect-tests [] {
       assert equal $res.0.text "4"
     }
 
-    "gpt.call.tool_use": {||
+    "call.tool_use": {||
+      use ../../gpt/schema.nu
+      use ../../gpt/mod.nu
+
       gpt init
       sleep 50ms
 
@@ -37,10 +40,19 @@ def collect-tests [] {
       sleep 50ms
       gpt mcp tool list nu | to json | .append mcp.nu.tools
 
-      "reverse of the string 'foo'; note, no print"
-      | gpt -p milli --servers ["nu"] | warning ($in | to json)
+      # Create turn using schema add-turn, then call gpt call
+      let turn = "reverse of the string 'foo'; note, no print" | schema add-turn {
+        provider_ptr: "milli"
+        servers: ["nu"]
+      }
+      let response = gpt call $turn.id
 
-      let res = .head gpt.turn | .cas $in | from json
+      # Check if we got an error response
+      if $response.topic == "gpt.error" {
+        $response | to json | error make {msg: $"API call failed: ($in)"}
+      }
+
+      let res = .cas $response.hash | from json
       assert ("tool_use" in ($res | get type))
     }
 
