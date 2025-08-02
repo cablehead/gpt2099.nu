@@ -223,7 +223,7 @@ export def process-turn [turn: record] {
   }
 
   if $res.topic == "gpt.error" {
-    print "womp" $res
+    print "womp" ($res | table -e)
     return
   }
 
