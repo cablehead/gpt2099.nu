@@ -8,12 +8,29 @@ def collect-tests [] {
   use $gpt_module
 
   {
-    "call.basics": {||
+    "call.anthropic.basics": {||
       gpt init
       sleep 50ms
 
       cat .env/anthropic | gpt provider enable anthropic
       gpt provider set-ptr milli anthropic claude-3-5-haiku-20241022
+      sleep 50ms
+
+      # Create turn using schema add-turn, then call gpt call
+      let turn = "what's 2+2, tersely?" | gpt schema add-turn {provider_ptr: "milli"}
+      let response = gpt call $turn.id
+
+      let res = .cas $response.hash | from json
+      $res | to json | debug $in
+      assert equal $res.0.text "4"
+    }
+
+    "call.gemini.basics": {||
+      gpt init
+      sleep 50ms
+
+      cat .env/gemini | gpt provider enable gemini
+      gpt provider set-ptr milli gemini gemini-2.5-flash
       sleep 50ms
 
       # Create turn using schema add-turn, then call gpt call

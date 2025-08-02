@@ -53,8 +53,7 @@ export def enable [
 
 # Get a record of currently enabled providers with their API keys
 export def get-enabled [] {
-  .cat
-  | where topic == "gpt.provider"
+  .cat -T "gpt.provider"
   | each { .cas | from json }
   | group-by name
   | values

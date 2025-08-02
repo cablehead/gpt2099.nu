@@ -2,6 +2,7 @@
 {
   modules: {
     "anthropic": (.head gpt.mod.provider.anthropic | .cas $in.hash)
+    "gemini": (.head gpt.mod.provider.gemini | .cas $in.hash)
     "ctx": (.head gpt.mod.ctx | .cas $in.hash)
   }
 
@@ -40,13 +41,24 @@
       } | flatten
     } else { [] }
 
-    let provider_data = .head gpt.provider | .cas $in.hash | from json
-    let key = $provider_data.key
+    let ptrs = .head gpt.provider.ptrs | default {} | get meta? | default {}
+    let ptr = $ptrs | get $provider_ptr
+    let ptr = $ptr | insert key (
+      .cat -T "gpt.provider" | each { .cas $in.hash | from json } | where name == $ptr.provider | last | get key
+    )
 
-    let p = anthropic provider
+    # Get the provider module based on the resolved provider name
+    let p = match $ptr.provider {
+      "anthropic" => (anthropic provider)
+      "gemini" => (gemini provider)
+      _ => {
+        error make {msg: $"Unsupported provider: ($ptr.provider)"}
+      }
+    }
+
     let prepared = do $p.prepare-request $window $tools
 
-    let res = $prepared | do $p.call $key "claude-3-5-haiku-20241022" | tee {
+    let res = $prepared | do $p.call $ptr.key $ptr.model | tee {
       each {|chunk|
         let event = do $p.response_stream_streamer $chunk
         if $event == null { return }
