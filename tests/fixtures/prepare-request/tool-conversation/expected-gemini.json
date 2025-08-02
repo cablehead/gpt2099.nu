@@ -61,7 +61,11 @@
             "properties": {
               "path": {
                 "type": "string"
-              }
+          },
+          "head": {
+            "type": "integer",
+            "format": "uint64"
+          }
             },
             "required": ["path"]
           }

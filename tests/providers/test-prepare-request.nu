@@ -22,6 +22,7 @@ const mock_tools = [
       additionalProperties: false
       properties: {
         path: {type: "string"}
+        head: {type: "integer" format: "uint64"}
       }
       required: ["path"]
       type: "object"
@@ -187,19 +188,15 @@ def test-case [
         ok
       }
     } catch {|e|
-      error make {msg: $"API test failed: ($case_name)"}
+      error make {msg: $"API test failed: ($case_name) ($e)"}
     }
   } else {
     # Standard fixture comparison
     use ../output.nu *
     start $"prepare-request.($provider).($case_name)"
 
-    try {
-      assert equal $actual $expected
-      ok
-    } catch {|e|
-      error make {msg: $"Test failed: ($case_name)"}
-    }
+    assert equal $actual $expected
+    ok
   }
 }
 

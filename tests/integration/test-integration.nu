@@ -42,7 +42,7 @@ def collect-tests [] {
       assert equal $res.0.text "4"
     }
 
-    "call.tool_use": {||
+    "call.anthropic.tool_use": {||
       gpt init
       sleep 50ms
 
