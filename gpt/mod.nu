@@ -192,57 +192,60 @@ export def process-turn [turn: record] {
     return (process-turn-response $turn)
   }
 
-  let res = call $turn.id
+  let res = call $turn.id {
+    generate {|chunk block = ""|
+      let chunk = $chunk | .cas $in.hash | from json
+      if $chunk == null { return {next: $block} } # Skip ignored chunks
+
+      let next_block = $chunk.type? | default $block
+
+      # Handle type indicator chunks (new content blocks)
+      if $next_block != $block {
+        if $block != "" {
+          print "\n"
+        }
+        if $next_block != "text" {
+          print -n $next_block
+          if "name" in $chunk {
+            print -n $"\(($chunk.name)\)"
+          }
+          print ":"
+        }
+      }
+
+      # Handle content addition chunks
+      if "content" in $chunk {
+        print -n $chunk.content
+      }
+
+      {next: $next_block} # Continue with the next block
+    }
+  }
 
   if $res.topic == "gpt.error" {
-    print $res
+    print "womp" $res
     return
   }
 
   .cas $res.hash | process-turn-response $res
 }
 
-export def call [turn_id: string] {
+export def call [turn_id: string preview?: closure] {
   let req = .append gpt.call --meta {continues: $turn_id}
-  let res = .cat -f --last-id $req.id | each {|frame|
-    $frame
-  } | where {|frame|
-    ($frame.topic in ["gpt.error" "gpt.turn"]) and ($frame.meta?.frame_id == $req.id)
+  let res = .cat -f --last-id $req.id
+  | conditional-pipe ($preview | is-not-empty) {
+    tee {
+      where {|frame|
+        ($frame.topic == "gpt.recv") and ($frame.meta?.frame_id == $req.id)
+      } | do $preview
+    }
+  }
+  | where {|frame|
+    let end = ($frame.topic in ["gpt.error" "gpt.turn"]) and ($frame.meta?.frame_id == $req.id)
+    $end
   }
   | first
   $res
-}
-
-export def preview-stream [streamer] {
-  generate {|chunk block = ""|
-    # Transform provider-specific event to normalized format
-    let event = do $streamer $chunk
-
-    if $event == null { return {next: $block} } # Skip ignored events
-
-    let next_block = $event.type? | default $block
-
-    # Handle type indicator events (new content blocks)
-    if $next_block != $block {
-      if $block != "" {
-        print "\n"
-      }
-      if $next_block != "text" {
-        print -n $next_block
-        if "name" in $event {
-          print -n $"\(($event.name)\)"
-        }
-        print ":"
-      }
-    }
-
-    # Handle content addition events
-    if "content" in $event {
-      print -n $event.content
-    }
-
-    {next: $next_block} # Continue with the next block
-  }
 }
 
 export def init [
@@ -264,5 +267,5 @@ def conditional-pipe [
   condition: bool
   action: closure
 ] {
-  if $condition { do $action } else { $in }
+  if $condition { do $action } else { }
 }
