@@ -63,8 +63,7 @@
                 "type": "string"
           },
           "head": {
-            "type": "integer",
-            "format": "uint64"
+            "type": "integer"
           }
             },
             "required": ["path"]

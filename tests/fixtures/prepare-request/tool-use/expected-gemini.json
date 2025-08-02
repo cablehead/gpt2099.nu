@@ -25,7 +25,10 @@
             "properties": {
               "path": {
                 "type": "string"
-              }
+          },
+          "head": {
+            "type": "integer"
+          }
             },
             "required": ["path"]
           }

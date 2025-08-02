@@ -21,6 +21,7 @@ export def convert-mcp-toolslist-to-provider [] {
                     $v | if ($in.items? != null) {
                       update items { reject -o additionalProperties }
                     } else { $in }
+                    | reject -o format
                     | into record
                   )
                 }
