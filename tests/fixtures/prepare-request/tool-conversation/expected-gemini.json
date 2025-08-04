@@ -61,10 +61,10 @@
             "properties": {
               "path": {
                 "type": "string"
-          },
-          "head": {
-            "type": "integer"
-          }
+              },
+              "head": {
+                "type": "integer"
+              }
             },
             "required": ["path"]
           }
