@@ -32,7 +32,16 @@ It really is easy from here.
 overlay use -pr ./gpt
 ```
 
-## Step 3: Configure a provider
+## Step 3: Initialize the command
+
+Initialize the cross.stream command that performs the actual LLM call. This appends the command to
+your event stream so later `gpt` invocations can use it:
+
+```nushell
+gpt init
+```
+
+## Step 4: Configure a provider
 
 Enable your preferred provider. This stores the API key for later use:
 
@@ -42,7 +51,7 @@ gpt provider enable
 
 For detailed provider configuration, see [Configure Providers](how-to/configure-providers.md).
 
-## Step 4: Set up a model alias
+## Step 5: Set up a model alias
 
 Set up a `milli` alias for a lightweight model (try OpenAI's `gpt-4.1-mini` or Anthropic's
 `claude-3-5-haiku-20241022`):
@@ -51,7 +60,7 @@ Set up a `milli` alias for a lightweight model (try OpenAI's `gpt-4.1-mini` or A
 gpt provider ptr milli --set
 ```
 
-## Step 5: Test your setup
+## Step 6: Test your setup
 
 Give it a spin:
 
