@@ -90,17 +90,24 @@ def main [] {
       }
 
       _ => {
-        {
-          jsonrpc: "2.0"
-          id: $request.id
-          error: {
-            code: -32601
-            message: $"Method not found: ($request.method)"
+        if ($request.id? != null) {
+          {
+            jsonrpc: "2.0"
+            id: $request.id
+            error: {
+              code: -32601
+              message: $"Method not found: ($request.method)"
+            }
           }
+        } else {
+          # Skip notifications - they don't get responses
+          null
         }
       }
     }
 
-    $response | to json -r | print $in
+    if ($response != null) {
+      print ($response | to json -r)
+    }
   } | ignore
 }

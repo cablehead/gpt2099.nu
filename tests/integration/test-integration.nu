@@ -97,7 +97,7 @@ def collect-tests [] {
       sleep 100ms
 
       # Get path to MCP test server
-      const test_server = (path self "../../tests/bin/test-mcp-server.nu")
+      const test_server = (path self "../bin/test-mcp-server.nu")
 
       # Register MCP server
       gpt mcp register hello $test_server
@@ -105,6 +105,8 @@ def collect-tests [] {
 
       # Wait for manager to initialize server and fetch tools
       sleep 2sec
+
+      .cat | table -e | print $in
 
       # Check that initialized event was emitted
       let initialized_events = .cat | where topic == "mcp.hello.initialized"

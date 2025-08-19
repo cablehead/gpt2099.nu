@@ -27,7 +27,6 @@ $env.mcp_pending = {}
           $env.mcp_pending | insert $init_id {
             server: $server_name
             method: "initialize"
-            next_action: "send_initialized"
           }
         )
 
@@ -65,7 +64,6 @@ $env.mcp_pending = {}
                 $env.mcp_pending | insert $tools_id {
                   server: $pending.server
                   method: "tools/list"
-                  next_action: "store_tools"
                 }
               )
 
@@ -78,11 +76,9 @@ $env.mcp_pending = {}
             if "error" in $response {
               $"MCP tools/list failed for ($pending.server): ($response.error.message)" | .append $"mcp.($pending.server).error"
             } else {
-              # Store tools list
+              # gpt2099 expects server's tool list to be cached
               $response.result.tools | to json | .append $"mcp.($pending.server).tools"
-
-              # Emit initialized event
-              null | .append $"mcp.($pending.server).initialized"
+              .append $"mcp.($pending.server).ready"
             }
           }
         }
