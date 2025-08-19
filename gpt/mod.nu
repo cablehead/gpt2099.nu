@@ -253,9 +253,11 @@ export def init [
 ] {
   const base = (path self) | path dirname
   cat ($base | path join "ctx.nu") | .append gpt.mod.ctx
+  cat ($base | path join "mcp-rpc.nu") | .append gpt.mod.mcp-rpc
   cat ($base | path join "providers/anthropic/mod.nu") | .append gpt.mod.provider.anthropic
   cat ($base | path join "providers/gemini/mod.nu") | .append gpt.mod.provider.gemini
   cat ($base | path join "xs/call.nu") | .append gpt.define
+  cat ($base | path join "xs/handler-mcp.nu") | .append mcp.manager.register
   if not $refresh {
   }
   ignore
