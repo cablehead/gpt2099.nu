@@ -91,7 +91,7 @@ def collect-tests [] {
       assert equal $stored_content $expected
     }
 
-    "mcp.manager.integration": {||
+    "mcp.manager": {||
       # Initialize gpt modules 
       gpt init
       sleep 100ms
@@ -106,10 +106,8 @@ def collect-tests [] {
       # Wait for manager to initialize server and fetch tools
       sleep 2sec
 
-      .cat | table -e | print $in
-
       # Check that initialized event was emitted
-      let initialized_events = .cat | where topic == "mcp.hello.initialized"
+      let initialized_events = .cat | where topic == "mcp.hello.ready"
       assert (($initialized_events | length) > 0)
 
       # Check that tools were stored

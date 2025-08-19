@@ -1,13 +1,19 @@
+use mcp-rpc.nu
+
 export def "register" [name: string command: string] {
-  $"{
+  let spawn_frame = $"{
     run: {|| ($command) | lines }
     duplex: true
   }" | .append $"mcp.($name).spawn"
+
+  # Wait for the server to be ready
+  .cat -f --last-id $spawn_frame.id
+  | where topic == $"mcp.($name).ready"
+  | first
 }
 
 # https://modelcontextprotocol.io/specification/2025-06-18/basic/lifecycle
 export def "initialize" [name] {
-  use mcp-rpc.nu
   let command = mcp-rpc initialize | from json
   let res = $command | call $name
   mcp-rpc initialized | .append $"mcp.($name).send"
@@ -15,21 +21,18 @@ export def "initialize" [name] {
 }
 
 export def "ping" [name: string] {
-  use mcp-rpc.nu
   let command = mcp-rpc ping | from json
   let res = $command | call $name
   $res
 }
 
 export def "tool call" [name: string method: string arguments: record] {
-  use mcp-rpc.nu
   let command = mcp-rpc tool-call $method $arguments | from json
   let res = $command | call $name
   $res
 }
 
 export def "tool list" [name] {
-  use mcp-rpc.nu
   let command = mcp-rpc tool-list | from json
 
   let res = $command | call $name
