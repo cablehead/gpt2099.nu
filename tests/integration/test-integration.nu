@@ -101,14 +101,9 @@ def collect-tests [] {
 
       # Register MCP server
       gpt mcp register hello $test_server
-      sleep 100ms
 
-      # Wait for manager to initialize server and fetch tools
-      sleep 2sec
-
-      # Check that initialized event was emitted
-      let initialized_events = .cat | where topic == "mcp.hello.ready"
-      assert (($initialized_events | length) > 0)
+      # check the server initialized correctly
+      assert ((.head "mcp.hello.ready") != null) "not initialized"
 
       # Check that tools were stored
       let tools_frame = .head mcp.hello.tools
