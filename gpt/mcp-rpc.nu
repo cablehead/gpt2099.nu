@@ -25,7 +25,7 @@ export def initialize [params?: record] {
     protocolVersion: "2025-06-18"
     clientInfo: {
       name: "gpt2099"
-      version: "0.5"
+      version: "0.6" # When updating this, also update the version command in mod.nu
     }
     capabilities: {}
   }

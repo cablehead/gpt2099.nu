@@ -248,6 +248,11 @@ export def call [turn_id: string preview?: closure] {
   $res
 }
 
+export def version [] {
+  # When updating this version, also update clientInfo.version in mcp-rpc.nu
+  "0.6"
+}
+
 export def init [
   --refresh (-r) # Skip configuration if set
 ] {
