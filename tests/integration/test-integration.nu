@@ -7,6 +7,9 @@ def collect-tests [] {
   const gpt_module = (path self "../../gpt")
   use $gpt_module
 
+  # Get path to MCP test server
+  const test_mcp_server = (path self "../bin/test-mcp-server.nu")
+
   {
     "call.anthropic.basics": {||
       gpt init
@@ -49,17 +52,12 @@ def collect-tests [] {
       cat .env/anthropic | gpt provider enable anthropic
       gpt provider set-ptr milli anthropic claude-3-5-haiku-20241022
 
-      gpt mcp register nu mcp-server-nu
-      # todo: init will setup a handler which takes care of this
-      sleep 50ms
-      gpt mcp initialize nu
-      sleep 50ms
-      gpt mcp tool list nu | to json | .append mcp.nu.tools
+      gpt mcp register hello $test_mcp_server
 
       # Create turn using schema add-turn, then call gpt call
-      let turn = "reverse of the string 'foo'; note, no print" | gpt schema add-turn {
+      let turn = "greet Andy" | gpt schema add-turn {
         provider_ptr: "milli"
-        servers: ["nu"]
+        servers: ["hello"]
       }
       let response = gpt call $turn.id
 
@@ -96,11 +94,8 @@ def collect-tests [] {
       gpt init
       sleep 100ms
 
-      # Get path to MCP test server
-      const test_server = (path self "../bin/test-mcp-server.nu")
-
       # Register MCP server
-      gpt mcp register hello $test_server
+      gpt mcp register hello $test_mcp_server
 
       # check the server initialized correctly
       assert ((.head "mcp.hello.ready") != null) "not initialized"
