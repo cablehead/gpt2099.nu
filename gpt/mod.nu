@@ -248,14 +248,21 @@ export def call [turn_id: string preview?: closure] {
   $res
 }
 
+export def version [] {
+  # When updating this version, also update clientInfo.version in mcp-rpc.nu
+  "0.6"
+}
+
 export def init [
   --refresh (-r) # Skip configuration if set
 ] {
   const base = (path self) | path dirname
   cat ($base | path join "ctx.nu") | .append gpt.mod.ctx
+  cat ($base | path join "mcp-rpc.nu") | .append gpt.mod.mcp-rpc
   cat ($base | path join "providers/anthropic/mod.nu") | .append gpt.mod.provider.anthropic
   cat ($base | path join "providers/gemini/mod.nu") | .append gpt.mod.provider.gemini
-  cat ($base | path join "xs/call.nu") | .append gpt.define
+  cat ($base | path join "xs/command-call.nu") | .append gpt.define
+  cat ($base | path join "xs/handler-mcp.nu") | .append mcp.manager.register
   if not $refresh {
   }
   ignore

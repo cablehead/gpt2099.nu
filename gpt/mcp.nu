@@ -1,61 +1,39 @@
+use mcp-rpc.nu
+
 export def "register" [name: string command: string] {
-  $"{
+  let spawn_frame = $"{
     run: {|| ($command) | lines }
     duplex: true
   }" | .append $"mcp.($name).spawn"
+
+  # Wait for the server to be ready
+  .cat -f --last-id $spawn_frame.id
+  | where topic == $"mcp.($name).ready"
+  | first
 }
 
 # https://modelcontextprotocol.io/specification/2025-06-18/basic/lifecycle
 export def "initialize" [name] {
-  let command = {
-    jsonrpc: "2.0"
-    "id": (random uuid)
-    method: initialize
-    params: {
-      protocolVersion: "2025-06-18"
-      clientInfo: {
-        name: "gpt2099"
-        version: "0.5"
-      }
-      capabilities: {}
-    }
-  }
+  let command = mcp-rpc initialize | from json
   let res = $command | call $name
-  {"jsonrpc": "2.0" "method": "notifications/initialized"} | to json -r | $in + "\n" | .append $"mcp.($name).send"
+  mcp-rpc initialized | .append $"mcp.($name).send"
   $res
 }
 
 export def "ping" [name: string] {
-  let command = {
-    jsonrpc: "2.0"
-    id: (random uuid)
-    method: ping
-  }
+  let command = mcp-rpc ping | from json
   let res = $command | call $name
   $res
 }
 
 export def "tool call" [name: string method: string arguments: record] {
-  let command = {
-    jsonrpc: "2.0"
-    id: (random uuid)
-    method: tools/call
-    params: {
-      name: $method
-      arguments: $arguments
-    }
-  }
+  let command = mcp-rpc tool-call $method $arguments | from json
   let res = $command | call $name
   $res
 }
 
 export def "tool list" [name] {
-  let command = {
-    "jsonrpc": "2.0"
-    "id": (random uuid)
-    "method": "tools/list"
-    "params": {}
-  }
+  let command = mcp-rpc tool-list | from json
 
   let res = $command | call $name
 
