@@ -98,24 +98,24 @@ def collect-tests [] {
 
       # Get path to MCP test server
       const test_server = (path self "../../tests/bin/test-mcp-server.nu")
-      
+
       # Register MCP server
       gpt mcp register hello $test_server
       sleep 100ms
-      
+
       # Wait for manager to initialize server and fetch tools
       sleep 2sec
-      
+
       # Check that initialized event was emitted
       let initialized_events = .cat | where topic == "mcp.hello.initialized"
       assert (($initialized_events | length) > 0)
-      
+
       # Check that tools were stored
       let tools_frame = .head mcp.hello.tools
       assert ($tools_frame != null)
       let tools = .cas $tools_frame.hash | from json
       assert (($tools | where name == "greeting" | length) > 0)
-      
+
       # Make a tool call using the MCP module
       let result = gpt mcp tool call hello greeting {name: "World"}
       assert ($result.result != null)

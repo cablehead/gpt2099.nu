@@ -38,7 +38,7 @@ $env.mcp_pending = {}
       # Handle server responses
       [mcp,$server,recv] => {
         let content = .cas $frame.hash
-        
+
         # Try to parse as JSON, skip if not valid JSON
         let response = try { $content | from json } catch { return }
         let response_id = try { $response.id } catch { return }
