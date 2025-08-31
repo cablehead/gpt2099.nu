@@ -1,0 +1,22 @@
+[
+  {
+    "name": "prepare_for_new_conversation",
+    "description": "Instructions for preparing for a new conversation. This tool should only be called on explicit user request.",
+    "inputSchema": {
+      "properties": {},
+      "title": "applyArguments",
+      "type": "object"
+    },
+    "outputSchema": {
+      "properties": {
+        "result": {
+          "title": "Result",
+          "type": "string"
+        }
+      },
+      "required": ["result"],
+      "title": "applyOutput",
+      "type": "object"
+    }
+  }
+]

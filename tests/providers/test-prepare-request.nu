@@ -12,23 +12,6 @@ const assets = {
   "document-image": {file: "tests/fixtures/assets/img.png" media_type: "image/png"}
 }
 
-# Mock MCP tools for testing
-const mock_tools = [
-  {
-    name: "filesystem___read_file"
-    description: "Read the complete contents of a file from the file system."
-    inputSchema: {
-      "$schema": "http://json-schema.org/draft-07/schema#"
-      additionalProperties: false
-      properties: {
-        path: {type: "string"}
-        head: {type: "integer" format: "uint64"}
-      }
-      required: ["path"]
-      type: "object"
-    }
-  }
-]
 
 # Load fixture with dynamic asset population
 def load-fixture [case_path: string filename: string] {
@@ -62,9 +45,16 @@ def test-error-case [
   use ../../gpt/providers
   let provider_impl = providers all | get $provider
 
-  # Provide mock tools if the input specifies servers
+  # Load tools dynamically based on servers
   let tools = if ($input.options?.servers? | is-not-empty) {
-    $mock_tools
+    $input.options.servers | each {|server|
+      let tool_file = $"tests/fixtures/tools/($server).json"
+      if ($tool_file | path exists) {
+        open $tool_file
+      } else {
+        error make {msg: $"Tool file not found: ($tool_file)"}
+      }
+    } | flatten
   } else {
     []
   }
@@ -159,9 +149,16 @@ def test-case [
   use ../../gpt/providers
   let provider_impl = providers all | get $provider
 
-  # Provide mock tools if the input specifies servers
+  # Load tools dynamically based on servers
   let tools = if ($input.options?.servers? | is-not-empty) {
-    $mock_tools
+    $input.options.servers | each {|server|
+      let tool_file = $"tests/fixtures/tools/($server).json"
+      if ($tool_file | path exists) {
+        open $tool_file
+      } else {
+        error make {msg: $"Tool file not found: ($tool_file)"}
+      }
+    } | flatten
   } else {
     []
   }

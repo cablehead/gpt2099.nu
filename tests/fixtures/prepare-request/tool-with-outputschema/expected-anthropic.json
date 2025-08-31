@@ -1,0 +1,26 @@
+{
+  "max_tokens": 8192,
+  "stream": true,
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Please prepare for a new conversation"
+        }
+      ]
+    }
+  ],
+  "tools": [
+    {
+      "name": "prepare_for_new_conversation",
+      "description": "Instructions for preparing for a new conversation. This tool should only be called on explicit user request.",
+      "input_schema": {
+        "properties": {},
+        "title": "applyArguments",
+        "type": "object"
+      }
+    }
+  ]
+}

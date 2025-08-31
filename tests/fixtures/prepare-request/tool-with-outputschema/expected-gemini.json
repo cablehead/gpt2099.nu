@@ -1,0 +1,32 @@
+{
+  "contents": [
+    {
+      "role": "user",
+      "parts": [
+        {
+          "text": "Please prepare for a new conversation"
+        }
+      ]
+    }
+  ],
+  "generationConfig": {
+    "temperature": 1,
+    "topP": 0.95,
+    "maxOutputTokens": 81920
+  },
+  "tools": [
+    {
+      "functionDeclarations": [
+        {
+          "name": "prepare_for_new_conversation",
+          "description": "Instructions for preparing for a new conversation. This tool should only be called on explicit user request.",
+          "parameters": {
+            "properties": {},
+            "title": "applyArguments",
+            "type": "object"
+          }
+        }
+      ]
+    }
+  ]
+}

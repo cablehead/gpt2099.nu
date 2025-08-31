@@ -28,7 +28,7 @@ def content-block-finish [content_block] {
 
 export def convert-mcp-toolslist-to-provider [] {
   $in | each {|tool|
-    $tool | rename -c {inputSchema: input_schema} | reject -o annotations
+    $tool | rename -c {inputSchema: input_schema} | reject -o annotations outputSchema
   }
 }
 

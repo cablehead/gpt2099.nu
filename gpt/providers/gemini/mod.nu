@@ -11,7 +11,7 @@ export def convert-mcp-toolslist-to-provider [] {
     {
       functionDeclarations: (
         $tools | each {|tool|
-          $tool | reject -o annotations | rename -c {
+          $tool | reject -o annotations outputSchema | rename -c {
             inputSchema: parameters
           } | update parameters {
             $in | reject -o additionalProperties examples "$schema" | update properties {
