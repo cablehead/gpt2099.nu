@@ -90,7 +90,7 @@ def collect-tests [] {
     }
 
     "mcp.manager": {||
-      # Initialize gpt modules 
+      # Initialize gpt modules
       gpt init
       sleep 100ms
 
@@ -110,6 +110,28 @@ def collect-tests [] {
       let result = gpt mcp tool call hello greeting {name: "World"}
       assert ($result.result != null)
       assert ("Hello, World!" in ($result.result.content.0.text))
+    }
+
+    "mcp.call.mixed_responses": {||
+      # Initialize gpt modules
+      gpt init
+      sleep 100ms
+
+      # Register MCP server
+      gpt mcp register hello $test_mcp_server
+
+      # check the server initialized correctly
+      assert ((.head "mcp.hello.ready") != null) "not initialized"
+
+      # Make a tool call that emits notification + response
+      let result = gpt mcp tool call hello notification_test {}
+
+      # Verify we got the response (not the notification)
+      assert ($result.result != null) "Should have result"
+      assert ("Test completed with notification" in ($result.result.content.0.text)) "Should have correct response text"
+
+      # Verify no error occurred from missing id in notification
+      assert ($result.error? == null) "Should not have error from notification filtering"
     }
   }
 }

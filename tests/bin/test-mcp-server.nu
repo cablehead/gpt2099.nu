@@ -51,6 +51,14 @@ def main [] {
                   required: ["name"]
                 }
               }
+              {
+                name: "notification_test"
+                description: "Test tool that emits notification then response"
+                inputSchema: {
+                  type: "object"
+                  properties: {}
+                }
+              }
             ]
           }
         }
@@ -71,6 +79,29 @@ def main [] {
                   {
                     type: "text"
                     text: $"Hello, ($name)!"
+                  }
+                ]
+              }
+            }
+          }
+          "notification_test" => {
+            # First emit a notification (no id)
+            print (
+              {
+                jsonrpc: "2.0"
+                method: "notifications/resources/list_changed"
+              } | to json -r
+            )
+
+            # Then return the actual response (with id)
+            {
+              jsonrpc: "2.0"
+              id: $request.id
+              result: {
+                content: [
+                  {
+                    type: "text"
+                    text: "Test completed with notification"
                   }
                 ]
               }

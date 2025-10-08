@@ -51,7 +51,7 @@ export def "call" [name: string] {
     .cat -f --last-id $frame.id
     | where topic == $"mcp.($name).recv"
     | each { .cas $in.hash | from json }
-    | where { $in.id == $command.id }
+    | where { $in.id? == $command.id }
     | first
   )
   $res
