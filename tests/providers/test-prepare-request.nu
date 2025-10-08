@@ -12,7 +12,6 @@ const assets = {
   "document-image": {file: "tests/fixtures/assets/img.png" media_type: "image/png"}
 }
 
-
 # Load fixture with dynamic asset population
 def load-fixture [case_path: string filename: string] {
   let case_name = ($case_path | path basename)

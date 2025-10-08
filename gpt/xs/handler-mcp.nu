@@ -18,7 +18,7 @@ $env.mcp_pending = {}
 
     match $topic_parts {
       # Handle server startup - begin initialization
-      [mcp,$server,running] => {
+      [mcp , $server , running] => {
         let init_request = mcp-rpc initialize
         let init_id = $init_request | from json | get id
 
@@ -35,7 +35,7 @@ $env.mcp_pending = {}
       }
 
       # Handle server responses
-      [mcp,$server,recv] => {
+      [mcp , $server , recv] => {
         let content = .cas $frame.hash
 
         # Try to parse as JSON, skip if not valid JSON

@@ -10,6 +10,7 @@ When committing: review `git diff`
 - Prefer just a subject and no body, unless the change is particularly complex
 
 Example good commit messages from this project:
+
 - `feat: add a cross.stream handler to manage mcp server initialization (#9)`
 - `docs: document gpt init step (#8)`
 - `fix: filter outputSchema from MCP tools for provider compatibility`
