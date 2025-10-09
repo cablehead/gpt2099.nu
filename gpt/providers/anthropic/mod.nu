@@ -11,7 +11,7 @@ def content-block-delta [current_block event] {
     "text_delta" => ($current_block | update text { $in | append $event.delta.text })
     "input_json_delta" => ($current_block | upsert partial_json { $in | default [] | append $event.delta.partial_json })
     "citations_delta" => $current_block # ignore for now
-    _ => ( error make {msg: $"TBD: ($event)"})
+    _ => (error make {msg: $"TBD: ($event)"})
   }
 }
 
@@ -37,11 +37,19 @@ export def provider [] {
     models: {|key: string|
       (
         http get
+        --allow-errors
         -H {
           "x-api-key": $key
           "anthropic-version": "2023-06-01"
         }
         https://api.anthropic.com/v1/models
+        | metadata access {|meta|
+          if $meta.http_response.status != 200 {
+            error make {
+              msg: $"Error fetching models: ($meta.http_response | to json) ($in)"
+            }
+          } else { }
+        }
         | get data
         | select id created_at
         | rename -c {created_at: "created"}
@@ -184,7 +192,7 @@ export def provider [] {
             "message_start" => ($response.message = $event.message)
             "content_block_start" => ($response.current_block = $event.content_block)
             "content_block_delta" => ($response.current_block = content-block-delta $response.current_block $event)
-            "content_block_stop" => ($response.message.content =  $response.message.content | append (content-block-finish $response.current_block))
+            "content_block_stop" => ($response.message.content = $response.message.content | append (content-block-finish $response.current_block))
             "message_delta" => ($response = ($response | merge deep {message: ($event.delta | insert usage $event.usage)}))
             "message_stop" => ($response = ($response | reject current_block))
             "ping" => (continue)
@@ -213,7 +221,7 @@ export def provider [] {
               "tool_use" => {type: $in.type name: $in.name}
               "server_tool_use" => {type: $in.type name: $in.name}
               "web_search_tool_result" => {type: $in.type content: ($in.content | reject encrypted_content | to csv)}
-              _ => ( error make {msg: $"TBD: ($event | to json)"})
+              _ => (error make {msg: $"TBD: ($event | to json)"})
             }
           )
         }
@@ -232,7 +240,7 @@ export def provider [] {
             "citations_delta" => { return {} }
 
             # Handle unexpected delta types
-            _ => ( error make {msg: $"TBD: ($event)"})
+            _ => (error make {msg: $"TBD: ($event)"})
           }
         }
 
@@ -242,7 +250,7 @@ export def provider [] {
         "ping" => { return }
         "content_block_stop" => { return }
 
-        _ => ( error make {msg: $"TBD: ($event)"})
+        _ => (error make {msg: $"TBD: ($event)"})
       }
     }
   }
