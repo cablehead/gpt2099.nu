@@ -4,6 +4,7 @@ use std assert
 const models = {
   anthropic: "claude-3-5-haiku-20241022"
   gemini: "gemini-2.5-flash"
+  openai: "gpt-5-nano"
 }
 
 # Asset mapping for dynamic fixture population

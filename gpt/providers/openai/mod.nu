@@ -8,9 +8,12 @@ def conditional-pipe [
 export def convert-mcp-toolslist-to-provider [] {
   $in | each {|tool|
     {
-      name: $tool.name
-      description: $tool.description
-      parameters: $tool.inputSchema
+      type: "function"
+      function: {
+        name: $tool.name
+        description: $tool.description
+        parameters: $tool.inputSchema
+      }
     }
   }
 }
@@ -39,7 +42,7 @@ export def provider [] {
           stream: true
         }
         | conditional-pipe ($tools | is-not-empty) {
-          insert functions ($tools | convert-mcp-toolslist-to-provider)
+          insert tools ($tools | convert-mcp-toolslist-to-provider)
         }
       )
 
@@ -54,7 +57,7 @@ export def provider [] {
         | http post --content-type application/json -H {"Authorization": $"Bearer ($key)"} $url
         | lines
         | each {|line| $line | split row -n 2 "data: " | get 1? }
-        | each {|x| x | from json }
+        | each {|x| $x | from json }
       )
     }
 
