@@ -10,6 +10,8 @@ $env.mcp_pending = {}
     "mcp-rpc": (.head gpt.mod.mcp-rpc | .cas $in.hash)
   }
 
+  resume_from: (.head xs.start).id
+
   run: {|frame|
     let topic_parts = $frame.topic | split row "."
     if ($topic_parts | length) < 2 { return }
