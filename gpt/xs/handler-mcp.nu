@@ -9,16 +9,16 @@ $env.mcp_pending = {}
   modules: {
     "mcp-rpc": (.head gpt.mod.mcp-rpc | .cas $in.hash)
   }
-  run: {|frame|
 
-     let topic_parts = $frame.topic | split row "."
+  run: {|frame|
+    let topic_parts = $frame.topic | split row "."
     if ($topic_parts | length) < 2 { return }
 
     let server_name = $topic_parts.1
 
     match $topic_parts {
       # Handle server startup - begin initialization
-      [mcp , $server , running] => {
+      [mcp,$server,running] => {
         let init_request = mcp-rpc initialize
         let init_id = $init_request | from json | get id
 
@@ -35,7 +35,7 @@ $env.mcp_pending = {}
       }
 
       # Handle server responses
-      [mcp , $server , recv] => {
+      [mcp,$server,recv] => {
         let content = .cas $frame.hash
 
         # Try to parse as JSON, skip if not valid JSON
