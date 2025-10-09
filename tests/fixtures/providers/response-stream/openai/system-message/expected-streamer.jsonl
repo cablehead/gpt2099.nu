@@ -1,0 +1,229 @@
+{"type":"text","content":"To"}
+{"type":"text","content":" reverse"}
+{"type":"text","content":" a"}
+{"type":"text","content":" string"}
+{"type":"text","content":" in"}
+{"type":"text","content":" most"}
+{"type":"text","content":" programming"}
+{"type":"text","content":" languages"}
+{"type":"text","content":","}
+{"type":"text","content":" you"}
+{"type":"text","content":" typically"}
+{"type":"text","content":" create"}
+{"type":"text","content":" a"}
+{"type":"text","content":" new"}
+{"type":"text","content":" string"}
+{"type":"text","content":" with"}
+{"type":"text","content":" the"}
+{"type":"text","content":" characters"}
+{"type":"text","content":" in"}
+{"type":"text","content":" the"}
+{"type":"text","content":" opposite"}
+{"type":"text","content":" order"}
+{"type":"text","content":"."}
+{"type":"text","content":" Here"}
+{"type":"text","content":" are"}
+{"type":"text","content":" examples"}
+{"type":"text","content":" in"}
+{"type":"text","content":" a"}
+{"type":"text","content":" few"}
+{"type":"text","content":" different"}
+{"type":"text","content":" languages"}
+{"type":"text","content":":\n\n"}
+{"type":"text","content":"1"}
+{"type":"text","content":"."}
+{"type":"text","content":" Python"}
+{"type":"text","content":":\n"}
+{"type":"text","content":"```"}
+{"type":"text","content":"python"}
+{"type":"text","content":"\n"}
+{"type":"text","content":"s"}
+{"type":"text","content":" ="}
+{"type":"text","content":" \""}
+{"type":"text","content":"hello"}
+{"type":"text","content":"\"\n"}
+{"type":"text","content":"re"}
+{"type":"text","content":"versed"}
+{"type":"text","content":"_s"}
+{"type":"text","content":" ="}
+{"type":"text","content":" s"}
+{"type":"text","content":"[::-"}
+{"type":"text","content":"1"}
+{"type":"text","content":"]\n"}
+{"type":"text","content":"print"}
+{"type":"text","content":"(re"}
+{"type":"text","content":"versed"}
+{"type":"text","content":"_s"}
+{"type":"text","content":")"}
+{"type":"text","content":" "}
+{"type":"text","content":" #"}
+{"type":"text","content":" Output"}
+{"type":"text","content":":"}
+{"type":"text","content":" \""}
+{"type":"text","content":"olle"}
+{"type":"text","content":"h"}
+{"type":"text","content":"\"\n"}
+{"type":"text","content":"``"}
+{"type":"text","content":"`\n\n"}
+{"type":"text","content":"2"}
+{"type":"text","content":"."}
+{"type":"text","content":" Java"}
+{"type":"text","content":"Script"}
+{"type":"text","content":":\n"}
+{"type":"text","content":"```"}
+{"type":"text","content":"javascript"}
+{"type":"text","content":"\n"}
+{"type":"text","content":"let"}
+{"type":"text","content":" s"}
+{"type":"text","content":" ="}
+{"type":"text","content":" \""}
+{"type":"text","content":"hello"}
+{"type":"text","content":"\";\n"}
+{"type":"text","content":"let"}
+{"type":"text","content":" reversed"}
+{"type":"text","content":"_s"}
+{"type":"text","content":" ="}
+{"type":"text","content":" s"}
+{"type":"text","content":".split"}
+{"type":"text","content":"('')."}
+{"type":"text","content":"reverse"}
+{"type":"text","content":"()."}
+{"type":"text","content":"join"}
+{"type":"text","content":"('');\n"}
+{"type":"text","content":"console"}
+{"type":"text","content":".log"}
+{"type":"text","content":"(re"}
+{"type":"text","content":"versed"}
+{"type":"text","content":"_s"}
+{"type":"text","content":");"}
+{"type":"text","content":" "}
+{"type":"text","content":" //"}
+{"type":"text","content":" Output"}
+{"type":"text","content":":"}
+{"type":"text","content":" \""}
+{"type":"text","content":"olle"}
+{"type":"text","content":"h"}
+{"type":"text","content":"\"\n"}
+{"type":"text","content":"``"}
+{"type":"text","content":"`\n\n"}
+{"type":"text","content":"3"}
+{"type":"text","content":"."}
+{"type":"text","content":" Java"}
+{"type":"text","content":":\n"}
+{"type":"text","content":"```"}
+{"type":"text","content":"java"}
+{"type":"text","content":"\n"}
+{"type":"text","content":"String"}
+{"type":"text","content":" s"}
+{"type":"text","content":" ="}
+{"type":"text","content":" \""}
+{"type":"text","content":"hello"}
+{"type":"text","content":"\";\n"}
+{"type":"text","content":"String"}
+{"type":"text","content":" reversed"}
+{"type":"text","content":"_s"}
+{"type":"text","content":" ="}
+{"type":"text","content":" new"}
+{"type":"text","content":" String"}
+{"type":"text","content":"Builder"}
+{"type":"text","content":"(s"}
+{"type":"text","content":")."}
+{"type":"text","content":"reverse"}
+{"type":"text","content":"()."}
+{"type":"text","content":"to"}
+{"type":"text","content":"String"}
+{"type":"text","content":"();\n"}
+{"type":"text","content":"System"}
+{"type":"text","content":".out"}
+{"type":"text","content":".println"}
+{"type":"text","content":"(re"}
+{"type":"text","content":"versed"}
+{"type":"text","content":"_s"}
+{"type":"text","content":");"}
+{"type":"text","content":" "}
+{"type":"text","content":" //"}
+{"type":"text","content":" Output"}
+{"type":"text","content":":"}
+{"type":"text","content":" \""}
+{"type":"text","content":"olle"}
+{"type":"text","content":"h"}
+{"type":"text","content":"\"\n"}
+{"type":"text","content":"``"}
+{"type":"text","content":"`\n\n"}
+{"type":"text","content":"4"}
+{"type":"text","content":"."}
+{"type":"text","content":" C"}
+{"type":"text","content":"++"}
+{"type":"text","content":":\n"}
+{"type":"text","content":"```"}
+{"type":"text","content":"cpp"}
+{"type":"text","content":"\n"}
+{"type":"text","content":"#include"}
+{"type":"text","content":" <"}
+{"type":"text","content":"iostream"}
+{"type":"text","content":">\n"}
+{"type":"text","content":"#include"}
+{"type":"text","content":" <"}
+{"type":"text","content":"algorithm"}
+{"type":"text","content":">\n"}
+{"type":"text","content":"using"}
+{"type":"text","content":" namespace"}
+{"type":"text","content":" std"}
+{"type":"text","content":";\n\n"}
+{"type":"text","content":"int"}
+{"type":"text","content":" main"}
+{"type":"text","content":"()"}
+{"type":"text","content":" {\n"}
+{"type":"text","content":"   "}
+{"type":"text","content":" string"}
+{"type":"text","content":" s"}
+{"type":"text","content":" ="}
+{"type":"text","content":" \""}
+{"type":"text","content":"hello"}
+{"type":"text","content":"\";\n"}
+{"type":"text","content":"   "}
+{"type":"text","content":" reverse"}
+{"type":"text","content":"(s"}
+{"type":"text","content":".begin"}
+{"type":"text","content":"(),"}
+{"type":"text","content":" s"}
+{"type":"text","content":".end"}
+{"type":"text","content":"());\n"}
+{"type":"text","content":"   "}
+{"type":"text","content":" cout"}
+{"type":"text","content":" <<"}
+{"type":"text","content":" s"}
+{"type":"text","content":" <<"}
+{"type":"text","content":" endl"}
+{"type":"text","content":";"}
+{"type":"text","content":" "}
+{"type":"text","content":" //"}
+{"type":"text","content":" Output"}
+{"type":"text","content":":"}
+{"type":"text","content":" \""}
+{"type":"text","content":"olle"}
+{"type":"text","content":"h"}
+{"type":"text","content":"\"\n"}
+{"type":"text","content":"   "}
+{"type":"text","content":" return"}
+{"type":"text","content":" "}
+{"type":"text","content":"0"}
+{"type":"text","content":";\n"}
+{"type":"text","content":"}\n"}
+{"type":"text","content":"``"}
+{"type":"text","content":"`\n\n"}
+{"type":"text","content":"If"}
+{"type":"text","content":" you"}
+{"type":"text","content":" want"}
+{"type":"text","content":" code"}
+{"type":"text","content":" in"}
+{"type":"text","content":" a"}
+{"type":"text","content":" specific"}
+{"type":"text","content":" language"}
+{"type":"text","content":" or"}
+{"type":"text","content":" further"}
+{"type":"text","content":" explanation"}
+{"type":"text","content":","}
+{"type":"text","content":" just"}
+{"type":"text","content":" ask"}
+{"type":"text","content":"!"}

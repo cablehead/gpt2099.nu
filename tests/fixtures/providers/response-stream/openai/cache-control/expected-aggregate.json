@@ -1,0 +1,20 @@
+{
+  "message": {
+    "type": "message",
+    "role": "assistant",
+    "model": "gpt-4.1-mini-2025-04-14",
+    "content": [
+      {
+        "type": "text",
+        "text": "You have provided a sequence of turns numbered from 1 to 20, with the last turn (Turn 20) including three items (item 1, item 2, item 3). Could you please clarify what you would like me to do with this sequence or these items?"
+      }
+    ],
+    "stop_reason": "end_turn",
+    "usage": {
+      "input_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 0
+    }
+  }
+}

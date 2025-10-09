@@ -1,0 +1,24 @@
+{
+  "message": {
+    "type": "message",
+    "role": "assistant",
+    "model": "gpt-4.1-mini-2025-04-14",
+    "content": [
+      {
+        "type": "tool_use",
+        "id": "5c4c84a9-fb7d-4a03-a3d2-1354acd1c4fc",
+        "name": "filesystem___read_file",
+        "input": {
+          "path": "config.json"
+        }
+      }
+    ],
+    "stop_reason": "tool_use",
+    "usage": {
+      "input_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 0
+    }
+  }
+}
