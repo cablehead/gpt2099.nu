@@ -13,5 +13,6 @@
       "role": "system",
       "content": "Remember to include examples in your responses."
     }
-  ]
+  ],
+  "tools": []
 }

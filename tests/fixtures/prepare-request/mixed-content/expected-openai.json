@@ -1,0 +1,32 @@
+{
+  "stream": true,
+  "messages": [
+    {
+      "role": "user",
+      "content": "Regular text message"
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "image_url",
+          "image_url": {
+            "url": "data:text/markdown;base64,IyBSRUFETUUKClRoaXMgaXMgZG9jdW1lbnRhdGlvbi4="
+          }
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "image_url",
+          "image_url": {
+            "url": "data:application/pdf;base64,JVBERi0xLjMKJcfsj6IKJSVJbnZvY2F0aW9uOiBwYXRoL2dzIC1zREVWSUNFPXBkZndyaXRlIC1kQ29tcGF0aWJpbGl0eUxldmVsPTEuMyAtZE5PUEFVU0UgLWRRVUlFVCAtZEJBVENIIC1kQXV0b1JvdGF0ZVBhZ2VzPS9Ob25lIC1zT3V0cHV0RmlsZT0/ID8KNSAwIG9iago8PC9MZW5ndGggNiAwIFIvRmlsdGVyIC9GbGF0ZURlY29kZT4+CnN0cmVhbQp4nCtUMNAzVDAAQSidnMtloJDOVchlCBZVgFLJuQpOIVz6QeYKhkYKIWlcEMWGIGljA4WQXC6N9IISIwNLS82QLC7XEK5AIAQAWbkS2WVuZHN0cmVhbQplbmRvYmoKNiAwIG9iago3NwplbmRvYmoKNCAwIG9iago8PC9UeXBlL1BhZ2UvTWVkaWFCb3ggWzAgMCA1OTUgODQyXQovUGFyZW50IDMgMCBSCi9SZXNvdXJjZXM8PC9Qcm9jU2V0Wy9QREYgL1RleHRdCi9Gb250IDggMCBSCj4+Ci9Db250ZW50cyA1IDAgUko+PgplbmRvYmoKMyAwIG9iago8PCAvVHlwZSAvUGFnZXMgL0tpZHMgWwo0IDAgUgpdIC9Db3VudCAxCj4+CmVuZG9iagoxIDAgb2JqCjw8L1R5cGUgL0NhdGFsb2cgL1BhZ2VzIDMgMCBSCj4+CmVuZG9iago4IDAgb2JqCjw8L1I3CjcgMCBSPj4KZW5kb2JqCjcgMCBvYmoKPDwvQmFzZUZvbnQvSGVsdmV0aWNhL1R5cGUvRm9udAovU3VidHlwZS9UeXBlMT4+CmVuZG9iagoyIDAgb2JqCjw8L1Byb2R1Y2VyKEdQTCBHaG9zdHNjcmlwdCAxMC4wMC4wKQovQ3JlYXRpb25EYXRlKEQ6MjAyNTA3MjYxODU3MjBaMDAnMDAnKQovTW9kRGF0ZShEOjIwMjUwNzI2MTg1NzIwWjAwJzAwJyk+PmVuZG9iagp4cmVmCjAgOQowMDAwMDAwMDAwIDY1NTM1IGYgCjAwMDAwMDA1MDMgMDAwMDAgbiAKMDAwMDAwMDY0NCAwMDAwMCBuIAowMDAwMDAwNDQ0IDAwMDAwIG4gCjAwMDAwMDAzMTIgMDAwMDAgbiAKMDAwMDAwMDE0NyAwMDAwMCBuIAowMDAwMDAwMjk0IDAwMDAwIG4gCjAwMDAwMDA1ODAgMDAwMDAgbiAKMDAwMDAwMDU1MSAwMDAwMCBuIAp0cmFpbGVyCjw8IC9TaXplIDkgL1Jvb3QgMSAwIFIgL0luZm8gMiAwIFIKL0lEIFs8OEFENzkzNjlFQTg3QjdBMjhFNzVCMTY0MEJFMjIzQzM+PDhBRDc5MzY5RUE4N0I3QTI4RTc1QjE2NDBCRTIyM0MzPl0KPj4Kc3RhcnR4cmVmCjc3MAolJUVPRgo="
+          }
+        }
+      ]
+    }
+  ],
+  "tools": []
+}

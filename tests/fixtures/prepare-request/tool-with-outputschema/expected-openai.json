@@ -1,0 +1,23 @@
+{
+  "stream": true,
+  "messages": [
+    {
+      "role": "user",
+      "content": "Please prepare for a new conversation"
+    }
+  ],
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "prepare_for_new_conversation",
+        "description": "Instructions for preparing for a new conversation. This tool should only be called on explicit user request.",
+        "parameters": {
+          "properties": {},
+          "title": "applyArguments",
+          "type": "object"
+        }
+      }
+    }
+  ]
+}
