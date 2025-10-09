@@ -1,0 +1,1 @@
+{"type":"tool_use","name":"filesystem___read_file","content":{"path":"config.json"}}

@@ -43,7 +43,30 @@ def test-aggregate [
     let expected_file = $case_path | path join "expected-aggregate.json"
     if ($expected_file | path exists) {
       let expected = open $expected_file
-      assert equal $result $expected
+
+      # Normalize: Replace random UUIDs in tool_use content with fixed UUID for comparison
+      # This is needed for Gemini which generates random UUIDs (Anthropic provides them)
+      let normalized_result = $result | update message.content {
+        $in | each {|item|
+          if $item.type == "tool_use" and ($item.id? | describe) == "string" {
+            $item | update id "00000000-0000-0000-0000-000000000000"
+          } else {
+            $item
+          }
+        }
+      }
+
+      let normalized_expected = $expected | update message.content {
+        $in | each {|item|
+          if $item.type == "tool_use" and ($item.id? | describe) == "string" {
+            $item | update id "00000000-0000-0000-0000-000000000000"
+          } else {
+            $item
+          }
+        }
+      }
+
+      assert equal $normalized_result $normalized_expected
     }
 
     ok
