@@ -21,7 +21,14 @@ export def convert-mcp-toolslist-to-provider [] {
 export def provider [] {
   {
     models: {|key: string|
-      (http get -H {"Authorization": $"Bearer ($key)"} "https://api.openai.com/v1/models")
+      (http get --allow-errors -H {"Authorization": $"Bearer ($key)"} "https://api.openai.com/v1/models")
+      | metadata access {|meta|
+        if $meta.http_response.status != 200 {
+          error make {
+            msg: $"Error fetching models: ($meta.http_response | to json) ($in)"
+          }
+        } else { }
+      }
       | get data
       | select id created
       | update created { $in * 1_000_000_000 | into datetime }

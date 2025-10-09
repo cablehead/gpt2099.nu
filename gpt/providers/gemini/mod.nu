@@ -39,7 +39,14 @@ export def provider [] {
   {
     models: {|key|
       (
-        http get $"https://generativelanguage.googleapis.com/v1beta/models?key=($key)"
+        http get --allow-errors $"https://generativelanguage.googleapis.com/v1beta/models?key=($key)"
+        | metadata access {|meta|
+          if $meta.http_response.status != 200 {
+            error make {
+              msg: $"Error fetching models: ($meta.http_response | to json) ($in)"
+            }
+          } else { }
+        }
         | get models | select name version supportedGenerationMethods
         | where {|it| 'generateContent' in $it.supportedGenerationMethods }
         | update name {|it| $it.name | str replace 'models/' '' } | get name | wrap id
@@ -93,7 +100,7 @@ export def provider [] {
                         {text: $"[Document: ($media_type) - content not directly supported by Gemini]"}
                       }
                     }
-                    _ => ( error make {msg: $"TBD: ($content)"})
+                    _ => (error make {msg: $"TBD: ($content)"})
                   }
                 }
               )
@@ -143,7 +150,14 @@ export def provider [] {
         error make {msg: $"TBD:\n\n($data | to json | table -e)\n\n($res | to json)"}
       }
 
-      $data | http post --content-type application/json $url
+      $data | http post --allow-errors --content-type application/json $url
+      | metadata access {|meta|
+        if $meta.http_response.status != 200 {
+          error make {
+            msg: $"Error calling gemini: ($meta.http_response | to json) ($in)"
+          }
+        } else { }
+      }
       | lines | each {|line| $line | split row -n 2 "data: " | get 1? }
       | each {|x| $x | from json }
     }
