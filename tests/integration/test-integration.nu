@@ -52,7 +52,7 @@ def collect-tests [] {
       cat .env/anthropic | gpt provider enable anthropic
       gpt provider set-ptr milli anthropic claude-3-5-haiku-20241022
 
-      gpt mcp register hello $test_mcp_server
+      gpt mcp register hello $"nu --stdin ($test_mcp_server)"
 
       # Create turn using schema add-turn, then call gpt call
       let turn = "greet Andy" | gpt schema add-turn {
@@ -95,7 +95,7 @@ def collect-tests [] {
       sleep 100ms
 
       # Register MCP server
-      gpt mcp register hello $test_mcp_server
+      gpt mcp register hello $"nu --stdin ($test_mcp_server)"
 
       # check the server initialized correctly
       assert ((.head "mcp.hello.ready") != null) "not initialized"
@@ -118,7 +118,7 @@ def collect-tests [] {
       sleep 100ms
 
       # Register MCP server
-      gpt mcp register hello $test_mcp_server
+      gpt mcp register hello $"nu --stdin ($test_mcp_server)"
 
       # check the server initialized correctly
       assert ((.head "mcp.hello.ready") != null) "not initialized"
