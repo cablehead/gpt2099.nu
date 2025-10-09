@@ -95,12 +95,13 @@ def update-data-fields [asset_data: string] {
 def run-all [
   provider: string # Provider name (anthropic, gemini, etc.)
   api_key?: string # API key for actual calls (optional)
+  capture?: bool # Capture streaming responses to fixtures
 ] {
   let fixtures_path = "tests/fixtures/prepare-request"
   let test_cases = (ls $fixtures_path | where type == dir | get name | path basename)
 
   for case in $test_cases {
-    test-case $provider $case $api_key
+    test-case $provider $case $api_key $capture
   }
 }
 
@@ -108,6 +109,7 @@ def test-case [
   provider: string
   case_name: string
   api_key?: string # API key if making real calls
+  capture?: bool # Capture streaming responses to fixtures
 ] {
   let case_path = ["tests" "fixtures" "prepare-request" $case_name] | path join
 
@@ -179,6 +181,15 @@ def test-case [
         $event
       } | collect
 
+      # Capture streaming events if --capture flag is set
+      if ($capture | default false) {
+        let capture_dir = ["tests" "fixtures" "response-stream" $provider $case_name] | path join
+        mkdir $capture_dir
+        let capture_file = $capture_dir | path join "events.jsonl"
+        $events | each {|event| $event | to json -r } | str join "\n" | save -f $capture_file
+        print $"  Captured ($events | length) events to ($capture_file)"
+      }
+
       if ($events | length) == 0 {
         error make {msg: "No response events received"}
       } else {
@@ -201,6 +212,7 @@ export def main [
   provider?: string # Provider name (anthropic, gemini, etc.) - runs all providers if omitted
   test_case?: string # Test case name (text-document, json-document, etc.) - runs all if omitted
   --call: any # API key (string) or closure that returns key for provider
+  --capture # Capture streaming responses to fixtures (requires --call)
 ] {
   # Get available providers
   use ../../gpt/providers
@@ -227,10 +239,10 @@ export def main [
 
     if ($test_case | is-not-empty) {
       # Run single test case for this provider
-      test-case $prov $test_case $api_key
+      test-case $prov $test_case $api_key $capture
     } else {
       # Run all test cases for this provider
-      run-all $prov $api_key
+      run-all $prov $api_key $capture
     }
   }
 }

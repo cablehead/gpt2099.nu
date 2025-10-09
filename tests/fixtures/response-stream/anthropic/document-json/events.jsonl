@@ -1,0 +1,45 @@
+{"type":"message_start","message":{"model":"claude-3-5-haiku-20241022","id":"msg_01ReU4P9xjQjhEqmrZkwvfJ4","type":"message","role":"assistant","content":[],"stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":13,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":1,"service_tier":"standard"}}}
+{"type":"content_block_start","index":0,"content_block":{"type":"text","text":""}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"This"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" appears"}}
+{"type":"ping"}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" to be a simple"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" JSON object with"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" one"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" key-value pair:"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"\n-"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" Key"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":": \"test\""}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"\n- Value: \"data"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"\"\n\nIn"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" most"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" programming languages, this"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" coul"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"d be parse"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"d and accesse"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"d like:"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"\n-"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" Python"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":": data"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"[\""}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"test\"]"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" woul"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"d return \""}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"data\"\n- JavaScript"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":": data.test woul"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"d return \"data\""}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"\n\nWoul"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"d you like me to demonstrate"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" how"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" to work"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" with this"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" JSON"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" in"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" a"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" specific"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" programming language or"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" context"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"?"}}
+{"type":"content_block_stop","index":0}
+{"type":"message_delta","delta":{"stop_reason":"end_turn","stop_sequence":null},"usage":{"input_tokens":13,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":92}}
+{"type":"message_stop"}

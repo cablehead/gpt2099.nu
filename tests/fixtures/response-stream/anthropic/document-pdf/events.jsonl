@@ -1,0 +1,40 @@
+{"type":"message_start","message":{"model":"claude-3-5-haiku-20241022","id":"msg_01CU41EfRwD9DfEM3hSMCuaC","type":"message","role":"assistant","content":[],"stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":1619,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":1,"service_tier":"standard"}}}
+{"type":"content_block_start","index":0,"content_block":{"type":"text","text":""}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"I"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" apolog"}}
+{"type":"ping"}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"ize, but the"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" "}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"document appears"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" to be blank or"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" contains"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" no"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" visible"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" content. The"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" only"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" text I"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" can"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" see are"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" the"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" words"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" \"g"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"pt"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"2"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"099"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"\" at"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" the top an"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"d bottom"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" of the page. Without"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" any readable"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" text or"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" disc"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"ernible image"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":", I cannot provide"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" any meaningful"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" analysis or description"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" of the"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" "}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"document."}}
+{"type":"content_block_stop","index":0}
+{"type":"message_delta","delta":{"stop_reason":"end_turn","stop_sequence":null},"usage":{"input_tokens":1619,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":66}}
+{"type":"message_stop"}

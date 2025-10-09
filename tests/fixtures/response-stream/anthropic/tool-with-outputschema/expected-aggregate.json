@@ -1,0 +1,33 @@
+{
+  "message": {
+    "model": "claude-3-5-haiku-20241022",
+    "id": "msg_01RhDfKShcrTEibCv4W4wfE3",
+    "type": "message",
+    "role": "assistant",
+    "content": [
+      {
+        "type": "text",
+        "text": "I'll help you prepare for a new conversation by using the prepare_for_new_conversation tool."
+      },
+      {
+        "type": "tool_use",
+        "id": "toolu_01P5gJNb2Zpnxjaq9Z4Ypn88",
+        "name": "prepare_for_new_conversation",
+        "input": {}
+      }
+    ],
+    "stop_reason": "tool_use",
+    "stop_sequence": null,
+    "usage": {
+      "input_tokens": 342,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 62,
+      "service_tier": "standard"
+    }
+  }
+}

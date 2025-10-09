@@ -1,0 +1,47 @@
+{"type":"text","content":""}
+{"content":"I"}
+{"content":"'ll"}
+{"content":" search"}
+{"content":" for recent"}
+{"content":" information about quantum computing an"}
+{"content":"d save the"}
+{"content":" key"}
+{"content":" findings"}
+{"content":" to a file."}
+{"type":"server_tool_use","name":"web_search"}
+{"content":""}
+{"content":"{\"query\": \""}
+{"content":"Latest"}
+{"content":" ad"}
+{"content":"vance"}
+{"content":"s i"}
+{"content":"n quantum c"}
+{"content":"omputin"}
+{"content":"g 2025 b"}
+{"content":"reak"}
+{"content":"throughs\"}"}
+{"type":"web_search_tool_result","content":"type,title,url,page_age\nweb_search_result,The Year of Quantum: From concept to reality in 2025,https://www.mckinsey.com/capabilities/mckinsey-digital/our-insights/the-year-of-quantum-from-concept-to-reality-in-2025,\"June 23, 2025\"\nweb_search_result,2025 Will See Huge Advances in Quantum Computing,https://thequantuminsider.com/2025/01/08/2025-will-see-huge-advances-in-quantum-computing-so-what-is-a-quantum-chip-and-how-does-it-work/,\"August 11, 2025\"\nweb_search_result,Quantum Computing Future - 6 Alternative Views Of The Quantum Future Post 2025,https://quantumzeitgeist.com/quantum-computing-future-2025-2035/,3 days ago\nweb_search_result,Quantum Breakthroughs: NIST & SQMS Lead the Way | NIST,https://www.nist.gov/news-events/news/2025/04/quantum-breakthroughs-nist-sqms-lead-way,\"June 18, 2025\"\nweb_search_result,2025 will see huge advances in quantum computing. So what is a quantum chip and how does it work? - CSIRO,https://www.csiro.au/en/news/all/articles/2025/january/2025-huge-advances-in-quantum-computing,\nweb_search_result,Quantum Computing News: ICQE 2025 & Latest Quantum Research | SpinQ,https://www.spinquanta.com/news-detail/latest-quantum-computing-news-and-quantum-research,\nweb_search_result,Latest Developments in Quantum Computing in 2025,https://www.techi.com/latest-developments-in-quantum-computing/,\"May 27, 2025\"\nweb_search_result,Quantum Computing Roadmaps & Predictions of Leading Players,https://thequantuminsider.com/2025/05/16/quantum-computing-roadmaps-a-look-at-the-maps-and-predictions-of-major-quantum-players/,\"May 16, 2025\"\nweb_search_result,Quantum Computers News -- ScienceDaily,https://www.sciencedaily.com/news/computers_math/quantum_computers/,1 day ago\nweb_search_result,\"IBM Sets the Course to Build World's First Large-Scale, Fault-Tolerant Quantum Computer at New IBM Quantum Data Center - Jun 10, 2025\",\"https://newsroom.ibm.com/2025-06-10-IBM-Sets-the-Course-to-Build-Worlds-First-Large-Scale,-Fault-Tolerant-Quantum-Computer-at-New-IBM-Quantum-Data-Center\",\n"}
+{"type":"text","content":""}
+{"content":"Now"}
+{"content":", I'll"}
+{"content":" save"}
+{"content":" the key"}
+{"content":" information about"}
+{"content":" recent"}
+{"content":" quantum"}
+{"content":" computing developments to"}
+{"content":" a file"}
+{"content":":"}
+{"type":"tool_use","name":"filesystem___read_file"}
+{"content":""}
+{"content":"{\"p"}
+{"content":"ath\":"}
+{"content":" \"/"}
+{"content":"tmp/quantu"}
+{"content":"m_comput"}
+{"content":"ing_2025_o"}
+{"content":"verview.txt"}
+{"content":"\""}
+{"content":", "}
+{"content":"\"head\": 200"}
+{"content":"0}"}

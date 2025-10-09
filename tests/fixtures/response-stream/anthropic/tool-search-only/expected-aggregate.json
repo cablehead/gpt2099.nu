@@ -1,0 +1,160 @@
+{
+  "message": {
+    "model": "claude-3-5-haiku-20241022",
+    "id": "msg_01K7VM8ytJp4VB5aKtARPxQC",
+    "type": "message",
+    "role": "assistant",
+    "content": [
+      {
+        "type": "server_tool_use",
+        "id": "srvtoolu_01XQbMhQGMyrN3hC7fyTdR4N",
+        "name": "web_search",
+        "input": {
+          "query": "Current weather in Tokyo today"
+        }
+      },
+      {
+        "type": "web_search_tool_result",
+        "tool_use_id": "srvtoolu_01XQbMhQGMyrN3hC7fyTdR4N",
+        "content": [
+          {
+            "type": "web_search_result",
+            "title": "Tokyo, Tokyo, Japan Weather Forecast | AccuWeather",
+            "url": "https://www.accuweather.com/en/jp/tokyo/226396/weather-forecast/226396",
+            "encrypted_content": "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",
+            "page_age": "1 day ago"
+          },
+          {
+            "type": "web_search_result",
+            "title": "Tokyo, Tokyo, Japan Current Weather | AccuWeather",
+            "url": "https://www.accuweather.com/en/jp/tokyo/226396/current-weather/226396",
+            "encrypted_content": "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",
+            "page_age": null
+          },
+          {
+            "type": "web_search_result",
+            "title": "Tokyo, Japan 14 day weather forecast",
+            "url": "https://www.timeanddate.com/weather/japan/tokyo/ext",
+            "encrypted_content": "EogCCioICBgCIiRlMmJmYTlmNS04ZDRjLTQ2MDYtODM5Ni1iOGUwY2U2YmNmMDgSDKYbOdx4OCS+3BMNVhoMkBwpIYKornRY1/wpIjAzN9AfGM/5R5Krke6Y+3dJryceXvHPKij6/ZD6fbEq8MQv++gvNSaY1Pk+CVqmIcQqiwG48ri6qSJ5twJVkWL4nYAoMQEPlF9m+H3tFnJhbdxnGFOfMt4yiBPg/hTCaVe4oVgu9mzT5CtlzLSgx+Y4iCmz1HkVDU+EAlrKMBsVFaABpx3xdM8XW4rrIEs+St6sz19dJuQt3SthB/ElRUSPpASQ2iUWpEGHK/OleHTj7tRJV3GrznluPHCxC1fAGAM=",
+            "page_age": "August 5, 2025"
+          },
+          {
+            "type": "web_search_result",
+            "title": "Weather for Tokyo, Japan",
+            "url": "https://www.timeanddate.com/weather/japan/tokyo",
+            "encrypted_content": "EtkBCioICBgCIiRlMmJmYTlmNS04ZDRjLTQ2MDYtODM5Ni1iOGUwY2U2YmNmMDgSDFE1gZPff0t7iNAZ8hoMO/zOT4fgHCTPkVIJIjA5NdSiHPnDqsXCSRUu2LngfIQ9kTl4dyMdC3wVEg77GzgyMqQ1PhQgGGvmA/bLbikqXZOqImRdLcCT/cYYJJAN3isB32YuXUDXiDtK0WpTzHzgwS5/+wXL3dQdbtg+Mr1cJVDm9cuVAw9OL9+/L2gcMGiZvitlt3k3UWvo4y81GQNI4uBJ6/4SAkfxl4MrXRgD",
+            "page_age": "August 5, 2025"
+          },
+          {
+            "type": "web_search_result",
+            "title": "Tokyo, Japan Weather Conditions | Weather Underground",
+            "url": "https://www.wunderground.com/weather/jp/tokyo",
+            "encrypted_content": "EsAMCioICBgCIiRlMmJmYTlmNS04ZDRjLTQ2MDYtODM5Ni1iOGUwY2U2YmNmMDgSDEGaTYoHOv5P+U0ZxBoM/99bxN69ujS16eSxIjCoVRIdtaQgPVu422GLSEvAVF2MQzJAB02Sm1lI3BNNRO+tm2cwVG2JicaNraUpnRYqwwukRi6dtrl9frTm6JevqnZvtz86PEF22ECW3hPEl//iY8IzubovgI+eRc0gp7QlCqrKiWKtMEqQEB1Y8uGwl23KpuLOQZJgKmS3b/xmbuMc4AFwwoNE8RjdkG/4T9w+Ob3DQBJ46jPuWdw+fZvaDIEFeLChQqxlTChvDzYWyzrpIHohdZSbNg84VMVbwEtbWSRaRZcPFvdVhG8mOjR59v6aBz38uLNtkp43Goz6T8NIL6i78Un4esMYokFP+cv182y9RQRg2FRkVr23oXN+/21QDtC/qXyHDr6/8rAOe8Kvkgf2o1Y8AQYvJvoa6koyZuwCRI555wiN01PQCt9XDZtZTcQFaThEH8mOga+xGI7xtzzUuzhnJcVtDZPAXMWc9LEI3QJtlJCE5ZMYN1bgwWDo4BH2Rr/FMkJzdTRircVtxH2pgBV/bFm9XhSZtjynskp7mMOQqfXiDi2AcYYMpQi1AHwxobyOJ2dkX2gTtxPfprb1c8UE2C3dIPCxskQzwjdxTTMFC4YFXQWoGA5eylHA0ttv5dxsO+CP9WPW+V2GAhB3IfzXeNnKuHSycs8j6Mf6sQyShykAGqdjc+lJnq0szs2zkTUAMisO4iuVr0vfJ4n8IRIt77uzUp2YRB7V/3Mhy/2Ba7wjH3BLhsOmWJgR/aeGC20Zi/7tzPrvwXC15cEH/s1Ts5TlkzB8Jr0EKILNRsx8FdzdE/dGv4xHRzwCdOYRVN3/fAWTToJuNfrBxRxZPG2ooCMqNwGQT6hJv/G+SNo+TGIBLxtkIHQwFe1CPzmYoySNp0tDluUiMszGaWpat6UNZstG0YG9vN/pASWCmOUNeSDVgeybdUNkCMmy8xKNGY1u1p9NWWAv6N1JYKAd5bTdlK/c6qeEJ/HcjlQoecpXbRwyB/FCEBLAfyFHyLHW3xCvL1SOHDLwrkFwFn4SqXGW60bKA4PYlgwAfSgq33HilYO4UbbSBAgaMXYno3Z/M+ODU7TYsQmFJB2QPyr09KUBQQZ9NOfYyIdrCYJIU+ImyDOsg8GkWZ9tKwpx7xSc+hHHHjetQyz84gRODwi3o0nMO4Rq3zOS/QSf36HZZAh10/hfDvuG3sxdwpHbcN71WHHHSGzNSykTvu2FLlvzIMqdL3Vl2OO5tPUDOSMsNAu1y2esh/KlOP1V3UebLkkmf1Nz3xSUr23wxycyijhKp1m0a9rx+EOGq5pLyWMI/b5dUhaWYZcei7fkMIlNuj60qRd7V3U7avIWD2I8oVZnD+C47T2vaGHNSBJ+IMkkmMvVSjEEDAJQIxJmkUCN/lVufgOguNSwoW+1/RK+iLxmxLXYo0lVvRvJMAKS0ZdXmeyCr7jTEZLwykuybG4gmGJlhj19maGgjo5lWsL0Oii8XACQEJo9Io3pSj478ZTI/4ZaVJjSaL2ZtYf3grku335QqZcn4EJm5IZ65Z2/DS/Ai2QOU78WgW9/SOktkslP6hotFGfriGg1JaUXS57wwTe+HGgBTzUs1UvL/8MyUZhZ9nNoLqncMIFXobhqZJSbKKEPlSM8Zulch/AvmIe08istaAwJfK/sSzDmnddWQZEWwrEuF/ti8BFbxISlq2nHvjmdwi/WZAUfvGtd4yc/STFB6E8JiGAx9t/CertkLoyCOBcTY64KheZMgjSmZ8wbxiG7JLIDrPgyTy42D1E1/67lQFvjLBmLPsSKW5hqiAL+Ihr/g6lcvhtBXssT+yNSpjr/s7rYl1X2oRp3pszQ8vhpAan3lWTQfjmcLEcNqtP+sNEL6DLqzY1toXLc2/A9k03PmNotCuK1g5Pn2cjMP2uatvsQyVhQp56i3xEBjN/ktwuiFx5rrJst5hq/DmtEZVBxxXqGSwxW5YDsKXCHKxs4xpuXjcIppPfx3/hAk+9oxB1pEsjlnpN8EvPWW9NdDMYUOMraF18HkQbBTgPE70ikElZoDejeH9SVkoDDGpRlTBgD",
+            "page_age": null
+          },
+          {
+            "type": "web_search_result",
+            "title": "Tokyo, 13, JP Current Weather - The Weather Network",
+            "url": "https://www.theweathernetwork.com/en/city/jp/tokyo/tokyo/current?_guid_iss_=1",
+            "encrypted_content": "Er8ECioICBgCIiRlMmJmYTlmNS04ZDRjLTQ2MDYtODM5Ni1iOGUwY2U2YmNmMDgSDCx61ekBT7tVel31IRoMXdjhokr/0VEPnShqIjD4OOcpvCTYrjeOSgr3JUOc01ShLCxvDxkJ4/SK7k/U2USIqnG2IVhe9IfVqxEthggqwgNtN63kFLWzO6TMpdZj5L8ZJKji6Zj9X5b0if0IFBw9MoZOv+2Z8PGlcbvZH3B9fUEE8fUie0eNTmrvV3/7+Z/y6k17bOH79GdZ48tuSIpWrenDuZLcHGU7C8InIr4AUvcXTl8ZgFBIQsZe4kVzm5qFeywUNb4HbNbze4PBwH8K6k6G1aPtktK4i22p8hp8lMb+o4L/TWT1UZOjlfoNtdrMVU06VRnTkwbHrONmOm2zNUsB0j4KW10tWUXIGWzdR4kKRBoWFX6KE0htg1+mb/MQ9okP2DZBfYSsXV33BSfI/IP16MFrTiXdNv9+bn4I3KexezWcYGb9v5n53tde4jTXU9AGe5Q9KFF5NxYbgjSO/3uhIaN/6D5ODgMMFMX+XsqCBBydRzDrKkJp+BR5n1b14hqEUJzad55xTWRoRGdt/quC2kBnIapCNFIo7HWAjou2FNls7p3GTP7plbtl/xSCiuN43+R6sIkZ9pkpy/lctr14PseoCtZaa/e++EB74BeKCXhHzl0/MzngSXjZMT+emab5qjbAORm0XorfqUeH8kqnmMPcDsmLOtzgDK6re4uXbMlCX8k+vLYz989ooN0BexEYAw==",
+            "page_age": null
+          },
+          {
+            "type": "web_search_result",
+            "title": "Tokyo, Japan Hourly Weather Forecast | Weather Underground",
+            "url": "https://www.wunderground.com/hourly/jp/tokyo",
+            "encrypted_content": "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",
+            "page_age": null
+          },
+          {
+            "type": "web_search_result",
+            "title": "Tokyo, Japan - Weather Forecasts | Maps | News - Yahoo Weather",
+            "url": "https://www.yahoo.com/news/weather/japan/tokyo-prefecture/tokyo-1118370",
+            "encrypted_content": "ErkKCioICBgCIiRlMmJmYTlmNS04ZDRjLTQ2MDYtODM5Ni1iOGUwY2U2YmNmMDgSDGH2jTAlblvhqYKB0xoMjOCKFSriG/rGI/11IjAA1JQ4N3oECjY2OzFwxs/ain9eK2U/521TEGyH0UBEcfb5/t83QPT+E4AFs7C+sIgqvAnsXOcWOjPv+UouavgpzinAj4xEpswrxnOjvtoIztCVvbJ97o0i6ouUVxqCtRQUBsUjD0cESmrgkJl2gVmKGJA9pdyxvqWvNCi7ZaoU8b/tkRT2iWltDntLUsCI7oVVzQvQDc4MyQPan3TyGZ6eGx6swAgQA0oxoJre83kE2yWgu0jRnVw3QVlG9QKURWdpjk6grPrmK4/+PRcj+/6GZPc5La/rWZMdQP927+Sdxxl9zQvR6Nsf6QobH2FaExd/+ADkNOS1rCzeBHub6RVzszpnQZGZAUW1M5vzVYpsx4WyYEV6mHQmPTooM6g9D4/21AoGq22P2KwIUmb6ya4/PfTpqIJxeEQrGWi7vZppmm8T6aFjdXDV7wRi0AWkY0LdaOOMJCxiITGFTfP9rAzVQLqy2usrArD85AN+zRivDl2kVn0jTM5ckEY8qhEsiBecCwW5XkIfPANH4V9kD2uoR+QRCv98dgF7PoOZuUk8F7KB6WSTciDPFIejga7BaFo0BQlQ96Rh8P3pAfSIVeZrSYaEy2feIdkqyZBEGcqTFCw+gNSMe4ifH0XO9equ5WneRsBakkkIYr1H86hfGI0H6H67SXc1+FbUJZ+mnYUoL4l0PFp9+qmg+2my6u7tU+WkaNj8REeAh1MF/6VUA0TMkswcDPHte5pkhfV7BOeIhEsWVrr7YuV4KWj2Mxj6bgweP0U/87zCeBEQ2AI37fajzh5eDuASzyUssWd983Zy01Sx+k1X8VklPCgp9IcLu94y3vOD5zHwdfxHFWQcNe2edhl7QgJUwu1XDQWdFFGl5bmN5PdbdmsqQrK9S/ySNkr6jVq9mAKonkBkvUWVRx+IW6ZdTQYhf/Z9H8wOKFMMd7ZFn345gyWK34tcl9FK/H1OWjCQhWM7LSEM2C+T92H2akqwToD0wU2dOz/1KA33ddzPARbqC1qD6Z6lgXzjExvkyLldMkqnur0GB6pC+gihMymf4jGdqWJSvgMYnxwF22d5fGnGP5gRc7hXZ+ubeG5iOJ5bkkU9DyE8b3bxJ9uXE212OvJ7+S/NrNzXcG82JVP4iIoEWwizDJJvOyUxNDRA4NzLNxCBTZD1l+2NBEt8Ksn/IXMw2Id9hgJOWpWeN7uDXxkSnZSj4T0qL92Pee6PaxY3zvuDdlg9tVYx3D29RRuO0TVTjzgQ6yM46yOMOPaNyyxzihZXiBi8bf49M9RYbENanuKA34wxPY1aTf5JbcbOuILKx1zF39mhJJmC6oAlpIUrWrSV06foDmmP1H03UZmYSTrkFyKUMHP2UJ5yOYeDK/t6qn0aHcXGmvyGIEEuXeOI+cX9lT3uFrxVQET8Id4UQ6HKKcUjV2FH9j/QuA0fe9Q5NHAGjlVYlc9+EkiySz8YmrYvxvA/DmlOWpAfMCeFgn3QbtTv3A0UFPABb6iydbuUD2DSz1XUsnVXGIynRaKKRbgHd3olsScEC7oicKZj0LKhEyC3m/F4sBAb2T4HvHQwHKrs0ojgsTFd0M5717rK/vrX/mTKkZ1/p04ZcWeA2zmjpQxmPCX6h1fA/kATg2flErraLw75gMgCMOPWiwWdTKhZduqFgnY0vSGjK/aBYhXvchGk4I+PKvUYAw==",
+            "page_age": null
+          },
+          {
+            "type": "web_search_result",
+            "title": "Weather & Geography | Japan's Weather | Travel Japan | JNTO",
+            "url": "https://www.japan.travel/en/weather/",
+            "encrypted_content": "Ep4JCioICBgCIiRlMmJmYTlmNS04ZDRjLTQ2MDYtODM5Ni1iOGUwY2U2YmNmMDgSDEzvEl1++6uJyn0+bxoMtpnVG5rZA4iaOH/YIjD+c8fRbYPF09LoYMyfRwm/itD5tdl4gLYcQ2RSImptr95mntJKaorxzX1nCDEv30wqoQh7TUQCHXni2ZmB6jMMrZi5xwi+Ccv5QC3seYRAi6rStwchGH3yxJoy3Fe6MQdNVwL5tJpHZTgF9rS7NSLwr+jv89gQWoB56r6Gz7x2m5tc4/M3ARCQkVqoJyfAjOQ5N42615vKqyikERizUKDbgibHUX1wKBL41SWS6stC0KXaIBNdMxnSkJRVVoBLpn1m+40AUmgpSpeVhC3n1tS4WjyCRQlSXtz51SOGQN+cDpbgQPW/GK/sMCqDX4QODGfE3LX/YHK23Pvdnou9vWwBoAQYBLCOh8gO7TUL6txQ/qIW1Jj5PySxV2wSfi+Y8cO8OKYZZmpdZKxO8SKWugm0MKYp42GXjF0eZmzz2ARU18l7+0nmqxUP3t4GYVt2yykB7zg+VaJhS456Q/RED622st5lC4vhG8H/5V/vaLiHaNHIAh+nqwyPSGI4xVuy7DoLiVK2YslpjQAwboVkomVaZegZvom7S0goy8FnPH12D42olGX3qNWkH5wjRF0jvEB6FRyb3xjLbugntbumFgB5wtcpu/ejZmztdoH12Mke3yuWtl07susprEzK1jwB3/lqzmwavQXWu54EYovnrO1YSkFqPWnk5LKQWz8NDj6wFRBp4dqsP93EHQUWPR0Cdzl2Dj2834NN7kHV/XvG15VrN3iFbDbkhMsT7+X/IChnP1uuqxDXRqLegskURZPuPUX3QKGaKdaNe581vqeliQRVMEAjHJp22Ns3hr0aBvhvvSWV40SWVEE3iVOvRpWAqIpUtQqpzZwrY9U3grZC5Y5cjSSeT5qupmzqQWCEVaVY3O0KPOBz0U9Q9qIPT63Xx4KN9hE5Fcz4dqQ4RIfS3iuEJFr2hSOtAVf5N1Ed/g2gav4jg76/QsQN//t4h4xw6+7lBzu1Tl/4EadOHGwI5A67iIJfagN9q485aOQMkuoqNejje/LcKeRqJNaeCtPzB5zuCfiHWKi7ukZRDZMQi44PdH4Uhj96gPL/dn3ud0NIC324pDzsZGQCWhFGO4n82QRxWFydyiPw+DDkxm0L9Gw6DEDktZpXgmGZ8nRJwtcchAZ1Blek3Lk1cCRk9/nC5TXboaukl7azkK+sHgWss214q4Cc0lNigehZeWVWqau4JM7UGc+lqa8IWx0FTKq7T11kRxaT+rzg2HidhTaQWUL2DF2lXazA0DLUqDMpxMkY3UfHXwYUP+3nmMDmJAAXHUjXzaUWB0GVlqCaxSGkVN+hkFMNSOfsxT/xSpYjuU9T82O0xm46RkfW1SEWHMW4depePNjMkAKfEOyN7FjXr4Nz11Rnp5dZYE54n8p0KSpeGWC1iWFz+qqZsJ1ihXVFy6W/hfohzDV7Z9amGUw1l+K0csjshU9kncBzPs15tyf5LlnYtZVuCAz8LP9Wzoh0HiM0+D3OGAM=",
+            "page_age": null
+          },
+          {
+            "type": "web_search_result",
+            "title": "Yr - Tokyo - Hourly weather forecast",
+            "url": "https://www.yr.no/en/forecast/hourly-table/2-1850147/Japan/Tokyo/Tokyo?i=0",
+            "encrypted_content": "Eo4DCioICBgCIiRlMmJmYTlmNS04ZDRjLTQ2MDYtODM5Ni1iOGUwY2U2YmNmMDgSDGbQ40EIIaSCyEFGzBoM3J5nnhud+tpDhzWGIjDWsWN+/OTzSE8BJvB6J+vf7QbAWYikc0L1Fgwnt9fS154A2deNbvvbroqDqXdNGoAqkQJ0g3qo8ddC3nFxLBW2SPIoP82wkIr7/Gwu+gJGSjW2nkw6gSqUkY7uxSgqF4gonqaCBMHmeR1II8Yr+ctJURJ3jfETCLfkwrTni3GWJwxExCywkKHR1Ny68RXG4Cp2YjkcyFMQNDthsE6ZJYr0oCf84Ifo2QFjklk4cTJ4xrj/dLDXQuSAl2BgPaY3jpF5KfEuASZswDEYP6MUnLHUUZsl7Q+paQ/a652el9PdU6z10yisyXa6z9R2wnlfd6zXsp8jfeT43XFJr+JKMjn1E8ziRw851G85mHrAAVde6UGIsNufN9EFeljrTepI9gQSt2D/6JpEG99iXOZBu/ztyGSdsW1igxyochTPaZSIEvnLsa0YAw==",
+            "page_age": null
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "text": "Based on the search results, here's the current weather in Tokyo:\n\n"
+      },
+      {
+        "citations": [],
+        "type": "text",
+        "text": "The current temperature is 69°F, and it's mostly cloudy"
+      },
+      {
+        "type": "text",
+        "text": ". More specifically:\n\n- "
+      },
+      {
+        "citations": [],
+        "type": "text",
+        "text": "It's currently partly cloudy with a RealFeel® temperature of 64°"
+      },
+      {
+        "type": "text",
+        "text": "\n- "
+      },
+      {
+        "citations": [],
+        "type": "text",
+        "text": "Wind is coming from the North at 3 mph with gusts up to 5 mph\n- Humidity is at 77%\n- Visibility is 15 miles"
+      },
+      {
+        "type": "text",
+        "text": "\n\nFor today's forecast, "
+      },
+      {
+        "citations": [],
+        "type": "text",
+        "text": "expect cloudy skies with a high of 73°F and winds from the North-Northeast at 15 to 25 mph"
+      },
+      {
+        "type": "text",
+        "text": ". "
+      },
+      {
+        "citations": [],
+        "type": "text",
+        "text": "Tonight will be cloudy with a 51% chance of precipitation and variable winds between 5 to 11 mph"
+      },
+      {
+        "type": "text",
+        "text": "."
+      }
+    ],
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "usage": {
+      "input_tokens": 10699,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 313,
+      "service_tier": "standard",
+      "server_tool_use": {
+        "web_search_requests": 1,
+        "web_fetch_requests": 0
+      }
+    }
+  }
+}

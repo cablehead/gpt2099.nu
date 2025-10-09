@@ -1,0 +1,27 @@
+{
+  "message": {
+    "model": "claude-3-5-haiku-20241022",
+    "id": "msg_01CU41EfRwD9DfEM3hSMCuaC",
+    "type": "message",
+    "role": "assistant",
+    "content": [
+      {
+        "type": "text",
+        "text": "I apologize, but the document appears to be blank or contains no visible content. The only text I can see are the words \"gpt2099\" at the top and bottom of the page. Without any readable text or discernible image, I cannot provide any meaningful analysis or description of the document."
+      }
+    ],
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "usage": {
+      "input_tokens": 1619,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 66,
+      "service_tier": "standard"
+    }
+  }
+}

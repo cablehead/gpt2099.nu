@@ -1,0 +1,85 @@
+{"type":"message_start","message":{"model":"claude-3-5-haiku-20241022","id":"msg_01SxVRHWxsDYTZrsGPhpEC21","type":"message","role":"assistant","content":[],"stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":476,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":1,"service_tier":"standard"}}}
+{"type":"content_block_start","index":0,"content_block":{"type":"text","text":""}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"I"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" apolog"}}
+{"type":"ping"}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"ize, but I cannot"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" directly"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" create a"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" backup file"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" with"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" the"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" currently"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" available"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" tools. The"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" only"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" tool"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" I have access to is"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" reading"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" files"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"."}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" To"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" create a backup, you"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" would typically"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" nee"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"d to:"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"\n\n1"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":". Use"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" a file"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" system comman"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"d to copy the file"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" ("}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"like"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" `cp config"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":".json config"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"."}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"json"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":".backup`)"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"\n2. Or"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" use a programming"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" language or"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" script"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" to copy"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" the file"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"\n3. Or manually"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" copy"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" the contents"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" to"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" a"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" new"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" file"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"\n\nWoul"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"d you like me to help"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" you copy"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" the contents"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" to"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" a backup"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" file manually"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"? I can show"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" you the"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" contents"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" I"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" just"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" read,"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" and you"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" coul"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"d save"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" them"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" to a new file name"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"d `"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"config.json.backup"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"`."}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"\n\nThe"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" contents"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" are"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":":"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"\n```"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"json\n{\n  "}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"\"database\": \"sqlite"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"://app.db\","}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" \n  \"debug"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"\": true\n}"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"\n```"}}
+{"type":"content_block_stop","index":0}
+{"type":"message_delta","delta":{"stop_reason":"end_turn","stop_sequence":null},"usage":{"input_tokens":476,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":171}}
+{"type":"message_stop"}
