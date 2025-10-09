@@ -75,7 +75,7 @@ export def provider [] {
           let has_text = ($m.content | where type == "text" | is-not-empty)
 
           if $has_documents {
-            # Build content array with text and image_url parts
+            # Build content array with text and file parts
             let content_parts = (
               []
               | append (
@@ -85,11 +85,28 @@ export def provider [] {
               )
               | append (
                 $m.content | where type == "document" | each {|d|
-                  {
-                    type: "image_url"
-                    image_url: {
-                      url: $"data:($d.source.media_type);base64,($d.source.data)"
+                  # OpenAI supports images via image_url and PDFs via file type
+                  # Other document types are not supported
+                  if ($d.source.media_type | str starts-with "image/") {
+                    # Images use image_url format
+                    {
+                      type: "image_url"
+                      image_url: {
+                        url: $"data:($d.source.media_type);base64,($d.source.data)"
+                      }
                     }
+                  } else if $d.source.media_type == "application/pdf" {
+                    # PDFs use file format
+                    {
+                      type: "file"
+                      file: {
+                        filename: "document.pdf"
+                        file_data: $"data:($d.source.media_type);base64,($d.source.data)"
+                      }
+                    }
+                  } else {
+                    # Unsupported document types - throw error
+                    error make {msg: $"OpenAI does not support document type: ($d.source.media_type)"}
                   }
                 }
               )
