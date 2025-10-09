@@ -1,14 +1,14 @@
 def collect-tests [] {
   use std/assert
 
-  const output_module = (path self "../output.nu")
+  const output_module = (path self "../utils/output.nu")
   use $output_module *
 
   const gpt_module = (path self "../../gpt")
   use $gpt_module
 
   # Get path to MCP test server
-  const test_mcp_server = (path self "../bin/test-mcp-server.nu")
+  const test_mcp_server = (path self "../utils/test-mcp-server.nu")
 
   {
     "call.anthropic.basics": {||
@@ -137,7 +137,7 @@ def collect-tests [] {
 }
 
 export def main [name?: string] {
-  use ../output.nu *
+  use ../utils/output.nu *
 
   let tests = collect-tests
 
@@ -161,7 +161,7 @@ export def main [name?: string] {
 
 # Spawn xs serve in a temporary directory, run a closure, then cleanup
 def .tmp-spawn [closure: closure] {
-  use ../output.nu *
+  use ../utils/output.nu *
   # Create a temporary directory
   let tmp_dir = (mktemp -d)
   debug $"Created temp directory: ($tmp_dir)"

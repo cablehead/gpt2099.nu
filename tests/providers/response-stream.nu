@@ -12,10 +12,10 @@ def test-aggregate [
   provider: string
   case_name: string
 ] {
-  use ../output.nu *
+  use ../utils/output.nu *
   start $"response-stream-aggregate.($provider).($case_name)"
 
-  let case_path = ["tests" "fixtures" "response-stream" $provider $case_name] | path join
+  let case_path = ["tests" "fixtures" "providers" "response-stream" $provider $case_name] | path join
   let events_file = $case_path | path join "events.jsonl"
 
   if not ($events_file | path exists) {
@@ -57,10 +57,10 @@ def test-streamer [
   provider: string
   case_name: string
 ] {
-  use ../output.nu *
+  use ../utils/output.nu *
   start $"response-stream-streamer.($provider).($case_name)"
 
-  let case_path = ["tests" "fixtures" "response-stream" $provider $case_name] | path join
+  let case_path = ["tests" "fixtures" "providers" "response-stream" $provider $case_name] | path join
   let events_file = $case_path | path join "events.jsonl"
 
   if not ($events_file | path exists) {
@@ -99,7 +99,7 @@ def run-all [
   provider: string
   test_type: string # "aggregate" or "streamer" or "both"
 ] {
-  let fixtures_path = ["tests" "fixtures" "response-stream" $provider] | path join
+  let fixtures_path = ["tests" "fixtures" "providers" "response-stream" $provider] | path join
 
   if not ($fixtures_path | path exists) {
     print $"No fixtures found for provider: ($provider)"

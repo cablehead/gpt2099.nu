@@ -48,7 +48,7 @@ def test-error-case [
   # Load tools dynamically based on servers
   let tools = if ($input.options?.servers? | is-not-empty) {
     $input.options.servers | each {|server|
-      let tool_file = $"tests/fixtures/tools/($server).json"
+      let tool_file = $"tests/fixtures/providers/tools/($server).json"
       if ($tool_file | path exists) {
         open $tool_file
       } else {
@@ -59,7 +59,7 @@ def test-error-case [
     []
   }
 
-  use ../output.nu *
+  use ../utils/output.nu *
   start $"prepare-request.($provider).($case_name)"
 
   try {
@@ -97,7 +97,7 @@ def run-all [
   api_key?: string # API key for actual calls (optional)
   capture?: bool # Capture streaming responses to fixtures
 ] {
-  let fixtures_path = "tests/fixtures/prepare-request"
+  let fixtures_path = "tests/fixtures/providers/prepare-request"
   let test_cases = (ls $fixtures_path | where type == dir | get name | path basename)
 
   for case in $test_cases {
@@ -111,7 +111,7 @@ def test-case [
   api_key?: string # API key if making real calls
   capture?: bool # Capture streaming responses to fixtures
 ] {
-  let case_path = ["tests" "fixtures" "prepare-request" $case_name] | path join
+  let case_path = ["tests" "fixtures" "providers" "prepare-request" $case_name] | path join
 
   # Check if expected fixture exists for this provider (.json or .err)
   let expected_json_file = [$case_path $"expected-($provider).json"] | path join
@@ -121,7 +121,7 @@ def test-case [
   let has_err = ($expected_err_file | path exists)
 
   if not ($has_json or $has_err) {
-    use ../output.nu *
+    use ../utils/output.nu *
     start $"prepare-request.($provider).($case_name)"
     skip "no expected fixture"
     return
@@ -129,7 +129,7 @@ def test-case [
 
   # Skip API calls for .err cases (they indicate unsupported features)
   if $has_err and ($api_key | is-not-empty) {
-    use ../output.nu *
+    use ../utils/output.nu *
     start $"prepare-request.($provider).($case_name).api-call"
     skip "err fixture indicates unsupported feature"
     return
@@ -154,7 +154,7 @@ def test-case [
   # Load tools dynamically based on servers
   let tools = if ($input.options?.servers? | is-not-empty) {
     $input.options.servers | each {|server|
-      let tool_file = $"tests/fixtures/tools/($server).json"
+      let tool_file = $"tests/fixtures/providers/tools/($server).json"
       if ($tool_file | path exists) {
         open $tool_file
       } else {
@@ -169,7 +169,7 @@ def test-case [
 
   if ($api_key | is-not-empty) {
     # Smoke test - just verify API call works and returns events
-    use ../output.nu *
+    use ../utils/output.nu *
     start $"prepare-request.($provider).($case_name).api-call"
 
     try {
@@ -200,7 +200,7 @@ def test-case [
     }
   } else {
     # Standard fixture comparison
-    use ../output.nu *
+    use ../utils/output.nu *
     start $"prepare-request.($provider).($case_name)"
 
     assert equal $actual $expected

@@ -9,7 +9,7 @@ def main [
   test_case: string
 ] {
   let p = providers all | get $provider
-  let base_path = ["tests" "fixtures" "response-stream" $provider $test_case] | path join
+  let base_path = ["tests" "fixtures" "providers" "response-stream" $provider $test_case] | path join
   let events_file = $base_path | path join "events.jsonl"
 
   if not ($events_file | path exists) {
