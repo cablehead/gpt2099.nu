@@ -169,62 +169,141 @@ export def provider [] {
     }
 
     response_stream_streamer: {|event|
-      let delta = $event.choices.0.delta
-      if $delta.content? != null {
-        {type: "text" content: $delta.content}
-      } else {
-        if $delta.function_call.name? != null {
-          {type: "tool_use" name: $delta.function_call.name}
-        } else {
-          if $delta.function_call.arguments? != null {
-            {content: $delta.function_call.arguments}
-          } else {
-            null
+      let delta = $event.choices?.0?.delta?
+      if $delta == null {
+        return null
+      }
+
+      # Handle text content
+      if ($delta.content? | is-not-empty) {
+        return {type: "text" content: $delta.content}
+      }
+
+      # Handle tool calls (OpenAI uses tool_calls array)
+      if ($delta.tool_calls? | is-not-empty) {
+        let tool_call = $delta.tool_calls.0
+
+        # First chunk includes function name and id
+        if ($tool_call.function?.name? | is-not-empty) {
+          return {
+            type: "tool_use"
+            name: $tool_call.function.name
+            id: $tool_call.id
           }
         }
+
+        # Subsequent chunks are just arguments
+        if ($tool_call.function?.arguments? | is-not-empty) {
+          return {content: $tool_call.function.arguments}
+        }
       }
+
+      null
     }
 
     response_stream_aggregate: {||
       collect {|events|
-        let text_parts = (
-          $events
-          | where type == "text"
-          | get content
-        )
+        mut model = null
+        mut text_content = ""
+        mut tool_calls_map = {}
+        mut finish_reason = null
 
-        let tool_use_event = (
-          $events
-          | where {|ev| $ev.type == "tool_use" }
-          | first
-        )
-
-        let arg_chunks = (
-          $events
-          | where {|ev| $ev.type != "text" and $ev.type != "tool_use" and $ev.content? }
-          | get content
-        )
-
-        let message_content = (
-          []
-          | if ($text_parts | is-not-empty) {
-            append {type: "text" text: ($text_parts | str join "")}
+        # Process all events to accumulate content
+        for event in $events {
+          # Extract model from first event (or any event)
+          if $model == null and ($event.model? | is-not-empty) {
+            $model = $event.model
           }
-          | if ($tool_use_event | is-not-empty) {
-            append {
-              type: "tool_use"
-              name: $tool_use_event.name
-              input: ($arg_chunks | str join "" | from json)
+
+          let delta = $event.choices?.0?.delta?
+          if $delta == null { continue }
+
+          # Accumulate text content
+          if ($delta.content? | is-not-empty) {
+            $text_content = $text_content + $delta.content
+          }
+
+          # Accumulate tool calls by index
+          if ($delta.tool_calls? | is-not-empty) {
+            for tool_call_delta in $delta.tool_calls {
+              let idx_str = ($tool_call_delta.index | into string)
+
+              # Check if this index already exists
+              let exists = ($idx_str in ($tool_calls_map | columns))
+
+              if not $exists {
+                # Initialize new tool call
+                $tool_calls_map = $tool_calls_map | insert $idx_str {
+                  id: ($tool_call_delta.id? | default "")
+                  type: ($tool_call_delta.type? | default "function")
+                  function: {
+                    name: ($tool_call_delta.function?.name? | default "")
+                    arguments: ($tool_call_delta.function?.arguments? | default "")
+                  }
+                }
+              } else {
+                # Accumulate arguments for existing tool call
+                let existing = $tool_calls_map | get $idx_str
+                $tool_calls_map = $tool_calls_map | update $idx_str {
+                  id: (if ($tool_call_delta.id? | is-not-empty) { $tool_call_delta.id } else { $existing.id })
+                  type: (if ($tool_call_delta.type? | is-not-empty) { $tool_call_delta.type } else { $existing.type })
+                  function: {
+                    name: (if ($tool_call_delta.function?.name? | is-not-empty) { $tool_call_delta.function.name } else { $existing.function.name })
+                    arguments: ($existing.function.arguments + ($tool_call_delta.function?.arguments? | default ""))
+                  }
+                }
+              }
             }
           }
-        )
+
+          # Capture finish reason from choices
+          let reason = $event.choices?.0?.finish_reason?
+          if ($reason | is-not-empty) {
+            $finish_reason = $reason
+          }
+        }
+
+        # Build content array
+        mut content = []
+        if ($text_content | is-not-empty) {
+          $content = $content | append {type: "text" text: $text_content}
+        }
+
+        # Convert tool calls map to content array
+        let tool_calls = $tool_calls_map | values
+        if ($tool_calls | is-not-empty) {
+          for tool_call in $tool_calls {
+            $content = $content | append {
+              type: "tool_use"
+              id: (random uuid)
+              name: $tool_call.function.name
+              input: ($tool_call.function.arguments | from json)
+            }
+          }
+        }
+
+        # Determine stop reason
+        let stop_reason = if ($tool_calls | is-not-empty) {
+          "tool_use"
+        } else if $finish_reason == "stop" {
+          "end_turn"
+        } else {
+          "end_turn"
+        }
 
         {
           message: {
             type: "message"
             role: "assistant"
-            content: $message_content
-            stop_reason: (if ($tool_use_event | is-not-empty) { "tool_use" } else { "end_turn" })
+            model: $model
+            content: $content
+            stop_reason: $stop_reason
+            usage: {
+              input_tokens: 0
+              cache_creation_input_tokens: 0
+              cache_read_input_tokens: 0
+              output_tokens: 0
+            }
           }
         }
       }

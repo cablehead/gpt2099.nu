@@ -183,7 +183,7 @@ def test-case [
 
       # Capture streaming events if --capture flag is set
       if ($capture | default false) {
-        let capture_dir = ["tests" "fixtures" "response-stream" $provider $case_name] | path join
+        let capture_dir = ["tests" "fixtures" "providers" "response-stream" $provider $case_name] | path join
         mkdir $capture_dir
         let capture_file = $capture_dir | path join "events.jsonl"
         $events | each {|event| $event | to json -r } | str join "\n" | save -f $capture_file
