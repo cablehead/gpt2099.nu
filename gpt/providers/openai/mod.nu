@@ -53,11 +53,13 @@ export def provider [] {
               }
             }
           } | collect
-          [{
-            role: "assistant"
-            content: ($m.content | where type == "text" | get text? | default [] | str join "")
-            tool_calls: $tool_calls_array
-          }]
+          [
+            {
+              role: "assistant"
+              content: ($m.content | where type == "text" | get text? | default [] | str join "")
+              tool_calls: $tool_calls_array
+            }
+          ]
         } else if ($tool_results | is-not-empty) {
           # Tool result messages become role: "tool"
           $tool_results | each {|tr|
@@ -76,28 +78,36 @@ export def provider [] {
             # Build content array with text and image_url parts
             let content_parts = (
               []
-              | append ($m.content | where type == "text" | each {|t|
-                {type: "text" text: $t.text}
-              })
-              | append ($m.content | where type == "document" | each {|d|
-                {
-                  type: "image_url"
-                  image_url: {
-                    url: $"data:($d.source.media_type);base64,($d.source.data)"
+              | append (
+                $m.content | where type == "text" | each {|t|
+                  {type: "text" text: $t.text}
+                }
+              )
+              | append (
+                $m.content | where type == "document" | each {|d|
+                  {
+                    type: "image_url"
+                    image_url: {
+                      url: $"data:($d.source.media_type);base64,($d.source.data)"
+                    }
                   }
                 }
-              })
+              )
             )
-            [{
-              role: $m.role
-              content: $content_parts
-            }]
+            [
+              {
+                role: $m.role
+                content: $content_parts
+              }
+            ]
           } else {
             # Text-only message
-            [{
-              role: $m.role
-              content: ($m.content | where type == "text" | get text | str join "")
-            }]
+            [
+              {
+                role: $m.role
+                content: ($m.content | where type == "text" | get text | str join "")
+              }
+            ]
           }
         }
       } | flatten
@@ -118,7 +128,15 @@ export def provider [] {
       (
         $in
         | insert model $model
-        | http post --content-type application/json -H {"Authorization": $"Bearer ($key)"} $url
+        | http post --allow-errors --content-type application/json -H {"Authorization": $"Bearer ($key)"} $url
+        | metadata access {|meta|
+
+          if $meta.http_response.status != 200 {
+            error make {
+              msg: $"Error calling openai: ($meta.http_response | to json) ($in)"
+            }
+          } else { }
+        }
         | lines
         | each {|line| $line | split row -n 2 "data: " | get 1? }
         | where $it != null and $it != "[DONE]"
