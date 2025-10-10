@@ -1,0 +1,823 @@
+{"id":"47befe9b-ee58-420e-9355-1153b990667d","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+{"type":"content-start","index":0,"delta":{"message":{"content":{"type":"thinking","thinking":""}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"Okay"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" user"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" is"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" asking"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" how"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" to"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" reverse"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" a"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" string"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Let"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" me"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" think"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" about"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" best"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" way"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" to"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" explain"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" this"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" First"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" I"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" need"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" to"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" consider"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" which"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" programming"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" languages"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" they"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" might"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" be"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" using"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Since"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" they"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" didn"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"'t"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" specify"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" I"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" should"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" cover"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" a"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" few"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" common"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" ones"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" like"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Python"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" JavaScript"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" and"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" maybe"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Java"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" or"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" C"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"++."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" \n\nIn"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Python"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" reversing"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" a"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" string"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" is"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" pretty"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" straightforward"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" You"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" can"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" slice"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" string"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" with"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" a"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" step"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" of"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" -"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"1"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" like"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" s"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"["}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"::-"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"1"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"]."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" That"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"'s"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" concise"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" and"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" efficient"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" For"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" JavaScript"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" you"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" can"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" split"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" string"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" into"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" an"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" array"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" reverse"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" array"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" and"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" then"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" join"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" it"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" back"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" So"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" s"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"split"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"('"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"')."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"reverse"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"()."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"join"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"('"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"')."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" \n\nWait"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" but"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" in"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" JavaScript"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" strings"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" are"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" immutable"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" so"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" converting"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" to"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" an"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" array"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" is"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" necessary"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" What"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" about"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" other"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" methods"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"?"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Maybe"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" using"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" a"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" loop"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" to"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" build"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" reversed"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" string"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" manually"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" That"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" could"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" be"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" another"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" approach"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" for"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" educational"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" purposes"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"\n\nAlso"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" I"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" should"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" mention"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" any"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" built"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"-"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"in"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" functions"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" or"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" libraries"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" For"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" example"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" in"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Java"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" using"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" StringBuilder"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"'s"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" reverse"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" method"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" And"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" in"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" C"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"++,"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" using"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" standard"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" library"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"'s"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" reverse"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" function"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" with"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" begin"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" and"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" end"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" iterators"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"\n\nI"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" should"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" also"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" explain"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" general"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" algorithm"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Like"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" take"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" string"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" start"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" from"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" last"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" character"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" and"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" append"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" each"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" character"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" to"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" a"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" new"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" string"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" That"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" way"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" even"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" if"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" someone"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" is"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" using"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" a"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" language"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" not"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" covered"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" they"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" can"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" implement"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" logic"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" themselves"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"\n\nAre"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" there"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" any"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" edge"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" cases"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"?"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Like"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" empty"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" strings"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" or"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" strings"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" with"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" one"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" character"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Probably"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" not"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" an"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" issue"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" but"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" worth"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" mentioning"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" that"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" methods"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" handle"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" those"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" cases"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"\n\nMaybe"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" provide"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" examples"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" for"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" each"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" language"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Let"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" me"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" structure"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" answer"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" by"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" listing"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" different"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" languages"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" and"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" their"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" respective"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" methods"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Start"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" with"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Python"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" then"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" JavaScript"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Java"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" C"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"++,"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" and"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" maybe"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" a"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" manual"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" approach"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Also"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" explain"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" each"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" step"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" briefly"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" so"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" user"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" understands"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" how"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" it"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" works"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"\n\nWait"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" user"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" might"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" be"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" a"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" beginner"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" so"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" avoiding"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" overly"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" complex"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" explanations"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" is"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" key"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Keep"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" it"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" simple"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" and"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" direct"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Use"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" code"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" snippets"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" with"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" comments"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" if"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" possible"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" But"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" since"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" this"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" is"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" text"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"-"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"based"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" formatting"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" code"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" correctly"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" is"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" important"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"\n\nLet"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" me"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" check"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" each"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" method"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" again"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" to"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" ensure"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" accuracy"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Python"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" slicing"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" is"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" correct"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" JavaScript"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" split"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"-"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"reverse"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"-"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"join"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" works"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Java"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"'s"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" StringBuilder"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" is"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" right"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" approach"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" C"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"++"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" using"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" std"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"::"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"reverse"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" with"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" correct"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" headers"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Manual"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" method"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" with"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" a"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" loop"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" iterating"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" from"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" end"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"\n\nYes"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" that"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" should"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" cover"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" main"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" approaches"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Also"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" mention"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" time"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" and"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" space"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" complexity"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" if"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" relevant"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" For"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" example"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" slicing"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" in"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Python"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" creates"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" a"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" new"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" string"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" so"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" O"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"("}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"n"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":")"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" space"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" The"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" in"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"-"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"place"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" methods"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" like"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" StringBuilder"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"'s"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" reverse"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" might"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" be"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" more"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" efficient"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" in"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" some"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" contexts"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"\n\nBut"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" maybe"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" that"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"'s"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" too"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" detailed"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" for"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" a"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" basic"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" question"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Stick"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" to"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" methods"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" unless"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" user"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" asks"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" for"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" optimization"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Alright"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" putting"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" it"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" all"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" together"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" in"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" a"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" clear"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" step"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"-"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"by"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"-"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"step"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" manner"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-end","index":0}
+{"type":"content-start","index":0,"delta":{"message":{"content":{"type":"text","text":""}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"To"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" reverse"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" a"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" string"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" here"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" are"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" common"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" methods"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" in"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" various"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" programming"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" languages"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":":"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n\n###"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" 1"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" **"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"Python"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"**"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n   Use"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" slicing"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" with"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" a"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" step"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" of"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" `-"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"1"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"`:"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n   ```"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"python"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n   reversed"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"_"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"str"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" ="}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" s"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"["}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"::-"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"1"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"]"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n   ```"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n\n###"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" 2"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" **"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"JavaScript"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"**"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n   Split"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" into"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" an"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" array"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" reverse"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" and"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" rejoin"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":":"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n   ```"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"javascript"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n   let"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" reversed"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"Str"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" ="}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" s"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"split"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"('"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"')."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"reverse"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"()."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"join"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"('');"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n   ```"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n\n###"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" 3"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" **"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"Java"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"**"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n   Use"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" `"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"StringBuilder"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"`"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" ("}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"re"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"vers"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"es"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" in"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"-"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"place"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"):"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n   ```"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"java"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n   String"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" reversed"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" ="}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" new"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" StringBuilder"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"("}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"s"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":")."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"reverse"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"()."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"toString"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"();"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n   ```"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n\n###"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" 4"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" **"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"C"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"++"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"**"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n   Use"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" Standard"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" Library"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"’"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"s"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" `"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"reverse"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"`:"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n   ```"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"cpp"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n   #"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"include"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" \u003calgorithm"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\u003e"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n   #"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"include"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" \u003cstring"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\u003e"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n   std"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"::"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"string"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" reversed"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"("}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"s"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":");"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n   std"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"::"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"reverse"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"("}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"reversed"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"begin"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"(),"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" reversed"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"end"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"());"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n   ```"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n\n###"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" 5"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" **"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"Manual"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" Approach"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" ("}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"Any"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" Language"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":")**"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n   Iterate"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" from"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" end"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" of"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" string"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" and"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" build"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" reversed"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" result"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":":"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n   ```"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"python"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n   reversed"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"_"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"str"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" ="}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" \"\""}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n   for"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" i"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" in"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" range"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"("}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"len"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"("}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"s"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":")-"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"1"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" -"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"1"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" -"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"1"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"):"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n       reversed"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"_"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"str"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" +="}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" s"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"["}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"i"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"]"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n   ```"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n\n###"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" Key"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" Notes"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":":"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n-"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" **"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"Time"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" Complexity"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"**:"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" Most"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" methods"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" run"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" in"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" **"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"O"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"("}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"n"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":")**"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" time"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" ("}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"linear"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":")."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n-"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" **"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"Space"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" Complexity"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"**:"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" Typically"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" **"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"O"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"("}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"n"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":")**"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" ("}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"new"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" string"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" created"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"),"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" except"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" in"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"-"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"place"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" methods"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" like"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" Java"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"’"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"s"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" `"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"StringBuilder"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"reverse"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"()`"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" which"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" use"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" **"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"O"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"("}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"1"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":")**"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" extra"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" space"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n\nChoose"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" method"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" that"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" fits"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" your"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" language"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" and"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" context"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"!"}}}}
+{"type":"content-end","index":0}
+{"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":7,"output_tokens":885},"tokens":{"input_tokens":1393,"output_tokens":889},"cached_tokens":0}}}

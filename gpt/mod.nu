@@ -261,6 +261,7 @@ export def init [
   cat ($base | path join "mcp-rpc.nu") | .append gpt.mod.mcp-rpc
   cat ($base | path join "providers/anthropic/mod.nu") | .append gpt.mod.provider.anthropic
   cat ($base | path join "providers/cerebras/mod.nu") | .append gpt.mod.provider.cerebras
+  cat ($base | path join "providers/cohere/mod.nu") | .append gpt.mod.provider.cohere
   cat ($base | path join "providers/gemini/mod.nu") | .append gpt.mod.provider.gemini
   cat ($base | path join "providers/openai/mod.nu") | .append gpt.mod.provider.openai
   cat ($base | path join "xs/command-call.nu") | .append gpt.define

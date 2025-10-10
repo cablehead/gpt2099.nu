@@ -1,0 +1,20 @@
+{
+  "message": {
+    "type": "message",
+    "role": "assistant",
+    "model": "cohere",
+    "content": [
+      {
+        "type": "text",
+        "text": "To reverse a string, here are common methods in various programming languages:\n\n### 1. **Python**\n   Use slicing with a step of `-1`:\n   ```python\n   reversed_str = s[::-1]\n   ```\n\n### 2. **JavaScript**\n   Split into an array, reverse, and rejoin:\n   ```javascript\n   let reversedStr = s.split('').reverse().join('');\n   ```\n\n### 3. **Java**\n   Use `StringBuilder` (reverses in-place):\n   ```java\n   String reversed = new StringBuilder(s).reverse().toString();\n   ```\n\n### 4. **C++**\n   Use the Standard Library’s `reverse`:\n   ```cpp\n   #include <algorithm>\n   #include <string>\n   std::string reversed(s);\n   std::reverse(reversed.begin(), reversed.end());\n   ```\n\n### 5. **Manual Approach (Any Language)**\n   Iterate from the end of the string and build the reversed result:\n   ```python\n   reversed_str = \"\"\n   for i in range(len(s)-1, -1, -1):\n       reversed_str += s[i]\n   ```\n\n### Key Notes:\n- **Time Complexity**: Most methods run in **O(n)** time (linear).\n- **Space Complexity**: Typically **O(n)** (new string created), except in-place methods like Java’s `StringBuilder.reverse()` which use **O(1)** extra space.\n\nChoose the method that fits your language and context!"
+      }
+    ],
+    "stop_reason": "end_turn",
+    "usage": {
+      "input_tokens": 7,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 885
+    }
+  }
+}

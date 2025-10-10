@@ -3,6 +3,7 @@
   modules: {
     "anthropic": (.head gpt.mod.provider.anthropic | .cas $in.hash)
     "cerebras": (.head gpt.mod.provider.cerebras | .cas $in.hash)
+    "cohere": (.head gpt.mod.provider.cohere | .cas $in.hash)
     "gemini": (.head gpt.mod.provider.gemini | .cas $in.hash)
     "openai": (.head gpt.mod.provider.openai | .cas $in.hash)
     "ctx": (.head gpt.mod.ctx | .cas $in.hash)
@@ -53,6 +54,7 @@
     let p = match $ptr.provider {
       "anthropic" => (anthropic provider)
       "cerebras" => (cerebras provider)
+      "cohere" => (cohere provider)
       "gemini" => (gemini provider)
       "openai" => (openai provider)
       _ => {
