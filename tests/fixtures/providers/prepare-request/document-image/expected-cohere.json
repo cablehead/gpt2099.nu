@@ -1,0 +1,17 @@
+{
+  "stream": true,
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "image_url",
+          "image_url": {
+            "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAGAQAAAABhwxpxAAAAHElEQVQI12P4DwQPGP7/YZAHkgxgkgOJzQ+UBQBX2xHFO9XWzAAAAABJRU5ErkJggg=="
+          }
+        }
+      ]
+    }
+  ],
+  "tools": []
+}

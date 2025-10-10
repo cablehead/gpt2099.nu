@@ -1,0 +1,13 @@
+{"type":"tool_use","name":"filesystem___read_file","id":"call_ZGLdkZXioWbm8rszihwu59rJ"}
+{"content":"{\""}
+{"content":"path"}
+{"content":"\":\""}
+{"content":"./"}
+{"content":"image"}
+{"content":".png"}
+{"content":"\",\""}
+{"content":"head"}
+{"content":"\":"}
+{"content":"100"}
+{"content":"0"}
+{"content":"}"}

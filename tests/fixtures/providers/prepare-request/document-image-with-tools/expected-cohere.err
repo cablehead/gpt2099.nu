@@ -1,0 +1,1 @@
+Cohere vision models do not support tool use (may work with strict_tools mode)

@@ -1,0 +1,46 @@
+{
+  "stream": true,
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Describe what you see in this image, then write your analysis to a file called analysis.txt"
+        },
+        {
+          "type": "image_url",
+          "image_url": {
+            "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAGAQAAAABhwxpxAAAAHElEQVQI12P4DwQPGP7/YZAHkgxgkgOJzQ+UBQBX2xHFO9XWzAAAAABJRU5ErkJggg=="
+          }
+        }
+      ]
+    }
+  ],
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "filesystem___read_file",
+        "description": "Read the complete contents of a file from the file system.",
+        "parameters": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "additionalProperties": false,
+          "properties": {
+            "path": {
+              "type": "string"
+            },
+            "head": {
+              "type": "integer",
+              "format": "uint64"
+            }
+          },
+          "required": [
+            "path"
+          ],
+          "type": "object"
+        }
+      }
+    }
+  ]
+}

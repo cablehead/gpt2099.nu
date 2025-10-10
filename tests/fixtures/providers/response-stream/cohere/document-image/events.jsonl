@@ -1,0 +1,61 @@
+{"id":"df283a84-13a6-4490-8d2e-b5d16de57f7f","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+{"type":"content-start","index":0,"delta":{"message":{"content":{"type":"text","text":""}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"I"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"'m"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" sorry"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" but"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" I"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" can"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"'t"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" provide"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" a"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" description"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" or"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" answer"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" based"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" on"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" image"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" you"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"'ve"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" provided"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" as"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" it"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" appears"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" to"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" be"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" too"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" blurry"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" or"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" unclear"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" to"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" discern"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" any"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" specific"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" details"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" If"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" you"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" have"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" another"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" image"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" or"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" more"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" context"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" feel"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" free"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" to"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" share"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" and"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" I"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"'d"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" be"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" happy"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" to"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" help"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"!"}}}}
+{"type":"content-end","index":0}
+{"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":259,"output_tokens":57},"tokens":{"input_tokens":496,"output_tokens":57,"image_tokens":259},"cached_tokens":480}}}

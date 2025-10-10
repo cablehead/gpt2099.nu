@@ -1,0 +1,25 @@
+{
+  "message": {
+    "type": "message",
+    "role": "assistant",
+    "model": "gpt-4.1-mini-2025-04-14",
+    "content": [
+      {
+        "type": "tool_use",
+        "id": "aa25ee4c-eded-4f3d-85af-b749df7feb68",
+        "name": "filesystem___read_file",
+        "input": {
+          "path": "./image.png",
+          "head": 1000
+        }
+      }
+    ],
+    "stop_reason": "tool_use",
+    "usage": {
+      "input_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 0
+    }
+  }
+}

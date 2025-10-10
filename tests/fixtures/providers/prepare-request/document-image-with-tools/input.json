@@ -1,0 +1,24 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "document",
+          "source": {
+            "type": "base64",
+            "media_type": "image/png",
+            "data": "iVBORw0KGgoAAAANSUhEUgAAACMAAAAGAQAAAABhwxpxAAAAHElEQVQI12P4DwQPGP7/YZAHkgxgkgOJzQ+UBQBX2xHFO9XWzAAAAABJRU5ErkJggg=="
+          }
+        },
+        {
+          "type": "text",
+          "text": "Describe what you see in this image, then write your analysis to a file called analysis.txt"
+        }
+      ]
+    }
+  ],
+  "options": {
+    "servers": ["filesystem"]
+  }
+}

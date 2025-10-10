@@ -33,15 +33,6 @@ export def provider [] {
         error make {msg: "Cohere does not support built-in search capabilities"}
       }
 
-      # Check for unsupported documents first
-      for msg in $ctx.messages {
-        let has_documents = ($msg.content | where type == "document" | is-not-empty)
-        if $has_documents {
-          let doc = $msg.content | where type == "document" | first
-          error make {msg: $"Cohere does not support document type: ($doc.source.media_type)"}
-        }
-      }
-
       # Transform messages
       let messages = $ctx.messages | each {|m|
         # Check if this is an assistant message with tool_use
@@ -80,13 +71,52 @@ export def provider [] {
             }
           }
         } else {
-          # Regular text message
-          [
-            {
-              role: $m.role
-              content: ($m.content | where type == "text" | get text | str join "")
-            }
-          ]
+          # Regular message - may contain text and/or documents
+          let has_documents = ($m.content | where type == "document" | is-not-empty)
+          let has_text = ($m.content | where type == "text" | is-not-empty)
+
+          if $has_documents {
+            # Build content array with text and document parts
+            let content_parts = (
+              []
+              | append (
+                $m.content | where type == "text" | each {|t|
+                  {type: "text" text: $t.text}
+                }
+              )
+              | append (
+                $m.content | where type == "document" | each {|d|
+                  let media_type = $d.source.media_type
+                  if ($media_type | str starts-with "image/") {
+                    # Images use image_url format (similar to OpenAI)
+                    {
+                      type: "image_url"
+                      image_url: {
+                        url: $"data:($media_type);base64,($d.source.data)"
+                      }
+                    }
+                  } else {
+                    # Unsupported document types
+                    error make {msg: $"Cohere does not support document type: ($media_type)"}
+                  }
+                }
+              )
+            )
+            [
+              {
+                role: $m.role
+                content: $content_parts
+              }
+            ]
+          } else {
+            # Text-only message
+            [
+              {
+                role: $m.role
+                content: ($m.content | where type == "text" | get text | str join "")
+              }
+            ]
+          }
         }
       } | flatten
 

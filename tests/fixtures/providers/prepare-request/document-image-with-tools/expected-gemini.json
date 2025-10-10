@@ -1,0 +1,47 @@
+{
+  "contents": [
+    {
+      "role": "user",
+      "parts": [
+        {
+          "inline_data": {
+            "mime_type": "image/png",
+            "data": "iVBORw0KGgoAAAANSUhEUgAAACMAAAAGAQAAAABhwxpxAAAAHElEQVQI12P4DwQPGP7/YZAHkgxgkgOJzQ+UBQBX2xHFO9XWzAAAAABJRU5ErkJggg=="
+          }
+        },
+        {
+          "text": "Describe what you see in this image, then write your analysis to a file called analysis.txt"
+        }
+      ]
+    }
+  ],
+  "generationConfig": {
+    "temperature": 1,
+    "topP": 0.95,
+    "maxOutputTokens": 81920
+  },
+  "tools": [
+    {
+      "functionDeclarations": [
+        {
+          "name": "filesystem___read_file",
+          "description": "Read the complete contents of a file from the file system.",
+          "parameters": {
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "head": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "type": "object"
+          }
+        }
+      ]
+    }
+  ]
+}

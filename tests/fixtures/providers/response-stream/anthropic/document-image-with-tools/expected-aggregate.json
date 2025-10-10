@@ -1,0 +1,35 @@
+{
+  "message": {
+    "model": "claude-3-5-haiku-20241022",
+    "id": "msg_01EJk6gGqBG8HpwF2vsduf4p",
+    "type": "message",
+    "role": "assistant",
+    "content": [
+      {
+        "type": "text",
+        "text": "I'll help you with that. However, I notice that the image appears to be heavily redacted or obscured, showing only a black horizontal line against a white background. \n\nI'll write an analysis to the file and then show you the contents:"
+      },
+      {
+        "type": "tool_use",
+        "id": "toolu_016nnDYS4iqKXeBeV4yHd77U",
+        "name": "filesystem___read_file",
+        "input": {
+          "path": "analysis.txt"
+        }
+      }
+    ],
+    "stop_reason": "tool_use",
+    "stop_sequence": null,
+    "usage": {
+      "input_tokens": 404,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 110,
+      "service_tier": "standard"
+    }
+  }
+}

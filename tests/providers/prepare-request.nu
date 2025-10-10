@@ -175,7 +175,12 @@ def test-case [
     start $"prepare-request.($provider).($case_name).api-call"
 
     try {
-      let model = $models | get $provider
+      # Use vision model for Cohere on document-image test
+      let model = if $provider == "cohere" and $case_name == "document-image" {
+        "command-a-vision-07-2025"
+      } else {
+        $models | get $provider
+      }
 
       # Simple smoke test: show events as they stream in
       let events = $actual | do $provider_impl.call $api_key $model | each {|event|

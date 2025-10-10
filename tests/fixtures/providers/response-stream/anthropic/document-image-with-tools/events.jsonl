@@ -1,0 +1,42 @@
+{"type":"message_start","message":{"model":"claude-3-5-haiku-20241022","id":"msg_01EJk6gGqBG8HpwF2vsduf4p","type":"message","role":"assistant","content":[],"stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":404,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":2,"service_tier":"standard"}}}
+{"type":"content_block_start","index":0,"content_block":{"type":"text","text":""}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"I'll"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" help"}}
+{"type":"ping"}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" you with that."}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" However"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":", I notice"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" that"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" the"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" image appears"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" to be"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" heavily"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" re"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"dacted or"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" obsc"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"ured, showing"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" only a black"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" horizontal"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" line against"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" a white background. "}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"\n\nI"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"'ll"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" write"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" an analysis to"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" the"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" file an"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"d then"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" show"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" you the contents"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":":"}}
+{"type":"content_block_stop","index":0}
+{"type":"content_block_start","index":1,"content_block":{"type":"tool_use","id":"toolu_016nnDYS4iqKXeBeV4yHd77U","name":"filesystem___read_file","input":{}}}
+{"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":""}}
+{"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"{\"pat"}}
+{"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"h\": \"a"}}
+{"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"nalysi"}}
+{"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"s.t"}}
+{"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"xt\"}"}}
+{"type":"content_block_stop","index":1}
+{"type":"message_delta","delta":{"stop_reason":"tool_use","stop_sequence":null},"usage":{"input_tokens":404,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":110}}
+{"type":"message_stop"}

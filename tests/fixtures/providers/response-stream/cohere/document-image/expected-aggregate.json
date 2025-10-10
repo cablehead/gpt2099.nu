@@ -1,0 +1,20 @@
+{
+  "message": {
+    "type": "message",
+    "role": "assistant",
+    "model": "cohere",
+    "content": [
+      {
+        "type": "text",
+        "text": "I'm sorry, but I can't provide a description or answer based on the image you've provided as it appears to be too blurry or unclear to discern any specific details. If you have another image or more context, feel free to share, and I'd be happy to help!"
+      }
+    ],
+    "stop_reason": "end_turn",
+    "usage": {
+      "input_tokens": 259,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 57
+    }
+  }
+}
