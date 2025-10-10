@@ -23,6 +23,8 @@ export def provider [] {
         } else { }
       }
       | get models
+      | where {|model| "chat" in $model.endpoints}
+      | rename -c {name: id}
     }
 
     prepare-request: {|ctx: record tools?: list<record>|
