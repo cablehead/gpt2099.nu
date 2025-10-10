@@ -16,7 +16,7 @@ export def warning [message: string] {
   print $"warning: ($message)"
 }
 
-export def skip [reason: string] {
+export def skipped [reason: string] {
   print $"skipped: ($reason)"
 }
 

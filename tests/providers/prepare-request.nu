@@ -123,7 +123,7 @@ def test-case [
   if not ($has_json or $has_err) {
     use ../utils/output.nu *
     start $"prepare-request.($provider).($case_name)"
-    skip "no expected fixture"
+    skipped "no expected fixture"
     return
   }
 
@@ -131,7 +131,7 @@ def test-case [
   if $has_err and ($api_key | is-not-empty) {
     use ../utils/output.nu *
     start $"prepare-request.($provider).($case_name).api-call"
-    skip "err fixture indicates unsupported feature"
+    skipped "err fixture indicates unsupported feature"
     return
   }
 

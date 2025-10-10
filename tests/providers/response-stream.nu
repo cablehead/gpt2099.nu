@@ -19,7 +19,7 @@ def test-aggregate [
   let events_file = $case_path | path join "events.jsonl"
 
   if not ($events_file | path exists) {
-    skip "no events fixture"
+    skipped "no events fixture"
     return
   }
 
@@ -87,7 +87,7 @@ def test-streamer [
   let events_file = $case_path | path join "events.jsonl"
 
   if not ($events_file | path exists) {
-    skip "no events fixture"
+    skipped "no events fixture"
     return
   }
 
