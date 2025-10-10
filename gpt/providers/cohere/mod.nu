@@ -44,11 +44,51 @@ export def provider [] {
 
       # Transform messages
       let messages = $ctx.messages | each {|m|
-        {
-          role: $m.role
-          content: ($m.content | where type == "text" | get text | str join "")
+        # Check if this is an assistant message with tool_use
+        let tool_uses = $m.content | where type == "tool_use"
+
+        # Check if this is a user message with tool_result
+        let tool_results = $m.content | where type == "tool_result"
+
+        if ($tool_uses | is-not-empty) {
+          # Assistant message with tool calls
+          let tool_calls_array = $tool_uses | each {|tu|
+            {
+              id: $tu.id
+              type: "function"
+              function: {
+                name: $tu.name
+                arguments: ($tu.input | to json -r)
+              }
+            }
+          }
+          let text_content = ($m.content | where type == "text" | get text? | default [] | str join "")
+          [
+            {
+              role: "assistant"
+              content: (if ($text_content | is-empty) { null } else { $text_content })
+              tool_calls: $tool_calls_array
+            }
+          ]
+        } else if ($tool_results | is-not-empty) {
+          # Tool result messages become role: "tool"
+          $tool_results | each {|tr|
+            {
+              role: "tool"
+              tool_call_id: $tr.tool_use_id
+              content: ($tr.content | get text | str join "")
+            }
+          }
+        } else {
+          # Regular text message
+          [
+            {
+              role: $m.role
+              content: ($m.content | where type == "text" | get text | str join "")
+            }
+          ]
         }
-      }
+      } | flatten
 
       let payload = {
         stream: true
