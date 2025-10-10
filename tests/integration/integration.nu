@@ -210,6 +210,37 @@ def collect-tests [] {
       assert ((.head gpt.mod.provider.gemini) != null) "gemini not loaded"
       assert ((.head gpt.mod.provider.openai) != null) "openai not loaded"
     }
+
+    "ctx.empty-thread": {||
+      gpt init
+      sleep 50ms
+
+      # Verify gpt ctx returns empty when no turns exist
+      let frames = gpt ctx | collect
+      assert equal $frames []
+    }
+
+    "ctx.thread-walk": {||
+      gpt init
+      sleep 50ms
+
+      # Create a thread with multiple turns
+      let turn1 = "first" | gpt schema add-turn {}
+      let turn2 = "second" | gpt schema add-turn {continues: $turn1.id}
+      let turn3 = "third" | gpt schema add-turn {continues: $turn2.id}
+
+      # Walk from latest should get all 3
+      let frames = gpt ctx | collect
+      assert equal ($frames | length) 3
+
+      # Walk from turn2 should get 2
+      let frames_from_2 = gpt ctx $turn2.id | collect
+      assert equal ($frames_from_2 | length) 2
+
+      # Walk from turn1 should get 1
+      let frames_from_1 = gpt ctx $turn1.id | collect
+      assert equal ($frames_from_1 | length) 1
+    }
   }
 }
 
