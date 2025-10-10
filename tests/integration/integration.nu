@@ -179,6 +179,48 @@ def collect-tests [] {
       assert ("tool_use" in ($res | get type))
     }
 
+    "call.cohere.basics": {||
+      gpt init
+      sleep 50ms
+
+      cat .env/cohere | gpt provider enable cohere
+      gpt provider set-ptr milli cohere command-a-reasoning-08-2025
+      sleep 50ms
+
+      # Create turn using schema add-turn, then call gpt call
+      let turn = "2+2=? reply with only the number" | gpt schema add-turn {provider_ptr: "milli"}
+      let response = gpt call $turn.id
+
+      let res = .cas $response.hash | from json
+      $res | to json | debug $in
+      assert equal $res.0.text "4"
+    }
+
+    "call.cohere.tool_use": {||
+      gpt init
+      sleep 50ms
+
+      cat .env/cohere | gpt provider enable cohere
+      gpt provider set-ptr milli cohere command-a-reasoning-08-2025
+
+      gpt mcp register hello $"nu --stdin ($test_mcp_server)"
+
+      # Create turn using schema add-turn, then call gpt call
+      let turn = "greet Andy" | gpt schema add-turn {
+        provider_ptr: "milli"
+        servers: ["hello"]
+      }
+      let response = gpt call $turn.id
+
+      # Check if we got an error response
+      if $response.topic == "gpt.error" {
+        $response | to json | error make {msg: $"API call failed: ($in)"}
+      }
+
+      let res = .cas $response.hash | from json
+      assert ("tool_use" in ($res | get type))
+    }
+
     "schema.add-turn.basic-text": {||
       let turn = "Hello world" | gpt schema add-turn {}
       let stored_content = .cas $turn.hash | from json
@@ -247,9 +289,10 @@ def collect-tests [] {
       gpt init
       sleep 50ms
 
-      # Verify all 4 providers loaded
+      # Verify all 5 providers loaded
       assert ((.head gpt.mod.provider.anthropic) != null) "anthropic not loaded"
       assert ((.head gpt.mod.provider.cerebras) != null) "cerebras not loaded"
+      assert ((.head gpt.mod.provider.cohere) != null) "cohere not loaded"
       assert ((.head gpt.mod.provider.gemini) != null) "gemini not loaded"
       assert ((.head gpt.mod.provider.openai) != null) "openai not loaded"
     }
