@@ -137,28 +137,48 @@ Refer to the schema documentation for complete details on:
 
 ## Integration Checklist
 
-To integrate a new provider into the system:
+This guide follows a test-driven approach, implementing features incrementally.
 
-### 1. Create Provider Module
+### 1. Create Provider Skeleton
 
-Create `gpt/providers/{name}/mod.nu` implementing all 5 required methods:
+Create `gpt/providers/{name}/mod.nu` with basic structure:
 
 ```nushell
 export def provider [] {
   {
-    models: {|key: string| ... }
-    prepare-request: {|ctx: record tools?: list<record>| ... }
-    call: {|key: string model: string| ... }
-    response_stream_streamer: {|event| ... }
-    response_stream_aggregate: {|| ... }
+    models: {|key: string|
+      # TODO: Implement model listing
+      []
+    }
+
+    prepare-request: {|ctx: record tools?: list<record>|
+      # TODO: Transform context to provider format
+      {}
+    }
+
+    call: {|key: string model: string|
+      # TODO: Make API call and stream events
+      []
+    }
+
+    response_stream_streamer: {|event|
+      # TODO: Transform event for display
+      null
+    }
+
+    response_stream_aggregate: {||
+      # TODO: Collect events into final response
+      {}
+    }
   }
 }
 ```
 
-### 2. Export Provider
+### 2. Wire Up Provider Early
 
-Add to `gpt/providers/mod.nu`:
+Complete integration steps now so you can test as you develop:
 
+**Export in `gpt/providers/mod.nu`:**
 ```nushell
 use ./newprovider
 
@@ -171,94 +191,152 @@ export def all [] {
 }
 ```
 
-### 3. Load Module on Init
-
-Add to `gpt/mod.nu` in the `init` function:
-
+**Load in `gpt/mod.nu` init:**
 ```nushell
 cat ($base | path join "providers/newprovider/mod.nu") | .append gpt.mod.provider.newprovider
 ```
 
-### 4. Register in Command Handler
-
-Update `gpt/xs/command-call.nu` in two places:
-
-**modules dict:**
+**Register in `gpt/xs/command-call.nu` (two places):**
 ```nushell
 modules: {
-  "anthropic": (.head gpt.mod.provider.anthropic | .cas $in.hash)
-  "gemini": (.head gpt.mod.provider.gemini | .cas $in.hash)
   "newprovider": (.head gpt.mod.provider.newprovider | .cas $in.hash)
-  "ctx": (.head gpt.mod.ctx | .cas $in.hash)
+  ...
 }
-```
 
-**match statement:**
-```nushell
 let p = match $ptr.provider {
-  "anthropic" => (anthropic provider)
-  "gemini" => (gemini provider)
   "newprovider" => (newprovider provider)
-  _ => {
-    error make {msg: $"Unsupported provider: ($ptr.provider)"}
-  }
+  ...
 }
 ```
 
-### 5. Create Test Fixtures
+### 3. Implement prepare-request Incrementally
 
-For each test case in `tests/fixtures/providers/prepare-request/`, create expected output:
+Work through test cases one at a time, implementing each feature:
 
+**a) Basic text (system-message):**
 ```bash
-# For supported features
-echo '{...}' > tests/fixtures/providers/prepare-request/{case}/expected-newprovider.json
+# Create expected output
+echo '{...}' > tests/fixtures/providers/prepare-request/system-message/expected-newprovider.json
 
-# For unsupported features
-echo 'Error message' > tests/fixtures/providers/prepare-request/{case}/expected-newprovider.err
+# Implement text handling in prepare-request
+
+# Verify
+nu tests/providers/prepare-request.nu newprovider system-message
 ```
 
-Run tests to verify transformations:
+**b) Tools (tool-use):**
+```bash
+# Add fixture
+echo '{...}' > tests/fixtures/providers/prepare-request/tool-use/expected-newprovider.json
 
+# Implement tool transformation
+
+# Verify
+nu tests/providers/prepare-request.nu newprovider tool-use
+```
+
+**c) Documents (document-image, document-pdf):**
+```bash
+# Add fixtures for each supported type
+echo '{...}' > tests/fixtures/providers/prepare-request/document-image/expected-newprovider.json
+echo '{...}' > tests/fixtures/providers/prepare-request/document-pdf/expected-newprovider.json
+
+# Or mark as unsupported
+echo 'Provider does not support images' > tests/fixtures/providers/prepare-request/document-image/expected-newprovider.err
+
+# Implement document handling
+
+# Verify each
+nu tests/providers/prepare-request.nu newprovider document-image
+nu tests/providers/prepare-request.nu newprovider document-pdf
+```
+
+**d) Advanced features (cache-control, tool-conversation):**
+```bash
+# Continue pattern for remaining cases
+nu tests/providers/prepare-request.nu newprovider cache-control
+nu tests/providers/prepare-request.nu newprovider tool-conversation
+```
+
+**Verify all prepare-request tests:**
 ```bash
 nu tests/providers/prepare-request.nu newprovider
 ```
 
-### 6. Capture Streaming Fixtures
+### 4. Implement Streaming Methods
 
-Capture real API responses and generate expected outputs:
-
+**a) Capture real responses:**
 ```bash
-# Get API key
 export NEWPROVIDER_API_KEY="..."
 
-# Capture all test cases
-for case in cache-control document-image document-pdf system-message tool-conversation tool-use tool-with-outputschema; do
-  nu tests/providers/prepare-request.nu newprovider $case --call $env.NEWPROVIDER_API_KEY --capture
-  nu tests/utils/generate-expected-outputs.nu newprovider $case
-done
+# Capture for each supported case
+nu tests/providers/prepare-request.nu newprovider system-message --call $env.NEWPROVIDER_API_KEY --capture
+nu tests/providers/prepare-request.nu newprovider tool-use --call $env.NEWPROVIDER_API_KEY --capture
+```
 
-# Verify streaming tests pass
+**b) Implement response_stream_streamer:**
+Study captured events and transform for display (returns type/name/content or null)
+
+**c) Implement response_stream_aggregate:**
+Collect all events into final normalized message structure
+
+**d) Generate expected outputs:**
+```bash
+nu tests/utils/generate-expected-outputs.nu newprovider system-message
+nu tests/utils/generate-expected-outputs.nu newprovider tool-use
+```
+
+**e) Verify streaming:**
+```bash
 nu tests/providers/response-stream.nu newprovider
 ```
 
-### 7. Update Documentation
+### 5. Add Integration Tests
 
-Add provider to capability table in `docs/how-to/configure-providers.md`:
+Add provider to `tests/integration/integration.nu`:
 
-```markdown
-| Feature                 | Anthropic | Gemini | NewProvider |
-| ----------------------- | --------- | ------ | ----------- |
-| Text conversations      | yes       | yes    | yes         |
-| PDF analysis            | yes       | yes    | yes/no      |
-| ...                     | ...       | ...    | ...         |
+```nushell
+"call.newprovider.basics": {||
+  gpt init
+  sleep 50ms
+
+  cat .env/newprovider | gpt provider enable newprovider
+  gpt provider set-ptr milli newprovider model-name
+  sleep 50ms
+
+  let turn = "2+2=? reply with only the number" | gpt schema add-turn {provider_ptr: "milli"}
+  let response = gpt call $turn.id
+
+  let res = .cas $response.hash | from json
+  assert equal $res.0.text "4"
+}
+
+"call.newprovider.tool_use": {||
+  # Similar to anthropic/gemini/openai tool_use tests
+}
 ```
 
-### Verification
+**Verify:**
+```bash
+nu tests/integration/integration.nu call.newprovider
+```
 
-Run complete test suite:
+### 6. Update Documentation
+
+Add to `docs/how-to/configure-providers.md`:
+
+```markdown
+| Feature                 | Anthropic | Gemini | OpenAI | NewProvider |
+| ----------------------- | --------- | ------ | ------ | ----------- |
+| Text conversations      | yes       | yes    | yes    | yes         |
+| PDF analysis            | yes       | yes    | yes    | yes/no      |
+```
+
+### 7. Final Verification
 
 ```bash
 nu tests/run.nu providers
+nu tests/run.nu integration
 ```
 
-All tests should pass before integration is complete
+All tests should pass before submitting PR.

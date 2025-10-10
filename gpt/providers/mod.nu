@@ -3,12 +3,14 @@
 # Each provider must implement the standard interface as defined in provider-api.md
 
 use ./anthropic
+use ./cerebras
 use ./gemini
 use ./openai
 
 export def all [] {
   {
     anthropic : (anthropic provider)
+    cerebras : (cerebras provider)
     gemini : (gemini provider)
     openai : (openai provider)
   }

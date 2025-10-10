@@ -2,6 +2,7 @@
 {
   modules: {
     "anthropic": (.head gpt.mod.provider.anthropic | .cas $in.hash)
+    "cerebras": (.head gpt.mod.provider.cerebras | .cas $in.hash)
     "gemini": (.head gpt.mod.provider.gemini | .cas $in.hash)
     "openai": (.head gpt.mod.provider.openai | .cas $in.hash)
     "ctx": (.head gpt.mod.ctx | .cas $in.hash)
@@ -51,6 +52,7 @@
     # Get the provider module based on the resolved provider name
     let p = match $ptr.provider {
       "anthropic" => (anthropic provider)
+      "cerebras" => (cerebras provider)
       "gemini" => (gemini provider)
       "openai" => (openai provider)
       _ => {

@@ -1,0 +1,18 @@
+{
+  "stream": true,
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a helpful coding assistant. Always provide clear, concise explanations."
+    },
+    {
+      "role": "user",
+      "content": "How do I reverse a string?"
+    },
+    {
+      "role": "system",
+      "content": "Remember to include examples in your responses."
+    }
+  ],
+  "tools": []
+}
