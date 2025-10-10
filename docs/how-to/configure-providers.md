@@ -55,15 +55,15 @@ Add `.r` for reasoning-optimized variants:
 
 ## Provider Capabilities
 
-| Feature                 | Anthropic | Gemini         |
-| ----------------------- | --------- | -------------- |
-| Text conversations      | ✅        | ✅             |
-| PDF analysis            | ✅        | ✅             |
-| Image analysis          | ✅        | ✅             |
-| Web search              | ✅        | ✅             |
-| MCP tools               | ✅        | ✅             |
-| Tools + search together | ✅        | ❌             |
-| Document caching        | ✅        | ✅ (automatic) |
+| Feature                 | Anthropic | Gemini       |
+| ----------------------- | --------- | ------------ |
+| Text conversations      | yes       | yes          |
+| PDF analysis            | yes       | yes          |
+| Image analysis          | yes       | yes          |
+| Web search              | yes       | yes          |
+| MCP tools               | yes       | yes          |
+| Tools + search together | yes       | no           |
+| Document caching        | yes       | yes (auto)   |
 
 **Key limitations:**
 

@@ -134,3 +134,131 @@ Refer to the schema documentation for complete details on:
 - Tool use blocks
 - Tool result blocks
 - Cache control options
+
+## Integration Checklist
+
+To integrate a new provider into the system:
+
+### 1. Create Provider Module
+
+Create `gpt/providers/{name}/mod.nu` implementing all 5 required methods:
+
+```nushell
+export def provider [] {
+  {
+    models: {|key: string| ... }
+    prepare-request: {|ctx: record tools?: list<record>| ... }
+    call: {|key: string model: string| ... }
+    response_stream_streamer: {|event| ... }
+    response_stream_aggregate: {|| ... }
+  }
+}
+```
+
+### 2. Export Provider
+
+Add to `gpt/providers/mod.nu`:
+
+```nushell
+use ./newprovider
+
+export def all [] {
+  {
+    anthropic: (anthropic provider)
+    gemini: (gemini provider)
+    newprovider: (newprovider provider)
+  }
+}
+```
+
+### 3. Load Module on Init
+
+Add to `gpt/mod.nu` in the `init` function:
+
+```nushell
+cat ($base | path join "providers/newprovider/mod.nu") | .append gpt.mod.provider.newprovider
+```
+
+### 4. Register in Command Handler
+
+Update `gpt/xs/command-call.nu` in two places:
+
+**modules dict:**
+```nushell
+modules: {
+  "anthropic": (.head gpt.mod.provider.anthropic | .cas $in.hash)
+  "gemini": (.head gpt.mod.provider.gemini | .cas $in.hash)
+  "newprovider": (.head gpt.mod.provider.newprovider | .cas $in.hash)
+  "ctx": (.head gpt.mod.ctx | .cas $in.hash)
+}
+```
+
+**match statement:**
+```nushell
+let p = match $ptr.provider {
+  "anthropic" => (anthropic provider)
+  "gemini" => (gemini provider)
+  "newprovider" => (newprovider provider)
+  _ => {
+    error make {msg: $"Unsupported provider: ($ptr.provider)"}
+  }
+}
+```
+
+### 5. Create Test Fixtures
+
+For each test case in `tests/fixtures/providers/prepare-request/`, create expected output:
+
+```bash
+# For supported features
+echo '{...}' > tests/fixtures/providers/prepare-request/{case}/expected-newprovider.json
+
+# For unsupported features
+echo 'Error message' > tests/fixtures/providers/prepare-request/{case}/expected-newprovider.err
+```
+
+Run tests to verify transformations:
+
+```bash
+nu tests/providers/prepare-request.nu newprovider
+```
+
+### 6. Capture Streaming Fixtures
+
+Capture real API responses and generate expected outputs:
+
+```bash
+# Get API key
+export NEWPROVIDER_API_KEY="..."
+
+# Capture all test cases
+for case in cache-control document-image document-pdf system-message tool-conversation tool-use tool-with-outputschema; do
+  nu tests/providers/prepare-request.nu newprovider $case --call $env.NEWPROVIDER_API_KEY --capture
+  nu tests/utils/generate-expected-outputs.nu newprovider $case
+done
+
+# Verify streaming tests pass
+nu tests/providers/response-stream.nu newprovider
+```
+
+### 7. Update Documentation
+
+Add provider to capability table in `docs/how-to/configure-providers.md`:
+
+```markdown
+| Feature                 | Anthropic | Gemini | NewProvider |
+| ----------------------- | --------- | ------ | ----------- |
+| Text conversations      | yes       | yes    | yes         |
+| PDF analysis            | yes       | yes    | yes/no      |
+| ...                     | ...       | ...    | ...         |
+```
+
+### Verification
+
+Run complete test suite:
+
+```bash
+nu tests/run.nu providers
+```
+
+All tests should pass before integration is complete
