@@ -73,15 +73,8 @@ export def provider [] {
           } else { }
         }
         | lines
-        | each {|line|
-          # Parse SSE format: "data: {...json...}"
-          if ($line | str starts-with "data:") {
-            $line | str replace "data: " ""
-          } else {
-            null
-          }
-        }
-        | where $it != null
+        | each {|line| $line | split row -n 2 "data: " | get 1? }
+        | where $it != null and $it != "[DONE]"
         | each {|x| $x | from json }
       )
     }
