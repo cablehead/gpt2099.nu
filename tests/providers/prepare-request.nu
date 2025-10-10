@@ -3,6 +3,7 @@ use std assert
 # Provider models for smoke testing
 const models = {
   anthropic: "claude-3-5-haiku-20241022"
+  cerebras: "llama-4-maverick-17b-128e-instruct"
   gemini: "gemini-2.5-flash"
   openai: "gpt-4.1-mini"
 }

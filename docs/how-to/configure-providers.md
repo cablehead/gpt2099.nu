@@ -55,18 +55,19 @@ Add `.r` for reasoning-optimized variants:
 
 ## Provider Capabilities
 
-| Feature                 | Anthropic | Gemini     | OpenAI     |
-| ----------------------- | --------- | ---------- | ---------- |
-| Text conversations      | yes       | yes        | yes        |
-| PDF analysis            | yes       | yes        | yes        |
-| Image analysis          | yes       | yes        | yes        |
-| Web search              | yes       | yes        | no         |
-| MCP tools               | yes       | yes        | yes        |
-| Tools + search together | yes       | no         | no         |
-| Document caching        | yes       | yes (auto) | yes        |
+| Feature                 | Anthropic | Cerebras | Gemini     | OpenAI     |
+| ----------------------- | --------- | -------- | ---------- | ---------- |
+| Text conversations      | yes       | yes      | yes        | yes        |
+| PDF analysis            | yes       | no       | yes        | yes        |
+| Image analysis          | yes       | no       | yes        | yes        |
+| Web search              | yes       | no       | yes        | no         |
+| MCP tools               | yes       | yes      | yes        | yes        |
+| Tools + search together | yes       | no       | no         | no         |
+| Document caching        | yes       | no       | yes (auto) | yes        |
 
 **Key limitations:**
 
+- **Cerebras**: No vision/PDF support; JSON schema fields (`format`, `minimum`, `nullable`, `$schema`) recursively stripped from tools
 - **Gemini**: Cannot use custom MCP tools and web search in the same conversation
 - **OpenAI**: No built-in web search support
 

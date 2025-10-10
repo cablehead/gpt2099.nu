@@ -1,0 +1,955 @@
+{"type":"text","content":"<think>"}
+{"type":"text","content":"\n"}
+{"type":"text","content":"Okay"}
+{"type":"text","content":","}
+{"type":"text","content":" the"}
+{"type":"text","content":" user"}
+{"type":"text","content":" is"}
+{"type":"text","content":" asking"}
+{"type":"text","content":" how"}
+{"type":"text","content":" to"}
+{"type":"text","content":" reverse"}
+{"type":"text","content":" a"}
+{"type":"text","content":" string"}
+{"type":"text","content":"."}
+{"type":"text","content":" Let"}
+{"type":"text","content":" me"}
+{"type":"text","content":" think"}
+{"type":"text","content":" about"}
+{"type":"text","content":" the"}
+{"type":"text","content":" different"}
+{"type":"text","content":" ways"}
+{"type":"text","content":" to"}
+{"type":"text","content":" approach"}
+{"type":"text","content":" this"}
+{"type":"text","content":" in"}
+{"type":"text","content":" various"}
+{"type":"text","content":" programming"}
+{"type":"text","content":" languages"}
+{"type":"text","content":".\n\n"}
+{"type":"text","content":"First"}
+{"type":"text","content":","}
+{"type":"text","content":" I"}
+{"type":"text","content":" should"}
+{"type":"text","content":" consider"}
+{"type":"text","content":" common"}
+{"type":"text","content":" languages"}
+{"type":"text","content":" like"}
+{"type":"text","content":" Python"}
+{"type":"text","content":","}
+{"type":"text","content":" JavaScript"}
+{"type":"text","content":","}
+{"type":"text","content":" Java"}
+{"type":"text","content":","}
+{"type":"text","content":" C"}
+{"type":"text","content":"++,"}
+{"type":"text","content":" etc"}
+{"type":"text","content":"."}
+{"type":"text","content":" Since"}
+{"type":"text","content":" the"}
+{"type":"text","content":" user"}
+{"type":"text","content":" didn"}
+{"type":"text","content":"'t"}
+{"type":"text","content":" specify"}
+{"type":"text","content":","}
+{"type":"text","content":" maybe"}
+{"type":"text","content":" I"}
+{"type":"text","content":" should"}
+{"type":"text","content":" cover"}
+{"type":"text","content":" a"}
+{"type":"text","content":" few"}
+{"type":"text","content":" examples"}
+{"type":"text","content":".\n\n"}
+{"type":"text","content":"In"}
+{"type":"text","content":" Python"}
+{"type":"text","content":","}
+{"type":"text","content":" there"}
+{"type":"text","content":"'s"}
+{"type":"text","content":" a"}
+{"type":"text","content":" neat"}
+{"type":"text","content":" way"}
+{"type":"text","content":" using"}
+{"type":"text","content":" slicing"}
+{"type":"text","content":"."}
+{"type":"text","content":" Like"}
+{"type":"text","content":","}
+{"type":"text","content":" s"}
+{"type":"text","content":"[::-"}
+{"type":"text","content":"1"}
+{"type":"text","content":"]."}
+{"type":"text","content":" That"}
+{"type":"text","content":"'s"}
+{"type":"text","content":" simple"}
+{"type":"text","content":" and"}
+{"type":"text","content":" effective"}
+{"type":"text","content":"."}
+{"type":"text","content":" But"}
+{"type":"text","content":" maybe"}
+{"type":"text","content":" they"}
+{"type":"text","content":" want"}
+{"type":"text","content":" a"}
+{"type":"text","content":" method"}
+{"type":"text","content":" using"}
+{"type":"text","content":" loops"}
+{"type":"text","content":" or"}
+{"type":"text","content":" built"}
+{"type":"text","content":"-in"}
+{"type":"text","content":" functions"}
+{"type":"text","content":"."}
+{"type":"text","content":" Oh"}
+{"type":"text","content":" right"}
+{"type":"text","content":","}
+{"type":"text","content":" the"}
+{"type":"text","content":" reversed"}
+{"type":"text","content":"()"}
+{"type":"text","content":" function"}
+{"type":"text","content":" with"}
+{"type":"text","content":" join"}
+{"type":"text","content":".\n\n"}
+{"type":"text","content":"JavaScript"}
+{"type":"text","content":" can"}
+{"type":"text","content":" use"}
+{"type":"text","content":" split"}
+{"type":"text","content":","}
+{"type":"text","content":" reverse"}
+{"type":"text","content":","}
+{"type":"text","content":" and"}
+{"type":"text","content":" join"}
+{"type":"text","content":" methods"}
+{"type":"text","content":"."}
+{"type":"text","content":" Or"}
+{"type":"text","content":" maybe"}
+{"type":"text","content":" a"}
+{"type":"text","content":" loop"}
+{"type":"text","content":"."}
+{"type":"text","content":" Also"}
+{"type":"text","content":","}
+{"type":"text","content":" C"}
+{"type":"text","content":"++"}
+{"type":"text","content":" would"}
+{"type":"text","content":" use"}
+{"type":"text","content":" reverse"}
+{"type":"text","content":" from"}
+{"type":"text","content":" the"}
+{"type":"text","content":" algorithm"}
+{"type":"text","content":" library"}
+{"type":"text","content":","}
+{"type":"text","content":" or"}
+{"type":"text","content":" manually"}
+{"type":"text","content":" reverse"}
+{"type":"text","content":" with"}
+{"type":"text","content":" a"}
+{"type":"text","content":" loop"}
+{"type":"text","content":".\n\n"}
+{"type":"text","content":"Wait"}
+{"type":"text","content":","}
+{"type":"text","content":" the"}
+{"type":"text","content":" user"}
+{"type":"text","content":" wants"}
+{"type":"text","content":" clear"}
+{"type":"text","content":" examples"}
+{"type":"text","content":"."}
+{"type":"text","content":" Maybe"}
+{"type":"text","content":" start"}
+{"type":"text","content":" with"}
+{"type":"text","content":" Python"}
+{"type":"text","content":" as"}
+{"type":"text","content":" the"}
+{"type":"text","content":" first"}
+{"type":"text","content":" example"}
+{"type":"text","content":" since"}
+{"type":"text","content":" slicing"}
+{"type":"text","content":" is"}
+{"type":"text","content":" straightforward"}
+{"type":"text","content":"."}
+{"type":"text","content":" Then"}
+{"type":"text","content":" JavaScript"}
+{"type":"text","content":","}
+{"type":"text","content":" and"}
+{"type":"text","content":" maybe"}
+{"type":"text","content":" Java"}
+{"type":"text","content":" as"}
+{"type":"text","content":" well"}
+{"type":"text","content":"."}
+{"type":"text","content":" But"}
+{"type":"text","content":" the"}
+{"type":"text","content":" user"}
+{"type":"text","content":" might"}
+{"type":"text","content":" not"}
+{"type":"text","content":" need"}
+{"type":"text","content":" all"}
+{"type":"text","content":","}
+{"type":"text","content":" but"}
+{"type":"text","content":" better"}
+{"type":"text","content":" to"}
+{"type":"text","content":" show"}
+{"type":"text","content":" a"}
+{"type":"text","content":" couple"}
+{"type":"text","content":".\n\n"}
+{"type":"text","content":"I"}
+{"type":"text","content":" should"}
+{"type":"text","content":" mention"}
+{"type":"text","content":" the"}
+{"type":"text","content":" slicing"}
+{"type":"text","content":" method"}
+{"type":"text","content":","}
+{"type":"text","content":" then"}
+{"type":"text","content":" a"}
+{"type":"text","content":" manual"}
+{"type":"text","content":" approach"}
+{"type":"text","content":"."}
+{"type":"text","content":" For"}
+{"type":"text","content":" each"}
+{"type":"text","content":" language"}
+{"type":"text","content":"."}
+{"type":"text","content":" But"}
+{"type":"text","content":" maybe"}
+{"type":"text","content":" the"}
+{"type":"text","content":" user"}
+{"type":"text","content":" doesn"}
+{"type":"text","content":"'t"}
+{"type":"text","content":" know"}
+{"type":"text","content":" the"}
+{"type":"text","content":" language"}
+{"type":"text","content":","}
+{"type":"text","content":" so"}
+{"type":"text","content":" keeping"}
+{"type":"text","content":" the"}
+{"type":"text","content":" explanation"}
+{"type":"text","content":" general"}
+{"type":"text","content":" but"}
+{"type":"text","content":" with"}
+{"type":"text","content":" code"}
+{"type":"text","content":" examples"}
+{"type":"text","content":".\n\n"}
+{"type":"text","content":"Also"}
+{"type":"text","content":","}
+{"type":"text","content":" think"}
+{"type":"text","content":" about"}
+{"type":"text","content":" edge"}
+{"type":"text","content":" cases"}
+{"type":"text","content":"."}
+{"type":"text","content":" Empty"}
+{"type":"text","content":" strings"}
+{"type":"text","content":"?"}
+{"type":"text","content":" That"}
+{"type":"text","content":"'s"}
+{"type":"text","content":" trivial"}
+{"type":"text","content":"."}
+{"type":"text","content":" But"}
+{"type":"text","content":" in"}
+{"type":"text","content":" the"}
+{"type":"text","content":" examples"}
+{"type":"text","content":","}
+{"type":"text","content":" perhaps"}
+{"type":"text","content":" include"}
+{"type":"text","content":" that"}
+{"type":"text","content":" it"}
+{"type":"text","content":" works"}
+{"type":"text","content":" for"}
+{"type":"text","content":" any"}
+{"type":"text","content":" string"}
+{"type":"text","content":".\n\n"}
+{"type":"text","content":"Let"}
+{"type":"text","content":" me"}
+{"type":"text","content":" outline"}
+{"type":"text","content":" the"}
+{"type":"text","content":" steps"}
+{"type":"text","content":" for"}
+{"type":"text","content":" Python"}
+{"type":"text","content":":"}
+{"type":"text","content":" \n\n"}
+{"type":"text","content":"1"}
+{"type":"text","content":"."}
+{"type":"text","content":" Using"}
+{"type":"text","content":" slicing"}
+{"type":"text","content":" ["}
+{"type":"text","content":"::-"}
+{"type":"text","content":"1"}
+{"type":"text","content":"]\n"}
+{"type":"text","content":"2"}
+{"type":"text","content":"."}
+{"type":"text","content":" Using"}
+{"type":"text","content":" reversed"}
+{"type":"text","content":"()"}
+{"type":"text","content":" and"}
+{"type":"text","content":" join"}
+{"type":"text","content":"\n"}
+{"type":"text","content":"3"}
+{"type":"text","content":"."}
+{"type":"text","content":" Using"}
+{"type":"text","content":" a"}
+{"type":"text","content":" loop"}
+{"type":"text","content":" to"}
+{"type":"text","content":" build"}
+{"type":"text","content":" the"}
+{"type":"text","content":" reversed"}
+{"type":"text","content":" string"}
+{"type":"text","content":".\n\n"}
+{"type":"text","content":"But"}
+{"type":"text","content":" maybe"}
+{"type":"text","content":" the"}
+{"type":"text","content":" first"}
+{"type":"text","content":" two"}
+{"type":"text","content":" are"}
+{"type":"text","content":" enough"}
+{"type":"text","content":" for"}
+{"type":"text","content":" an"}
+{"type":"text","content":" example"}
+{"type":"text","content":"."}
+{"type":"text","content":" Let"}
+{"type":"text","content":"'s"}
+{"type":"text","content":" show"}
+{"type":"text","content":" one"}
+{"type":"text","content":" clear"}
+{"type":"text","content":" example"}
+{"type":"text","content":" and"}
+{"type":"text","content":" then"}
+{"type":"text","content":" others"}
+{"type":"text","content":" if"}
+{"type":"text","content":" needed"}
+{"type":"text","content":".\n\n"}
+{"type":"text","content":"Similarly"}
+{"type":"text","content":" for"}
+{"type":"text","content":" JavaScript"}
+{"type":"text","content":":"}
+{"type":"text","content":" '"}
+{"type":"text","content":"abc"}
+{"type":"text","content":"'."}
+{"type":"text","content":"split"}
+{"type":"text","content":"('')."}
+{"type":"text","content":"reverse"}
+{"type":"text","content":"()."}
+{"type":"text","content":"join"}
+{"type":"text","content":"('"}
+{"type":"text","content":"')"}
+{"type":"text","content":" or"}
+{"type":"text","content":" using"}
+{"type":"text","content":" a"}
+{"type":"text","content":" loop"}
+{"type":"text","content":".\n\n"}
+{"type":"text","content":"Wait"}
+{"type":"text","content":","}
+{"type":"text","content":" also"}
+{"type":"text","content":" note"}
+{"type":"text","content":" that"}
+{"type":"text","content":" in"}
+{"type":"text","content":" some"}
+{"type":"text","content":" languages"}
+{"type":"text","content":" strings"}
+{"type":"text","content":" are"}
+{"type":"text","content":" immutable"}
+{"type":"text","content":","}
+{"type":"text","content":" so"}
+{"type":"text","content":" you"}
+{"type":"text","content":" need"}
+{"type":"text","content":" to"}
+{"type":"text","content":" convert"}
+{"type":"text","content":" to"}
+{"type":"text","content":" a"}
+{"type":"text","content":" list"}
+{"type":"text","content":" or"}
+{"type":"text","content":" array"}
+{"type":"text","content":" first"}
+{"type":"text","content":".\n\n"}
+{"type":"text","content":"Once"}
+{"type":"text","content":" I"}
+{"type":"text","content":"'ve"}
+{"type":"text","content":" got"}
+{"type":"text","content":" the"}
+{"type":"text","content":" examples"}
+{"type":"text","content":","}
+{"type":"text","content":" explain"}
+{"type":"text","content":" each"}
+{"type":"text","content":" step"}
+{"type":"text","content":" briefly"}
+{"type":"text","content":"."}
+{"type":"text","content":" The"}
+{"type":"text","content":" user"}
+{"type":"text","content":" needs"}
+{"type":"text","content":" to"}
+{"type":"text","content":" understand"}
+{"type":"text","content":" how"}
+{"type":"text","content":" each"}
+{"type":"text","content":" method"}
+{"type":"text","content":" works"}
+{"type":"text","content":".\n\n"}
+{"type":"text","content":"Wait"}
+{"type":"text","content":","}
+{"type":"text","content":" the"}
+{"type":"text","content":" user"}
+{"type":"text","content":" might"}
+{"type":"text","content":" be"}
+{"type":"text","content":" looking"}
+{"type":"text","content":" for"}
+{"type":"text","content":" the"}
+{"type":"text","content":" simplest"}
+{"type":"text","content":" way"}
+{"type":"text","content":"."}
+{"type":"text","content":" So"}
+{"type":"text","content":" highlight"}
+{"type":"text","content":" the"}
+{"type":"text","content":" built"}
+{"type":"text","content":"-in"}
+{"type":"text","content":" methods"}
+{"type":"text","content":" first"}
+{"type":"text","content":".\n\n"}
+{"type":"text","content":"I"}
+{"type":"text","content":" should"}
+{"type":"text","content":" check"}
+{"type":"text","content":" if"}
+{"type":"text","content":" the"}
+{"type":"text","content":" user"}
+{"type":"text","content":" wants"}
+{"type":"text","content":" in"}
+{"type":"text","content":"-place"}
+{"type":"text","content":" reversal"}
+{"type":"text","content":" or"}
+{"type":"text","content":" creating"}
+{"type":"text","content":" a"}
+{"type":"text","content":" new"}
+{"type":"text","content":" string"}
+{"type":"text","content":"."}
+{"type":"text","content":" But"}
+{"type":"text","content":" strings"}
+{"type":"text","content":" are"}
+{"type":"text","content":" immutable"}
+{"type":"text","content":" in"}
+{"type":"text","content":" many"}
+{"type":"text","content":" languages"}
+{"type":"text","content":","}
+{"type":"text","content":" so"}
+{"type":"text","content":" in"}
+{"type":"text","content":"-place"}
+{"type":"text","content":" isn"}
+{"type":"text","content":"'t"}
+{"type":"text","content":" possible"}
+{"type":"text","content":"."}
+{"type":"text","content":" So"}
+{"type":"text","content":" all"}
+{"type":"text","content":" examples"}
+{"type":"text","content":" would"}
+{"type":"text","content":" create"}
+{"type":"text","content":" a"}
+{"type":"text","content":" new"}
+{"type":"text","content":" string"}
+{"type":"text","content":".\n\n"}
+{"type":"text","content":"Finally"}
+{"type":"text","content":","}
+{"type":"text","content":" make"}
+{"type":"text","content":" sure"}
+{"type":"text","content":" the"}
+{"type":"text","content":" examples"}
+{"type":"text","content":" are"}
+{"type":"text","content":" correct"}
+{"type":"text","content":"."}
+{"type":"text","content":" Let"}
+{"type":"text","content":" me"}
+{"type":"text","content":" test"}
+{"type":"text","content":" the"}
+{"type":"text","content":" Python"}
+{"type":"text","content":" slicing"}
+{"type":"text","content":" example"}
+{"type":"text","content":"."}
+{"type":"text","content":" '"}
+{"type":"text","content":"hello"}
+{"type":"text","content":"'"}
+{"type":"text","content":"[::-"}
+{"type":"text","content":"1"}
+{"type":"text","content":"]"}
+{"type":"text","content":" is"}
+{"type":"text","content":" '"}
+{"type":"text","content":"olle"}
+{"type":"text","content":"h"}
+{"type":"text","content":"'"}
+{"type":"text","content":"—"}
+{"type":"text","content":"yes"}
+{"type":"text","content":"."}
+{"type":"text","content":" The"}
+{"type":"text","content":" JavaScript"}
+{"type":"text","content":" example"}
+{"type":"text","content":":"}
+{"type":"text","content":" '"}
+{"type":"text","content":"hello"}
+{"type":"text","content":"'."}
+{"type":"text","content":"split"}
+{"type":"text","content":"('')."}
+{"type":"text","content":"reverse"}
+{"type":"text","content":"()."}
+{"type":"text","content":"join"}
+{"type":"text","content":"('"}
+{"type":"text","content":"')"}
+{"type":"text","content":" gives"}
+{"type":"text","content":" '"}
+{"type":"text","content":"olle"}
+{"type":"text","content":"h"}
+{"type":"text","content":"'"}
+{"type":"text","content":"—"}
+{"type":"text","content":"correct"}
+{"type":"text","content":".\n\n"}
+{"type":"text","content":"Maybe"}
+{"type":"text","content":" provide"}
+{"type":"text","content":" two"}
+{"type":"text","content":" examples"}
+{"type":"text","content":" in"}
+{"type":"text","content":" different"}
+{"type":"text","content":" languages"}
+{"type":"text","content":","}
+{"type":"text","content":" and"}
+{"type":"text","content":" mention"}
+{"type":"text","content":" that"}
+{"type":"text","content":" there"}
+{"type":"text","content":" are"}
+{"type":"text","content":" multiple"}
+{"type":"text","content":" ways"}
+{"type":"text","content":".\n"}
+{"type":"text","content":"</think>"}
+{"type":"text","content":"\n\n"}
+{"type":"text","content":"To"}
+{"type":"text","content":" reverse"}
+{"type":"text","content":" a"}
+{"type":"text","content":" string"}
+{"type":"text","content":","}
+{"type":"text","content":" you"}
+{"type":"text","content":" can"}
+{"type":"text","content":" use"}
+{"type":"text","content":" built"}
+{"type":"text","content":"-in"}
+{"type":"text","content":" methods"}
+{"type":"text","content":" or"}
+{"type":"text","content":" manual"}
+{"type":"text","content":" approaches"}
+{"type":"text","content":" depending"}
+{"type":"text","content":" on"}
+{"type":"text","content":" the"}
+{"type":"text","content":" programming"}
+{"type":"text","content":" language"}
+{"type":"text","content":"."}
+{"type":"text","content":" Below"}
+{"type":"text","content":" are"}
+{"type":"text","content":" examples"}
+{"type":"text","content":" in"}
+{"type":"text","content":" popular"}
+{"type":"text","content":" languages"}
+{"type":"text","content":":\n\n"}
+{"type":"text","content":"---\n\n"}
+{"type":"text","content":"###"}
+{"type":"text","content":" **"}
+{"type":"text","content":"Python"}
+{"type":"text","content":"**\n"}
+{"type":"text","content":"1"}
+{"type":"text","content":"."}
+{"type":"text","content":" **"}
+{"type":"text","content":"S"}
+{"type":"text","content":"licing"}
+{"type":"text","content":" ("}
+{"type":"text","content":"simple"}
+{"type":"text","content":"st"}
+{"type":"text","content":" method"}
+{"type":"text","content":"):"}
+{"type":"text","content":"**\n"}
+{"type":"text","content":"  "}
+{"type":"text","content":" ```"}
+{"type":"text","content":"python"}
+{"type":"text","content":"\n"}
+{"type":"text","content":"  "}
+{"type":"text","content":" text"}
+{"type":"text","content":" ="}
+{"type":"text","content":" \""}
+{"type":"text","content":"hello"}
+{"type":"text","content":"\"\n"}
+{"type":"text","content":"  "}
+{"type":"text","content":" reversed"}
+{"type":"text","content":"_text"}
+{"type":"text","content":" ="}
+{"type":"text","content":" text"}
+{"type":"text","content":"[::-"}
+{"type":"text","content":"1"}
+{"type":"text","content":"]\n"}
+{"type":"text","content":"  "}
+{"type":"text","content":" print"}
+{"type":"text","content":"(re"}
+{"type":"text","content":"versed"}
+{"type":"text","content":"_text"}
+{"type":"text","content":")"}
+{"type":"text","content":" "}
+{"type":"text","content":" #"}
+{"type":"text","content":" Output"}
+{"type":"text","content":":"}
+{"type":"text","content":" \""}
+{"type":"text","content":"olle"}
+{"type":"text","content":"h"}
+{"type":"text","content":"\"\n"}
+{"type":"text","content":"  "}
+{"type":"text","content":" ``"}
+{"type":"text","content":"`\n\n"}
+{"type":"text","content":"2"}
+{"type":"text","content":"."}
+{"type":"text","content":" **"}
+{"type":"text","content":"Using"}
+{"type":"text","content":" `"}
+{"type":"text","content":"re"}
+{"type":"text","content":"versed"}
+{"type":"text","content":"()`"}
+{"type":"text","content":" and"}
+{"type":"text","content":" `"}
+{"type":"text","content":"join"}
+{"type":"text","content":"()"}
+{"type":"text","content":"`:"}
+{"type":"text","content":"**\n"}
+{"type":"text","content":"  "}
+{"type":"text","content":" ```"}
+{"type":"text","content":"python"}
+{"type":"text","content":"\n"}
+{"type":"text","content":"  "}
+{"type":"text","content":" text"}
+{"type":"text","content":" ="}
+{"type":"text","content":" \""}
+{"type":"text","content":"hello"}
+{"type":"text","content":"\"\n"}
+{"type":"text","content":"  "}
+{"type":"text","content":" reversed"}
+{"type":"text","content":"_text"}
+{"type":"text","content":" ="}
+{"type":"text","content":" ''."}
+{"type":"text","content":"join"}
+{"type":"text","content":"(re"}
+{"type":"text","content":"versed"}
+{"type":"text","content":"(text"}
+{"type":"text","content":"))\n"}
+{"type":"text","content":"  "}
+{"type":"text","content":" print"}
+{"type":"text","content":"(re"}
+{"type":"text","content":"versed"}
+{"type":"text","content":"_text"}
+{"type":"text","content":")"}
+{"type":"text","content":" "}
+{"type":"text","content":" #"}
+{"type":"text","content":" Output"}
+{"type":"text","content":":"}
+{"type":"text","content":" \""}
+{"type":"text","content":"olle"}
+{"type":"text","content":"h"}
+{"type":"text","content":"\"\n"}
+{"type":"text","content":"  "}
+{"type":"text","content":" ``"}
+{"type":"text","content":"`\n\n"}
+{"type":"text","content":"---\n\n"}
+{"type":"text","content":"###"}
+{"type":"text","content":" **"}
+{"type":"text","content":"JavaScript"}
+{"type":"text","content":"**\n"}
+{"type":"text","content":"1"}
+{"type":"text","content":"."}
+{"type":"text","content":" **"}
+{"type":"text","content":"Using"}
+{"type":"text","content":" `"}
+{"type":"text","content":"split"}
+{"type":"text","content":"()"}
+{"type":"text","content":"`,"}
+{"type":"text","content":" `"}
+{"type":"text","content":"reverse"}
+{"type":"text","content":"()"}
+{"type":"text","content":"`,"}
+{"type":"text","content":" and"}
+{"type":"text","content":" `"}
+{"type":"text","content":"join"}
+{"type":"text","content":"()"}
+{"type":"text","content":"`:"}
+{"type":"text","content":"**\n"}
+{"type":"text","content":"  "}
+{"type":"text","content":" ```"}
+{"type":"text","content":"javascript"}
+{"type":"text","content":"\n"}
+{"type":"text","content":"  "}
+{"type":"text","content":" let"}
+{"type":"text","content":" text"}
+{"type":"text","content":" ="}
+{"type":"text","content":" \""}
+{"type":"text","content":"hello"}
+{"type":"text","content":"\";\n"}
+{"type":"text","content":"  "}
+{"type":"text","content":" let"}
+{"type":"text","content":" reversed"}
+{"type":"text","content":"Text"}
+{"type":"text","content":" ="}
+{"type":"text","content":" text"}
+{"type":"text","content":".split"}
+{"type":"text","content":"('')."}
+{"type":"text","content":"reverse"}
+{"type":"text","content":"()."}
+{"type":"text","content":"join"}
+{"type":"text","content":"('');\n"}
+{"type":"text","content":"  "}
+{"type":"text","content":" console"}
+{"type":"text","content":".log"}
+{"type":"text","content":"(re"}
+{"type":"text","content":"versed"}
+{"type":"text","content":"Text"}
+{"type":"text","content":");"}
+{"type":"text","content":" "}
+{"type":"text","content":" //"}
+{"type":"text","content":" Output"}
+{"type":"text","content":":"}
+{"type":"text","content":" \""}
+{"type":"text","content":"olle"}
+{"type":"text","content":"h"}
+{"type":"text","content":"\"\n"}
+{"type":"text","content":"  "}
+{"type":"text","content":" ``"}
+{"type":"text","content":"`\n\n"}
+{"type":"text","content":"2"}
+{"type":"text","content":"."}
+{"type":"text","content":" **"}
+{"type":"text","content":"Using"}
+{"type":"text","content":" a"}
+{"type":"text","content":" `"}
+{"type":"text","content":"for"}
+{"type":"text","content":"`"}
+{"type":"text","content":" loop"}
+{"type":"text","content":":"}
+{"type":"text","content":"**\n"}
+{"type":"text","content":"  "}
+{"type":"text","content":" ```"}
+{"type":"text","content":"javascript"}
+{"type":"text","content":"\n"}
+{"type":"text","content":"  "}
+{"type":"text","content":" let"}
+{"type":"text","content":" text"}
+{"type":"text","content":" ="}
+{"type":"text","content":" \""}
+{"type":"text","content":"hello"}
+{"type":"text","content":"\";\n"}
+{"type":"text","content":"  "}
+{"type":"text","content":" let"}
+{"type":"text","content":" reversed"}
+{"type":"text","content":"Text"}
+{"type":"text","content":" ="}
+{"type":"text","content":" '';\n"}
+{"type":"text","content":"  "}
+{"type":"text","content":" for"}
+{"type":"text","content":" ("}
+{"type":"text","content":"let"}
+{"type":"text","content":" i"}
+{"type":"text","content":" ="}
+{"type":"text","content":" text"}
+{"type":"text","content":".length"}
+{"type":"text","content":" -"}
+{"type":"text","content":" "}
+{"type":"text","content":"1"}
+{"type":"text","content":";"}
+{"type":"text","content":" i"}
+{"type":"text","content":" >="}
+{"type":"text","content":" "}
+{"type":"text","content":"0"}
+{"type":"text","content":";"}
+{"type":"text","content":" i"}
+{"type":"text","content":"--)"}
+{"type":"text","content":" {\n"}
+{"type":"text","content":"      "}
+{"type":"text","content":" reversed"}
+{"type":"text","content":"Text"}
+{"type":"text","content":" +="}
+{"type":"text","content":" text"}
+{"type":"text","content":"[i"}
+{"type":"text","content":"];\n"}
+{"type":"text","content":"  "}
+{"type":"text","content":" }\n"}
+{"type":"text","content":"  "}
+{"type":"text","content":" console"}
+{"type":"text","content":".log"}
+{"type":"text","content":"(re"}
+{"type":"text","content":"versed"}
+{"type":"text","content":"Text"}
+{"type":"text","content":");"}
+{"type":"text","content":" "}
+{"type":"text","content":" //"}
+{"type":"text","content":" Output"}
+{"type":"text","content":":"}
+{"type":"text","content":" \""}
+{"type":"text","content":"olle"}
+{"type":"text","content":"h"}
+{"type":"text","content":"\"\n"}
+{"type":"text","content":"  "}
+{"type":"text","content":" ``"}
+{"type":"text","content":"`\n\n"}
+{"type":"text","content":"---\n\n"}
+{"type":"text","content":"###"}
+{"type":"text","content":" **"}
+{"type":"text","content":"Java"}
+{"type":"text","content":"**\n"}
+{"type":"text","content":"```"}
+{"type":"text","content":"java"}
+{"type":"text","content":"\n"}
+{"type":"text","content":"public"}
+{"type":"text","content":" class"}
+{"type":"text","content":" Main"}
+{"type":"text","content":" {\n"}
+{"type":"text","content":"   "}
+{"type":"text","content":" public"}
+{"type":"text","content":" static"}
+{"type":"text","content":" void"}
+{"type":"text","content":" main"}
+{"type":"text","content":"(String"}
+{"type":"text","content":"[]"}
+{"type":"text","content":" args"}
+{"type":"text","content":")"}
+{"type":"text","content":" {\n"}
+{"type":"text","content":"       "}
+{"type":"text","content":" String"}
+{"type":"text","content":" text"}
+{"type":"text","content":" ="}
+{"type":"text","content":" \""}
+{"type":"text","content":"hello"}
+{"type":"text","content":"\";\n"}
+{"type":"text","content":"       "}
+{"type":"text","content":" String"}
+{"type":"text","content":" reversed"}
+{"type":"text","content":"Text"}
+{"type":"text","content":" ="}
+{"type":"text","content":" new"}
+{"type":"text","content":" StringBuilder"}
+{"type":"text","content":"(text"}
+{"type":"text","content":")."}
+{"type":"text","content":"reverse"}
+{"type":"text","content":"()."}
+{"type":"text","content":"toString"}
+{"type":"text","content":"();\n"}
+{"type":"text","content":"       "}
+{"type":"text","content":" System"}
+{"type":"text","content":".out"}
+{"type":"text","content":".println"}
+{"type":"text","content":"(re"}
+{"type":"text","content":"versed"}
+{"type":"text","content":"Text"}
+{"type":"text","content":");"}
+{"type":"text","content":" "}
+{"type":"text","content":" //"}
+{"type":"text","content":" Output"}
+{"type":"text","content":":"}
+{"type":"text","content":" \""}
+{"type":"text","content":"olle"}
+{"type":"text","content":"h"}
+{"type":"text","content":"\"\n"}
+{"type":"text","content":"   "}
+{"type":"text","content":" }\n"}
+{"type":"text","content":"}\n"}
+{"type":"text","content":"``"}
+{"type":"text","content":"`\n\n"}
+{"type":"text","content":"---\n\n"}
+{"type":"text","content":"###"}
+{"type":"text","content":" **"}
+{"type":"text","content":"C"}
+{"type":"text","content":"++"}
+{"type":"text","content":"**\n"}
+{"type":"text","content":"```"}
+{"type":"text","content":"cpp"}
+{"type":"text","content":"\n"}
+{"type":"text","content":"#include"}
+{"type":"text","content":" <"}
+{"type":"text","content":"iostream"}
+{"type":"text","content":">\n"}
+{"type":"text","content":"#include"}
+{"type":"text","content":" <"}
+{"type":"text","content":"algorithm"}
+{"type":"text","content":">\n"}
+{"type":"text","content":"using"}
+{"type":"text","content":" namespace"}
+{"type":"text","content":" std"}
+{"type":"text","content":";\n\n"}
+{"type":"text","content":"int"}
+{"type":"text","content":" main"}
+{"type":"text","content":"()"}
+{"type":"text","content":" {\n"}
+{"type":"text","content":"   "}
+{"type":"text","content":" string"}
+{"type":"text","content":" text"}
+{"type":"text","content":" ="}
+{"type":"text","content":" \""}
+{"type":"text","content":"hello"}
+{"type":"text","content":"\";\n"}
+{"type":"text","content":"   "}
+{"type":"text","content":" reverse"}
+{"type":"text","content":"(text"}
+{"type":"text","content":".begin"}
+{"type":"text","content":"(),"}
+{"type":"text","content":" text"}
+{"type":"text","content":".end"}
+{"type":"text","content":"());"}
+{"type":"text","content":" "}
+{"type":"text","content":" //"}
+{"type":"text","content":" Mod"}
+{"type":"text","content":"ifies"}
+{"type":"text","content":" the"}
+{"type":"text","content":" original"}
+{"type":"text","content":" string"}
+{"type":"text","content":"\n"}
+{"type":"text","content":"   "}
+{"type":"text","content":" cout"}
+{"type":"text","content":" <<"}
+{"type":"text","content":" text"}
+{"type":"text","content":" <<"}
+{"type":"text","content":" endl"}
+{"type":"text","content":";"}
+{"type":"text","content":" "}
+{"type":"text","content":" //"}
+{"type":"text","content":" Output"}
+{"type":"text","content":":"}
+{"type":"text","content":" \""}
+{"type":"text","content":"olle"}
+{"type":"text","content":"h"}
+{"type":"text","content":"\"\n"}
+{"type":"text","content":"   "}
+{"type":"text","content":" return"}
+{"type":"text","content":" "}
+{"type":"text","content":"0"}
+{"type":"text","content":";\n"}
+{"type":"text","content":"}\n"}
+{"type":"text","content":"``"}
+{"type":"text","content":"`\n\n"}
+{"type":"text","content":"---\n\n"}
+{"type":"text","content":"###"}
+{"type":"text","content":" **"}
+{"type":"text","content":"Key"}
+{"type":"text","content":" Notes"}
+{"type":"text","content":"**\n"}
+{"type":"text","content":"-"}
+{"type":"text","content":" Most"}
+{"type":"text","content":" methods"}
+{"type":"text","content":" create"}
+{"type":"text","content":" a"}
+{"type":"text","content":" new"}
+{"type":"text","content":" string"}
+{"type":"text","content":" since"}
+{"type":"text","content":" strings"}
+{"type":"text","content":" are"}
+{"type":"text","content":" immutable"}
+{"type":"text","content":" in"}
+{"type":"text","content":" languages"}
+{"type":"text","content":" like"}
+{"type":"text","content":" Python"}
+{"type":"text","content":" or"}
+{"type":"text","content":" JavaScript"}
+{"type":"text","content":".\n"}
+{"type":"text","content":"-"}
+{"type":"text","content":" Use"}
+{"type":"text","content":" the"}
+{"type":"text","content":" most"}
+{"type":"text","content":" concise"}
+{"type":"text","content":" built"}
+{"type":"text","content":"-in"}
+{"type":"text","content":" approach"}
+{"type":"text","content":" ("}
+{"type":"text","content":"e"}
+{"type":"text","content":".g"}
+{"type":"text","content":".,"}
+{"type":"text","content":" Python"}
+{"type":"text","content":" slicing"}
+{"type":"text","content":")"}
+{"type":"text","content":" unless"}
+{"type":"text","content":" manually"}
+{"type":"text","content":" implementing"}
+{"type":"text","content":" for"}
+{"type":"text","content":" learning"}
+{"type":"text","content":" purposes"}
+{"type":"text","content":"."}

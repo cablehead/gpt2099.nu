@@ -1,0 +1,25 @@
+{
+  "message": {
+    "type": "message",
+    "role": "assistant",
+    "model": "llama-4-maverick-17b-128e-instruct",
+    "content": [
+      {
+        "type": "tool_use",
+        "id": "1ab3af27-2d66-4173-b6b8-09602705cde3",
+        "name": "filesystem___read_file",
+        "input": {
+          "path": "config.json",
+          "head": 10
+        }
+      }
+    ],
+    "stop_reason": "tool_use",
+    "usage": {
+      "input_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 0
+    }
+  }
+}
