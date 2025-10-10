@@ -1,0 +1,16 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Process my data with pagination"
+        }
+      ]
+    }
+  ],
+  "options": {
+    "servers": ["nested-schema"]
+  }
+}

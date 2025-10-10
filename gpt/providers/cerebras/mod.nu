@@ -1,28 +1,37 @@
-def conditional-pipe [
-  condition: bool
-  action: closure
-] {
-  if $condition { do $action } else { $in }
+# Recursively strip unsupported JSON schema fields for Cerebras
+# Removes: $schema, format, minimum, nullable at all nesting levels
+def clean-schema-recursive [] {
+  let input = $in
+  let input_type = ($input | describe -d | get type)
+
+  if $input_type == "record" {
+    # Strip unsupported fields from this record level
+    let cleaned = $input | reject --optional '$schema' format minimum nullable
+
+    # Recursively clean all nested values
+    $cleaned | items {|key val|
+      {$key: ($val | clean-schema-recursive)}
+    } | into record
+  } else if $input_type == "list" {
+    # Recursively clean all items in the list
+    $input | each {|item| $item | clean-schema-recursive}
+  } else {
+    # Primitive value - return as-is
+    $input
+  }
 }
 
 export def convert-mcp-toolslist-to-provider [] {
   $in | each {|tool|
-    # Strip unsupported JSON schema fields for Cerebras (format, $schema)
-    let clean_schema = $tool.inputSchema | reject --optional '$schema'
-    let clean_properties = if ('properties' in $clean_schema) {
-      $clean_schema.properties | items {|key val|
-        {$key: ($val | reject --optional format)}
-      } | into record
-    } else {
-      $clean_schema.properties? | default {}
-    }
+    # Recursively clean the entire inputSchema
+    let clean_schema = $tool.inputSchema | clean-schema-recursive
 
     {
       type: "function"
       function: {
         name: $tool.name
         description: $tool.description
-        parameters: ($clean_schema | upsert properties $clean_properties)
+        parameters: $clean_schema
       }
     }
   }

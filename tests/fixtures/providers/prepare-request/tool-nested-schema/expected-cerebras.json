@@ -1,0 +1,66 @@
+{
+  "stream": true,
+  "messages": [
+    {
+      "role": "user",
+      "content": "Process my data with pagination"
+    }
+  ],
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "process_data",
+        "description": "Process data with pagination and metadata",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Search query"
+            },
+            "limit": {
+              "type": "integer"
+            },
+            "offset": {
+              "type": "integer"
+            },
+            "metadata": {
+              "$ref": "#/definitions/Metadata"
+            }
+          },
+          "required": [
+            "query"
+          ],
+          "definitions": {
+            "Metadata": {
+              "type": "object",
+              "properties": {
+                "priority": {
+                  "type": "number"
+                },
+                "timestamp": {
+                  "type": "string"
+                },
+                "config": {
+                  "$ref": "#/definitions/Config"
+                }
+              }
+            },
+            "Config": {
+              "type": "object",
+              "properties": {
+                "max_results": {
+                  "type": "integer"
+                },
+                "timeout_ms": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

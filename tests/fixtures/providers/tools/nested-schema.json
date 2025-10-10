@@ -1,0 +1,69 @@
+[
+  {
+    "name": "process_data",
+    "description": "Process data with pagination and metadata",
+    "inputSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "Search query"
+        },
+        "limit": {
+          "type": "integer",
+          "format": "uint32",
+          "minimum": 1,
+          "nullable": true
+        },
+        "offset": {
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0,
+          "nullable": true
+        },
+        "metadata": {
+          "$ref": "#/definitions/Metadata"
+        }
+      },
+      "required": ["query"],
+      "definitions": {
+        "Metadata": {
+          "type": "object",
+          "properties": {
+            "priority": {
+              "type": "number",
+              "format": "float",
+              "nullable": true
+            },
+            "timestamp": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "config": {
+              "$ref": "#/definitions/Config"
+            }
+          }
+        },
+        "Config": {
+          "type": "object",
+          "properties": {
+            "max_results": {
+              "type": "integer",
+              "format": "uint16",
+              "minimum": 0,
+              "nullable": true
+            },
+            "timeout_ms": {
+              "type": "integer",
+              "format": "uint32",
+              "minimum": 100,
+              "nullable": true
+            }
+          }
+        }
+      }
+    }
+  }
+]

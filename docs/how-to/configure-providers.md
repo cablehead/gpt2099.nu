@@ -67,7 +67,7 @@ Add `.r` for reasoning-optimized variants:
 
 **Key limitations:**
 
-- **Cerebras**: No vision/PDF support; JSON schema `format` fields stripped from tools
+- **Cerebras**: No vision/PDF support; JSON schema fields (`format`, `minimum`, `nullable`, `$schema`) recursively stripped from tools
 - **Gemini**: Cannot use custom MCP tools and web search in the same conversation
 - **OpenAI**: No built-in web search support
 
