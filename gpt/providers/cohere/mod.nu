@@ -110,9 +110,9 @@ export def provider [] {
         }
         "tool-call-delta" => {
           # Tool call arguments being streamed
-          let params = $event.delta?.message?.tool_calls?.function?.parameters?
-          if ($params | is-not-empty) {
-            return {content: $params}
+          let args = $event.delta?.message?.tool_calls?.function?.arguments?
+          if ($args | is-not-empty) {
+            return {content: $args}
           }
           null
         }
@@ -123,7 +123,9 @@ export def provider [] {
     response_stream_aggregate: {||
       collect {|events|
         mut text_content = ""
-        mut tool_calls = []
+        mut tool_call_id = null
+        mut tool_call_name = null
+        mut tool_call_arguments = ""
         mut finish_reason = "end_turn"
         mut usage = {
           input_tokens: 0
@@ -142,11 +144,19 @@ export def provider [] {
             if ($text | is-not-empty) {
               $text_content = $text_content + $text
             }
-          } else if $event_type == "tool-call-delta" {
-            # Accumulate tool calls
+          } else if $event_type == "tool-call-start" {
+            # Start of tool call - capture id and name
             let tool_call = $event.delta?.message?.tool_calls?
             if ($tool_call | is-not-empty) {
-              $tool_calls = $tool_calls | append $tool_call
+              $tool_call_id = $tool_call.id
+              $tool_call_name = $tool_call.function.name
+              $tool_call_arguments = ($tool_call.function?.arguments? | default "")
+            }
+          } else if $event_type == "tool-call-delta" {
+            # Accumulate tool call arguments
+            let args = $event.delta?.message?.tool_calls?.function?.arguments?
+            if ($args | is-not-empty) {
+              $tool_call_arguments = $tool_call_arguments + $args
             }
           } else if $event_type == "message-end" {
             # Extract finish reason and usage
@@ -169,20 +179,18 @@ export def provider [] {
           $content = $content | append {type: "text" text: $text_content}
         }
 
-        # Add tool calls to content
-        if ($tool_calls | is-not-empty) {
-          for tool_call in $tool_calls {
-            $content = $content | append {
-              type: "tool_use"
-              id: (random uuid)
-              name: $tool_call.function.name
-              input: ($tool_call.function.parameters | from json)
-            }
+        # Add tool call to content if we have one
+        if ($tool_call_name | is-not-empty) {
+          $content = $content | append {
+            type: "tool_use"
+            id: $tool_call_id
+            name: $tool_call_name
+            input: ($tool_call_arguments | from json)
           }
         }
 
         # Determine stop reason
-        let stop_reason = if ($tool_calls | is-not-empty) {
+        let stop_reason = if ($tool_call_name | is-not-empty) {
           "tool_use"
         } else {
           "end_turn"
