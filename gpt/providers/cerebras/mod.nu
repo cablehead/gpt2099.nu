@@ -1,7 +1,6 @@
 # Recursively strip unsupported JSON schema fields for Cerebras
 # Removes: $schema, format, minimum, nullable at all nesting levels
-def clean-schema-recursive [] {
-  let input = $in
+def clean-schema-recursive [input: any] {
   let input_type = ($input | describe -d | get type)
 
   if $input_type == "record" {
@@ -10,11 +9,11 @@ def clean-schema-recursive [] {
 
     # Recursively clean all nested values
     $cleaned | items {|key val|
-      {$key: ($val | clean-schema-recursive)}
+      {$key: (clean-schema-recursive $val)}
     } | into record
   } else if $input_type == "list" {
     # Recursively clean all items in the list
-    $input | each {|item| $item | clean-schema-recursive}
+    $input | each {|item| clean-schema-recursive $item}
   } else {
     # Primitive value - return as-is
     $input
@@ -24,7 +23,7 @@ def clean-schema-recursive [] {
 export def convert-mcp-toolslist-to-provider [] {
   $in | each {|tool|
     # Recursively clean the entire inputSchema
-    let clean_schema = $tool.inputSchema | clean-schema-recursive
+    let clean_schema = clean-schema-recursive $tool.inputSchema
 
     {
       type: "function"
