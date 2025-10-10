@@ -133,6 +133,16 @@ def collect-tests [] {
       # Verify no error occurred from missing id in notification
       assert ($result.error? == null) "Should not have error from notification filtering"
     }
+
+    "init.loads-all-providers": {||
+      gpt init
+      sleep 50ms
+
+      # Verify all 3 providers loaded
+      assert ((.head gpt.mod.provider.anthropic) != null) "anthropic not loaded"
+      assert ((.head gpt.mod.provider.gemini) != null) "gemini not loaded"
+      assert ((.head gpt.mod.provider.openai) != null) "openai not loaded"
+    }
   }
 }
 
