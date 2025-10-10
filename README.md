@@ -14,7 +14,7 @@ stored in [cross.stream](https://cablehead.github.io/xs/)
 
 ## Features
 
-- **Consistent API Across Models:** Connect to Gemini + Search and Anthropic + Search through a
+- **Consistent API Across Models:** Connect to Anthropic, Cerebras, Cohere, Gemini, and OpenAI through a
   single, simple interface. ([Add providers easily.](docs/reference/provider-api.md))
 - **Persistent, Editable Conversations:**
   [Conversation threads](https://cablehead.github.io/xs/tutorials/threaded-conversations/) are
