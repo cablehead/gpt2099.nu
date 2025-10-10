@@ -145,11 +145,6 @@ export def provider [] {
 
       let url = $"https://generativelanguage.googleapis.com/v1beta/models/($model):streamGenerateContent?alt=sse&key=($key)"
 
-      if false {
-        let res = $data | http post -f -e --content-type application/json $url
-        error make {msg: $"TBD:\n\n($data | to json | table -e)\n\n($res | to json)"}
-      }
-
       $data | http post --allow-errors --content-type application/json $url
       | metadata access {|meta|
         if $meta.http_response.status != 200 {

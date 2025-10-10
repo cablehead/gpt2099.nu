@@ -158,20 +158,6 @@ export def provider [] {
         "anthropic-version": "2023-06-01"
       }
 
-      if false {
-        let debug_data = $"data: ($data | to json)"
-        let debug_headers = $"headers: ($headers | to json)"
-        let debug_response = (
-          http post --full --allow-errors
-          --content-type application/json
-          -H $headers
-          https://api.anthropic.com/v1/messages
-          $data | table -e | tee { to json | save -f /tmp/gpt2099.capture }
-        )
-        let debug_message = $"($debug_data)\n($debug_headers)\n($debug_response)"
-        error make {msg: $debug_message}
-      }
-
       (
         http post
         --allow-errors
