@@ -1,0 +1,24 @@
+{
+  "message": {
+    "type": "message",
+    "role": "assistant",
+    "model": "cohere",
+    "content": [
+      {
+        "type": "tool_use",
+        "id": "filesystem___read_file_xn4bd3e6y76v",
+        "name": "filesystem___read_file",
+        "input": {
+          "path": "config.json"
+        }
+      }
+    ],
+    "stop_reason": "tool_use",
+    "usage": {
+      "input_tokens": 40,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 220
+    }
+  }
+}
