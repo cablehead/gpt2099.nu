@@ -92,7 +92,7 @@ let turn2 = "Second topic" | gpt -p milli
 ### View Raw Thread History
 
 ```nushell
-gpt context list europe-capitals
+gpt ctx list europe-capitals
 ```
 
 Shows the chronological sequence of turns in a thread.
@@ -100,7 +100,7 @@ Shows the chronological sequence of turns in a thread.
 ### View Resolved Context
 
 ```nushell
-gpt context resolve europe-capitals
+gpt ctx resolve europe-capitals
 ```
 
 Shows the full context window as it would be sent to the LLM, with all options merged.
@@ -109,7 +109,7 @@ Shows the full context window as it would be sent to the LLM, with all options m
 
 ```nushell
 # View context for a specific turn ID
-gpt context list 01JG123ABC456DEF789GHI012
+gpt ctx list 01JG123ABC456DEF789GHI012
 ```
 
 ## Advanced Threading Patterns
@@ -188,8 +188,8 @@ You can override inherited options:
 
 1. **Use descriptive bookmarks** for important conversation threads
 2. **Branch conversations** when exploring different approaches to the same topic
-3. **Inspect context** with `gpt context resolve` to understand what's being sent to the LLM
+3. **Inspect context** with `gpt ctx resolve` to understand what's being sent to the LLM
 4. **Manage context size** by continuing from specific points rather than entire threads
 5. **Organize by project or topic** using consistent bookmark naming schemes
 
-See the [commands reference](../commands.md#gpt-context) for complete context inspection commands.
+See the [commands reference](../commands.md#gpt-ctx) for complete context inspection commands.
