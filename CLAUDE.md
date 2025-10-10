@@ -1,3 +1,10 @@
+## Documentation Style
+
+- Use plain ASCII only in all documentation
+- Avoid complex encodings (emojis, Unicode box-drawing, etc.)
+- Use "yes"/"no" instead of checkmarks
+- Use simple indentation instead of tree characters
+
 ## Git Commit Style Preferences
 
 When committing: review `git diff`
