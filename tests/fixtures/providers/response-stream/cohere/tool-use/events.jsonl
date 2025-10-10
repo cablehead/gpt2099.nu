@@ -1,0 +1,218 @@
+{"id":"fc975f28-800b-4c46-bfef-778e6c4f9f64","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+{"type":"content-start","index":0,"delta":{"message":{"content":{"type":"thinking","thinking":""}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"Okay"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" user"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" wants"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" me"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" to"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" read"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" config"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"json"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" file"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" and"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" explain"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" its"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" structure"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Let"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" me"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" start"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" by"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" checking"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" available"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" tools"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" There"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"'s"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" a"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" filesystem"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"___"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"read"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"_"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"file"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" tool"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" that"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" can"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" read"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" files"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" The"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" parameters"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" required"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" are"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" path"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" and"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" optionally"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" head"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" which"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" is"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" a"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" uint"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"6"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"4"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Since"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" user"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" mentioned"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" \""}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"config"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"json"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"\","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" I"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" need"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" to"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" read"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" that"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" file"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"\n\nFirst"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" I"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" should"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" call"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" filesystem"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"___"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"read"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"_"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"file"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" tool"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" with"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" path"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" set"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" to"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" \""}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"config"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"json"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"\"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" The"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" head"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" parameter"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" is"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" optional"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" so"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" unless"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" user"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" specified"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" a"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" number"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" of"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" lines"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" to"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" read"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" I"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" can"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" omit"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" it"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Assuming"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" they"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" want"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" entire"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" file"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" I"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"'ll"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" leave"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" head"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" out"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Once"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" I"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" get"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" content"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" I"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"'ll"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" need"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" to"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" parse"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" JSON"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" and"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" describe"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" its"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" structure"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" If"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" file"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" isn"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"'t"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" valid"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" JSON"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" I"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" might"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" run"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" into"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" issues"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" but"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" I"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"'ll"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" handle"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" that"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" if"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" it"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" comes"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" up"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"\n\nSo"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" plan"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" is"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":":"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" read"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" file"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" using"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" tool"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" then"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" analyze"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" JSON"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" content"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" to"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" explain"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" its"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" structure"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Let"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"'s"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" make"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" tool"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" call"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" first"}}}}
+{"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+{"type":"content-end","index":0}
+{"type":"tool-call-start","index":0,"delta":{"message":{"tool_calls":{"id":"filesystem___read_file_xn4bd3e6y76v","type":"function","function":{"name":"filesystem___read_file","arguments":""}}}}}
+{"type":"tool-call-delta","index":0,"delta":{"message":{"tool_calls":{"function":{"arguments":"{\""}}}}}
+{"type":"tool-call-delta","index":0,"delta":{"message":{"tool_calls":{"function":{"arguments":"path"}}}}}
+{"type":"tool-call-delta","index":0,"delta":{"message":{"tool_calls":{"function":{"arguments":"\":"}}}}}
+{"type":"tool-call-delta","index":0,"delta":{"message":{"tool_calls":{"function":{"arguments":" \""}}}}}
+{"type":"tool-call-delta","index":0,"delta":{"message":{"tool_calls":{"function":{"arguments":"config"}}}}}
+{"type":"tool-call-delta","index":0,"delta":{"message":{"tool_calls":{"function":{"arguments":"."}}}}}
+{"type":"tool-call-delta","index":0,"delta":{"message":{"tool_calls":{"function":{"arguments":"json"}}}}}
+{"type":"tool-call-delta","index":0,"delta":{"message":{"tool_calls":{"function":{"arguments":"\"}"}}}}}
+{"type":"tool-call-end","index":0}
+{"type":"message-end","delta":{"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":40,"output_tokens":220},"tokens":{"input_tokens":1500,"output_tokens":249},"cached_tokens":0}}}

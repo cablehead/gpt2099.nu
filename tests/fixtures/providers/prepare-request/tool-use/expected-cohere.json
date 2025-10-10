@@ -1,0 +1,35 @@
+{
+  "stream": true,
+  "messages": [
+    {
+      "role": "user",
+      "content": "Please read the file config.json and tell me about its structure"
+    }
+  ],
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "filesystem___read_file",
+        "description": "Read the complete contents of a file from the file system.",
+        "parameters": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "additionalProperties": false,
+          "properties": {
+            "path": {
+              "type": "string"
+            },
+            "head": {
+              "type": "integer",
+              "format": "uint64"
+            }
+          },
+          "required": [
+            "path"
+          ],
+          "type": "object"
+        }
+      }
+    }
+  ]
+}

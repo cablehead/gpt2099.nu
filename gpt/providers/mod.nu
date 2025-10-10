@@ -4,6 +4,7 @@
 
 use ./anthropic
 use ./cerebras
+use ./cohere
 use ./gemini
 use ./openai
 
@@ -11,6 +12,7 @@ export def all [] {
   {
     anthropic : (anthropic provider)
     cerebras : (cerebras provider)
+    cohere : (cohere provider)
     gemini : (gemini provider)
     openai : (openai provider)
   }
