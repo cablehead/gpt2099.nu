@@ -59,7 +59,7 @@ Add `.r` for reasoning-optimized variants:
 | ----------------------- | --------- | -------- | ------ | ---------- | ---------- |
 | Text conversations      | yes       | yes      | yes    | yes        | yes        |
 | PDF analysis            | yes       | no       | no     | yes        | yes        |
-| Image analysis          | yes       | no       | no     | yes        | yes        |
+| Image analysis          | yes       | no       | yes*   | yes        | yes        |
 | Web search              | yes       | no       | no     | yes        | no         |
 | MCP tools               | yes       | yes      | yes    | yes        | yes        |
 | Tools + search together | yes       | no       | no     | no         | no         |
@@ -68,7 +68,7 @@ Add `.r` for reasoning-optimized variants:
 **Key limitations:**
 
 - **Cerebras**: No vision/PDF support; JSON schema fields (`format`, `minimum`, `nullable`, `$schema`) recursively stripped from tools
-- **Cohere**: No vision/PDF support; no built-in web search
+- **Cohere**: Vision and tools mutually exclusive (vision models support images but not tools; other models support tools but not images); no PDF support; no built-in web search
 - **Gemini**: Cannot use custom MCP tools and web search in the same conversation
 - **OpenAI**: No built-in web search support
 
