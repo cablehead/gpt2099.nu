@@ -133,6 +133,13 @@ export def resolve [headish?] {
 
 # Raw walk of frames in a thread
 export def main [id?: string] {
+  let head = .head gpt.turn
+  if ($id | is-empty) and ($head | is-empty) {
+    return []
+  }
+
+  let start_id = $id | default $head.id
+
   generate {|stack|
     if ($stack | is-empty) { {} } else {
       let id = ($stack | first)
@@ -143,5 +150,5 @@ export def main [id?: string] {
       let new_stack = ($remaining | append $continues_list)
       {out: $frame next: $new_stack}
     }
-  } [($id | default (.head gpt.turn | get id))]
+  } [$start_id]
 }
