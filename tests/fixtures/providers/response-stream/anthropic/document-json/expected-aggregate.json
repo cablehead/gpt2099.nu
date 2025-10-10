@@ -1,0 +1,27 @@
+{
+  "message": {
+    "model": "claude-3-5-haiku-20241022",
+    "id": "msg_01ReU4P9xjQjhEqmrZkwvfJ4",
+    "type": "message",
+    "role": "assistant",
+    "content": [
+      {
+        "type": "text",
+        "text": "This appears to be a simple JSON object with one key-value pair:\n- Key: \"test\"\n- Value: \"data\"\n\nIn most programming languages, this could be parsed and accessed like:\n- Python: data[\"test\"] would return \"data\"\n- JavaScript: data.test would return \"data\"\n\nWould you like me to demonstrate how to work with this JSON in a specific programming language or context?"
+      }
+    ],
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "usage": {
+      "input_tokens": 13,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 92,
+      "service_tier": "standard"
+    }
+  }
+}

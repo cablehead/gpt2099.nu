@@ -1,0 +1,116 @@
+{"type":"text","content":""}
+{"content":"Here"}
+{"content":" are"}
+{"content":" multiple"}
+{"content":" ways to reverse a string"}
+{"content":" in different"}
+{"content":" programming languages:\n\n1"}
+{"content":". Python"}
+{"content":":"}
+{"content":"\n```python\n#"}
+{"content":" Metho"}
+{"content":"d 1: Using sl"}
+{"content":"icing"}
+{"content":"\ns = \"hello"}
+{"content":"\""}
+{"content":"\nreversed_s ="}
+{"content":" s[::-1]"}
+{"content":"  "}
+{"content":"# \""}
+{"content":"olleh\"\n\n#"}
+{"content":" Method 2: Using"}
+{"content":" reverse"}
+{"content":"d() function\nreversed_"}
+{"content":"s = '"}
+{"content":"'.join(reversed("}
+{"content":"s))  # \""}
+{"content":"olleh\""}
+{"content":"\n```\n\n2. JavaScript"}
+{"content":":\n```javascript"}
+{"content":"\n// Method 1:"}
+{"content":" Using split"}
+{"content":","}
+{"content":" reverse"}
+{"content":", join"}
+{"content":"\nlet"}
+{"content":" s"}
+{"content":" = \"hello\";"}
+{"content":"\nlet reversed ="}
+{"content":" s.split('')."}
+{"content":"reverse().join('');"}
+{"content":"  "}
+{"content":"// \"olleh\""}
+{"content":"\n\n// Method 2"}
+{"content":": Using sprea"}
+{"content":"d operator\nlet reverse"}
+{"content":"d = [...s].reverse"}
+{"content":"().join('');  "}
+{"content":"// \"olleh\""}
+{"content":"\n```\n\n3."}
+{"content":" Java:\n```java"}
+{"content":"\nString s = \""}
+{"content":"hello\";\n//"}
+{"content":" Method 1: Using"}
+{"content":" StringBuilder"}
+{"content":"\nString"}
+{"content":" reversed = new"}
+{"content":" StringBuilder(s).reverse"}
+{"content":"().toString();  //"}
+{"content":" \"olleh\""}
+{"content":"\n\n// Method 2:"}
+{"content":" Manual"}
+{"content":" rever"}
+{"content":"sal\nStringBuilder reverse"}
+{"content":"d = new StringBuilder();"}
+{"content":"\nfor (int i"}
+{"content":" = s.length()"}
+{"content":" - 1; i"}
+{"content":" >= 0; i"}
+{"content":"--) {\n    "}
+{"content":"reversed.append(s"}
+{"content":".charAt(i));"}
+{"content":"\n}\n```"}
+{"content":"\n\n4. C++"}
+{"content":":\n```cpp"}
+{"content":"\nstring s = \"hello"}
+{"content":"\";\n// Method "}
+{"content":"1: Using algorithm"}
+{"content":" library"}
+{"content":"\nreverse(s."}
+{"content":"begin(), s.en"}
+{"content":"d());  // \"oll"}
+{"content":"eh\"\n\n// Metho"}
+{"content":"d 2: Manual rever"}
+{"content":"sal\nstring"}
+{"content":" reversed;"}
+{"content":"\nfor (int i"}
+{"content":" = s.length()"}
+{"content":" - 1; i"}
+{"content":" >= 0; i"}
+{"content":"--) {\n    "}
+{"content":"reversed += s[i"}
+{"content":"];\n}\n```"}
+{"content":"\n\nKey"}
+{"content":" points:"}
+{"content":"\n- Most"}
+{"content":" languages have built-in"}
+{"content":" methods"}
+{"content":" to reverse strings"}
+{"content":"\n- You"}
+{"content":" can also manually"}
+{"content":" reverse by"}
+{"content":" iterating from"}
+{"content":" the end"}
+{"content":"\n- Time"}
+{"content":" complexity is"}
+{"content":" typically"}
+{"content":" O(n)"}
+{"content":"\n- Space complexity varies"}
+{"content":" depending on the metho"}
+{"content":"d use"}
+{"content":"d\n\nChoose"}
+{"content":" the method that best fits"}
+{"content":" your programming"}
+{"content":" language and specific"}
+{"content":" use"}
+{"content":" case."}

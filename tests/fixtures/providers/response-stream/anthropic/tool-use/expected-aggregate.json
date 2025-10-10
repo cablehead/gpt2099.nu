@@ -1,0 +1,35 @@
+{
+  "message": {
+    "model": "claude-3-5-haiku-20241022",
+    "id": "msg_01FghZ8BSVShEy6nY5twVTqM",
+    "type": "message",
+    "role": "assistant",
+    "content": [
+      {
+        "type": "text",
+        "text": "I'll read the contents of the config.json file for you."
+      },
+      {
+        "type": "tool_use",
+        "id": "toolu_01BS69cJuGZberZcfHHw1D4n",
+        "name": "filesystem___read_file",
+        "input": {
+          "path": "config.json"
+        }
+      }
+    ],
+    "stop_reason": "tool_use",
+    "stop_sequence": null,
+    "usage": {
+      "input_tokens": 389,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 72,
+      "service_tier": "standard"
+    }
+  }
+}

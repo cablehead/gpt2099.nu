@@ -3,7 +3,7 @@
 export def main [suite?: string] {
   # Load required environment for integration tests
   use xs.nu *
-  use output.nu *
+  use utils/output.nu *
   use ../gpt
 
   let all_suites = ["unit" "providers" "integration"]
@@ -26,12 +26,14 @@ export def main [suite?: string] {
           mcp-response-processing
         }
         "providers" => {
-          use providers/test-prepare-request.nu
-          test-prepare-request
+          use providers/prepare-request.nu
+          prepare-request
+          use providers/response-stream.nu
+          response-stream
         }
         "integration" => {
-          use integration/test-integration.nu
-          test-integration
+          use integration/integration.nu
+          integration
         }
       }
       ok

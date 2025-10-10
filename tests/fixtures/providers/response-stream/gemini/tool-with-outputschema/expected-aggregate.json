@@ -1,0 +1,22 @@
+{
+  "message": {
+    "type": "message",
+    "role": "assistant",
+    "content": [
+      {
+        "type": "tool_use",
+        "id": "2c7a0bdf-deec-4f28-a73d-53595dd11dfa",
+        "name": "prepare_for_new_conversation",
+        "input": {}
+      }
+    ],
+    "model": "gemini-2.5-flash",
+    "usage": {
+      "input_tokens": 51,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 14
+    },
+    "stop_reason": "tool_use"
+  }
+}

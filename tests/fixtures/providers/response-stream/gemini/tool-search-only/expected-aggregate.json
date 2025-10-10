@@ -1,0 +1,19 @@
+{
+  "message": {
+    "type": "message",
+    "role": "assistant",
+    "content": [
+      {
+        "type": "text",
+        "text": "The current weather in Tokyo, Japan, is cloudy with a temperature of 18°C (64°F), feeling like 18°C (64°F). The humidity is around 66%. The time in Tokyo is 07:08 AM on Friday, October 10, 2025."
+      }
+    ],
+    "model": "gemini-2.5-flash",
+    "usage": {
+      "input_tokens": 10,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 86
+    }
+  }
+}

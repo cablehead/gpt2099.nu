@@ -1,0 +1,19 @@
+{
+  "message": {
+    "type": "message",
+    "role": "assistant",
+    "content": [
+      {
+        "type": "text",
+        "text": "This appears to be a sequence of **20 turns**, likely representing progress in a game, simulation, or process.\n\nSpecifically:\n\n*   There are **19 distinct turns** (Turn 1 through Turn 19).\n*   **Turn 20** is further detailed, indicating **3 specific items** associated with it (item 1, item 2, and item 3)."
+      }
+    ],
+    "model": "gemini-2.5-flash",
+    "usage": {
+      "input_tokens": 108,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 83
+    }
+  }
+}

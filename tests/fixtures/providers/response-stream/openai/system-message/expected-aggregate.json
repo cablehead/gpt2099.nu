@@ -1,0 +1,20 @@
+{
+  "message": {
+    "type": "message",
+    "role": "assistant",
+    "model": "gpt-4.1-mini-2025-04-14",
+    "content": [
+      {
+        "type": "text",
+        "text": "To reverse a string in most programming languages, you typically create a new string with the characters in the opposite order. Here are examples in a few different languages:\n\n1. Python:\n```python\ns = \"hello\"\nreversed_s = s[::-1]\nprint(reversed_s)  # Output: \"olleh\"\n```\n\n2. JavaScript:\n```javascript\nlet s = \"hello\";\nlet reversed_s = s.split('').reverse().join('');\nconsole.log(reversed_s);  // Output: \"olleh\"\n```\n\n3. Java:\n```java\nString s = \"hello\";\nString reversed_s = new StringBuilder(s).reverse().toString();\nSystem.out.println(reversed_s);  // Output: \"olleh\"\n```\n\n4. C++:\n```cpp\n#include <iostream>\n#include <algorithm>\nusing namespace std;\n\nint main() {\n    string s = \"hello\";\n    reverse(s.begin(), s.end());\n    cout << s << endl;  // Output: \"olleh\"\n    return 0;\n}\n```\n\nIf you want code in a specific language or further explanation, just ask!"
+      }
+    ],
+    "stop_reason": "end_turn",
+    "usage": {
+      "input_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 0
+    }
+  }
+}

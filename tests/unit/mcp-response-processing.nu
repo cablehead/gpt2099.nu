@@ -2,8 +2,8 @@ use std/assert
 use ../../gpt/mcp.nu response-to-tool-result
 
 def test-case [case_name: string module_name: string] {
-  use ../output.nu *
-  let base_path = $"tests/fixtures/mcp-response-to-tool-result/($case_name)"
+  use ../utils/output.nu *
+  let base_path = $"tests/fixtures/unit/mcp-response-to-tool-result/($case_name)"
   let input = open ($base_path | path join "input.json")
   let expected = open ($base_path | path join "expected.json")
 

@@ -1,0 +1,19 @@
+{
+  "message": {
+    "type": "message",
+    "role": "assistant",
+    "content": [
+      {
+        "type": "text",
+        "text": "I received the JSON data: `{\"test\": \"data\"}`.\n\nHow can I help you with this information?"
+      }
+    ],
+    "model": "gemini-2.5-flash",
+    "usage": {
+      "input_tokens": 7,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 25
+    }
+  }
+}

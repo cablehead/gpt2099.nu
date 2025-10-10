@@ -1,0 +1,40 @@
+{"type":"text","content":""}
+{"content":"This"}
+{"content":" appears"}
+{"content":" to be a simple"}
+{"content":" JSON object with"}
+{"content":" one"}
+{"content":" key-value pair:"}
+{"content":"\n-"}
+{"content":" Key"}
+{"content":": \"test\""}
+{"content":"\n- Value: \"data"}
+{"content":"\"\n\nIn"}
+{"content":" most"}
+{"content":" programming languages, this"}
+{"content":" coul"}
+{"content":"d be parse"}
+{"content":"d and accesse"}
+{"content":"d like:"}
+{"content":"\n-"}
+{"content":" Python"}
+{"content":": data"}
+{"content":"[\""}
+{"content":"test\"]"}
+{"content":" woul"}
+{"content":"d return \""}
+{"content":"data\"\n- JavaScript"}
+{"content":": data.test woul"}
+{"content":"d return \"data\""}
+{"content":"\n\nWoul"}
+{"content":"d you like me to demonstrate"}
+{"content":" how"}
+{"content":" to work"}
+{"content":" with this"}
+{"content":" JSON"}
+{"content":" in"}
+{"content":" a"}
+{"content":" specific"}
+{"content":" programming language or"}
+{"content":" context"}
+{"content":"?"}

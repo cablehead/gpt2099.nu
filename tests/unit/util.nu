@@ -16,7 +16,7 @@ def "test is-scru128" [] {
 }
 
 export def main [] {
-  use ../output.nu *
+  use ../utils/output.nu *
 
   start "util.is-scru128"
   test is-scru128

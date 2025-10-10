@@ -209,7 +209,7 @@ Internal representation used by the context system (see `gpt/ctx.nu` for impleme
 
 ## Resolved Context Window Schema
 
-Full resolved context returned by `gpt context resolve` (matches normalized input schema):
+Full resolved context returned by `gpt ctx resolve` (matches normalized input schema):
 
 ```nushell
 {

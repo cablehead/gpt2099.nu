@@ -1,0 +1,98 @@
+{"type":"server_tool_use","name":"web_search"}
+{"content":""}
+{"content":"{\""}
+{"content":"query"}
+{"content":"\": "}
+{"content":"\"Curre"}
+{"content":"nt weather i"}
+{"content":"n Tokyo tod"}
+{"content":"ay\"}"}
+{"type":"web_search_tool_result","content":"type,title,url,page_age\nweb_search_result,\"Tokyo, Tokyo, Japan Weather Forecast | AccuWeather\",https://www.accuweather.com/en/jp/tokyo/226396/weather-forecast/226396,1 day ago\nweb_search_result,\"Tokyo, Tokyo, Japan Current Weather | AccuWeather\",https://www.accuweather.com/en/jp/tokyo/226396/current-weather/226396,\nweb_search_result,\"Tokyo, Japan 14 day weather forecast\",https://www.timeanddate.com/weather/japan/tokyo/ext,\"August 5, 2025\"\nweb_search_result,\"Weather for Tokyo, Japan\",https://www.timeanddate.com/weather/japan/tokyo,\"August 5, 2025\"\nweb_search_result,\"Tokyo, Japan Weather Conditions | Weather Underground\",https://www.wunderground.com/weather/jp/tokyo,\nweb_search_result,\"Tokyo, 13, JP Current Weather - The Weather Network\",https://www.theweathernetwork.com/en/city/jp/tokyo/tokyo/current?_guid_iss_=1,\nweb_search_result,\"Tokyo, Japan Hourly Weather Forecast | Weather Underground\",https://www.wunderground.com/hourly/jp/tokyo,\nweb_search_result,\"Tokyo, Japan - Weather Forecasts | Maps | News - Yahoo Weather\",https://www.yahoo.com/news/weather/japan/tokyo-prefecture/tokyo-1118370,\nweb_search_result,Weather & Geography | Japan's Weather | Travel Japan | JNTO,https://www.japan.travel/en/weather/,\nweb_search_result,Yr - Tokyo - Hourly weather forecast,https://www.yr.no/en/forecast/hourly-table/2-1850147/Japan/Tokyo/Tokyo?i=0,\n"}
+{"type":"text","content":""}
+{"content":"Base"}
+{"content":"d on the search results,"}
+{"content":" here"}
+{"content":"'s"}
+{"content":" the"}
+{"content":" current"}
+{"content":" weather in"}
+{"content":" Tokyo:"}
+{"content":"\n\n"}
+{"type":"text","content":""}
+{}
+{"content":"The current temperature"}
+{"content":" is"}
+{"content":" 69"}
+{"content":"°F,"}
+{"content":" an"}
+{"content":"d it's mostly"}
+{"content":" clou"}
+{"content":"dy"}
+{"type":"text","content":""}
+{"content":"."}
+{"content":" More"}
+{"content":" specifically"}
+{"content":":"}
+{"content":"\n\n- "}
+{"type":"text","content":""}
+{}
+{"content":"It's currently partly"}
+{"content":" cloudy with a R"}
+{"content":"ealFeel®"}
+{"content":" temperature of 64"}
+{"content":"°"}
+{"type":"text","content":""}
+{"content":"\n- "}
+{"type":"text","content":""}
+{}
+{"content":"Wind is"}
+{"content":" coming"}
+{"content":" from the North"}
+{"content":" at"}
+{"content":" 3"}
+{"content":" mph with"}
+{"content":" gusts up to "}
+{"content":"5 mph"}
+{"content":"\n-"}
+{"content":" Humidity is at"}
+{"content":" 77"}
+{"content":"%"}
+{"content":"\n-"}
+{"content":" Visibility is 15"}
+{"content":" miles"}
+{"type":"text","content":""}
+{"content":"\n\nFor"}
+{"content":" today"}
+{"content":"'s"}
+{"content":" forecast"}
+{"content":", "}
+{"type":"text","content":""}
+{}
+{"content":"expect clou"}
+{"content":"dy skies with a"}
+{"content":" high of 73"}
+{"content":"°F an"}
+{"content":"d winds"}
+{"content":" from"}
+{"content":" the North-"}
+{"content":"Northeast at 15"}
+{"content":" to"}
+{"content":" 25"}
+{"content":" mph"}
+{"type":"text","content":""}
+{"content":"."}
+{"content":" "}
+{"type":"text","content":""}
+{}
+{"content":"Tonight"}
+{"content":" will"}
+{"content":" be clou"}
+{"content":"dy with a 51"}
+{"content":"% chance of precipitation"}
+{"content":" an"}
+{"content":"d variable"}
+{"content":" winds between"}
+{"content":" 5 to "}
+{"content":"11 mph"}
+{"type":"text","content":""}
+{"content":"."}

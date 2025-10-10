@@ -1,0 +1,27 @@
+{
+  "message": {
+    "model": "claude-3-5-haiku-20241022",
+    "id": "msg_01JNXdqAxhkuERCR9s6WqqeG",
+    "type": "message",
+    "role": "assistant",
+    "content": [
+      {
+        "type": "text",
+        "text": "I apologize, but the image appears to be a blank white page. There is no visible content or text on this document. If you intended to share a specific document or image, you may want to check the upload and try again."
+      }
+    ],
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "usage": {
+      "input_tokens": 1625,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 51,
+      "service_tier": "standard"
+    }
+  }
+}

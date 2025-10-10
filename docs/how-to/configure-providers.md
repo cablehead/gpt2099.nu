@@ -55,19 +55,20 @@ Add `.r` for reasoning-optimized variants:
 
 ## Provider Capabilities
 
-| Feature                 | Anthropic | Gemini         |
-| ----------------------- | --------- | -------------- |
-| Text conversations      | ✅        | ✅             |
-| PDF analysis            | ✅        | ✅             |
-| Image analysis          | ✅        | ✅             |
-| Web search              | ✅        | ✅             |
-| MCP tools               | ✅        | ✅             |
-| Tools + search together | ✅        | ❌             |
-| Document caching        | ✅        | ✅ (automatic) |
+| Feature                 | Anthropic | Gemini     | OpenAI     |
+| ----------------------- | --------- | ---------- | ---------- |
+| Text conversations      | yes       | yes        | yes        |
+| PDF analysis            | yes       | yes        | yes        |
+| Image analysis          | yes       | yes        | yes        |
+| Web search              | yes       | yes        | no         |
+| MCP tools               | yes       | yes        | yes        |
+| Tools + search together | yes       | no         | no         |
+| Document caching        | yes       | yes (auto) | yes        |
 
 **Key limitations:**
 
 - **Gemini**: Cannot use custom MCP tools and web search in the same conversation
+- **OpenAI**: No built-in web search support
 
 ## Example Configuration
 

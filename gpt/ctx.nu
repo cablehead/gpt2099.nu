@@ -76,7 +76,7 @@ def id-to-turns [ids] {
       "string" => { $stack = ($stack | append $next) }
       "list" => { $stack = ($stack | append $next) }
       "nothing" => { }
-      _ => ( error make {msg: "Invalid continues value"})
+      _ => (error make {msg: "Invalid continues value"})
     }
   }
 
@@ -99,7 +99,7 @@ def id-to-frames [ids] {
       "string" => { $stack = ($stack | append $next) }
       "list" => { $stack = ($stack | append $next) }
       "nothing" => { }
-      _ => ( error make {msg: "Invalid continues value"})
+      _ => (error make {msg: "Invalid continues value"})
     }
   }
 
@@ -129,4 +129,26 @@ export def resolve [headish?] {
     messages: $turns
     options: $options
   }
+}
+
+# Raw walk of frames in a thread
+export def main [id?: string] {
+  let head = .head gpt.turn
+  if ($id | is-empty) and ($head | is-empty) {
+    return []
+  }
+
+  let start_id = $id | default $head.id
+
+  generate {|stack|
+    if ($stack | is-empty) { {} } else {
+      let id = ($stack | first)
+      let remaining = ($stack | skip 1)
+      let frame = ($id | .get $in)
+      let continues = ($frame.meta.continues? | default [])
+      let continues_list = if ($continues | describe) == "string" { [$continues] } else { $continues }
+      let new_stack = ($remaining | append $continues_list)
+      {out: $frame next: $new_stack}
+    }
+  } [$start_id]
 }

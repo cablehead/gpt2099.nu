@@ -1,0 +1,50 @@
+{"type":"message_start","message":{"model":"claude-3-5-haiku-20241022","id":"msg_01HmSdvb9tBCboQg1E6xmXps","type":"message","role":"assistant","content":[],"stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":1,"service_tier":"standard"}}}
+{"type":"content_block_start","index":0,"content_block":{"type":"text","text":""}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"It"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" looks"}}
+{"type":"ping"}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" like you've"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" starte"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"d with"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" a simple"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" Markdown"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" file. The"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" `"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"#"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" Hello World` indicates"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" a"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" top"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"-level heading, an"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"d `"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"This is a test."}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"` is a"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" paragraph.\n\nIn"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" Markdown, hea"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"dings are create"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"d using the `#`"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" symbol, with"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" the number of"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" `"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"#` symbols"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" determining the heading"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" level:"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"\n-"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" `#` is"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" H"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"1 (largest"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" heading)\n- `"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"##` is H2"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"\n- `###` is"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" H3\nan"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"d so on.\n\nWoul"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"d you like me"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" to help"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" you with anything"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" specific"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" about"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" this"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" Markdown text"}}
+{"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"?"}}
+{"type":"content_block_stop","index":0}
+{"type":"message_delta","delta":{"stop_reason":"end_turn","stop_sequence":null},"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":121}}
+{"type":"message_stop"}

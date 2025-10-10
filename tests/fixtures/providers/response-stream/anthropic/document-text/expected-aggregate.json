@@ -1,0 +1,27 @@
+{
+  "message": {
+    "model": "claude-3-5-haiku-20241022",
+    "id": "msg_01HmSdvb9tBCboQg1E6xmXps",
+    "type": "message",
+    "role": "assistant",
+    "content": [
+      {
+        "type": "text",
+        "text": "It looks like you've started with a simple Markdown file. The `# Hello World` indicates a top-level heading, and `This is a test.` is a paragraph.\n\nIn Markdown, headings are created using the `#` symbol, with the number of `#` symbols determining the heading level:\n- `#` is H1 (largest heading)\n- `##` is H2\n- `###` is H3\nand so on.\n\nWould you like me to help you with anything specific about this Markdown text?"
+      }
+    ],
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "usage": {
+      "input_tokens": 16,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 121,
+      "service_tier": "standard"
+    }
+  }
+}

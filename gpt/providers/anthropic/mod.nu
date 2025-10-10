@@ -174,10 +174,18 @@ export def provider [] {
 
       (
         http post
+        --allow-errors
         --content-type application/json
         -H $headers
         https://api.anthropic.com/v1/messages
         $data
+        | metadata access {|meta|
+          if $meta.http_response.status != 200 {
+            error make {
+              msg: $"Error calling anthropic: ($meta.http_response | to json) ($in)"
+            }
+          } else { }
+        }
         | lines
         | each {|line| $line | split row -n 2 "data: " | get 1? }
         | each {|x| $x | from json }

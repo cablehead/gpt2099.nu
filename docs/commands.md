@@ -66,21 +66,25 @@ $content | schema add-turn [META_RECORD]
 
 See: [Schema Reference](./reference/schemas.md#turn-creation)
 
-## `gpt context`
+## `gpt ctx`
 
 Inspect conversation threads.
 
 **Commands:**
 
 ```nushell
-gpt context list [HEADISH]    # Raw per-turn view
-gpt context resolve [HEADISH] # Resolved context with merged options
+gpt ctx [ID]                  # Raw walk of frames in thread
+gpt ctx list [HEADISH]        # Raw per-turn view
+gpt ctx resolve [HEADISH]     # Resolved context with merged options
 ```
 
-**Example:**
+**Examples:**
 
 ```nushell
-gpt context list my-bookmark
+gpt ctx                       # Walk from latest turn
+gpt ctx $turn_id              # Walk from specific turn
+gpt ctx list my-bookmark      # List turns in thread
+gpt ctx resolve               # Get resolved context
 ```
 
 See: [How to manage conversations](./how-to/manage-conversations.md)

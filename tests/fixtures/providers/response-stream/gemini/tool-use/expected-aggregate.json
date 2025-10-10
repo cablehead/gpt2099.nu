@@ -1,0 +1,24 @@
+{
+  "message": {
+    "type": "message",
+    "role": "assistant",
+    "content": [
+      {
+        "type": "tool_use",
+        "id": "ac01d5eb-0c25-4e78-94b3-4f0b22e032db",
+        "name": "filesystem___read_file",
+        "input": {
+          "path": "config.json"
+        }
+      }
+    ],
+    "model": "gemini-2.5-flash",
+    "usage": {
+      "input_tokens": 75,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 19
+    },
+    "stop_reason": "tool_use"
+  }
+}
