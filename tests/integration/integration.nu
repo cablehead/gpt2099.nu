@@ -104,7 +104,7 @@ def collect-tests [] {
       sleep 50ms
 
       # Create turn using schema add-turn, then call gpt call
-      let turn = "what's 2+2, tersely?" | gpt schema add-turn {provider_ptr: "milli"}
+      let turn = "2+2=? reply with only the number" | gpt schema add-turn {provider_ptr: "milli"}
       let response = gpt call $turn.id
 
       let res = .cas $response.hash | from json
