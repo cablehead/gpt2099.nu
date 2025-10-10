@@ -70,6 +70,73 @@ def collect-tests [] {
       assert ("tool_use" in ($res | get type))
     }
 
+    "call.gemini.tool_use": {||
+      gpt init
+      sleep 50ms
+
+      cat .env/gemini | gpt provider enable gemini
+      gpt provider set-ptr milli gemini gemini-2.5-flash
+
+      gpt mcp register hello $"nu --stdin ($test_mcp_server)"
+
+      # Create turn using schema add-turn, then call gpt call
+      let turn = "greet Andy" | gpt schema add-turn {
+        provider_ptr: "milli"
+        servers: ["hello"]
+      }
+      let response = gpt call $turn.id
+
+      # Check if we got an error response
+      if $response.topic == "gpt.error" {
+        $response | to json | error make {msg: $"API call failed: ($in)"}
+      }
+
+      let res = .cas $response.hash | from json
+      assert ("tool_use" in ($res | get type))
+    }
+
+    "call.openai.basics": {||
+      gpt init
+      sleep 50ms
+
+      cat .env/openai | gpt provider enable openai
+      gpt provider set-ptr milli openai gpt-4.1-mini
+      sleep 50ms
+
+      # Create turn using schema add-turn, then call gpt call
+      let turn = "what's 2+2, tersely?" | gpt schema add-turn {provider_ptr: "milli"}
+      let response = gpt call $turn.id
+
+      let res = .cas $response.hash | from json
+      $res | to json | debug $in
+      assert equal $res.0.text "4"
+    }
+
+    "call.openai.tool_use": {||
+      gpt init
+      sleep 50ms
+
+      cat .env/openai | gpt provider enable openai
+      gpt provider set-ptr milli openai gpt-4.1-mini
+
+      gpt mcp register hello $"nu --stdin ($test_mcp_server)"
+
+      # Create turn using schema add-turn, then call gpt call
+      let turn = "greet Andy" | gpt schema add-turn {
+        provider_ptr: "milli"
+        servers: ["hello"]
+      }
+      let response = gpt call $turn.id
+
+      # Check if we got an error response
+      if $response.topic == "gpt.error" {
+        $response | to json | error make {msg: $"API call failed: ($in)"}
+      }
+
+      let res = .cas $response.hash | from json
+      assert ("tool_use" in ($res | get type))
+    }
+
     "schema.add-turn.basic-text": {||
       let turn = "Hello world" | gpt schema add-turn {}
       let stored_content = .cas $turn.hash | from json
