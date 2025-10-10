@@ -27,25 +27,25 @@ nu tests/providers/prepare-request.nu anthropic --call {|p| $env.($"($p | str up
 
 ```
 tests/
-├── run.nu                      # Complete suite runner
-├── unit/                       # Pure function tests
-│   └── util.nu
-├── providers/                  # Provider transformation tests
-│   ├── prepare-request.nu      # Request transformation
-│   └── response-stream.nu      # Streaming response processing
-├── integration/                # Full pipeline tests
-│   └── integration.nu
-├── utils/                      # Test utilities (not runnable)
-│   ├── output.nu               # Test output formatting
-│   ├── test-mcp-server.nu      # MCP test server
-│   └── generate-expected-outputs.nu
-└── fixtures/
-    ├── providers/
-    │   ├── prepare-request/    # Request transformation fixtures
-    │   ├── response-stream/    # Captured API responses
-    │   └── tools/              # MCP tool definitions
-    ├── unit/                   # Unit test fixtures
-    └── assets/                 # Binary files (PDF, images)
+  run.nu                        # Complete suite runner
+  unit/                         # Pure function tests
+    util.nu
+  providers/                    # Provider transformation tests
+    prepare-request.nu          # Request transformation
+    response-stream.nu          # Streaming response processing
+  integration/                  # Full pipeline tests
+    integration.nu
+  utils/                        # Test utilities (not runnable)
+    output.nu                   # Test output formatting
+    test-mcp-server.nu          # MCP test server
+    generate-expected-outputs.nu
+  fixtures/
+    providers/
+      prepare-request/          # Request transformation fixtures
+      response-stream/          # Captured API responses
+      tools/                    # MCP tool definitions
+    unit/                       # Unit test fixtures
+    assets/                     # Binary files (PDF, images)
 ```
 
 ## Provider Tests
