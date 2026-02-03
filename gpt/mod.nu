@@ -232,7 +232,7 @@ export def process-turn [turn: record] {
 
 export def call [turn_id: string preview?: closure] {
   let req = .append gpt.call --meta {continues: $turn_id}
-  let res = .cat -f --last-id $req.id
+  let res = .cat -f --after $req.id
   | conditional-pipe ($preview | is-not-empty) {
     tee {
       where {|frame|
