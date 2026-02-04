@@ -7,7 +7,7 @@ export def "register" [name: string command: string] {
   }" | .append $"mcp.($name).spawn"
 
   # Wait for the server to be ready
-  .cat -f --last-id $spawn_frame.id
+  .cat -f --after $spawn_frame.id
   | where topic == $"mcp.($name).ready"
   | first
 }
@@ -48,7 +48,7 @@ export def "call" [name: string] {
   let command = $in
   let frame = $command | to json -r | $in + "\n" | .append $"mcp.($name).send" --meta {id: $command.id}
   let res = (
-    .cat -f --last-id $frame.id
+    .cat -f --after $frame.id
     | where topic == $"mcp.($name).recv"
     | each { .cas $in.hash | from json }
     | where { $in.id? == $command.id }

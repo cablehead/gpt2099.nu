@@ -66,7 +66,7 @@ def _cat [options: record] {
     (if ($options | get tail? | default false) { "--tail" })
     (if ($options | get all? | default false) { "--all" })
 
-    (if $options.last_id? != null { ["--last-id" $options.last_id] })
+    (if $options.after? != null { ["--after" $options.after] })
 
     (if $options.limit? != null { ["--limit" $options.limit] })
     (if $options.pulse? != null { ["--pulse" $options.pulse] })
@@ -82,7 +82,7 @@ export def .cat [
   --pulse (-p): int # specifies the interval (in milliseconds) to receive a synthetic "xs.pulse" event
   --tail (-t) # begin long after the end of the stream
   --detail (-d) # include all frame fields in the output
-  --last-id (-l): string
+  --after (-A): string
   --limit: int
   --context (-c): string # the context to read from
   --all (-a) # cat across all contexts
@@ -92,7 +92,7 @@ export def .cat [
     follow: $follow
     pulse: $pulse
     tail: $tail
-    last_id: $last_id
+    after: $after
     limit: $limit
     context: (if not $all { (xs-context $context (metadata $context).span) })
     all: $all
