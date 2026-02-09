@@ -97,7 +97,7 @@ export def ptr [
     return (set-ptr $name)
   }
 
-  let ptrs = .head gpt.provider.ptrs | default {} | get meta? | default {}
+  let ptrs = .last gpt.provider.ptrs | default {} | get meta? | default {}
 
   if $name == null {
     return $ptrs

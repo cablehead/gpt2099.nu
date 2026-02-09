@@ -1,15 +1,13 @@
 # append to gpt.define
 {
-  modules: {
-    "anthropic": (.head gpt.mod.provider.anthropic | .cas $in.hash)
-    "cerebras": (.head gpt.mod.provider.cerebras | .cas $in.hash)
-    "cohere": (.head gpt.mod.provider.cohere | .cas $in.hash)
-    "gemini": (.head gpt.mod.provider.gemini | .cas $in.hash)
-    "openai": (.head gpt.mod.provider.openai | .cas $in.hash)
-    "ctx": (.head gpt.mod.ctx | .cas $in.hash)
-  }
-
   run: {|frame|
+    use xs/gpt/ctx
+    use xs/gpt/provider/anthropic
+    use xs/gpt/provider/cerebras
+    use xs/gpt/provider/cohere
+    use xs/gpt/provider/gemini
+    use xs/gpt/provider/openai
+
     let continues = $frame.meta?.continues?
     if $continues == null {
       error make {
@@ -37,14 +35,14 @@
     let servers = $window.options?.servers?
     let $tools = $servers | if ($in | is-not-empty) {
       each {|server|
-        .head $"mcp.($server).tools" | .cas $in.hash | from json | update name {
+        .last $"mcp.($server).tools" | .cas $in.hash | from json | update name {
           # prepend server name to tool name so we can determine which server to use
           $"($server)___($in)"
         }
       } | flatten
     } else { [] }
 
-    let ptrs = .head gpt.provider.ptrs | default {} | get meta? | default {}
+    let ptrs = .last gpt.provider.ptrs | default {} | get meta? | default {}
     let ptr = $ptrs | get $provider_ptr
     let ptr = $ptr | insert key (
       .cat -T "gpt.provider" | each { .cas $in.hash | from json } | where name == $ptr.provider | last | get key

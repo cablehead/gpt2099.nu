@@ -179,6 +179,7 @@ export def provider [] {
 Complete integration steps now so you can test as you develop:
 
 **Export in `gpt/providers/mod.nu`:**
+
 ```nushell
 use ./newprovider
 
@@ -192,17 +193,18 @@ export def all [] {
 ```
 
 **Load in `gpt/mod.nu` init:**
+
 ```nushell
-cat ($base | path join "providers/newprovider/mod.nu") | .append gpt.mod.provider.newprovider
+cat ($base | path join "providers/newprovider/mod.nu") | .append gpt.provider.newprovider.nu
 ```
 
 **Register in `gpt/xs/command-call.nu` (two places):**
-```nushell
-modules: {
-  "newprovider": (.head gpt.mod.provider.newprovider | .cas $in.hash)
-  ...
-}
 
+```nushell
+# Add VFS use at top of run closure:
+use xs/gpt/provider/newprovider
+
+# Add to provider match:
 let p = match $ptr.provider {
   "newprovider" => (newprovider provider)
   ...
@@ -214,6 +216,7 @@ let p = match $ptr.provider {
 Work through test cases one at a time, implementing each feature:
 
 **a) Basic text (system-message):**
+
 ```bash
 # Create expected output
 echo '{...}' > tests/fixtures/providers/prepare-request/system-message/expected-newprovider.json
@@ -225,6 +228,7 @@ nu tests/providers/prepare-request.nu newprovider system-message
 ```
 
 **b) Tools (tool-use):**
+
 ```bash
 # Add fixture
 echo '{...}' > tests/fixtures/providers/prepare-request/tool-use/expected-newprovider.json
@@ -236,6 +240,7 @@ nu tests/providers/prepare-request.nu newprovider tool-use
 ```
 
 **c) Documents (document-image, document-pdf):**
+
 ```bash
 # Add fixtures for each supported type
 echo '{...}' > tests/fixtures/providers/prepare-request/document-image/expected-newprovider.json
@@ -252,6 +257,7 @@ nu tests/providers/prepare-request.nu newprovider document-pdf
 ```
 
 **d) Advanced features (cache-control, tool-conversation):**
+
 ```bash
 # Continue pattern for remaining cases
 nu tests/providers/prepare-request.nu newprovider cache-control
@@ -259,6 +265,7 @@ nu tests/providers/prepare-request.nu newprovider tool-conversation
 ```
 
 **Verify all prepare-request tests:**
+
 ```bash
 nu tests/providers/prepare-request.nu newprovider
 ```
@@ -266,6 +273,7 @@ nu tests/providers/prepare-request.nu newprovider
 ### 4. Implement Streaming Methods
 
 **a) Capture real responses:**
+
 ```bash
 export NEWPROVIDER_API_KEY="..."
 
@@ -274,19 +282,21 @@ nu tests/providers/prepare-request.nu newprovider system-message --call $env.NEW
 nu tests/providers/prepare-request.nu newprovider tool-use --call $env.NEWPROVIDER_API_KEY --capture
 ```
 
-**b) Implement response_stream_streamer:**
-Study captured events and transform for display (returns type/name/content or null)
+**b) Implement response_stream_streamer:** Study captured events and transform for display (returns
+type/name/content or null)
 
-**c) Implement response_stream_aggregate:**
-Collect all events into final normalized message structure
+**c) Implement response_stream_aggregate:** Collect all events into final normalized message
+structure
 
 **d) Generate expected outputs:**
+
 ```bash
 nu tests/utils/generate-expected-outputs.nu newprovider system-message
 nu tests/utils/generate-expected-outputs.nu newprovider tool-use
 ```
 
 **e) Verify streaming:**
+
 ```bash
 nu tests/providers/response-stream.nu newprovider
 ```
@@ -317,6 +327,7 @@ Add provider to `tests/integration/integration.nu`:
 ```
 
 **Verify:**
+
 ```bash
 nu tests/integration/integration.nu call.newprovider
 ```
@@ -326,10 +337,10 @@ nu tests/integration/integration.nu call.newprovider
 Add to `docs/how-to/configure-providers.md`:
 
 ```markdown
-| Feature                 | Anthropic | Gemini | OpenAI | NewProvider |
-| ----------------------- | --------- | ------ | ------ | ----------- |
-| Text conversations      | yes       | yes    | yes    | yes         |
-| PDF analysis            | yes       | yes    | yes    | yes/no      |
+| Feature            | Anthropic | Gemini | OpenAI | NewProvider |
+| ------------------ | --------- | ------ | ------ | ----------- |
+| Text conversations | yes       | yes    | yes    | yes         |
+| PDF analysis       | yes       | yes    | yes    | yes/no      |
 ```
 
 ### 7. Final Verification

@@ -249,10 +249,10 @@ def collect-tests [] {
       gpt mcp register hello $"nu --stdin ($test_mcp_server)"
 
       # check the server initialized correctly
-      assert ((.head "mcp.hello.ready") != null) "not initialized"
+      assert ((.last "mcp.hello.ready") != null) "not initialized"
 
       # Check that tools were stored
-      let tools_frame = .head mcp.hello.tools
+      let tools_frame = .last mcp.hello.tools
       assert ($tools_frame != null)
       let tools = .cas $tools_frame.hash | from json
       assert (($tools | where name == "greeting" | length) > 0)
@@ -272,7 +272,7 @@ def collect-tests [] {
       gpt mcp register hello $"nu --stdin ($test_mcp_server)"
 
       # check the server initialized correctly
-      assert ((.head "mcp.hello.ready") != null) "not initialized"
+      assert ((.last "mcp.hello.ready") != null) "not initialized"
 
       # Make a tool call that emits notification + response
       let result = gpt mcp tool call hello notification_test {}
@@ -290,11 +290,11 @@ def collect-tests [] {
       sleep 50ms
 
       # Verify all 5 providers loaded
-      assert ((.head gpt.mod.provider.anthropic) != null) "anthropic not loaded"
-      assert ((.head gpt.mod.provider.cerebras) != null) "cerebras not loaded"
-      assert ((.head gpt.mod.provider.cohere) != null) "cohere not loaded"
-      assert ((.head gpt.mod.provider.gemini) != null) "gemini not loaded"
-      assert ((.head gpt.mod.provider.openai) != null) "openai not loaded"
+      assert ((.last gpt.provider.anthropic.nu) != null) "anthropic not loaded"
+      assert ((.last gpt.provider.cerebras.nu) != null) "cerebras not loaded"
+      assert ((.last gpt.provider.cohere.nu) != null) "cohere not loaded"
+      assert ((.last gpt.provider.gemini.nu) != null) "gemini not loaded"
+      assert ((.last gpt.provider.openai.nu) != null) "openai not loaded"
     }
 
     "ctx.empty-thread": {||

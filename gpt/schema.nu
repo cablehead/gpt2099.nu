@@ -30,7 +30,7 @@ export def add-turn [
 
   # Build continues list
   let continues = $meta.continues? | default [] | append [] | each { ctx headish-to-id $in }
-  let continues = $continues | conditional-pipe ($meta.respond? | default false) { append (.head gpt.turn).id }
+  let continues = $continues | conditional-pipe ($meta.respond? | default false) { append (.last gpt.turn).id }
 
   # Determine head
   let head = $meta.bookmark? | default (

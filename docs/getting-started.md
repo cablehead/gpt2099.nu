@@ -19,7 +19,7 @@ After this step you should be able to run:
 
 ```nushell
 "as easy as" | .append abc123
-.head abc123 | .cas
+.last abc123 | .cas
 ```
 
 <img height="200" alt="image" src="https://github.com/user-attachments/assets/dcff4ecf-e708-42fc-8cac-573375003320" />

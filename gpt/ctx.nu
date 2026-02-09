@@ -109,14 +109,14 @@ def id-to-frames [ids] {
 # Raw per-turn view
 export def list [headish?] {
   let ids = $headish | default [] | each { headish-to-id $in }
-  let ids = if ($ids | is-empty) { (.head gpt.turn).id } else { $ids }
+  let ids = if ($ids | is-empty) { (.last gpt.turn).id } else { $ids }
   id-to-turns $ids
 }
 
 # Fully resolved context window
 export def resolve [headish?] {
   let ids = $headish | default [] | each { headish-to-id $in }
-  let ids = if ($ids | is-empty) { (.head gpt.turn).id } else { $ids }
+  let ids = if ($ids | is-empty) { (.last gpt.turn).id } else { $ids }
 
   let turns = id-to-turns $ids
   let frames = id-to-frames $ids
@@ -133,7 +133,7 @@ export def resolve [headish?] {
 
 # Raw walk of frames in a thread
 export def main [id?: string] {
-  let head = .head gpt.turn
+  let head = .last gpt.turn
   if ($id | is-empty) and ($head | is-empty) {
     return []
   }
