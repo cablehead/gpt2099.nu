@@ -1,8 +1,6 @@
 export alias "h. get" = h. request get
 export alias "h. post" = h. request post
 
-export const XS_CONTEXT_SYSTEM = "0000000000000000000000000"
-
 def and-then [next: closure --else: closure] {
   if ($in | is-not-empty) { do $next } else {
     if $else != null { do $else }
@@ -21,83 +19,53 @@ def conditional-pipe [
 }
 
 export def xs-addr [] {
-  $env | get XS_ADDR? | or-else { try { open ~/.config/cross.stream/XS_ADDR | str trim | path expand } } | or-else { "~/.local/share/cross.stream/store" | path expand }
-}
-
-export def xs-context-collect [] {
-  _cat {context: $XS_CONTEXT_SYSTEM} | reduce --fold {} {|frame acc|
-    match $frame.topic {
-      "xs.context" => ($acc | insert $frame.id $frame.meta?.name?)
-      "xs.annotate" => (
-        if $frame.meta?.updates? in $acc {
-          $acc | update $frame.meta.updates $frame.meta?.name?
-        } else {
-          $acc
-        }
-      )
-      _ => $acc
-    }
-  } | transpose id name | prepend {
-    id: $XS_CONTEXT_SYSTEM
-    name: "system"
-  }
-}
-
-export def xs-context [selected?: string span?] {
-  if $selected == null {
-    return ($env | get XS_CONTEXT?)
-  }
-
-  xs-context-collect | where id == $selected or name == $selected | try { first | get id } catch {
-    if $span != null {
-      error make {
-        msg: $"context not found: ($selected)"
-        label: {text: "provided span" span: $span}
-      }
-    } else {
-      error make -u {msg: $"context not found: ($selected)"}
-    }
-  }
+  $env | get XS_ADDR? | or-else { "~/.local/share/cross.stream/store" | path expand }
 }
 
 def _cat [options: record] {
+  let with_ts = ($options | get with_timestamp? | default false)
   let params = [
     (if ($options | get follow? | default false) { "--follow" })
-    (if ($options | get tail? | default false) { "--tail" })
-    (if ($options | get all? | default false) { "--all" })
+    (if ($options | get new? | default false) { "--new" })
+    (if $with_ts { "--with-timestamp" })
 
     (if $options.after? != null { ["--after" $options.after] })
+    (if $options.from? != null { ["--from" $options.from] })
 
     (if $options.limit? != null { ["--limit" $options.limit] })
+    (if $options.last? != null { ["--last" $options.last] })
     (if $options.pulse? != null { ["--pulse" $options.pulse] })
-    (if $options.context? != null { ["--context" $options.context] })
     (if $options.topic? != null { ["--topic" $options.topic] })
   ] | compact | flatten
 
-  xs cat (xs-addr) ...$params | lines | each {|x| $x | from json }
+  xs cat (xs-addr) ...$params | lines | each {|x|
+    $x | from json | if $with_ts { into datetime timestamp } else { }
+  }
 }
 
 export def .cat [
   --follow (-f) # long poll for new events
   --pulse (-p): int # specifies the interval (in milliseconds) to receive a synthetic "xs.pulse" event
-  --tail (-t) # begin long after the end of the stream
+  --new (-n) # skip existing, only show new
   --detail (-d) # include all frame fields in the output
-  --after (-A): string
+  --with-timestamp # include RFC3339 timestamp extracted from frame ID
+  --after: string # start after a specific frame ID (exclusive)
+  --from: string # start from a specific frame ID (inclusive)
   --limit: int
-  --context (-c): string # the context to read from
-  --all (-a) # cat across all contexts
+  --last: int # return the last N events (most recent)
   --topic (-T): string # filter by topic
 ] {
   _cat {
     follow: $follow
     pulse: $pulse
-    tail: $tail
+    new: $new
+    with_timestamp: $with_timestamp
     after: $after
+    from: $from
     limit: $limit
-    context: (if not $all { (xs-context $context (metadata $context).span) })
-    all: $all
+    last: $last
     topic: $topic
-  } | conditional-pipe (not ($detail or $all)) { each { reject context_id ttl } }
+  } | conditional-pipe (not $detail) { each { reject ttl } }
 }
 
 def read_hash [hash?: any] {
@@ -115,23 +83,38 @@ export def .cas [hash?: any] {
   xs cas (xs-addr) $hash
 }
 
-export def .get [id: string] {
-  xs get (xs-addr) $id | from json
+export def .cas-post [] {
+  $in | xs cas-post (xs-addr)
 }
 
-export def .head [
-  topic: string
-  --follow (-f)
-  --context (-c): string
+export def .get [
+  id: string
+  --with-timestamp # include RFC3339 timestamp extracted from frame ID
 ] {
-  let params = [
-    (xs-context $context (metadata $context).span | and-then { ["--context" $in] })
+  xs get (xs-addr) $id ...(if $with_timestamp { ["--with-timestamp"] } else { [] })
+  | from json
+  | if $with_timestamp { into datetime timestamp } else { }
+}
+
+export def .last [
+  topic?: string
+  --last (-n): int  # Number of frames to return
+  --follow (-f)
+  --with-timestamp # include RFC3339 timestamp extracted from frame ID
+] {
+  let args = [
+    (if $topic != null { [$topic] })
+    (if $last != null { ["-n" $last] })
+    (if $follow { ["--follow"] })
+    (if $with_timestamp { ["--with-timestamp"] })
   ] | compact | flatten
 
-  if $follow {
-    xs head (xs-addr) $topic ...($params) --follow | lines | each {|x| $x | from json }
+  if $follow or ($last != null and $last > 1) {
+    xs last (xs-addr) ...$args | lines | each {|x|
+      $x | from json | if $with_timestamp { into datetime timestamp } else { }
+    }
   } else {
-    xs head (xs-addr) $topic ...($params) | from json
+    xs last (xs-addr) ...$args | from json | if $with_timestamp { into datetime timestamp } else { }
   }
 }
 
@@ -139,20 +122,20 @@ export def .head [
 export def .append [
   topic: string # The topic to append the event to
   --meta: record # Optional metadata to include with the event, provided as a record
-  --context (-c): string # the context to append to
   --ttl: string # Optional Time-To-Live for the event. Supported formats:
   #   - "forever": The event is kept indefinitely.
   #   - "ephemeral": The event is not stored; only active subscribers can see it.
   #   - "time:<milliseconds>": The event is kept for a custom duration in milliseconds.
   #   - "head:<n>": Retains only the last n events for the topic (n must be >= 1).
+  --with-timestamp # include RFC3339 timestamp extracted from frame ID
 ] {
   xs append (xs-addr) $topic ...(
     [
       (if $meta != null { ["--meta" ($meta | to json -r)] })
       (if $ttl != null { ["--ttl" $ttl] })
-      (xs-context $context (metadata $context).span | and-then { ["--context" $in] })
+      (if $with_timestamp { ["--with-timestamp"] })
     ] | compact | flatten
-  ) | from json
+  ) | from json | if $with_timestamp { into datetime timestamp } else { }
 }
 
 export def .remove [id: string] {
@@ -160,47 +143,6 @@ export def .remove [id: string] {
 }
 
 export alias .rm = .remove
-
-export def ".ctx" [
-  --detail (-d) # return a record with id and name fields
-] {
-  let id = xs-context | or-else { $XS_CONTEXT_SYSTEM }
-  let name = xs-context-collect | where id == $id | get name.0
-  if $detail {
-    {id: $id} | if $name != null { insert name $name } else { $in }
-  } else {
-    $name | default $id
-  }
-}
-
-export def ".ctx list" [] {
-  let active = .ctx -d | get id
-  xs-context-collect | insert active {
-    $in.id == $active
-  }
-}
-
-export alias ".ctx ls" = .ctx list
-
-export def --env ".ctx switch" [id?: string] {
-  $env.XS_CONTEXT = $id | or-else { .ctx select }
-  .ctx --detail | get id
-}
-
-export def --env ".ctx new" [name: string] {
-  .append "xs.context" -c $XS_CONTEXT_SYSTEM --meta {name: $name} | .ctx switch $in.id
-}
-
-export def --env ".ctx rename" [id: string name: string] {
-  .append "xs.annotate" -c $XS_CONTEXT_SYSTEM --meta {
-    updates: (xs-context $id (metadata $id).span)
-    name: $name
-  }
-}
-
-export def --env ".ctx select" [] {
-  .ctx list | input list | get id
-}
 
 export def .export [path: string] {
   if ($path | path exists) {
@@ -234,17 +176,29 @@ export def .import [path: string] {
   }
 
   open ($path | path join "frames.jsonl") | lines | each {
-    from json | default "0000000000000000000000000" context_id | to json -r | xs import (xs-addr)
+    from json | to json -r | xs import (xs-addr)
   }
 }
 
-# Execute a Nushell script with store helper commands available
-export def .exec [script?: string] {
-  let input_script = if $script != null { $script } else { $in }
-  if $input_script == null {
-    error make {msg: "No script provided as argument or via pipeline"}
+# Evaluate a Nushell script with store helper commands available
+export def .eval [
+  file?: string             # Script file to evaluate, or "-" for stdin
+  --commands (-c): string   # Evaluate script from command line
+] {
+  if $commands != null {
+    xs eval (xs-addr) -c $commands
+  } else if $file != null {
+    xs eval (xs-addr) $file
+  } else {
+    let input_script = $in
+    if $input_script == null {
+      error make {
+        msg: "No script provided"
+        help: "Provide a file (.eval script.nu), use -c (.eval -c '<script>'), or pipe input ('<script>' | .eval)"
+      }
+    }
+    xs eval (xs-addr) -c $input_script
   }
-  xs exec (xs-addr) $input_script
 }
 
 # Generate a new SCRU128 ID
@@ -300,7 +254,6 @@ export def .tmp-spawn [
     print $"Started xs serve with job ID: ($job_id)"
 
     $env.XS_ADDR = $store_path
-    $env.XS_CONTEXT = null
 
     # Give the server a moment to start up
     sleep 500ms

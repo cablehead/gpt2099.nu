@@ -35,9 +35,7 @@
               "format": "uint64"
             }
           },
-          "required": [
-            "path"
-          ],
+          "required": ["path"],
           "type": "object"
         }
       }

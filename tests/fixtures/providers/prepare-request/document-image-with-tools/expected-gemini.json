@@ -35,9 +35,7 @@
                 "type": "integer"
               }
             },
-            "required": [
-              "path"
-            ],
+            "required": ["path"],
             "type": "object"
           }
         }

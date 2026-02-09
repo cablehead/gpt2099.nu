@@ -29,9 +29,7 @@
               "$ref": "#/definitions/Metadata"
             }
           },
-          "required": [
-            "query"
-          ],
+          "required": ["query"],
           "definitions": {
             "Metadata": {
               "type": "object",

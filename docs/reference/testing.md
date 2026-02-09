@@ -52,7 +52,8 @@ tests/
 
 ### prepare-request
 
-Tests input transformation for each provider's API format. Compares transformed requests against expected fixtures.
+Tests input transformation for each provider's API format. Compares transformed requests against
+expected fixtures.
 
 ```bash
 # Run all prepare-request tests for a provider
@@ -67,7 +68,8 @@ nu tests/providers/prepare-request.nu openai --call $env.OPENAI_API_KEY
 
 ### response-stream
 
-Tests streaming response processing (aggregate and streamer methods). Uses captured API responses for deterministic playback.
+Tests streaming response processing (aggregate and streamer methods). Uses captured API responses
+for deterministic playback.
 
 ```bash
 # Run all response-stream tests for a provider
@@ -93,7 +95,9 @@ nu tests/utils/generate-expected-outputs.nu anthropic tool-use
 nu tests/providers/response-stream.nu anthropic tool-use
 ```
 
-This saves raw streaming events to `tests/fixtures/providers/response-stream/{provider}/{case}/events.jsonl` and generates expected outputs for both aggregate and streamer methods.
+This saves raw streaming events to
+`tests/fixtures/providers/response-stream/{provider}/{case}/events.jsonl` and generates expected
+outputs for both aggregate and streamer methods.
 
 ## Adding Tests
 
