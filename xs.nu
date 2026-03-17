@@ -98,23 +98,25 @@ export def .get [
 
 export def .last [
   topic?: string
-  --last (-n): int  # Number of frames to return
+  count?: int  # Number of frames to return (default: 1)
   --follow (-f)
   --with-timestamp # include RFC3339 timestamp extracted from frame ID
 ] {
   let args = [
     (if $topic != null { [$topic] })
-    (if $last != null { ["-n" $last] })
+    (if $count != null { [$count] })
     (if $follow { ["--follow"] })
     (if $with_timestamp { ["--with-timestamp"] })
   ] | compact | flatten
 
-  if $follow or ($last != null and $last > 1) {
-    xs last (xs-addr) ...$args | lines | each {|x|
-      $x | from json | if $with_timestamp { into datetime timestamp } else { }
-    }
+  let result = xs last (xs-addr) ...$args | lines | each {|x|
+    $x | from json | if $with_timestamp { into datetime timestamp } else { }
+  }
+
+  if $follow or ($count != null and $count > 1) {
+    $result
   } else {
-    xs last (xs-addr) ...$args | from json | if $with_timestamp { into datetime timestamp } else { }
+    $result | first
   }
 }
 

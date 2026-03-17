@@ -112,7 +112,10 @@ export def main [
 export def --env process-turn-response [turn: record] {
   let content = .cas $turn.hash | from json
   let tool_use = $content | where type == "tool_use"
-  if ($tool_use | is-empty) { return }
+  if ($tool_use | is-empty) {
+    print ""
+    return $content
+  }
   let tool_use = $tool_use | first
   print ($tool_use | table -e)
 
