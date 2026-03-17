@@ -150,5 +150,5 @@ export def main [id?: string] {
       let new_stack = ($remaining | append $continues_list)
       {out: $frame next: $new_stack}
     }
-  } [$start_id] | reject context_id ttl
+  } [$start_id] | reject ttl
 }
