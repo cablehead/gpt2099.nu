@@ -1,12 +1,12 @@
 # append to gpt.define
 {
   run: {|frame|
-    use xs/gpt/ctx
-    use xs/gpt/provider/anthropic
-    use xs/gpt/provider/cerebras
-    use xs/gpt/provider/cohere
-    use xs/gpt/provider/gemini
-    use xs/gpt/provider/openai
+    use gpt/ctx
+    use gpt/provider/anthropic
+    use gpt/provider/cerebras
+    use gpt/provider/cohere
+    use gpt/provider/gemini
+    use gpt/provider/openai
 
     let continues = $frame.meta?.continues?
     if $continues == null {

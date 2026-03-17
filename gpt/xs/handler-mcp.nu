@@ -9,7 +9,7 @@ $env.mcp_pending = {}
   start: (.last xs.start).id
 
   run: {|frame|
-    use xs/gpt/mcp-rpc
+    use gpt/mcp-rpc
 
     let topic_parts = $frame.topic | split row "."
     if ($topic_parts | length) < 2 { return }
